@@ -73,10 +73,10 @@ Checks: {"PASS": 83, "FAIL": 0, "WARN": 0, "SKIP": 1}
 
 QA preview only: evaluate placement trade-offs without moving the live PCB.
 - verdict: regresses
-- fixed: 
+- fixed:
 - introduced: mission.support_C3
 - worsened: mission.support_C3
-- improved: 
+- improved:
 - unverified: access.connector, fit.courtyard::C3|R2, fit.overlap::C3|R1
 
 ### 2026-09-08T23:30:50.396400+00:00 · proposal_decision
