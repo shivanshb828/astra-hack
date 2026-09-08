@@ -25,3 +25,11 @@ blender/out/
 
 # Generated: local app database
 *.db
+.gstack/
+
+# Generated: frontend build output
+web/dist/
+web/tsconfig.tsbuildinfo
+
+# Local secrets. Commit .env.example instead.
+.env
