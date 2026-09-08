@@ -44,6 +44,20 @@ the user presses `Apply`; with it on, the proposal is applied immediately.
 
 ## Highlight And Annotate
 
-Use `Mark AFE`, `Mark BUCK`, and `Mark CELL` in the desktop widget. These write
-visible silkscreen annotations directly into the KiCad board file. If KiCad
-prompts that the file changed on disk, choose reload.
+Use chat commands:
+
+```text
+mark AFE
+```
+
+```text
+highlight BUCK
+```
+
+```text
+explain CELL
+```
+
+These write visible silkscreen annotations directly into the KiCad board file.
+If KiCad prompts that the file changed on disk, choose reload. `reload KiCad`
+also sends a manual reload/foreground signal.

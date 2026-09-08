@@ -44,7 +44,8 @@ class AstraWidget(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
         self.title("Astra KiCad")
-        self.geometry("390x510+1040+120")
+        self.geometry("330x390+1080+120")
+        self.minsize(300, 320)
         self.attributes("-topmost", True)
         self.configure(bg="#fafaf7")
         self.pending_proposal: str | None = None
@@ -57,37 +58,25 @@ class AstraWidget(tk.Tk):
     def _build(self) -> None:
         style = ttk.Style(self)
         style.theme_use("clam")
-        style.configure("TButton", padding=(8, 5), relief="flat")
+        style.configure("TButton", padding=(6, 4), relief="flat")
         style.configure("Primary.TButton", background="#111111", foreground="#ffffff")
         style.configure("TCheckbutton", background="#fafaf7")
 
         header = tk.Frame(self, bg="#ffffff", highlightbackground="#111111", highlightthickness=1)
         header.pack(fill="x")
-        mark = tk.Label(header, text="A", fg="#ffffff", bg="#111111", width=3, height=1)
-        mark.pack(side="left", padx=(10, 8), pady=10)
+        mark = tk.Label(header, text="A", fg="#ffffff", bg="#111111", width=2, height=1)
+        mark.pack(side="left", padx=(8, 7), pady=7)
         title = tk.Frame(header, bg="#ffffff")
         title.pack(side="left", fill="x", expand=True)
         tk.Label(title, text="Astra KiCad", anchor="w", bg="#ffffff", fg="#111111",
-                 font=("Helvetica", 13, "bold")).pack(fill="x")
+                 font=("Helvetica", 12, "bold")).pack(fill="x")
         tk.Label(title, textvariable=self.status, anchor="w", bg="#ffffff", fg="#555555",
-                 font=("Helvetica", 10)).pack(fill="x")
-        ttk.Checkbutton(header, text="Auto-apply", variable=self.auto_apply).pack(
-            side="right", padx=10
+                 font=("Helvetica", 9)).pack(fill="x")
+        ttk.Button(header, text="Reload", command=self.reload_kicad).pack(
+            side="right", padx=(0, 8)
         )
-
-        actions = tk.Frame(self, bg="#f0f0ec")
-        actions.pack(fill="x", padx=0, pady=0)
-        ttk.Button(actions, text="Open KiCad", command=self.open_kicad).pack(
-            side="left", padx=(10, 4), pady=8
-        )
-        ttk.Button(actions, text="Mark AFE", command=lambda: self.annotate("AFE")).pack(
-            side="left", padx=4, pady=8
-        )
-        ttk.Button(actions, text="Mark BUCK", command=lambda: self.annotate("BUCK")).pack(
-            side="left", padx=4, pady=8
-        )
-        ttk.Button(actions, text="Mark CELL", command=lambda: self.annotate("CELL")).pack(
-            side="left", padx=4, pady=8
+        ttk.Button(header, text="Open", command=self.open_kicad).pack(
+            side="right", padx=(0, 5)
         )
 
         self.log = tk.Text(
@@ -96,13 +85,13 @@ class AstraWidget(tk.Tk):
             bg="#fbfbf8",
             fg="#111111",
             relief="flat",
-            padx=10,
-            pady=10,
-            height=18,
-            font=("Helvetica", 12),
+            padx=8,
+            pady=8,
+            height=12,
+            font=("Helvetica", 11),
         )
         self.log.pack(fill="both", expand=True)
-        self.log.insert("end", "Ready. Ask Astra to inspect or change the open KiCad board.\n")
+        self.log.insert("end", "Astra: Ask what to build, inspect, move, or mark.\n")
         self.log.configure(state="disabled")
 
         composer = tk.Frame(self, bg="#ffffff", highlightbackground="#111111", highlightthickness=1)
@@ -113,21 +102,21 @@ class AstraWidget(tk.Tk):
             relief="flat",
             bg="#ffffff",
             fg="#111111",
-            font=("Helvetica", 12),
+            font=("Helvetica", 11),
         )
-        entry.pack(side="left", fill="x", expand=True, padx=10, pady=12)
-        entry.insert(0, "Build a rechargeable 7-day ECG patch...")
+        entry.pack(side="left", fill="x", expand=True, padx=8, pady=9)
+        entry.insert(0, "What are we building?")
         entry.bind("<FocusIn>", self._clear_placeholder)
         entry.bind("<Return>", lambda _event: self.send())
         ttk.Button(composer, text="Send", style="Primary.TButton", command=self.send).pack(
-            side="right", padx=(0, 10), pady=8
+            side="right", padx=(0, 8), pady=7
         )
         ttk.Button(composer, text="Apply", command=self.apply).pack(
-            side="right", padx=(0, 6), pady=8
+            side="right", padx=(0, 5), pady=7
         )
 
     def _clear_placeholder(self, _event: object) -> None:
-        if self.input.get() == "Build a rechargeable 7-day ECG patch...":
+        if self.input.get() == "What are we building?":
             self.input.set("")
 
     def append(self, who: str, text: str) -> None:
@@ -158,6 +147,16 @@ class AstraWidget(tk.Tk):
 
         self.run_bg(task)
 
+    def reload_kicad(self) -> None:
+        def task() -> None:
+            try:
+                request("/api/kicad/reload", {})
+                self.append("Astra", "Reload signal sent. If KiCad prompts, choose Reload.")
+            except Exception as exc:
+                self.append("Astra", f"Reload failed: {exc}")
+
+        self.run_bg(task)
+
     def annotate(self, ref: str) -> None:
         notes = {
             "AFE": "sensitive analog front end",
@@ -176,10 +175,27 @@ class AstraWidget(tk.Tk):
 
     def send(self) -> None:
         message = self.input.get().strip()
-        if not message or message == "Build a rechargeable 7-day ECG patch...":
+        if not message or message == "What are we building?":
             return
         self.input.set("")
         self.append("You", message)
+
+        lowered = message.lower().strip()
+        command_match = None
+        for verb in ("mark", "highlight", "annotate"):
+            if lowered.startswith(f"{verb} "):
+                command_match = message.split(maxsplit=1)[1].strip().upper()
+                break
+        if command_match:
+            ref = command_match.split()[0]
+            self.annotate(ref)
+            return
+        if lowered in {"reload", "reload kicad", "refresh kicad"}:
+            self.reload_kicad()
+            return
+        if lowered in {"open", "open kicad"}:
+            self.open_kicad()
+            return
 
         def task() -> None:
             try:

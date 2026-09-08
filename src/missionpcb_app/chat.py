@@ -328,6 +328,41 @@ def interpret(
                 "provider_label": f"Model provider failed; local fallback used: {exc}",
             }
 
+    explain_match = re.search(r"\b(?:explain|what(?:'s| is)|why)\s+(?:the\s+)?([a-z0-9_ -]+)\??$", lowered)
+    if explain_match:
+        phrase = explain_match.group(1).strip()
+        refs = _resolve(design, phrase, parts_index)
+        if len(refs) == 1:
+            comp = design.component(refs[0])
+            part = parts_index.get(comp.part_id) if comp else None
+            flags = [
+                "heat source" if bool(getattr(part, "heat_source", False)) else "",
+                "noise source" if bool(getattr(part, "noise_source", False)) else "",
+                "skin contact" if bool(getattr(part, "skin_contact", False)) else "",
+                f"sensitivity: {getattr(part, 'sensitivity', 'none')}"
+                if getattr(part, "sensitivity", "none") != "none"
+                else "",
+            ]
+            flags = [item for item in flags if item]
+            return {
+                **base,
+                "needs_clarification": False,
+                "reply": (
+                    f"{refs[0]} is {getattr(part, 'name', comp.part_id) if part else comp.part_id} "
+                    f"at ({comp.pos_mm[0]}, {comp.pos_mm[1]}) mm. "
+                    f"Role: {getattr(part, 'category', 'unknown') if part else 'unknown'}. "
+                    f"{'Flags: ' + ', '.join(flags) + '. ' if flags else ''}"
+                    "Use Mark to write a visible KiCad annotation, or ask me to move it."
+                ),
+                "selected_ref": refs[0],
+            }
+        if len(refs) > 1:
+            return {
+                **base,
+                "needs_clarification": True,
+                "reply": f"That could mean {', '.join(refs)}. Which ref should I explain?",
+            }
+
     exact_ref = next((c.ref for c in design.components if c.ref.lower() == lowered), None)
     if exact_ref:
         return {
