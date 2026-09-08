@@ -1,0 +1,91 @@
+{
+  "parts": [
+    {
+      "id": "msp430fr2433",
+      "name": "MSP430FR2433",
+      "category": "processor",
+      "dimensions_mm": {
+        "length": 4.0,
+        "width": 4.0,
+        "height": 0.8
+      },
+      "heat_source": false,
+      "noise_source": true,
+      "sensitivity": "low",
+      "heat_zone_radius_mm": null
+    },
+    {
+      "id": "ads1292r",
+      "name": "ADS1292R",
+      "category": "sensor",
+      "dimensions_mm": {
+        "length": 4.0,
+        "width": 4.0,
+        "height": 0.92
+      },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitivity": "high",
+      "heat_zone_radius_mm": null
+    },
+    {
+      "id": "mdbt42q",
+      "name": "MDBT42Q-512KV2",
+      "category": "wireless",
+      "dimensions_mm": {
+        "length": 16.0,
+        "width": 10.0,
+        "height": 2.2
+      },
+      "heat_source": false,
+      "noise_source": true,
+      "sensitivity": "high",
+      "heat_zone_radius_mm": null
+    },
+    {
+      "id": "tps62740",
+      "name": "TPS62740",
+      "category": "power_regulator",
+      "dimensions_mm": {
+        "length": 2.0,
+        "width": 1.975,
+        "height": 0.8
+      },
+      "heat_source": true,
+      "noise_source": true,
+      "sensitivity": "low",
+      "heat_zone_radius_mm": 18
+    },
+    {
+      "id": "mcp73831",
+      "name": "MCP73831",
+      "category": "driver",
+      "dimensions_mm": {
+        "length": 2.8,
+        "width": 2.9,
+        "height": 1.4
+      },
+      "heat_source": true,
+      "noise_source": false,
+      "sensitivity": "low",
+      "heat_zone_radius_mm": 22
+    },
+    {
+      "id": "bm02b_srss",
+      "name": "BM02B-SRSS-TB",
+      "category": "connector",
+      "dimensions_mm": {
+        "length": 4.0,
+        "width": 3.6,
+        "height": 4.32
+      },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitivity": "low",
+      "heat_zone_radius_mm": null
+    }
+  ],
+  "notes": [
+    "Cached representative CAD dimensions; U2/U4 approximate. Authored clearance proxies."
+  ]
+}

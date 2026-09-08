@@ -44,3 +44,14 @@ blender/out/
 
 # Generated: local app database
 *.db
+
+# Native widget local credentials, binaries, runtime exchanges
+missionpcb_blender_demo/kicad_bridge/.widget-token
+missionpcb_blender_demo/kicad_bridge/MissionPCBPanel
+missionpcb_blender_demo/kicad_bridge/*.app/
+missionpcb_blender_demo/kicad_bridge/activity.jsonl
+missionpcb_blender_demo/blender_widget/ipc/
+missionpcb_review/runs/
+missionpcb_review/exchange/
+*.kicad_prl
+*.lck
