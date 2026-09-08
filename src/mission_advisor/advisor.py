@@ -22,7 +22,10 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-import anthropic
+try:
+    import anthropic
+except ModuleNotFoundError:  # pragma: no cover - exercised in no-SDK dev envs
+    anthropic = None
 
 from .catalog import PartRecord, render_catalog
 from .schema import AdvisorOutput
@@ -140,7 +143,12 @@ def build_mission_prompt(
     return "\n".join(parts)
 
 
-def _client(api_key: str | None = None) -> anthropic.Anthropic:
+def _client(api_key: str | None = None):
+    if anthropic is None:
+        raise RuntimeError(
+            "anthropic is not installed. Install the provider SDK to run a live "
+            "advisor pass, or use --dry-run to inspect the assembled prompt."
+        )
     # A bare constructor also resolves ANTHROPIC_AUTH_TOKEN and `ant auth login`
     # profiles, so do not require the env var to be set.
     return anthropic.Anthropic(api_key=api_key) if api_key else anthropic.Anthropic()

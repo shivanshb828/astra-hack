@@ -26,6 +26,7 @@ from constraint_engine import load_parts
 from . import chat as chat_mod
 from . import integrations
 from .analysis import DEFAULT_PARTS, analyse
+from .manufacturing import build_manufacturing_package
 from .schema import SCHEMA_VERSION, DesignState
 from .store import RevisionConflict, Store
 
@@ -381,6 +382,29 @@ def export_design() -> JSONResponse:
             "history": [e.model_dump() for e in store.history(DESIGN_ID)],
         },
         headers={"Content-Disposition": "attachment; filename=missionpcb-export.json"},
+    )
+
+
+@app.get("/api/manufacturing/export")
+def export_manufacturing_package() -> JSONResponse:
+    state = _design()
+    analysis = store.analysis_for_revision(DESIGN_ID, state.revision)
+    render_contracts = [
+        path
+        for path in ("render/naive.json", "render/solved.json")
+        if os.path.exists(os.path.join(REPO_ROOT, path))
+    ]
+    payload = build_manufacturing_package(
+        state,
+        analysis=analysis,
+        integrations=integrations_status(),
+        render_contracts=render_contracts,
+    )
+    return JSONResponse(
+        payload,
+        headers={
+            "Content-Disposition": "attachment; filename=missionpcb-manufacturing-export.json"
+        },
     )
 
 
