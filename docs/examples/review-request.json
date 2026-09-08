@@ -1,0 +1,349 @@
+{
+  "design_id": "ecg-patch",
+  "revision": 7,
+  "source_board_hash": "sha256:02f2ccce4ac4ed06",
+  "brief": "Single-lead ECG chest patch, 14-day continuous wear, sealed.",
+  "distance_metric": "edge",
+  "catalog": {
+    "jst_zh_electrode": {
+      "id": "ELEC_B",
+      "name": "B2B-ZR (JST)",
+      "category": "electrode",
+      "dimensions_mm": {
+        "length": 4.5,
+        "width": 3.5,
+        "height": 4.5
+      },
+      "_dimension_source": {
+        "length": "JST eZH (ZH CONNECTOR catalogue), p.4, nominal",
+        "width": "JST eZH (ZH CONNECTOR catalogue), p.4, nominal",
+        "height": "JST eZH (ZH CONNECTOR catalogue), p.4, nominal"
+      },
+      "_catalog_id": "jst_zh_electrode",
+      "sensitive": "high",
+      "_access_required": true,
+      "required_clearance_mm": {
+        "from_noisy_components": 12
+      },
+      "placement_notes": "Second lead of the pair.",
+      "source_url": "https://www.jst-mfg.com/product/pdf/eng/eZH.pdf"
+    },
+    "tpd4e1b06": {
+      "id": "ESD",
+      "name": "TPD4E1B06 (Texas Instruments)",
+      "category": "sensor",
+      "dimensions_mm": {
+        "length": 1.7,
+        "width": 1.7,
+        "height": 0.6
+      },
+      "_dimension_source": {
+        "length": "SLVSBQ8E, p.21, max",
+        "width": "SLVSBQ8E, p.21, max",
+        "height": "SLVSBQ8E, p.21, max"
+      },
+      "_catalog_id": "tpd4e1b06",
+      "placement_notes": "Added on the advisor's recommendation: the electrode leads are the only conductors leaving the sealed shell and touching a person, so they are the ESD entry path.",
+      "source_url": "https://www.ti.com/lit/ds/symlink/tpd4e1b06.pdf"
+    },
+    "ads1292r": {
+      "id": "AFE",
+      "name": "ADS1292R (Texas Instruments)",
+      "category": "analog_frontend",
+      "dimensions_mm": {
+        "length": 4.0,
+        "width": 4.0,
+        "height": 1.0
+      },
+      "_dimension_source": {
+        "length": "SBAS502C, p.80, nominal",
+        "width": "SBAS502C, p.80, nominal",
+        "height": "SBAS502C, p.80, max"
+      },
+      "_catalog_id": "ads1292r",
+      "heat_source": true,
+      "sensitive": "high",
+      "required_clearance_mm": {
+        "from_hot_components": 10,
+        "from_noisy_components": 15
+      },
+      "placement_notes": "24-bit front end on a ~1 mV biopotential. 15 mm from switching sources because the buck's fundamental and harmonics land inside its 0-150 Hz measurement band; 10 mm from heat because package self-heating drifts the input offset and reads as baseline wander.",
+      "source_url": "https://www.ti.com/lit/ds/symlink/ads1292r.pdf"
+    },
+    "mdbt42q": {
+      "id": "BLE",
+      "name": "MDBT42Q-512KV2 (Raytac)",
+      "category": "wireless",
+      "dimensions_mm": {
+        "length": 16.0,
+        "width": 10.0,
+        "height": 2.2
+      },
+      "_dimension_source": {
+        "length": "MDBT42Q Approval Sheet Version P (2025/07/14), p.6, nominal",
+        "width": "MDBT42Q Approval Sheet Version P (2025/07/14), p.6, nominal",
+        "height": "MDBT42Q Approval Sheet Version P (2025/07/14), p.6, nominal"
+      },
+      "_catalog_id": "mdbt42q",
+      "noise_source": true,
+      "sensitive": "high",
+      "required_clearance_mm": {
+        "from_noisy_components": 10
+      },
+      "keepout_zone_mm": {
+        "extends": 6,
+        "width": 10,
+        "direction": "+y"
+      },
+      "placement_notes": "Module with an integrated antenna, so it is both the radio and a digital noise source. The 6 mm keep-out is the ground-plane clearance the module's integration guide requires ahead of the antenna end; it is a mission-level assumption, not a catalog measurement, because the catalog records no keep-out geometry.",
+      "source_url": "https://www.raytac.com/download/index.php?index_id=27"
+    },
+    "tps62740": {
+      "id": "BUCK",
+      "name": "TPS62740 (Texas Instruments)",
+      "category": "power_regulator",
+      "dimensions_mm": {
+        "length": 3.0,
+        "width": 2.0,
+        "height": 0.8
+      },
+      "_dimension_source": {
+        "length": "SLVSB02B, p.30, nominal",
+        "width": "SLVSB02B, p.30, nominal",
+        "height": "SLVSB02B, p.30, max"
+      },
+      "_catalog_id": "tps62740",
+      "noise_source": true,
+      "heat_zone_radius_mm": 6,
+      "placement_notes": "The switching node is the dominant conducted-noise source on the board. The 6 mm thermal radius is a geometric proxy scaled to a 3x2 mm package on modest copper, not a solved field.",
+      "source_url": "https://www.ti.com/lit/ds/symlink/tps62740.pdf"
+    },
+    "bq24040": {
+      "id": "CHG",
+      "name": "BQ24040 (Texas Instruments)",
+      "category": "power_regulator",
+      "dimensions_mm": {
+        "length": 2.0,
+        "width": 2.0,
+        "height": 0.8
+      },
+      "_dimension_source": {
+        "length": "SLUS941H, p.37, nominal",
+        "width": "SLUS941H, p.37, nominal",
+        "height": "SLUS941H, p.37, max"
+      },
+      "_catalog_id": "bq24040",
+      "heat_source": true,
+      "heat_zone_radius_mm": 8,
+      "placement_notes": "Linear charger: its dominant emission is heat, and worst case is the precondition-to-constant-current transition, not steady state. Chosen over mcp73831 on the advisor's recommendation because it has a thermal pad and a TS pin for a cell thermistor.",
+      "source_url": "https://www.ti.com/lit/ds/symlink/bq24040.pdf"
+    },
+    "varta_cp1254": {
+      "id": "CELL",
+      "name": "CP 1254 A4 (VARTA Microbattery GmbH)",
+      "category": "battery",
+      "dimensions_mm": {
+        "length": 12.1,
+        "width": 12.1,
+        "height": 5.6
+      },
+      "_dimension_source": {
+        "length": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01), p.1, max",
+        "width": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01), p.1, max",
+        "height": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01), p.1, max"
+      },
+      "_catalog_id": "varta_cp1254",
+      "thermal_runaway_risk": true,
+      "_access_required": true,
+      "placement_notes": "12.1 mm coin, 5.6 mm tall including tolerance. Tallest part on the board and the thing that sets the enclosure height. VARTA states, unconditionally, that it must not be used without a protection circuit module.",
+      "source_url": "https://www.elektronik.ropla.eu/pdf/stock/vmb/cp1254a4.pdf"
+    },
+    "bm02b_srss": {
+      "id": "BATCON",
+      "name": "BM02B-SRSS-TB (JST)",
+      "category": "connector",
+      "dimensions_mm": {
+        "length": 4.0,
+        "width": 3.6,
+        "height": 4.3
+      },
+      "_dimension_source": {
+        "length": "JST eSH (SH CONNECTOR catalogue), p.3, nominal",
+        "width": "JST eSH (SH CONNECTOR catalogue), p.3, nominal",
+        "height": "JST eSH (SH CONNECTOR catalogue), p.3, nominal"
+      },
+      "_catalog_id": "bm02b_srss",
+      "_access_required": true,
+      "placement_notes": "Top-entry header, mated along the board normal. Its 4.3 mm unmated height plus the mating lead is a vertical clearance requirement, which the height check covers.",
+      "source_url": "https://www.jst-mfg.com/product/pdf/eng/eSH.pdf"
+    }
+  },
+  "components": [
+    {
+      "ref": "ELEC_A",
+      "catalog_id": "jst_zh_electrode",
+      "kicad_ref": "J1",
+      "position_mm": [
+        8,
+        13
+      ],
+      "rotation_deg": 0
+    },
+    {
+      "ref": "ELEC_B",
+      "catalog_id": "jst_zh_electrode",
+      "kicad_ref": "J2",
+      "position_mm": [
+        14,
+        13
+      ],
+      "rotation_deg": 0
+    },
+    {
+      "ref": "ESD",
+      "catalog_id": "tpd4e1b06",
+      "kicad_ref": "D1",
+      "position_mm": [
+        20,
+        13
+      ],
+      "rotation_deg": 0
+    },
+    {
+      "ref": "AFE",
+      "catalog_id": "ads1292r",
+      "kicad_ref": "U1",
+      "position_mm": [
+        26,
+        13
+      ],
+      "rotation_deg": 0
+    },
+    {
+      "ref": "BUCK",
+      "catalog_id": "tps62740",
+      "kicad_ref": "U3",
+      "position_mm": [
+        31,
+        13
+      ],
+      "rotation_deg": 0
+    },
+    {
+      "ref": "CHG",
+      "catalog_id": "bq24040",
+      "kicad_ref": "U4",
+      "position_mm": [
+        36,
+        13
+      ],
+      "rotation_deg": 0
+    },
+    {
+      "ref": "CELL",
+      "catalog_id": "varta_cp1254",
+      "kicad_ref": "BT1",
+      "position_mm": [
+        50,
+        13
+      ],
+      "rotation_deg": 0
+    },
+    {
+      "ref": "BATCON",
+      "catalog_id": "bm02b_srss",
+      "kicad_ref": "J3",
+      "position_mm": [
+        62,
+        13
+      ],
+      "rotation_deg": 0
+    },
+    {
+      "ref": "BLE",
+      "catalog_id": "mdbt42q",
+      "kicad_ref": "U2",
+      "position_mm": [
+        78,
+        13
+      ],
+      "rotation_deg": 0
+    }
+  ],
+  "geometry": {
+    "enclosure": {
+      "interior_mm": {
+        "length": 104,
+        "width": 34,
+        "height": 8.5
+      },
+      "wall_thickness_mm": 1.5,
+      "wall_keepout_mm": 2.0,
+      "openings": [],
+      "_openings_note": "No lateral opening. Both headers are top-entry, mated along the board normal during assembly, so their access requirement is vertical clearance -- covered by the height budget, not by a hole in a wall. The brief's charge cradle needs contact pads that no catalog part covers yet; that gap is recorded as an open question rather than modelled with an invented part."
+    },
+    "board": {
+      "size_mm": {
+        "length": 94,
+        "width": 26,
+        "thickness": 1.0
+      },
+      "origin_mm": [
+        5,
+        4,
+        1
+      ],
+      "edge_margin_mm": 1.5,
+      "max_component_height_mm": 6.5,
+      "min_component_gap_mm": 0.5,
+      "id": "PCB_Naive"
+    },
+    "traces": []
+  },
+  "constraints": {
+    "mission_profile": {
+      "skin_contact_clearance_mm": 0,
+      "battery_thermal_clearance_mm": 8
+    },
+    "mission_rules": [
+      {
+        "id": "lead_vector",
+        "type": "min_separation",
+        "between": [
+          "ELEC_A",
+          "ELEC_B"
+        ],
+        "distance_mm": 35,
+        "metric": "center",
+        "severity": "blocker",
+        "title": "Electrode leads exit far enough apart to resolve the lead vector",
+        "rationale": "A single-lead ECG measures the potential difference between two electrodes, and amplitude scales with how much of the heart's dipole the pair spans. The pads themselves are on flying leads and land wherever the adhesive puts them, so this checks the connectors as a proxy for where the leads exit the shell: connectors at the same end force the pads together too."
+      },
+      {
+        "id": "esd_at_the_boundary",
+        "type": "max_separation",
+        "between": [
+          "ESD",
+          "ELEC_A"
+        ],
+        "distance_mm": 10,
+        "metric": "center",
+        "severity": "major",
+        "title": "ESD protection sits at the electrode entry, not downstream of it",
+        "rationale": "Protection only works ahead of what it protects. If the clamp is further from the connector than the AFE is, a strike travels down board copper past the front end before it reaches the diode."
+      }
+    ],
+    "rationales": {
+      "sep.noise": "The signal at the front end is roughly 1 mV. The buck's switching fundamental and its harmonics fall inside the 0-150 Hz band the AFE's noise figure is specified in, so coupled switching noise does not degrade the trace, it buries the QRS complex.",
+      "sep.thermal": "A 24-bit front end resolves well under a microvolt per count. Self-heating in a neighbouring part drifts its input offset and bias currents, and that drift reads as baseline wander that looks like respiration.",
+      "sep.rf": "Broadband switching noise raises the module's receiver noise floor. Lost link margin means retries, retries keep the radio on longer, and a 77 mAh coin cell has no budget for that across a 14-day wear.",
+      "zone.heat_overlap": "A fixed radius standing in for the elevated-temperature region around a dissipating part. A geometric proxy, not a solved thermal field.",
+      "zone.rf_keepout": "The module's antenna radiates into the volume ahead of it. Copper or bulk material inside that volume detunes the match, and inside a sealed patch there is no way to retune after assembly.",
+      "safety.battery_thermal": "Sustained heat accelerates lithium cell ageing and lowers the thermal runaway threshold. This cell sits directly against the skin-side shell with no convective path, so heat that reaches it stays there and reaches the patient.",
+      "fit.height": "The 5.6 mm cell sets the enclosure height, and the two top-entry connectors need vertical clearance to be mated during assembly. The patch has to stay wearable under a shirt, so every millimetre here is argued for.",
+      "fit.courtyard": "IPC-7351 courtyard excess. At this density the placement head needs room to land and the joints need room to fillet.",
+      "fit.enclosure_xy": "A sealed patch needs an uninterrupted gasket path around the full perimeter; anything in the wall zone breaks the seal.",
+      "access.connector": "Both headers are top-entry, mated along the board normal during assembly rather than reached through a wall. Their access requirement is the vertical clearance covered by the height check, so no lateral opening is declared for them."
+    }
+  }
+}
