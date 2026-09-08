@@ -44,6 +44,7 @@ from .models import (
     Trace,
 )
 from .report import render_report
+from .review import SCHEMA_VERSION, SubmissionError, review
 from .solver import solve
 
 __version__ = ENGINE_VERSION
@@ -80,7 +81,10 @@ __all__ = [
     "load_layout",
     "load_parts",
     "render_brief_text",
+    "SCHEMA_VERSION",
+    "SubmissionError",
     "render_report",
+    "review",
     "solve",
     "validate",
 ]

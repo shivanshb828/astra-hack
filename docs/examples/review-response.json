@@ -1,0 +1,2900 @@
+{
+  "schema_version": "review/1",
+  "engine_version": "0.1.0",
+  "design_id": "ecg-patch",
+  "revision": 7,
+  "source_board_hash": "sha256:02f2ccce4ac4ed06",
+  "coordinate_frame": {
+    "frame": "enclosure",
+    "units": "mm",
+    "origin": "enclosure interior minimum corner",
+    "note": "Overlay geometry is already in this frame. Component positions were read in board-local mm as submitted."
+  },
+  "summary": {
+    "total": 58,
+    "blocking": 2,
+    "fail": 7,
+    "unknown": 7,
+    "pass": 44
+  },
+  "brief": "Single-lead ECG chest patch, 14-day continuous wear, sealed.",
+  "findings": [
+    {
+      "rule_id": "mission.lead_vector",
+      "family": "mission",
+      "title": "Electrode leads exit far enough apart to resolve the lead vector",
+      "status": "fail",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "ELEC_A",
+          "catalog_id": "jst_zh_electrode",
+          "kicad_ref": "J1"
+        },
+        {
+          "ref": "ELEC_B",
+          "catalog_id": "jst_zh_electrode",
+          "kicad_ref": "J2"
+        }
+      ],
+      "kicad_refs": [
+        "J1",
+        "J2"
+      ],
+      "method": "declared",
+      "explanation": "ELEC_A and ELEC_B are only 6.00 mm apart, 35 mm required.",
+      "rationale": "A single-lead ECG measures the potential difference between two electrodes, and amplitude scales with how much of the heart's dipole the pair spans. The pads themselves are on flying leads and land wherever the adhesive puts them, so this checks the connectors as a proxy for where the leads exit the shell: connectors at the same end force the pads together too.",
+      "measured": {
+        "value": 6.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 35.0,
+        "unit": "mm",
+        "comparison": ">=",
+        "reads_as": "measured >= 35.0 mm"
+      },
+      "margin": {
+        "value": -29.0,
+        "unit": "mm"
+      },
+      "metric": "center_distance",
+      "both_metrics": {
+        "edge_gap_mm": 1.5,
+        "center_distance_mm": 6.0
+      },
+      "limitation": "Threshold declared in the submitted constraints, not derived.",
+      "suggested_action": "Adjust ELEC_A/ELEC_B spacing by 29.00 mm.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.9,
+          0.15,
+          0.15
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          13.0,
+          17.0,
+          5.0
+        ],
+        "to": [
+          19.0,
+          17.0,
+          5.0
+        ],
+        "label": "6.0 mm \u2717 (needs 35.0)",
+        "label_at": [
+          16.0,
+          17.0,
+          11.0
+        ],
+        "marker": "x",
+        "marker_at": [
+          16.0,
+          17.0,
+          5.0
+        ]
+      }
+    },
+    {
+      "rule_id": "safety.battery_thermal::CELL|CHG",
+      "family": "safety.battery_thermal",
+      "title": "CELL is clear of heat source CHG",
+      "status": "fail",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "CELL",
+          "catalog_id": "varta_cp1254",
+          "kicad_ref": "BT1"
+        },
+        {
+          "ref": "CHG",
+          "catalog_id": "bq24040",
+          "kicad_ref": "U4"
+        }
+      ],
+      "kicad_refs": [
+        "BT1",
+        "U4"
+      ],
+      "method": "heuristic",
+      "explanation": "CELL sits 6.95 mm from CHG (edge gap) but needs 8 mm. Short by 1.05 mm.",
+      "rationale": "Sustained heat accelerates lithium cell ageing and lowers the thermal runaway threshold. This cell sits directly against the skin-side shell with no convective path, so heat that reaches it stays there and reaches the patient.",
+      "measured": {
+        "value": 6.95,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 8.0,
+        "unit": "mm",
+        "comparison": ">=",
+        "reads_as": "measured >= 8.0 mm"
+      },
+      "margin": {
+        "value": -1.05,
+        "unit": "mm"
+      },
+      "metric": "edge_gap",
+      "both_metrics": {
+        "edge_gap_mm": 6.95,
+        "center_distance_mm": 14.0
+      },
+      "limitation": "Distance threshold for cell ageing and runaway margin, not a solved cell temperature.",
+      "suggested_action": "Move CELL at least 1.05 mm further from CHG.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.9,
+          0.15,
+          0.15
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          55.0,
+          17.0,
+          5.0
+        ],
+        "to": [
+          41.0,
+          17.0,
+          5.0
+        ],
+        "label": "7.0 mm \u2717 (needs 8.0)",
+        "label_at": [
+          48.0,
+          17.0,
+          11.0
+        ],
+        "marker": "x",
+        "marker_at": [
+          48.0,
+          17.0,
+          5.0
+        ]
+      }
+    },
+    {
+      "rule_id": "mission.esd_at_the_boundary",
+      "family": "mission",
+      "title": "ESD protection sits at the electrode entry, not downstream of it",
+      "status": "fail",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "ESD",
+          "catalog_id": "tpd4e1b06",
+          "kicad_ref": "D1"
+        },
+        {
+          "ref": "ELEC_A",
+          "catalog_id": "jst_zh_electrode",
+          "kicad_ref": "J1"
+        }
+      ],
+      "kicad_refs": [
+        "D1",
+        "J1"
+      ],
+      "method": "declared",
+      "explanation": "ESD and ELEC_A are 12.00 mm apart, exceeds the 10 mm maximum.",
+      "rationale": "Protection only works ahead of what it protects. If the clamp is further from the connector than the AFE is, a strike travels down board copper past the front end before it reaches the diode.",
+      "measured": {
+        "value": 12.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 10.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 10.0 mm"
+      },
+      "margin": {
+        "value": -2.0,
+        "unit": "mm"
+      },
+      "metric": "center_distance",
+      "both_metrics": {
+        "edge_gap_mm": 8.9,
+        "center_distance_mm": 12.0
+      },
+      "limitation": "Threshold declared in the submitted constraints, not derived.",
+      "suggested_action": "Adjust ESD/ELEC_A spacing by 2.00 mm.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.9,
+          0.15,
+          0.15
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          25.0,
+          17.0,
+          5.0
+        ],
+        "to": [
+          13.0,
+          17.0,
+          5.0
+        ],
+        "label": "12.0 mm \u2717 (needs 10.0)",
+        "label_at": [
+          19.0,
+          17.0,
+          11.0
+        ],
+        "marker": "x",
+        "marker_at": [
+          19.0,
+          17.0,
+          5.0
+        ]
+      }
+    },
+    {
+      "rule_id": "sep.noise::AFE|BUCK",
+      "family": "sep.noise",
+      "title": "AFE is clear of noise source BUCK",
+      "status": "fail",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "AFE",
+          "catalog_id": "ads1292r",
+          "kicad_ref": "U1"
+        },
+        {
+          "ref": "BUCK",
+          "catalog_id": "tps62740",
+          "kicad_ref": "U3"
+        }
+      ],
+      "kicad_refs": [
+        "U1",
+        "U3"
+      ],
+      "method": "heuristic",
+      "explanation": "AFE sits 1.50 mm from BUCK (edge gap) but needs 15 mm. Short by 13.50 mm.",
+      "rationale": "The signal at the front end is roughly 1 mV. The buck's switching fundamental and its harmonics fall inside the 0-150 Hz band the AFE's noise figure is specified in, so coupled switching noise does not degrade the trace, it buries the QRS complex.",
+      "measured": {
+        "value": 1.5,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 15.0,
+        "unit": "mm",
+        "comparison": ">=",
+        "reads_as": "measured >= 15.0 mm"
+      },
+      "margin": {
+        "value": -13.5,
+        "unit": "mm"
+      },
+      "metric": "edge_gap",
+      "both_metrics": {
+        "edge_gap_mm": 1.5,
+        "center_distance_mm": 5.0
+      },
+      "limitation": "Distance threshold, not a computed coupling coefficient.",
+      "suggested_action": "Move AFE at least 13.50 mm further from BUCK.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.9,
+          0.15,
+          0.15
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          31.0,
+          17.0,
+          5.0
+        ],
+        "to": [
+          36.0,
+          17.0,
+          5.0
+        ],
+        "label": "1.5 mm \u2717 (needs 15.0)",
+        "label_at": [
+          33.5,
+          17.0,
+          11.0
+        ],
+        "marker": "x",
+        "marker_at": [
+          33.5,
+          17.0,
+          5.0
+        ]
+      }
+    },
+    {
+      "rule_id": "sep.thermal::AFE|BUCK",
+      "family": "sep.thermal",
+      "title": "AFE is clear of heat source BUCK",
+      "status": "fail",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "AFE",
+          "catalog_id": "ads1292r",
+          "kicad_ref": "U1"
+        },
+        {
+          "ref": "BUCK",
+          "catalog_id": "tps62740",
+          "kicad_ref": "U3"
+        }
+      ],
+      "kicad_refs": [
+        "U1",
+        "U3"
+      ],
+      "method": "heuristic",
+      "explanation": "AFE sits 1.50 mm from BUCK (edge gap) but needs 10 mm. Short by 8.50 mm.",
+      "rationale": "A 24-bit front end resolves well under a microvolt per count. Self-heating in a neighbouring part drifts its input offset and bias currents, and that drift reads as baseline wander that looks like respiration.",
+      "measured": {
+        "value": 1.5,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 10.0,
+        "unit": "mm",
+        "comparison": ">=",
+        "reads_as": "measured >= 10.0 mm"
+      },
+      "margin": {
+        "value": -8.5,
+        "unit": "mm"
+      },
+      "metric": "edge_gap",
+      "both_metrics": {
+        "edge_gap_mm": 1.5,
+        "center_distance_mm": 5.0
+      },
+      "limitation": "Distance threshold, not a computed junction temperature.",
+      "suggested_action": "Move AFE at least 8.50 mm further from BUCK.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.9,
+          0.15,
+          0.15
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          31.0,
+          17.0,
+          5.0
+        ],
+        "to": [
+          36.0,
+          17.0,
+          5.0
+        ],
+        "label": "1.5 mm \u2717 (needs 10.0)",
+        "label_at": [
+          33.5,
+          17.0,
+          11.0
+        ],
+        "marker": "x",
+        "marker_at": [
+          33.5,
+          17.0,
+          5.0
+        ]
+      }
+    },
+    {
+      "rule_id": "sep.thermal::AFE|CHG",
+      "family": "sep.thermal",
+      "title": "AFE is clear of heat source CHG",
+      "status": "fail",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "AFE",
+          "catalog_id": "ads1292r",
+          "kicad_ref": "U1"
+        },
+        {
+          "ref": "CHG",
+          "catalog_id": "bq24040",
+          "kicad_ref": "U4"
+        }
+      ],
+      "kicad_refs": [
+        "U1",
+        "U4"
+      ],
+      "method": "heuristic",
+      "explanation": "AFE sits 7.00 mm from CHG (edge gap) but needs 10 mm. Short by 3.00 mm.",
+      "rationale": "A 24-bit front end resolves well under a microvolt per count. Self-heating in a neighbouring part drifts its input offset and bias currents, and that drift reads as baseline wander that looks like respiration.",
+      "measured": {
+        "value": 7.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 10.0,
+        "unit": "mm",
+        "comparison": ">=",
+        "reads_as": "measured >= 10.0 mm"
+      },
+      "margin": {
+        "value": -3.0,
+        "unit": "mm"
+      },
+      "metric": "edge_gap",
+      "both_metrics": {
+        "edge_gap_mm": 7.0,
+        "center_distance_mm": 10.0
+      },
+      "limitation": "Distance threshold, not a computed junction temperature.",
+      "suggested_action": "Move AFE at least 3.00 mm further from CHG.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.9,
+          0.15,
+          0.15
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          31.0,
+          17.0,
+          5.0
+        ],
+        "to": [
+          41.0,
+          17.0,
+          5.0
+        ],
+        "label": "7.0 mm \u2717 (needs 10.0)",
+        "label_at": [
+          36.0,
+          17.0,
+          11.0
+        ],
+        "marker": "x",
+        "marker_at": [
+          36.0,
+          17.0,
+          5.0
+        ]
+      }
+    },
+    {
+      "rule_id": "zone.heat_overlap::BUCK|AFE",
+      "family": "zone.heat_overlap",
+      "title": "AFE is outside the BUCK heat zone",
+      "status": "fail",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "BUCK",
+          "catalog_id": "tps62740",
+          "kicad_ref": "U3"
+        },
+        {
+          "ref": "AFE",
+          "catalog_id": "ads1292r",
+          "kicad_ref": "U1"
+        }
+      ],
+      "kicad_refs": [
+        "U3",
+        "U1"
+      ],
+      "method": "heuristic",
+      "explanation": "AFE reaches 3.00 mm inside the 6 mm thermal zone around BUCK.",
+      "rationale": "A fixed radius standing in for the elevated-temperature region around a dissipating part. A geometric proxy, not a solved thermal field.",
+      "measured": {
+        "value": 3.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -3.0,
+        "unit": "mm"
+      },
+      "metric": "zone_penetration",
+      "limitation": "Fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field.",
+      "suggested_action": "Move AFE 3.00 mm further from BUCK, or cut BUCK dissipation.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.9,
+          0.15,
+          0.15
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          36.0,
+          17.0,
+          5.0
+        ],
+        "to": [
+          31.0,
+          17.0,
+          5.0
+        ],
+        "label": "heat zone \u2717",
+        "label_at": [
+          33.5,
+          17.0,
+          11.0
+        ],
+        "marker": "x",
+        "marker_at": [
+          33.5,
+          17.0,
+          5.0
+        ]
+      }
+    },
+    {
+      "rule_id": "access.connector",
+      "family": "access.connector",
+      "title": "Connector accessibility",
+      "status": "unknown",
+      "severity": "info",
+      "components": [
+        {
+          "ref": "BATCON",
+          "catalog_id": "bm02b_srss",
+          "kicad_ref": "J3"
+        }
+      ],
+      "kicad_refs": [
+        "J3"
+      ],
+      "method": "exact",
+      "explanation": "The enclosure declares no openings, so accessibility could not be evaluated.",
+      "rationale": "Requires at least one entry in enclosure.openings."
+    },
+    {
+      "rule_id": "fit.board::AFE",
+      "family": "fit.board",
+      "title": "AFE fits on the PCB",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "AFE",
+          "catalog_id": "ads1292r",
+          "kicad_ref": "U1"
+        }
+      ],
+      "kicad_refs": [
+        "U1"
+      ],
+      "method": "exact",
+      "explanation": "AFE is inside the board outline with 1.5 mm edge margin.",
+      "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.board::BATCON",
+      "family": "fit.board",
+      "title": "BATCON fits on the PCB",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "BATCON",
+          "catalog_id": "bm02b_srss",
+          "kicad_ref": "J3"
+        }
+      ],
+      "kicad_refs": [
+        "J3"
+      ],
+      "method": "exact",
+      "explanation": "BATCON is inside the board outline with 1.5 mm edge margin.",
+      "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.board::BLE",
+      "family": "fit.board",
+      "title": "BLE fits on the PCB",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "BLE",
+          "catalog_id": "mdbt42q",
+          "kicad_ref": "U2"
+        }
+      ],
+      "kicad_refs": [
+        "U2"
+      ],
+      "method": "exact",
+      "explanation": "BLE is inside the board outline with 1.5 mm edge margin.",
+      "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.board::BUCK",
+      "family": "fit.board",
+      "title": "BUCK fits on the PCB",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "BUCK",
+          "catalog_id": "tps62740",
+          "kicad_ref": "U3"
+        }
+      ],
+      "kicad_refs": [
+        "U3"
+      ],
+      "method": "exact",
+      "explanation": "BUCK is inside the board outline with 1.5 mm edge margin.",
+      "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.board::CELL",
+      "family": "fit.board",
+      "title": "CELL fits on the PCB",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "CELL",
+          "catalog_id": "varta_cp1254",
+          "kicad_ref": "BT1"
+        }
+      ],
+      "kicad_refs": [
+        "BT1"
+      ],
+      "method": "exact",
+      "explanation": "CELL is inside the board outline with 1.5 mm edge margin.",
+      "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.board::CHG",
+      "family": "fit.board",
+      "title": "CHG fits on the PCB",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "CHG",
+          "catalog_id": "bq24040",
+          "kicad_ref": "U4"
+        }
+      ],
+      "kicad_refs": [
+        "U4"
+      ],
+      "method": "exact",
+      "explanation": "CHG is inside the board outline with 1.5 mm edge margin.",
+      "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.board::ELEC_A",
+      "family": "fit.board",
+      "title": "ELEC_A fits on the PCB",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "ELEC_A",
+          "catalog_id": "jst_zh_electrode",
+          "kicad_ref": "J1"
+        }
+      ],
+      "kicad_refs": [
+        "J1"
+      ],
+      "method": "exact",
+      "explanation": "ELEC_A is inside the board outline with 1.5 mm edge margin.",
+      "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.board::ELEC_B",
+      "family": "fit.board",
+      "title": "ELEC_B fits on the PCB",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "ELEC_B",
+          "catalog_id": "jst_zh_electrode",
+          "kicad_ref": "J2"
+        }
+      ],
+      "kicad_refs": [
+        "J2"
+      ],
+      "method": "exact",
+      "explanation": "ELEC_B is inside the board outline with 1.5 mm edge margin.",
+      "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.board::ESD",
+      "family": "fit.board",
+      "title": "ESD fits on the PCB",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "ESD",
+          "catalog_id": "tpd4e1b06",
+          "kicad_ref": "D1"
+        }
+      ],
+      "kicad_refs": [
+        "D1"
+      ],
+      "method": "exact",
+      "explanation": "ESD is inside the board outline with 1.5 mm edge margin.",
+      "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.enclosure_xy::AFE",
+      "family": "fit.enclosure_xy",
+      "title": "AFE clears the enclosure wall",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "AFE",
+          "catalog_id": "ads1292r",
+          "kicad_ref": "U1"
+        }
+      ],
+      "kicad_refs": [
+        "U1"
+      ],
+      "method": "exact",
+      "explanation": "AFE respects the 2 mm wall keep-out.",
+      "rationale": "A sealed patch needs an uninterrupted gasket path around the full perimeter; anything in the wall zone breaks the seal.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.enclosure_xy::BATCON",
+      "family": "fit.enclosure_xy",
+      "title": "BATCON clears the enclosure wall",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "BATCON",
+          "catalog_id": "bm02b_srss",
+          "kicad_ref": "J3"
+        }
+      ],
+      "kicad_refs": [
+        "J3"
+      ],
+      "method": "exact",
+      "explanation": "BATCON respects the 2 mm wall keep-out.",
+      "rationale": "A sealed patch needs an uninterrupted gasket path around the full perimeter; anything in the wall zone breaks the seal.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.enclosure_xy::BLE",
+      "family": "fit.enclosure_xy",
+      "title": "BLE clears the enclosure wall",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "BLE",
+          "catalog_id": "mdbt42q",
+          "kicad_ref": "U2"
+        }
+      ],
+      "kicad_refs": [
+        "U2"
+      ],
+      "method": "exact",
+      "explanation": "BLE respects the 2 mm wall keep-out.",
+      "rationale": "A sealed patch needs an uninterrupted gasket path around the full perimeter; anything in the wall zone breaks the seal.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.enclosure_xy::BUCK",
+      "family": "fit.enclosure_xy",
+      "title": "BUCK clears the enclosure wall",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "BUCK",
+          "catalog_id": "tps62740",
+          "kicad_ref": "U3"
+        }
+      ],
+      "kicad_refs": [
+        "U3"
+      ],
+      "method": "exact",
+      "explanation": "BUCK respects the 2 mm wall keep-out.",
+      "rationale": "A sealed patch needs an uninterrupted gasket path around the full perimeter; anything in the wall zone breaks the seal.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.enclosure_xy::CELL",
+      "family": "fit.enclosure_xy",
+      "title": "CELL clears the enclosure wall",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "CELL",
+          "catalog_id": "varta_cp1254",
+          "kicad_ref": "BT1"
+        }
+      ],
+      "kicad_refs": [
+        "BT1"
+      ],
+      "method": "exact",
+      "explanation": "CELL respects the 2 mm wall keep-out.",
+      "rationale": "A sealed patch needs an uninterrupted gasket path around the full perimeter; anything in the wall zone breaks the seal.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.enclosure_xy::CHG",
+      "family": "fit.enclosure_xy",
+      "title": "CHG clears the enclosure wall",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "CHG",
+          "catalog_id": "bq24040",
+          "kicad_ref": "U4"
+        }
+      ],
+      "kicad_refs": [
+        "U4"
+      ],
+      "method": "exact",
+      "explanation": "CHG respects the 2 mm wall keep-out.",
+      "rationale": "A sealed patch needs an uninterrupted gasket path around the full perimeter; anything in the wall zone breaks the seal.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.enclosure_xy::ELEC_A",
+      "family": "fit.enclosure_xy",
+      "title": "ELEC_A clears the enclosure wall",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "ELEC_A",
+          "catalog_id": "jst_zh_electrode",
+          "kicad_ref": "J1"
+        }
+      ],
+      "kicad_refs": [
+        "J1"
+      ],
+      "method": "exact",
+      "explanation": "ELEC_A respects the 2 mm wall keep-out.",
+      "rationale": "A sealed patch needs an uninterrupted gasket path around the full perimeter; anything in the wall zone breaks the seal.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.enclosure_xy::ELEC_B",
+      "family": "fit.enclosure_xy",
+      "title": "ELEC_B clears the enclosure wall",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "ELEC_B",
+          "catalog_id": "jst_zh_electrode",
+          "kicad_ref": "J2"
+        }
+      ],
+      "kicad_refs": [
+        "J2"
+      ],
+      "method": "exact",
+      "explanation": "ELEC_B respects the 2 mm wall keep-out.",
+      "rationale": "A sealed patch needs an uninterrupted gasket path around the full perimeter; anything in the wall zone breaks the seal.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.enclosure_xy::ESD",
+      "family": "fit.enclosure_xy",
+      "title": "ESD clears the enclosure wall",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "ESD",
+          "catalog_id": "tpd4e1b06",
+          "kicad_ref": "D1"
+        }
+      ],
+      "kicad_refs": [
+        "D1"
+      ],
+      "method": "exact",
+      "explanation": "ESD respects the 2 mm wall keep-out.",
+      "rationale": "A sealed patch needs an uninterrupted gasket path around the full perimeter; anything in the wall zone breaks the seal.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "bbox_overflow"
+    },
+    {
+      "rule_id": "fit.height::AFE",
+      "family": "fit.height",
+      "title": "AFE fits under the lid",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "AFE",
+          "catalog_id": "ads1292r",
+          "kicad_ref": "U1"
+        }
+      ],
+      "kicad_refs": [
+        "U1"
+      ],
+      "method": "exact",
+      "explanation": "AFE stands 1 mm tall against a 6.5 mm ceiling (5.50 mm spare).",
+      "rationale": "Interior height 8.5 mm minus the 1 mm standoff and 1 mm board leaves 6.5 mm above the surface. The 5.6 mm cell sets the enclosure height, and the two top-entry connectors need vertical clearance to be mated during assembly. The patch has to stay wearable under a shirt, so every millimetre here is argued for.",
+      "measured": {
+        "value": 1.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 6.5,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 6.5 mm"
+      },
+      "margin": {
+        "value": 5.5,
+        "unit": "mm"
+      },
+      "metric": "height"
+    },
+    {
+      "rule_id": "fit.height::BATCON",
+      "family": "fit.height",
+      "title": "BATCON fits under the lid",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "BATCON",
+          "catalog_id": "bm02b_srss",
+          "kicad_ref": "J3"
+        }
+      ],
+      "kicad_refs": [
+        "J3"
+      ],
+      "method": "exact",
+      "explanation": "BATCON stands 4.3 mm tall against a 6.5 mm ceiling (2.20 mm spare).",
+      "rationale": "Interior height 8.5 mm minus the 1 mm standoff and 1 mm board leaves 6.5 mm above the surface. The 5.6 mm cell sets the enclosure height, and the two top-entry connectors need vertical clearance to be mated during assembly. The patch has to stay wearable under a shirt, so every millimetre here is argued for.",
+      "measured": {
+        "value": 4.3,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 6.5,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 6.5 mm"
+      },
+      "margin": {
+        "value": 2.2,
+        "unit": "mm"
+      },
+      "metric": "height"
+    },
+    {
+      "rule_id": "fit.height::BLE",
+      "family": "fit.height",
+      "title": "BLE fits under the lid",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "BLE",
+          "catalog_id": "mdbt42q",
+          "kicad_ref": "U2"
+        }
+      ],
+      "kicad_refs": [
+        "U2"
+      ],
+      "method": "exact",
+      "explanation": "BLE stands 2.2 mm tall against a 6.5 mm ceiling (4.30 mm spare).",
+      "rationale": "Interior height 8.5 mm minus the 1 mm standoff and 1 mm board leaves 6.5 mm above the surface. The 5.6 mm cell sets the enclosure height, and the two top-entry connectors need vertical clearance to be mated during assembly. The patch has to stay wearable under a shirt, so every millimetre here is argued for.",
+      "measured": {
+        "value": 2.2,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 6.5,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 6.5 mm"
+      },
+      "margin": {
+        "value": 4.3,
+        "unit": "mm"
+      },
+      "metric": "height"
+    },
+    {
+      "rule_id": "fit.height::BUCK",
+      "family": "fit.height",
+      "title": "BUCK fits under the lid",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "BUCK",
+          "catalog_id": "tps62740",
+          "kicad_ref": "U3"
+        }
+      ],
+      "kicad_refs": [
+        "U3"
+      ],
+      "method": "exact",
+      "explanation": "BUCK stands 0.8 mm tall against a 6.5 mm ceiling (5.70 mm spare).",
+      "rationale": "Interior height 8.5 mm minus the 1 mm standoff and 1 mm board leaves 6.5 mm above the surface. The 5.6 mm cell sets the enclosure height, and the two top-entry connectors need vertical clearance to be mated during assembly. The patch has to stay wearable under a shirt, so every millimetre here is argued for.",
+      "measured": {
+        "value": 0.8,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 6.5,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 6.5 mm"
+      },
+      "margin": {
+        "value": 5.7,
+        "unit": "mm"
+      },
+      "metric": "height"
+    },
+    {
+      "rule_id": "fit.height::CELL",
+      "family": "fit.height",
+      "title": "CELL fits under the lid",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "CELL",
+          "catalog_id": "varta_cp1254",
+          "kicad_ref": "BT1"
+        }
+      ],
+      "kicad_refs": [
+        "BT1"
+      ],
+      "method": "exact",
+      "explanation": "CELL stands 5.6 mm tall against a 6.5 mm ceiling (0.90 mm spare).",
+      "rationale": "Interior height 8.5 mm minus the 1 mm standoff and 1 mm board leaves 6.5 mm above the surface. The 5.6 mm cell sets the enclosure height, and the two top-entry connectors need vertical clearance to be mated during assembly. The patch has to stay wearable under a shirt, so every millimetre here is argued for.",
+      "measured": {
+        "value": 5.6,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 6.5,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 6.5 mm"
+      },
+      "margin": {
+        "value": 0.9,
+        "unit": "mm"
+      },
+      "metric": "height"
+    },
+    {
+      "rule_id": "fit.height::CHG",
+      "family": "fit.height",
+      "title": "CHG fits under the lid",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "CHG",
+          "catalog_id": "bq24040",
+          "kicad_ref": "U4"
+        }
+      ],
+      "kicad_refs": [
+        "U4"
+      ],
+      "method": "exact",
+      "explanation": "CHG stands 0.8 mm tall against a 6.5 mm ceiling (5.70 mm spare).",
+      "rationale": "Interior height 8.5 mm minus the 1 mm standoff and 1 mm board leaves 6.5 mm above the surface. The 5.6 mm cell sets the enclosure height, and the two top-entry connectors need vertical clearance to be mated during assembly. The patch has to stay wearable under a shirt, so every millimetre here is argued for.",
+      "measured": {
+        "value": 0.8,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 6.5,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 6.5 mm"
+      },
+      "margin": {
+        "value": 5.7,
+        "unit": "mm"
+      },
+      "metric": "height"
+    },
+    {
+      "rule_id": "fit.height::ELEC_A",
+      "family": "fit.height",
+      "title": "ELEC_A fits under the lid",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "ELEC_A",
+          "catalog_id": "jst_zh_electrode",
+          "kicad_ref": "J1"
+        }
+      ],
+      "kicad_refs": [
+        "J1"
+      ],
+      "method": "exact",
+      "explanation": "ELEC_A stands 4.5 mm tall against a 6.5 mm ceiling (2.00 mm spare).",
+      "rationale": "Interior height 8.5 mm minus the 1 mm standoff and 1 mm board leaves 6.5 mm above the surface. The 5.6 mm cell sets the enclosure height, and the two top-entry connectors need vertical clearance to be mated during assembly. The patch has to stay wearable under a shirt, so every millimetre here is argued for.",
+      "measured": {
+        "value": 4.5,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 6.5,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 6.5 mm"
+      },
+      "margin": {
+        "value": 2.0,
+        "unit": "mm"
+      },
+      "metric": "height"
+    },
+    {
+      "rule_id": "fit.height::ELEC_B",
+      "family": "fit.height",
+      "title": "ELEC_B fits under the lid",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "ELEC_B",
+          "catalog_id": "jst_zh_electrode",
+          "kicad_ref": "J2"
+        }
+      ],
+      "kicad_refs": [
+        "J2"
+      ],
+      "method": "exact",
+      "explanation": "ELEC_B stands 4.5 mm tall against a 6.5 mm ceiling (2.00 mm spare).",
+      "rationale": "Interior height 8.5 mm minus the 1 mm standoff and 1 mm board leaves 6.5 mm above the surface. The 5.6 mm cell sets the enclosure height, and the two top-entry connectors need vertical clearance to be mated during assembly. The patch has to stay wearable under a shirt, so every millimetre here is argued for.",
+      "measured": {
+        "value": 4.5,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 6.5,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 6.5 mm"
+      },
+      "margin": {
+        "value": 2.0,
+        "unit": "mm"
+      },
+      "metric": "height"
+    },
+    {
+      "rule_id": "fit.height::ESD",
+      "family": "fit.height",
+      "title": "ESD fits under the lid",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "ESD",
+          "catalog_id": "tpd4e1b06",
+          "kicad_ref": "D1"
+        }
+      ],
+      "kicad_refs": [
+        "D1"
+      ],
+      "method": "exact",
+      "explanation": "ESD stands 0.6 mm tall against a 6.5 mm ceiling (5.90 mm spare).",
+      "rationale": "Interior height 8.5 mm minus the 1 mm standoff and 1 mm board leaves 6.5 mm above the surface. The 5.6 mm cell sets the enclosure height, and the two top-entry connectors need vertical clearance to be mated during assembly. The patch has to stay wearable under a shirt, so every millimetre here is argued for.",
+      "measured": {
+        "value": 0.6,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 6.5,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 6.5 mm"
+      },
+      "margin": {
+        "value": 5.9,
+        "unit": "mm"
+      },
+      "metric": "height"
+    },
+    {
+      "rule_id": "safety.battery_thermal::CELL|AFE",
+      "family": "safety.battery_thermal",
+      "title": "CELL is clear of heat source AFE",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "CELL",
+          "catalog_id": "varta_cp1254",
+          "kicad_ref": "BT1"
+        },
+        {
+          "ref": "AFE",
+          "catalog_id": "ads1292r",
+          "kicad_ref": "U1"
+        }
+      ],
+      "kicad_refs": [
+        "BT1",
+        "U1"
+      ],
+      "method": "heuristic",
+      "explanation": "CELL sits 15.95 mm from AFE (edge gap); 8 mm required, 7.95 mm to spare.",
+      "rationale": "Sustained heat accelerates lithium cell ageing and lowers the thermal runaway threshold. This cell sits directly against the skin-side shell with no convective path, so heat that reaches it stays there and reaches the patient.",
+      "measured": {
+        "value": 15.95,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 8.0,
+        "unit": "mm",
+        "comparison": ">=",
+        "reads_as": "measured >= 8.0 mm"
+      },
+      "margin": {
+        "value": 7.95,
+        "unit": "mm"
+      },
+      "metric": "edge_gap",
+      "both_metrics": {
+        "edge_gap_mm": 15.95,
+        "center_distance_mm": 24.0
+      },
+      "limitation": "Distance threshold for cell ageing and runaway margin, not a solved cell temperature.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.15,
+          0.8,
+          0.3
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          55.0,
+          17.0,
+          5.0
+        ],
+        "to": [
+          31.0,
+          17.0,
+          5.0
+        ],
+        "label": "16.0 mm \u2713 (needs 8.0)",
+        "label_at": [
+          43.0,
+          17.0,
+          11.0
+        ],
+        "marker": "check",
+        "marker_at": [
+          43.0,
+          17.0,
+          5.0
+        ]
+      }
+    },
+    {
+      "rule_id": "safety.battery_thermal::CELL|BUCK",
+      "family": "safety.battery_thermal",
+      "title": "CELL is clear of heat source BUCK",
+      "status": "pass",
+      "severity": "blocker",
+      "components": [
+        {
+          "ref": "CELL",
+          "catalog_id": "varta_cp1254",
+          "kicad_ref": "BT1"
+        },
+        {
+          "ref": "BUCK",
+          "catalog_id": "tps62740",
+          "kicad_ref": "U3"
+        }
+      ],
+      "kicad_refs": [
+        "BT1",
+        "U3"
+      ],
+      "method": "heuristic",
+      "explanation": "CELL sits 11.45 mm from BUCK (edge gap); 8 mm required, 3.45 mm to spare.",
+      "rationale": "Sustained heat accelerates lithium cell ageing and lowers the thermal runaway threshold. This cell sits directly against the skin-side shell with no convective path, so heat that reaches it stays there and reaches the patient.",
+      "measured": {
+        "value": 11.45,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 8.0,
+        "unit": "mm",
+        "comparison": ">=",
+        "reads_as": "measured >= 8.0 mm"
+      },
+      "margin": {
+        "value": 3.45,
+        "unit": "mm"
+      },
+      "metric": "edge_gap",
+      "both_metrics": {
+        "edge_gap_mm": 11.45,
+        "center_distance_mm": 19.0
+      },
+      "limitation": "Distance threshold for cell ageing and runaway margin, not a solved cell temperature.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.15,
+          0.8,
+          0.3
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          55.0,
+          17.0,
+          5.0
+        ],
+        "to": [
+          36.0,
+          17.0,
+          5.0
+        ],
+        "label": "11.5 mm \u2713 (needs 8.0)",
+        "label_at": [
+          45.5,
+          17.0,
+          11.0
+        ],
+        "marker": "check",
+        "marker_at": [
+          45.5,
+          17.0,
+          5.0
+        ]
+      }
+    },
+    {
+      "rule_id": "sep.noise::AFE|BLE",
+      "family": "sep.noise",
+      "title": "AFE is clear of noise source BLE",
+      "status": "pass",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "AFE",
+          "catalog_id": "ads1292r",
+          "kicad_ref": "U1"
+        },
+        {
+          "ref": "BLE",
+          "catalog_id": "mdbt42q",
+          "kicad_ref": "U2"
+        }
+      ],
+      "kicad_refs": [
+        "U1",
+        "U2"
+      ],
+      "method": "heuristic",
+      "explanation": "AFE sits 42.00 mm from BLE (edge gap); 15 mm required, 27.00 mm to spare.",
+      "rationale": "The signal at the front end is roughly 1 mV. The buck's switching fundamental and its harmonics fall inside the 0-150 Hz band the AFE's noise figure is specified in, so coupled switching noise does not degrade the trace, it buries the QRS complex.",
+      "measured": {
+        "value": 42.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 15.0,
+        "unit": "mm",
+        "comparison": ">=",
+        "reads_as": "measured >= 15.0 mm"
+      },
+      "margin": {
+        "value": 27.0,
+        "unit": "mm"
+      },
+      "metric": "edge_gap",
+      "both_metrics": {
+        "edge_gap_mm": 42.0,
+        "center_distance_mm": 52.0
+      },
+      "limitation": "Distance threshold, not a computed coupling coefficient.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.15,
+          0.8,
+          0.3
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          31.0,
+          17.0,
+          5.0
+        ],
+        "to": [
+          83.0,
+          17.0,
+          5.0
+        ],
+        "label": "42.0 mm \u2713 (needs 15.0)",
+        "label_at": [
+          57.0,
+          17.0,
+          11.0
+        ],
+        "marker": "check",
+        "marker_at": [
+          57.0,
+          17.0,
+          5.0
+        ]
+      }
+    },
+    {
+      "rule_id": "sep.noise::BLE|BUCK",
+      "family": "sep.noise",
+      "title": "BLE is clear of noise source BUCK",
+      "status": "pass",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "BLE",
+          "catalog_id": "mdbt42q",
+          "kicad_ref": "U2"
+        },
+        {
+          "ref": "BUCK",
+          "catalog_id": "tps62740",
+          "kicad_ref": "U3"
+        }
+      ],
+      "kicad_refs": [
+        "U2",
+        "U3"
+      ],
+      "method": "heuristic",
+      "explanation": "BLE sits 37.50 mm from BUCK (edge gap); 10 mm required, 27.50 mm to spare.",
+      "rationale": "The signal at the front end is roughly 1 mV. The buck's switching fundamental and its harmonics fall inside the 0-150 Hz band the AFE's noise figure is specified in, so coupled switching noise does not degrade the trace, it buries the QRS complex.",
+      "measured": {
+        "value": 37.5,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 10.0,
+        "unit": "mm",
+        "comparison": ">=",
+        "reads_as": "measured >= 10.0 mm"
+      },
+      "margin": {
+        "value": 27.5,
+        "unit": "mm"
+      },
+      "metric": "edge_gap",
+      "both_metrics": {
+        "edge_gap_mm": 37.5,
+        "center_distance_mm": 47.0
+      },
+      "limitation": "Distance threshold, not a computed coupling coefficient.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.15,
+          0.8,
+          0.3
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          83.0,
+          17.0,
+          5.0
+        ],
+        "to": [
+          36.0,
+          17.0,
+          5.0
+        ],
+        "label": "37.5 mm \u2713 (needs 10.0)",
+        "label_at": [
+          59.5,
+          17.0,
+          11.0
+        ],
+        "marker": "check",
+        "marker_at": [
+          59.5,
+          17.0,
+          5.0
+        ]
+      }
+    },
+    {
+      "rule_id": "sep.noise::ELEC_A|BLE",
+      "family": "sep.noise",
+      "title": "ELEC_A is clear of noise source BLE",
+      "status": "pass",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "ELEC_A",
+          "catalog_id": "jst_zh_electrode",
+          "kicad_ref": "J1"
+        },
+        {
+          "ref": "BLE",
+          "catalog_id": "mdbt42q",
+          "kicad_ref": "U2"
+        }
+      ],
+      "kicad_refs": [
+        "J1",
+        "U2"
+      ],
+      "method": "heuristic",
+      "explanation": "ELEC_A sits 59.75 mm from BLE (edge gap); 12 mm required, 47.75 mm to spare.",
+      "rationale": "The signal at the front end is roughly 1 mV. The buck's switching fundamental and its harmonics fall inside the 0-150 Hz band the AFE's noise figure is specified in, so coupled switching noise does not degrade the trace, it buries the QRS complex.",
+      "measured": {
+        "value": 59.75,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 12.0,
+        "unit": "mm",
+        "comparison": ">=",
+        "reads_as": "measured >= 12.0 mm"
+      },
+      "margin": {
+        "value": 47.75,
+        "unit": "mm"
+      },
+      "metric": "edge_gap",
+      "both_metrics": {
+        "edge_gap_mm": 59.75,
+        "center_distance_mm": 70.0
+      },
+      "limitation": "Distance threshold, not a computed coupling coefficient.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.15,
+          0.8,
+          0.3
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          13.0,
+          17.0,
+          5.0
+        ],
+        "to": [
+          83.0,
+          17.0,
+          5.0
+        ],
+        "label": "59.8 mm \u2713 (needs 12.0)",
+        "label_at": [
+          48.0,
+          17.0,
+          11.0
+        ],
+        "marker": "check",
+        "marker_at": [
+          48.0,
+          17.0,
+          5.0
+        ]
+      }
+    },
+    {
+      "rule_id": "sep.noise::ELEC_A|BUCK",
+      "family": "sep.noise",
+      "title": "ELEC_A is clear of noise source BUCK",
+      "status": "pass",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "ELEC_A",
+          "catalog_id": "jst_zh_electrode",
+          "kicad_ref": "J1"
+        },
+        {
+          "ref": "BUCK",
+          "catalog_id": "tps62740",
+          "kicad_ref": "U3"
+        }
+      ],
+      "kicad_refs": [
+        "J1",
+        "U3"
+      ],
+      "method": "heuristic",
+      "explanation": "ELEC_A sits 19.25 mm from BUCK (edge gap); 12 mm required, 7.25 mm to spare.",
+      "rationale": "The signal at the front end is roughly 1 mV. The buck's switching fundamental and its harmonics fall inside the 0-150 Hz band the AFE's noise figure is specified in, so coupled switching noise does not degrade the trace, it buries the QRS complex.",
+      "measured": {
+        "value": 19.25,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 12.0,
+        "unit": "mm",
+        "comparison": ">=",
+        "reads_as": "measured >= 12.0 mm"
+      },
+      "margin": {
+        "value": 7.25,
+        "unit": "mm"
+      },
+      "metric": "edge_gap",
+      "both_metrics": {
+        "edge_gap_mm": 19.25,
+        "center_distance_mm": 23.0
+      },
+      "limitation": "Distance threshold, not a computed coupling coefficient.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.15,
+          0.8,
+          0.3
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          13.0,
+          17.0,
+          5.0
+        ],
+        "to": [
+          36.0,
+          17.0,
+          5.0
+        ],
+        "label": "19.2 mm \u2713 (needs 12.0)",
+        "label_at": [
+          24.5,
+          17.0,
+          11.0
+        ],
+        "marker": "check",
+        "marker_at": [
+          24.5,
+          17.0,
+          5.0
+        ]
+      }
+    },
+    {
+      "rule_id": "sep.noise::ELEC_B|BLE",
+      "family": "sep.noise",
+      "title": "ELEC_B is clear of noise source BLE",
+      "status": "pass",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "ELEC_B",
+          "catalog_id": "jst_zh_electrode",
+          "kicad_ref": "J2"
+        },
+        {
+          "ref": "BLE",
+          "catalog_id": "mdbt42q",
+          "kicad_ref": "U2"
+        }
+      ],
+      "kicad_refs": [
+        "J2",
+        "U2"
+      ],
+      "method": "heuristic",
+      "explanation": "ELEC_B sits 53.75 mm from BLE (edge gap); 12 mm required, 41.75 mm to spare.",
+      "rationale": "The signal at the front end is roughly 1 mV. The buck's switching fundamental and its harmonics fall inside the 0-150 Hz band the AFE's noise figure is specified in, so coupled switching noise does not degrade the trace, it buries the QRS complex.",
+      "measured": {
+        "value": 53.75,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 12.0,
+        "unit": "mm",
+        "comparison": ">=",
+        "reads_as": "measured >= 12.0 mm"
+      },
+      "margin": {
+        "value": 41.75,
+        "unit": "mm"
+      },
+      "metric": "edge_gap",
+      "both_metrics": {
+        "edge_gap_mm": 53.75,
+        "center_distance_mm": 64.0
+      },
+      "limitation": "Distance threshold, not a computed coupling coefficient.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.15,
+          0.8,
+          0.3
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          19.0,
+          17.0,
+          5.0
+        ],
+        "to": [
+          83.0,
+          17.0,
+          5.0
+        ],
+        "label": "53.8 mm \u2713 (needs 12.0)",
+        "label_at": [
+          51.0,
+          17.0,
+          11.0
+        ],
+        "marker": "check",
+        "marker_at": [
+          51.0,
+          17.0,
+          5.0
+        ]
+      }
+    },
+    {
+      "rule_id": "sep.noise::ELEC_B|BUCK",
+      "family": "sep.noise",
+      "title": "ELEC_B is clear of noise source BUCK",
+      "status": "pass",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "ELEC_B",
+          "catalog_id": "jst_zh_electrode",
+          "kicad_ref": "J2"
+        },
+        {
+          "ref": "BUCK",
+          "catalog_id": "tps62740",
+          "kicad_ref": "U3"
+        }
+      ],
+      "kicad_refs": [
+        "J2",
+        "U3"
+      ],
+      "method": "heuristic",
+      "explanation": "ELEC_B sits 13.25 mm from BUCK (edge gap); 12 mm required, 1.25 mm to spare.",
+      "rationale": "The signal at the front end is roughly 1 mV. The buck's switching fundamental and its harmonics fall inside the 0-150 Hz band the AFE's noise figure is specified in, so coupled switching noise does not degrade the trace, it buries the QRS complex.",
+      "measured": {
+        "value": 13.25,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 12.0,
+        "unit": "mm",
+        "comparison": ">=",
+        "reads_as": "measured >= 12.0 mm"
+      },
+      "margin": {
+        "value": 1.25,
+        "unit": "mm"
+      },
+      "metric": "edge_gap",
+      "both_metrics": {
+        "edge_gap_mm": 13.25,
+        "center_distance_mm": 17.0
+      },
+      "limitation": "Distance threshold, not a computed coupling coefficient.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.15,
+          0.8,
+          0.3
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          19.0,
+          17.0,
+          5.0
+        ],
+        "to": [
+          36.0,
+          17.0,
+          5.0
+        ],
+        "label": "13.2 mm \u2713 (needs 12.0)",
+        "label_at": [
+          27.5,
+          17.0,
+          11.0
+        ],
+        "marker": "check",
+        "marker_at": [
+          27.5,
+          17.0,
+          5.0
+        ]
+      }
+    },
+    {
+      "rule_id": "sep.rf::BLE|BUCK",
+      "family": "sep.rf",
+      "title": "BLE is clear of noise source BUCK",
+      "status": "pass",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "BLE",
+          "catalog_id": "mdbt42q",
+          "kicad_ref": "U2"
+        },
+        {
+          "ref": "BUCK",
+          "catalog_id": "tps62740",
+          "kicad_ref": "U3"
+        }
+      ],
+      "kicad_refs": [
+        "U2",
+        "U3"
+      ],
+      "method": "heuristic",
+      "explanation": "BLE sits 37.50 mm from BUCK (edge gap); 10 mm required, 27.50 mm to spare.",
+      "rationale": "Broadband switching noise raises the module's receiver noise floor. Lost link margin means retries, retries keep the radio on longer, and a 77 mAh coin cell has no budget for that across a 14-day wear.",
+      "measured": {
+        "value": 37.5,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 10.0,
+        "unit": "mm",
+        "comparison": ">=",
+        "reads_as": "measured >= 10.0 mm"
+      },
+      "margin": {
+        "value": 27.5,
+        "unit": "mm"
+      },
+      "metric": "edge_gap",
+      "both_metrics": {
+        "edge_gap_mm": 37.5,
+        "center_distance_mm": 47.0
+      },
+      "limitation": "Distance threshold, not a computed link budget.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.15,
+          0.8,
+          0.3
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          83.0,
+          17.0,
+          5.0
+        ],
+        "to": [
+          36.0,
+          17.0,
+          5.0
+        ],
+        "label": "37.5 mm \u2713 (needs 10.0)",
+        "label_at": [
+          59.5,
+          17.0,
+          11.0
+        ],
+        "marker": "check",
+        "marker_at": [
+          59.5,
+          17.0,
+          5.0
+        ]
+      }
+    },
+    {
+      "rule_id": "zone.heat_overlap::BUCK|BLE",
+      "family": "zone.heat_overlap",
+      "title": "BLE is outside the BUCK heat zone",
+      "status": "pass",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "BUCK",
+          "catalog_id": "tps62740",
+          "kicad_ref": "U3"
+        },
+        {
+          "ref": "BLE",
+          "catalog_id": "mdbt42q",
+          "kicad_ref": "U2"
+        }
+      ],
+      "kicad_refs": [
+        "U3",
+        "U2"
+      ],
+      "method": "heuristic",
+      "explanation": "BLE sits outside the 6 mm thermal zone around BUCK.",
+      "rationale": "A fixed radius standing in for the elevated-temperature region around a dissipating part. A geometric proxy, not a solved thermal field.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "zone_penetration",
+      "limitation": "Fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field."
+    },
+    {
+      "rule_id": "zone.heat_overlap::BUCK|ELEC_A",
+      "family": "zone.heat_overlap",
+      "title": "ELEC_A is outside the BUCK heat zone",
+      "status": "pass",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "BUCK",
+          "catalog_id": "tps62740",
+          "kicad_ref": "U3"
+        },
+        {
+          "ref": "ELEC_A",
+          "catalog_id": "jst_zh_electrode",
+          "kicad_ref": "J1"
+        }
+      ],
+      "kicad_refs": [
+        "U3",
+        "J1"
+      ],
+      "method": "heuristic",
+      "explanation": "ELEC_A sits outside the 6 mm thermal zone around BUCK.",
+      "rationale": "A fixed radius standing in for the elevated-temperature region around a dissipating part. A geometric proxy, not a solved thermal field.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "zone_penetration",
+      "limitation": "Fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field."
+    },
+    {
+      "rule_id": "zone.heat_overlap::BUCK|ELEC_B",
+      "family": "zone.heat_overlap",
+      "title": "ELEC_B is outside the BUCK heat zone",
+      "status": "pass",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "BUCK",
+          "catalog_id": "tps62740",
+          "kicad_ref": "U3"
+        },
+        {
+          "ref": "ELEC_B",
+          "catalog_id": "jst_zh_electrode",
+          "kicad_ref": "J2"
+        }
+      ],
+      "kicad_refs": [
+        "U3",
+        "J2"
+      ],
+      "method": "heuristic",
+      "explanation": "ELEC_B sits outside the 6 mm thermal zone around BUCK.",
+      "rationale": "A fixed radius standing in for the elevated-temperature region around a dissipating part. A geometric proxy, not a solved thermal field.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "zone_penetration",
+      "limitation": "Fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field."
+    },
+    {
+      "rule_id": "zone.heat_overlap::CHG|AFE",
+      "family": "zone.heat_overlap",
+      "title": "AFE is outside the CHG heat zone",
+      "status": "pass",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "CHG",
+          "catalog_id": "bq24040",
+          "kicad_ref": "U4"
+        },
+        {
+          "ref": "AFE",
+          "catalog_id": "ads1292r",
+          "kicad_ref": "U1"
+        }
+      ],
+      "kicad_refs": [
+        "U4",
+        "U1"
+      ],
+      "method": "heuristic",
+      "explanation": "AFE sits outside the 8 mm thermal zone around CHG.",
+      "rationale": "A fixed radius standing in for the elevated-temperature region around a dissipating part. A geometric proxy, not a solved thermal field.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "zone_penetration",
+      "limitation": "Fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field."
+    },
+    {
+      "rule_id": "zone.heat_overlap::CHG|BLE",
+      "family": "zone.heat_overlap",
+      "title": "BLE is outside the CHG heat zone",
+      "status": "pass",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "CHG",
+          "catalog_id": "bq24040",
+          "kicad_ref": "U4"
+        },
+        {
+          "ref": "BLE",
+          "catalog_id": "mdbt42q",
+          "kicad_ref": "U2"
+        }
+      ],
+      "kicad_refs": [
+        "U4",
+        "U2"
+      ],
+      "method": "heuristic",
+      "explanation": "BLE sits outside the 8 mm thermal zone around CHG.",
+      "rationale": "A fixed radius standing in for the elevated-temperature region around a dissipating part. A geometric proxy, not a solved thermal field.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "zone_penetration",
+      "limitation": "Fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field."
+    },
+    {
+      "rule_id": "zone.heat_overlap::CHG|ELEC_A",
+      "family": "zone.heat_overlap",
+      "title": "ELEC_A is outside the CHG heat zone",
+      "status": "pass",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "CHG",
+          "catalog_id": "bq24040",
+          "kicad_ref": "U4"
+        },
+        {
+          "ref": "ELEC_A",
+          "catalog_id": "jst_zh_electrode",
+          "kicad_ref": "J1"
+        }
+      ],
+      "kicad_refs": [
+        "U4",
+        "J1"
+      ],
+      "method": "heuristic",
+      "explanation": "ELEC_A sits outside the 8 mm thermal zone around CHG.",
+      "rationale": "A fixed radius standing in for the elevated-temperature region around a dissipating part. A geometric proxy, not a solved thermal field.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "zone_penetration",
+      "limitation": "Fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field."
+    },
+    {
+      "rule_id": "zone.heat_overlap::CHG|ELEC_B",
+      "family": "zone.heat_overlap",
+      "title": "ELEC_B is outside the CHG heat zone",
+      "status": "pass",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "CHG",
+          "catalog_id": "bq24040",
+          "kicad_ref": "U4"
+        },
+        {
+          "ref": "ELEC_B",
+          "catalog_id": "jst_zh_electrode",
+          "kicad_ref": "J2"
+        }
+      ],
+      "kicad_refs": [
+        "U4",
+        "J2"
+      ],
+      "method": "heuristic",
+      "explanation": "ELEC_B sits outside the 8 mm thermal zone around CHG.",
+      "rationale": "A fixed radius standing in for the elevated-temperature region around a dissipating part. A geometric proxy, not a solved thermal field.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "zone_penetration",
+      "limitation": "Fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field."
+    },
+    {
+      "rule_id": "zone.rf_keepout::BLE",
+      "family": "zone.rf_keepout",
+      "title": "BLE antenna keep-out is clear",
+      "status": "pass",
+      "severity": "major",
+      "components": [
+        {
+          "ref": "BLE",
+          "catalog_id": "mdbt42q",
+          "kicad_ref": "U2"
+        }
+      ],
+      "kicad_refs": [
+        "U2"
+      ],
+      "method": "exact",
+      "explanation": "The 6 mm keep-out ahead of BLE is clear.",
+      "rationale": "The module's antenna radiates into the volume ahead of it. Copper or bulk material inside that volume detunes the match, and inside a sealed patch there is no way to retune after assembly.",
+      "measured": {
+        "value": 0.0,
+        "unit": "mm"
+      },
+      "threshold": {
+        "value": 0.0,
+        "unit": "mm",
+        "comparison": "<=",
+        "reads_as": "measured <= 0.0 mm"
+      },
+      "margin": {
+        "value": -0.0,
+        "unit": "mm"
+      },
+      "metric": "intruder_count",
+      "overlay": {
+        "type": "zone_rect",
+        "color": [
+          0.6,
+          0.3,
+          0.85
+        ],
+        "collection": "03_Constraint_Overlays",
+        "center": [
+          83.0,
+          25.0,
+          2.4
+        ],
+        "size_mm": [
+          10.0,
+          6.0
+        ],
+        "label": "BLE keep-out \u2713",
+        "label_at": [
+          83.0,
+          25.0,
+          11.0
+        ]
+      }
+    },
+    {
+      "rule_id": "coverage.not_evaluated::electrical_connectivity",
+      "family": "coverage",
+      "title": "Electrical connectivity \u2014 not evaluated",
+      "status": "unknown",
+      "severity": "info",
+      "components": [],
+      "kicad_refs": [],
+      "method": "unsupported",
+      "explanation": "A submission carries placement, not netlist. Nothing here can tell whether two pads that should be connected are.",
+      "rationale": "",
+      "limitation": "A submission carries placement, not netlist. Nothing here can tell whether two pads that should be connected are."
+    },
+    {
+      "rule_id": "coverage.not_evaluated::manufacturability",
+      "family": "coverage",
+      "title": "Manufacturability \u2014 not evaluated",
+      "status": "unknown",
+      "severity": "info",
+      "components": [],
+      "kicad_refs": [],
+      "method": "unsupported",
+      "explanation": "Only IPC-7351 courtyard spacing is checked. Panelisation, stencil aperture, assembly order, and test-point access are not evaluated.",
+      "rationale": "",
+      "limitation": "Only IPC-7351 courtyard spacing is checked. Panelisation, stencil aperture, assembly order, and test-point access are not evaluated."
+    },
+    {
+      "rule_id": "coverage.not_evaluated::patient_connected_spacing",
+      "family": "coverage",
+      "title": "Patient connected spacing \u2014 not evaluated",
+      "status": "unknown",
+      "severity": "info",
+      "components": [],
+      "kicad_refs": [],
+      "method": "unsupported",
+      "explanation": "Creepage needs a path along an insulating surface and clearance needs separation through air. Neither is derivable from component outlines and centre distances, so no spacing verdict is issued.",
+      "rationale": "",
+      "limitation": "Creepage needs a path along an insulating surface and clearance needs separation through air. Neither is derivable from component outlines and centre distances, so no spacing verdict is issued."
+    },
+    {
+      "rule_id": "coverage.not_evaluated::radiated_emissions",
+      "family": "coverage",
+      "title": "Radiated emissions \u2014 not evaluated",
+      "status": "unknown",
+      "severity": "info",
+      "components": [],
+      "kicad_refs": [],
+      "method": "unsupported",
+      "explanation": "Antenna keep-out is a rectangular exclusion volume, not a radiation pattern. No emissions level, link budget, or compliance margin is computed.",
+      "rationale": "",
+      "limitation": "Antenna keep-out is a rectangular exclusion volume, not a radiation pattern. No emissions level, link budget, or compliance margin is computed."
+    },
+    {
+      "rule_id": "coverage.not_evaluated::thermal_field",
+      "family": "coverage",
+      "title": "Thermal field \u2014 not evaluated",
+      "status": "unknown",
+      "severity": "info",
+      "components": [],
+      "kicad_refs": [],
+      "method": "unsupported",
+      "explanation": "No thermal solve is performed. Heat is modelled as a declared radius around a dissipating part, so no surface or junction temperature is produced and none should be inferred from the zone overlays.",
+      "rationale": "",
+      "limitation": "No thermal solve is performed. Heat is modelled as a declared radius around a dissipating part, so no surface or junction temperature is produced and none should be inferred from the zone overlays."
+    },
+    {
+      "rule_id": "coverage.not_evaluated::trace_current_copper_geometry",
+      "family": "coverage",
+      "title": "Trace current copper geometry \u2014 not evaluated",
+      "status": "unknown",
+      "severity": "info",
+      "components": [],
+      "kicad_refs": [],
+      "method": "unsupported",
+      "explanation": "No copper geometry or current data is carried in a submission. Traces are polylines used only for antenna keep-out crossing, so trace width against current cannot be evaluated.",
+      "rationale": "",
+      "limitation": "No copper geometry or current data is carried in a submission. Traces are polylines used only for antenna keep-out crossing, so trace width against current cannot be evaluated."
+    }
+  ],
+  "components": [
+    {
+      "ref": "AFE",
+      "catalog_id": "ads1292r",
+      "kicad_ref": "U1",
+      "checked": true,
+      "worst_status": "fail",
+      "worst_severity": "major",
+      "counts": {
+        "fail": 4,
+        "warning": 0,
+        "unknown": 0,
+        "pass": 6
+      },
+      "rule_ids": [
+        "sep.noise::AFE|BUCK",
+        "sep.thermal::AFE|BUCK",
+        "sep.thermal::AFE|CHG",
+        "zone.heat_overlap::BUCK|AFE",
+        "fit.board::AFE",
+        "fit.enclosure_xy::AFE",
+        "fit.height::AFE",
+        "safety.battery_thermal::CELL|AFE",
+        "sep.noise::AFE|BLE",
+        "zone.heat_overlap::CHG|AFE"
+      ]
+    },
+    {
+      "ref": "BATCON",
+      "catalog_id": "bm02b_srss",
+      "kicad_ref": "J3",
+      "checked": true,
+      "worst_status": "unknown",
+      "worst_severity": null,
+      "counts": {
+        "fail": 0,
+        "warning": 0,
+        "unknown": 1,
+        "pass": 3
+      },
+      "rule_ids": [
+        "access.connector",
+        "fit.board::BATCON",
+        "fit.enclosure_xy::BATCON",
+        "fit.height::BATCON"
+      ]
+    },
+    {
+      "ref": "BLE",
+      "catalog_id": "mdbt42q",
+      "kicad_ref": "U2",
+      "checked": true,
+      "worst_status": "pass",
+      "worst_severity": null,
+      "counts": {
+        "fail": 0,
+        "warning": 0,
+        "unknown": 0,
+        "pass": 11
+      },
+      "rule_ids": [
+        "fit.board::BLE",
+        "fit.enclosure_xy::BLE",
+        "fit.height::BLE",
+        "sep.noise::AFE|BLE",
+        "sep.noise::BLE|BUCK",
+        "sep.noise::ELEC_A|BLE",
+        "sep.noise::ELEC_B|BLE",
+        "sep.rf::BLE|BUCK",
+        "zone.heat_overlap::BUCK|BLE",
+        "zone.heat_overlap::CHG|BLE",
+        "zone.rf_keepout::BLE"
+      ]
+    },
+    {
+      "ref": "BUCK",
+      "catalog_id": "tps62740",
+      "kicad_ref": "U3",
+      "checked": true,
+      "worst_status": "fail",
+      "worst_severity": "major",
+      "counts": {
+        "fail": 3,
+        "warning": 0,
+        "unknown": 0,
+        "pass": 11
+      },
+      "rule_ids": [
+        "sep.noise::AFE|BUCK",
+        "sep.thermal::AFE|BUCK",
+        "zone.heat_overlap::BUCK|AFE",
+        "fit.board::BUCK",
+        "fit.enclosure_xy::BUCK",
+        "fit.height::BUCK",
+        "safety.battery_thermal::CELL|BUCK",
+        "sep.noise::BLE|BUCK",
+        "sep.noise::ELEC_A|BUCK",
+        "sep.noise::ELEC_B|BUCK",
+        "sep.rf::BLE|BUCK",
+        "zone.heat_overlap::BUCK|BLE",
+        "zone.heat_overlap::BUCK|ELEC_A",
+        "zone.heat_overlap::BUCK|ELEC_B"
+      ]
+    },
+    {
+      "ref": "CELL",
+      "catalog_id": "varta_cp1254",
+      "kicad_ref": "BT1",
+      "checked": true,
+      "worst_status": "fail",
+      "worst_severity": "blocker",
+      "counts": {
+        "fail": 1,
+        "warning": 0,
+        "unknown": 0,
+        "pass": 5
+      },
+      "rule_ids": [
+        "safety.battery_thermal::CELL|CHG",
+        "fit.board::CELL",
+        "fit.enclosure_xy::CELL",
+        "fit.height::CELL",
+        "safety.battery_thermal::CELL|AFE",
+        "safety.battery_thermal::CELL|BUCK"
+      ]
+    },
+    {
+      "ref": "CHG",
+      "catalog_id": "bq24040",
+      "kicad_ref": "U4",
+      "checked": true,
+      "worst_status": "fail",
+      "worst_severity": "blocker",
+      "counts": {
+        "fail": 2,
+        "warning": 0,
+        "unknown": 0,
+        "pass": 7
+      },
+      "rule_ids": [
+        "safety.battery_thermal::CELL|CHG",
+        "sep.thermal::AFE|CHG",
+        "fit.board::CHG",
+        "fit.enclosure_xy::CHG",
+        "fit.height::CHG",
+        "zone.heat_overlap::CHG|AFE",
+        "zone.heat_overlap::CHG|BLE",
+        "zone.heat_overlap::CHG|ELEC_A",
+        "zone.heat_overlap::CHG|ELEC_B"
+      ]
+    },
+    {
+      "ref": "ELEC_A",
+      "catalog_id": "jst_zh_electrode",
+      "kicad_ref": "J1",
+      "checked": true,
+      "worst_status": "fail",
+      "worst_severity": "blocker",
+      "counts": {
+        "fail": 2,
+        "warning": 0,
+        "unknown": 0,
+        "pass": 7
+      },
+      "rule_ids": [
+        "mission.lead_vector",
+        "mission.esd_at_the_boundary",
+        "fit.board::ELEC_A",
+        "fit.enclosure_xy::ELEC_A",
+        "fit.height::ELEC_A",
+        "sep.noise::ELEC_A|BLE",
+        "sep.noise::ELEC_A|BUCK",
+        "zone.heat_overlap::BUCK|ELEC_A",
+        "zone.heat_overlap::CHG|ELEC_A"
+      ]
+    },
+    {
+      "ref": "ELEC_B",
+      "catalog_id": "jst_zh_electrode",
+      "kicad_ref": "J2",
+      "checked": true,
+      "worst_status": "fail",
+      "worst_severity": "blocker",
+      "counts": {
+        "fail": 1,
+        "warning": 0,
+        "unknown": 0,
+        "pass": 7
+      },
+      "rule_ids": [
+        "mission.lead_vector",
+        "fit.board::ELEC_B",
+        "fit.enclosure_xy::ELEC_B",
+        "fit.height::ELEC_B",
+        "sep.noise::ELEC_B|BLE",
+        "sep.noise::ELEC_B|BUCK",
+        "zone.heat_overlap::BUCK|ELEC_B",
+        "zone.heat_overlap::CHG|ELEC_B"
+      ]
+    },
+    {
+      "ref": "ESD",
+      "catalog_id": "tpd4e1b06",
+      "kicad_ref": "D1",
+      "checked": true,
+      "worst_status": "fail",
+      "worst_severity": "major",
+      "counts": {
+        "fail": 1,
+        "warning": 0,
+        "unknown": 0,
+        "pass": 3
+      },
+      "rule_ids": [
+        "mission.esd_at_the_boundary",
+        "fit.board::ESD",
+        "fit.enclosure_xy::ESD",
+        "fit.height::ESD"
+      ]
+    }
+  ],
+  "coverage": {
+    "families_evaluated": [
+      "access.connector",
+      "fit.board",
+      "fit.enclosure_xy",
+      "fit.height",
+      "mission",
+      "safety.battery_thermal",
+      "sep.noise",
+      "sep.rf",
+      "sep.thermal",
+      "zone.heat_overlap",
+      "zone.rf_keepout"
+    ],
+    "not_evaluated": [
+      "electrical_connectivity",
+      "manufacturability",
+      "patient_connected_spacing",
+      "radiated_emissions",
+      "thermal_field",
+      "trace_current_copper_geometry"
+    ],
+    "note": "A category listed in not_evaluated produced no verdict at all. Its absence from the findings is not a pass."
+  },
+  "warnings": []
+}
