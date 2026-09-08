@@ -1,0 +1,140 @@
+{
+  "mission": "Single-lead ECG chest patch",
+  "_comment": [
+    "The judgment half of the parts library. The catalog (parts/catalog/) holds",
+    "context-free physical facts extracted from datasheets; it deliberately",
+    "contains no separation distances. This file supplies them, for this mission",
+    "only, and states why each one is what it is.",
+    "",
+    "Nothing here restates a dimension. Dimensions come from the catalog at build",
+    "time via tools/build_mission_parts.py, so a datasheet correction propagates",
+    "instead of drifting."
+  ],
+
+  "bom": [
+    {
+      "ref": "ELEC_A",
+      "catalog_id": "jst_zh_electrode",
+      "engine_category": "electrode",
+      "sensitivity": "high",
+      "clearances_mm": { "from_noisy_components": 12 },
+      "why": "Carries the raw electrode lead. Contact resistance is 20 mohm initially and 30 mohm after environmental tests, in series with a signal measured in microvolts, so anything coupling in here arrives before any gain."
+    },
+    {
+      "ref": "ELEC_B",
+      "catalog_id": "jst_zh_electrode",
+      "engine_category": "electrode",
+      "sensitivity": "high",
+      "clearances_mm": { "from_noisy_components": 12 },
+      "why": "Second lead of the pair."
+    },
+    {
+      "ref": "ESD",
+      "catalog_id": "tpd4e1b06",
+      "engine_category": "sensor",
+      "why": "Added on the advisor's recommendation: the electrode leads are the only conductors leaving the sealed shell and touching a person, so they are the ESD entry path."
+    },
+    {
+      "ref": "AFE",
+      "catalog_id": "ads1292r",
+      "engine_category": "analog_frontend",
+      "sensitivity": "high",
+      "clearances_mm": { "from_hot_components": 10, "from_noisy_components": 15 },
+      "why": "24-bit front end on a ~1 mV biopotential. 15 mm from switching sources because the buck's fundamental and harmonics land inside its 0-150 Hz measurement band; 10 mm from heat because package self-heating drifts the input offset and reads as baseline wander."
+    },
+    {
+      "ref": "BLE",
+      "catalog_id": "mdbt42q",
+      "engine_category": "wireless",
+      "noise_source": true,
+      "sensitivity": "high",
+      "keepout_zone_mm": { "extends": 6, "width": 10, "direction": "+y" },
+      "clearances_mm": { "from_noisy_components": 10 },
+      "why": "Module with an integrated antenna, so it is both the radio and a digital noise source. The 6 mm keep-out is the ground-plane clearance the module's integration guide requires ahead of the antenna end; it is a mission-level assumption, not a catalog measurement, because the catalog records no keep-out geometry."
+    },
+    {
+      "ref": "BUCK",
+      "catalog_id": "tps62740",
+      "engine_category": "power_regulator",
+      "noise_source": true,
+      "heat_zone_radius_mm": 6,
+      "why": "The switching node is the dominant conducted-noise source on the board. The 6 mm thermal radius is a geometric proxy scaled to a 3x2 mm package on modest copper, not a solved field."
+    },
+    {
+      "ref": "CHG",
+      "catalog_id": "bq24040",
+      "engine_category": "power_regulator",
+      "heat_source": true,
+      "heat_zone_radius_mm": 8,
+      "why": "Linear charger: its dominant emission is heat, and worst case is the precondition-to-constant-current transition, not steady state. Chosen over mcp73831 on the advisor's recommendation because it has a thermal pad and a TS pin for a cell thermistor."
+    },
+    {
+      "ref": "CELL",
+      "catalog_id": "varta_cp1254",
+      "engine_category": "battery",
+      "thermal_runaway_risk": true,
+      "why": "12.1 mm coin, 5.6 mm tall including tolerance. Tallest part on the board and the thing that sets the enclosure height. VARTA states, unconditionally, that it must not be used without a protection circuit module."
+    },
+    {
+      "ref": "BATCON",
+      "catalog_id": "bm02b_srss",
+      "engine_category": "connector",
+      "why": "Top-entry header, mated along the board normal. Its 4.3 mm unmated height plus the mating lead is a vertical clearance requirement, which the height check covers."
+    }
+  ],
+
+  "mission_profile": {
+    "skin_contact_clearance_mm": 0,
+    "battery_thermal_clearance_mm": 8,
+    "_skin_contact_note": [
+      "Deliberately disabled, not forgotten. In the original hand-authored demo",
+      "the electrodes were on-board pads and a lateral distance from a heat",
+      "source was a meaningful proxy for skin temperature. With real parts the",
+      "electrodes are flying leads on a connector, so nothing on the board",
+      "touches the patient -- the enclosure's bottom face does.",
+      "",
+      "That makes skin-contact temperature a vertical and material question",
+      "(board-to-shell standoff, copper spreading, charge current) that this",
+      "engine does not model. Setting a lateral clearance here would look like",
+      "the risk was checked when it was not. It is carried in unmodeled_risks",
+      "instead, and the IEC 60601-1 43 C limit still needs a measurement on",
+      "real hardware."
+    ]
+  },
+
+  "mission_rules": [
+    {
+      "id": "lead_vector",
+      "type": "min_separation",
+      "between": ["ELEC_A", "ELEC_B"],
+      "distance_mm": 35,
+      "metric": "center",
+      "severity": "blocker",
+      "title": "Electrode leads exit far enough apart to resolve the lead vector",
+      "rationale": "A single-lead ECG measures the potential difference between two electrodes, and amplitude scales with how much of the heart's dipole the pair spans. The pads themselves are on flying leads and land wherever the adhesive puts them, so this checks the connectors as a proxy for where the leads exit the shell: connectors at the same end force the pads together too."
+    },
+    {
+      "id": "esd_at_the_boundary",
+      "type": "max_separation",
+      "between": ["ESD", "ELEC_A"],
+      "distance_mm": 10,
+      "metric": "center",
+      "severity": "major",
+      "title": "ESD protection sits at the electrode entry, not downstream of it",
+      "rationale": "Protection only works ahead of what it protects. If the clamp is further from the connector than the AFE is, a strike travels down board copper past the front end before it reaches the diode."
+    }
+  ],
+
+  "rationales": {
+    "sep.noise": "The signal at the front end is roughly 1 mV. The buck's switching fundamental and its harmonics fall inside the 0-150 Hz band the AFE's noise figure is specified in, so coupled switching noise does not degrade the trace, it buries the QRS complex.",
+    "sep.thermal": "A 24-bit front end resolves well under a microvolt per count. Self-heating in a neighbouring part drifts its input offset and bias currents, and that drift reads as baseline wander that looks like respiration.",
+    "sep.rf": "Broadband switching noise raises the module's receiver noise floor. Lost link margin means retries, retries keep the radio on longer, and a 77 mAh coin cell has no budget for that across a 14-day wear.",
+    "zone.heat_overlap": "A fixed radius standing in for the elevated-temperature region around a dissipating part. A geometric proxy, not a solved thermal field.",
+    "zone.rf_keepout": "The module's antenna radiates into the volume ahead of it. Copper or bulk material inside that volume detunes the match, and inside a sealed patch there is no way to retune after assembly.",
+    "safety.battery_thermal": "Sustained heat accelerates lithium cell ageing and lowers the thermal runaway threshold. This cell sits directly against the skin-side shell with no convective path, so heat that reaches it stays there and reaches the patient.",
+    "fit.height": "The 5.6 mm cell sets the enclosure height, and the two top-entry connectors need vertical clearance to be mated during assembly. The patch has to stay wearable under a shirt, so every millimetre here is argued for.",
+    "fit.courtyard": "IPC-7351 courtyard excess. At this density the placement head needs room to land and the joints need room to fillet.",
+    "fit.enclosure_xy": "A sealed patch needs an uninterrupted gasket path around the full perimeter; anything in the wall zone breaks the seal.",
+    "access.connector": "Both headers are top-entry, mated along the board normal during assembly rather than reached through a wall. Their access requirement is the vertical clearance covered by the height check, so no lateral opening is declared for them."
+  }
+}

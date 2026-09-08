@@ -1,114 +1,209 @@
 {
   "library": "Single-lead ECG chest patch",
+  "_generated_by": "tools/build_mission_parts.py -- do not hand-edit",
+  "_inputs": [
+    "missions/ecg-patch-constraints.json",
+    "parts/catalog/*.json"
+  ],
   "notes": [
-    "Mission BOM for the MissionPCB demo. Kept separate from seed-parts.json,",
-    "which is the generic library; this file is the parts list for one product.",
-    "Clearance fields are intentionally written in two different styles here",
-    "(property-keyed and category-keyed) because the loader normalizes both.",
-    "Dimensions are representative package sizes, not verified against a",
-    "specific manufacturer drawing. Confirm against datasheets before layout."
+    "Generated. Dimensions come from the catalog records and carry their citation in _dimension_source; clearances come from the mission's constraints file, where each one is argued for.",
+    "To change a dimension, fix the catalog record. To change a clearance, edit the constraints file. Then rebuild."
   ],
   "parts": [
     {
-      "id": "afe-ecg-24bit",
-      "name": "ECG Analog Front End (24-bit, single lead)",
+      "id": "ELEC_A",
+      "name": "B2B-ZR (JST)",
+      "category": "electrode",
+      "dimensions_mm": {
+        "length": 4.5,
+        "width": 3.5,
+        "height": 4.5
+      },
+      "_dimension_source": {
+        "length": "JST eZH (ZH CONNECTOR catalogue), p.4, nominal",
+        "width": "JST eZH (ZH CONNECTOR catalogue), p.4, nominal",
+        "height": "JST eZH (ZH CONNECTOR catalogue), p.4, nominal"
+      },
+      "_catalog_id": "jst_zh_electrode",
+      "sensitive": "high",
+      "_access_required": true,
+      "required_clearance_mm": {
+        "from_noisy_components": 12
+      },
+      "placement_notes": "Carries the raw electrode lead. Contact resistance is 20 mohm initially and 30 mohm after environmental tests, in series with a signal measured in microvolts, so anything coupling in here arrives before any gain.",
+      "source_url": "https://www.jst-mfg.com/product/pdf/eng/eZH.pdf"
+    },
+    {
+      "id": "ELEC_B",
+      "name": "B2B-ZR (JST)",
+      "category": "electrode",
+      "dimensions_mm": {
+        "length": 4.5,
+        "width": 3.5,
+        "height": 4.5
+      },
+      "_dimension_source": {
+        "length": "JST eZH (ZH CONNECTOR catalogue), p.4, nominal",
+        "width": "JST eZH (ZH CONNECTOR catalogue), p.4, nominal",
+        "height": "JST eZH (ZH CONNECTOR catalogue), p.4, nominal"
+      },
+      "_catalog_id": "jst_zh_electrode",
+      "sensitive": "high",
+      "_access_required": true,
+      "required_clearance_mm": {
+        "from_noisy_components": 12
+      },
+      "placement_notes": "Second lead of the pair.",
+      "source_url": "https://www.jst-mfg.com/product/pdf/eng/eZH.pdf"
+    },
+    {
+      "id": "ESD",
+      "name": "TPD4E1B06 (Texas Instruments)",
+      "category": "sensor",
+      "dimensions_mm": {
+        "length": 1.7,
+        "width": 1.7,
+        "height": 0.6
+      },
+      "_dimension_source": {
+        "length": "SLVSBQ8E, p.21, max",
+        "width": "SLVSBQ8E, p.21, max",
+        "height": "SLVSBQ8E, p.21, max"
+      },
+      "_catalog_id": "tpd4e1b06",
+      "placement_notes": "Added on the advisor's recommendation: the electrode leads are the only conductors leaving the sealed shell and touching a person, so they are the ESD entry path.",
+      "source_url": "https://www.ti.com/lit/ds/symlink/tpd4e1b06.pdf"
+    },
+    {
+      "id": "AFE",
+      "name": "ADS1292R (Texas Instruments)",
       "category": "analog_frontend",
-      "dimensions_mm": { "length": 5, "width": 5, "height": 1.0 },
-      "heat_source": false,
-      "noise_source": false,
+      "dimensions_mm": {
+        "length": 4.0,
+        "width": 4.0,
+        "height": 1.0
+      },
+      "_dimension_source": {
+        "length": "SBAS502C, p.80, nominal",
+        "width": "SBAS502C, p.80, nominal",
+        "height": "SBAS502C, p.80, max"
+      },
+      "_catalog_id": "ads1292r",
+      "heat_source": true,
       "sensitive": "high",
       "required_clearance_mm": {
         "from_hot_components": 10,
         "from_noisy_components": 15
       },
-      "placement_notes": "Keep electrode traces to this part short, symmetric, and guarded. This is the most noise-critical part on the board: the input signal is roughly 1 mV.",
-      "source_url": "https://www.ti.com/product/ADS1292R"
+      "placement_notes": "24-bit front end on a ~1 mV biopotential. 15 mm from switching sources because the buck's fundamental and harmonics land inside its 0-150 Hz measurement band; 10 mm from heat because package self-heating drifts the input offset and reads as baseline wander.",
+      "source_url": "https://www.ti.com/lit/ds/symlink/ads1292r.pdf"
     },
     {
-      "id": "mcu-ble-soc",
-      "name": "BLE System-on-Chip (Cortex-M4F)",
-      "category": "mcu",
-      "dimensions_mm": { "length": 6, "width": 6, "height": 0.9 },
-      "heat_source": false,
-      "noise_source": true,
-      "sensitive": "low",
-      "min_distance_mm": {
-        "afe": 15
+      "id": "BLE",
+      "name": "MDBT42Q-512KV2 (Raytac)",
+      "category": "wireless",
+      "dimensions_mm": {
+        "length": 16.0,
+        "width": 10.0,
+        "height": 2.2
       },
-      "placement_notes": "Digital switching and the radio PA both live here. Keep it on the digital side of the board, away from the analog front end.",
-      "source_url": "https://www.nordicsemi.com/products/nrf52832"
-    },
-    {
-      "id": "ant-chip-2g4",
-      "name": "2.4 GHz Chip Antenna",
-      "category": "rf",
-      "dimensions_mm": { "length": 3.2, "width": 1.6, "height": 1.0 },
-      "heat_source": false,
-      "noise_source": false,
+      "_dimension_source": {
+        "length": "MDBT42Q Approval Sheet Version P (2025/07/14), p.6, nominal",
+        "width": "MDBT42Q Approval Sheet Version P (2025/07/14), p.6, nominal",
+        "height": "MDBT42Q Approval Sheet Version P (2025/07/14), p.6, nominal"
+      },
+      "_catalog_id": "mdbt42q",
+      "noise_source": true,
       "sensitive": "high",
+      "required_clearance_mm": {
+        "from_noisy_components": 10
+      },
       "keepout_zone_mm": {
-        "extends": 8,
-        "width": 8,
+        "extends": 6,
+        "width": 10,
         "direction": "+y"
       },
-      "min_distance_mm": {
-        "driver": 20,
-        "power": 20,
-        "mcu": 20
-      },
-      "placement_notes": "Mount at a board edge with the keep-out facing open space. No copper pour, no ground plane, and no bulk material inside the keep-out.",
-      "source_url": "https://www.johansontechnology.com/antennas"
+      "placement_notes": "Module with an integrated antenna, so it is both the radio and a digital noise source. The 6 mm keep-out is the ground-plane clearance the module's integration guide requires ahead of the antenna end; it is a mission-level assumption, not a catalog measurement, because the catalog records no keep-out geometry.",
+      "source_url": "https://www.raytac.com/download/index.php?index_id=27"
     },
     {
-      "id": "reg-buck-3v3",
-      "name": "Buck Regulator 3.3 V (with inductor)",
+      "id": "BUCK",
+      "name": "TPS62740 (Texas Instruments)",
       "category": "power_regulator",
-      "dimensions_mm": { "length": 3, "width": 3, "height": 1.5 },
-      "heat_source": true,
-      "noise_source": true,
-      "sensitive": "low",
-      "heat_zone_radius_mm": 10,
-      "avoid_near": ["sensor", "battery"],
-      "placement_notes": "The 10 mm thermal radius covers heat spreading through the copper pour, not just the package body. Switching node is the dominant EMI source on this board.",
-      "source_url": "https://www.ti.com/product/TPS62740"
-    },
-    {
-      "id": "bat-lipo-150mah",
-      "name": "LiPo Pouch Cell 150 mAh",
-      "category": "battery",
-      "dimensions_mm": { "length": 30, "width": 16, "height": 3.2 },
-      "heat_source": false,
-      "noise_source": false,
-      "sensitive": "low",
-      "thermal_runaway_risk": true,
-      "placement_notes": "Dominates the height budget and the board area. Keep it away from sustained heat; a sealed shell gives the cell nowhere to dump energy.",
-      "source_url": "https://www.powerstream.com/thin-lithium-ion.htm"
-    },
-    {
-      "id": "con-charge-pogo",
-      "name": "Pogo Charge Pads (4-pin)",
-      "category": "connector",
-      "dimensions_mm": { "length": 8, "width": 4, "height": 1.0 },
-      "heat_source": false,
-      "noise_source": false,
-      "sensitive": "low",
-      "placement_notes": "Must register with the gasketed charge window. The patch is sealed, so this is the only external interface after assembly.",
-      "source_url": "https://www.mill-max.com/products/spring-loaded"
-    },
-    {
-      "id": "elec-snap-agagcl",
-      "name": "Ag/AgCl Electrode Snap Pad",
-      "category": "electrode",
-      "dimensions_mm": { "length": 6, "width": 6, "height": 0.8 },
-      "heat_source": false,
-      "noise_source": false,
-      "sensitive": "high",
-      "skin_contact": true,
-      "required_clearance_mm": {
-        "from_noisy_components": 12
+      "dimensions_mm": {
+        "length": 3.0,
+        "width": 2.0,
+        "height": 0.8
       },
-      "placement_notes": "Pressed against the patient for the wear duration. Two are required to form the lead vector, and they must sit at opposite ends of the long axis.",
-      "source_url": "https://www.3m.com/3M/en_US/p/d/b5005158048/"
+      "_dimension_source": {
+        "length": "SLVSB02B, p.30, nominal",
+        "width": "SLVSB02B, p.30, nominal",
+        "height": "SLVSB02B, p.30, max"
+      },
+      "_catalog_id": "tps62740",
+      "noise_source": true,
+      "heat_zone_radius_mm": 6,
+      "placement_notes": "The switching node is the dominant conducted-noise source on the board. The 6 mm thermal radius is a geometric proxy scaled to a 3x2 mm package on modest copper, not a solved field.",
+      "source_url": "https://www.ti.com/lit/ds/symlink/tps62740.pdf"
+    },
+    {
+      "id": "CHG",
+      "name": "BQ24040 (Texas Instruments)",
+      "category": "power_regulator",
+      "dimensions_mm": {
+        "length": 2.0,
+        "width": 2.0,
+        "height": 0.8
+      },
+      "_dimension_source": {
+        "length": "SLUS941H, p.37, nominal",
+        "width": "SLUS941H, p.37, nominal",
+        "height": "SLUS941H, p.37, max"
+      },
+      "_catalog_id": "bq24040",
+      "heat_source": true,
+      "heat_zone_radius_mm": 8,
+      "placement_notes": "Linear charger: its dominant emission is heat, and worst case is the precondition-to-constant-current transition, not steady state. Chosen over mcp73831 on the advisor's recommendation because it has a thermal pad and a TS pin for a cell thermistor.",
+      "source_url": "https://www.ti.com/lit/ds/symlink/bq24040.pdf"
+    },
+    {
+      "id": "CELL",
+      "name": "CP 1254 A4 (VARTA Microbattery GmbH)",
+      "category": "battery",
+      "dimensions_mm": {
+        "length": 12.1,
+        "width": 12.1,
+        "height": 5.6
+      },
+      "_dimension_source": {
+        "length": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01), p.1, max",
+        "width": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01), p.1, max",
+        "height": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01), p.1, max"
+      },
+      "_catalog_id": "varta_cp1254",
+      "thermal_runaway_risk": true,
+      "_access_required": true,
+      "placement_notes": "12.1 mm coin, 5.6 mm tall including tolerance. Tallest part on the board and the thing that sets the enclosure height. VARTA states, unconditionally, that it must not be used without a protection circuit module.",
+      "source_url": "https://www.elektronik.ropla.eu/pdf/stock/vmb/cp1254a4.pdf"
+    },
+    {
+      "id": "BATCON",
+      "name": "BM02B-SRSS-TB (JST)",
+      "category": "connector",
+      "dimensions_mm": {
+        "length": 4.0,
+        "width": 3.6,
+        "height": 4.3
+      },
+      "_dimension_source": {
+        "length": "JST eSH (SH CONNECTOR catalogue), p.3, nominal",
+        "width": "JST eSH (SH CONNECTOR catalogue), p.3, nominal",
+        "height": "JST eSH (SH CONNECTOR catalogue), p.3, nominal"
+      },
+      "_catalog_id": "bm02b_srss",
+      "_access_required": true,
+      "placement_notes": "Top-entry header, mated along the board normal. Its 4.3 mm unmated height plus the mating lead is a vertical clearance requirement, which the height check covers.",
+      "source_url": "https://www.jst-mfg.com/product/pdf/eng/eSH.pdf"
     }
   ]
 }

@@ -256,8 +256,10 @@ class TestBoundarySemantics:
 class TestDemoStillHolds:
     """None of the above changed the demo's behaviour."""
 
-    def test_naive_still_fails_the_same_ten(self, naive_layout, parts):
-        assert len(validate(naive_layout, parts).failures) == 10
+    def test_naive_still_fails_its_designed_set(self, naive_layout, parts):
+        # Seven with the real catalog parts; the exact ids are pinned in
+        # test_golden.py.
+        assert len(validate(naive_layout, parts).failures) == 7
 
     def test_target_still_passes(self, target_layout, parts):
         assert validate(target_layout, parts).passed
@@ -266,11 +268,11 @@ class TestDemoStillHolds:
         solved, _ = solve(naive_layout, parts)
         assert validate(solved, parts).passed
 
-    def test_shipped_parts_library_loads_without_new_warnings(self, repo):
+    def test_shipped_parts_library_loads_without_warnings(self, repo):
+        # The library is generated from the catalog now, so every clearance is
+        # stated explicitly and nothing has to be assumed at load time.
         _, warnings = load_parts(repo / "parts" / "ecg-patch-parts.json")
-        # The two avoid_near defaults are expected; nothing else should appear.
-        assert len(warnings) == 2
-        assert all("avoid_near" in w for w in warnings)
+        assert warnings == []
 
     def test_shipped_layouts_load_without_warnings(self, repo):
         for name in ("ecg-patch-naive", "ecg-patch-missionpcb"):

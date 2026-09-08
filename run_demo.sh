@@ -17,11 +17,18 @@ cd "$(dirname "$0")"
 export PYTHONPATH=src
 
 PARTS="parts/ecg-patch-parts.json"
+CONSTRAINTS="missions/ecg-patch-constraints.json"
 NAIVE="layouts/ecg-patch-naive.json"
 TARGET="layouts/ecg-patch-missionpcb.json"
 SOLVED="layouts/ecg-patch-solved.json"
 
 run() { python3 -m constraint_engine "$@"; }
+
+echo "=============================================================="
+echo " 0. BUILD PARTS - merge catalog facts with this mission's clearances"
+echo "=============================================================="
+python3 tools/build_mission_parts.py --constraints "$CONSTRAINTS" --out "$PARTS"
+echo
 
 echo "=============================================================="
 echo " 1. NAIVE LAYOUT - what a constraint-blind first pass produces"

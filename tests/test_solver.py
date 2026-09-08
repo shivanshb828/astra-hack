@@ -127,13 +127,13 @@ class TestRespectsConstraints:
         pinned = replace(
             naive_layout,
             placements=[
-                replace(p, anchored=True) if p.ref == "LIPO" else p
+                replace(p, anchored=True) if p.ref == "CELL" else p
                 for p in naive_layout.placements
             ],
         )
-        original = naive_layout.placement("LIPO")
+        original = naive_layout.placement("CELL")
         solved_layout, _ = solve(pinned, parts)
-        after = solved_layout.placement("LIPO")
+        after = solved_layout.placement("CELL")
         assert (after.x_mm, after.y_mm) == (original.x_mm, original.y_mm)
         assert after.anchored
 

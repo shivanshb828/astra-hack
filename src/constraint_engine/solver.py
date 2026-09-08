@@ -52,7 +52,12 @@ COARSE_STEP_MM = 2.0
 FINE_STEP_MM = 0.5
 FINE_RADIUS_MM = 4.0
 MAX_PASSES = 8
-DEFAULT_SEEDS = (0, 1, 2, 3)
+# Eight restarts rather than four. With the real catalog parts the search got
+# materially harder -- a rotatable radio module whose keep-out turns with it,
+# plus a 12 mm coin cell that blocks most of the board -- and four starts
+# reached a local minimum that left the antenna keep-out obstructed. Doubling
+# the restarts costs a few seconds and finds it reliably.
+DEFAULT_SEEDS = (0, 1, 2, 3, 4, 5, 6, 7)
 
 
 class _Model:

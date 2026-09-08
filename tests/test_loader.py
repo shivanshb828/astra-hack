@@ -421,17 +421,26 @@ class TestRoundTrip:
     def test_mission_rationales_reach_the_layout(self, naive_layout):
         # Product-specific prose must arrive from data, not from the checker.
         assert "QRS" in naive_layout.rationale_for("sep.noise")
-        assert "60601" in naive_layout.rationale_for("safety.skin_contact_temp")
+        assert "runaway" in naive_layout.rationale_for("safety.battery_thermal")
 
     def test_unknown_family_falls_back(self, naive_layout):
         assert naive_layout.rationale_for("nope.nothing", "fallback") == "fallback"
 
 
 def test_real_parts_library_loads(parts):
-    assert len(parts) == 7
-    afe = parts["afe-ecg-24bit"]
+    """The generated library carries the catalog's real numbers."""
+    assert len(parts) == 9
+
+    afe = parts["AFE"]
     assert afe.sensitivity == "high"
     assert afe.clearances.from_property["noisy"] == 15.0
-    assert parts["bat-lipo-150mah"].thermal_runaway_risk
-    assert parts["elec-snap-agagcl"].skin_contact
-    assert parts["ant-chip-2g4"].keepout.extends_mm == 8
+    assert (afe.length_mm, afe.width_mm, afe.height_mm) == (4.0, 4.0, 1.0)
+
+    # The real VARTA CP1254: a 12.1 mm coin, 5.6 mm tall. The placeholder this
+    # replaced was a 30 x 16 x 3.2 mm pouch that does not exist.
+    cell = parts["CELL"]
+    assert cell.thermal_runaway_risk
+    assert (cell.length_mm, cell.width_mm, cell.height_mm) == (12.1, 12.1, 5.6)
+
+    assert parts["BLE"].keepout.extends_mm == 6
+    assert parts["CELL"].height_mm == max(p.height_mm for p in parts.values())
