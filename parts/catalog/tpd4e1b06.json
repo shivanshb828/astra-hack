@@ -1,0 +1,119 @@
+{
+  "id": "tpd4e1b06",
+  "mpn": "TPD4E1B06",
+  "manufacturer": "Texas Instruments",
+  "role": "esd_protection",
+
+  "mechanical": {
+    "package": "SOT-563 (DRL-6)",
+    "length_mm": {
+      "value": 1.7, "unit": "mm", "qualifier": "max",
+      "conditions": "DRL0006A package outline, body 1.5-1.7 mm excluding mold flash, protrusions and gate burrs. Page 1 quotes the nominal package size including pins as 1.6 mm x 1.6 mm. The alternative DCK (SC70-6) package is 1.85-2.15 mm on this axis.",
+      "source": { "doc": "SLVSBQ8E", "page": 21, "section": "PACKAGE OUTLINE DRL0006A" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 1.7, "unit": "mm", "qualifier": "max",
+      "conditions": "DRL0006A package outline, body 1.5-1.7 mm on the orthogonal axis, excluding mold flash. The package is square. The alternative DCK (SC70-6) is 1.4-1.8 mm wide with a 1.85-2.15 mm lead span.",
+      "source": { "doc": "SLVSBQ8E", "page": 21, "section": "PACKAGE OUTLINE DRL0006A" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 0.6, "unit": "mm", "qualifier": "max",
+      "conditions": "DRL0006A, 'SOT - 0.6 mm max height'. The alternative DCK (SC70-6) package is 1.1 mm max height -- nearly twice as tall in the same role.",
+      "source": { "doc": "SLVSBQ8E", "page": 21, "section": "PACKAGE OUTLINE DRL0006A" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": false,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": -5.5, "unit": "V", "qualifier": "min",
+      "conditions": "VRWM reverse stand-off voltage at TA = 25 C; equivalently the recommended-operating-condition limit that the voltage between any two device pins should not exceed 5.5 V in either polarity. The device is bi-directional, so this is a symmetric window.",
+      "source": { "doc": "SLVSBQ8E", "page": 5, "section": "5.5 Electrical Characteristics" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 5.5, "unit": "V", "qualifier": "max",
+      "conditions": "VRWM reverse stand-off voltage at TA = 25 C. Breakdown voltage VBR is 7 V min / 9.5 V max at IIO = 1 mA, so the part is transparent below 5.5 V and conducts above roughly 7 V.",
+      "source": { "doc": "SLVSBQ8E", "page": 5, "section": "5.5 Electrical Characteristics" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 0.5, "unit": "nA", "qualifier": "max",
+      "conditions": "ILEAK leakage current at VIO = 2.5 V, TA = 25 C. This is the headline parameter of the part -- leakage this low is what allows it to sit on a precision analog line without corrupting it. Leakage rises steeply with temperature, but is specified ONLY at 25 C; the temperature behaviour appears only as an unlabelled curve (Figure 5-4, Leakage vs Temperature, page 6) whose axis runs to 300 pA, so no numeric value at any other temperature is recorded here.",
+      "source": { "doc": "SLVSBQ8E", "page": 5, "section": "5.5 Electrical Characteristics" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 233.4, "unit": "C/W", "qualifier": "typ",
+          "conditions": "DRL (SOT-563) 6-pin, junction-to-ambient thermal resistance, JEDEC standard board",
+          "source": { "doc": "SLVSBQ8E", "page": 4, "section": "5.4 Thermal Information" },
+          "review_status": "extracted"
+        },
+        {
+          "value": 227.3, "unit": "C/W", "qualifier": "typ",
+          "conditions": "DCK (SC70) 6-pin, junction-to-ambient thermal resistance, JEDEC standard board",
+          "source": { "doc": "SLVSBQ8E", "page": 4, "section": "5.4 Thermal Information" },
+          "review_status": "extracted"
+        }
+      ]
+    }
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "TA, operating free-air temperature, recommended operating conditions",
+        "source": { "doc": "SLVSBQ8E", "page": 4, "section": "5.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 125, "unit": "C", "qualifier": "max",
+        "conditions": "TA, operating free-air temperature, recommended operating conditions. Storage range is -65 to +155 C.",
+        "source": { "doc": "SLVSBQ8E", "page": 4, "section": "5.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "accuracy_note": "Not a sensor, but its defining parameter degrades with heat in a way that corrupts the line it protects: leakage is specified at 0.5 nA max only at TA = 25 C, and the only temperature information is the Leakage vs Temperature curve (Figure 5-4, page 6), which is a plot with no tabulated values -- its current axis extends to 300 pA, two and a half times the 25 C limit, but nothing on it is a specified number. Because this part is deliberately placed on high-impedance precision analog lines, a warm neighbour turns it from an invisible protector into a signal-path leakage source. There is no leakage specification at any temperature other than 25 C."
+    }
+  },
+
+  "design_notes": [
+    {
+      "note": "Place the device as close to the connector as possible. TI's stated reason is not convenience: during an ESD event, EMI couples from the struck trace to other nearby unprotected traces and causes early system failures. The keep-away therefore runs the other way as well -- unprotected traces must be kept away from the protected traces between the diode and the connector.",
+      "source": { "doc": "SLVSBQ8E", "page": 10, "section": "7.3.1 Layout Guidelines" }
+    },
+    {
+      "note": "Route the protected traces as straight as possible and eliminate sharp corners between the diode and the connector, using rounded corners with the largest radii available. Electric fields build up on corners and increase EMI coupling during a strike.",
+      "source": { "doc": "SLVSBQ8E", "page": 10, "section": "7.3.1 Layout Guidelines" }
+    },
+    {
+      "note": "In the DRL package, pin 2 is GND and pin 5 has no internal connection: it does not need to be routed anywhere, though tying it to the ground plane is acceptable. Pins 1 and 6, and 3 and 4, are the differential pairs in TI's layout example. (Pin numbering differs from the DCK package, where GND is pin 3 and NC is pin 6.)",
+      "source": { "doc": "SLVSBQ8E", "page": 10, "section": "7.3.2 Layout Examples" }
+    },
+    {
+      "note": "Clamping performance, not just survival, is what the protected IC sees: VCLAMP is 10.9 V typ at IPP = 1 A and 14.5 V typ at IPP = 3 A (8/20 us), held down by a dynamic resistance of about 1 ohm. The absolute maximum peak pulse rating is 3.0 A / 45 W at 8/20 us.",
+      "source": { "doc": "SLVSBQ8E", "page": 5, "section": "5.5 Electrical Characteristics / 5.1 Absolute Maximum Ratings" }
+    },
+    {
+      "note": "Line capacitance is 0.7 pF typ, 0.95 pF max at 1 MHz with VBIAS = 2.5 V -- low enough that TI rates it for data rates to 3.4 Gbps. On a low-frequency biopotential line the capacitance is negligible; the leakage figure is the parameter that matters.",
+      "source": { "doc": "SLVSBQ8E", "page": 5, "section": "5.5 Electrical Characteristics" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/tpd4e1b06.pdf",
+    "doc_revision": "SLVSBQ8E (December 2012, revised October 2024)",
+    "review_status": "extracted",
+    "notes": "VARIANT: parts/sources.json names no package, and TI offers two -- DCK (SC70-6, 2 x 2.1 mm, 1.1 mm max height) and DRL (SOT-563, 1.6 x 1.6 mm, 0.6 mm max height). Body dimensions here are for the DRL, the smaller and much shorter of the two, which is the appropriate choice for a chest patch; the DCK figures are carried in the conditions strings so the record can be switched without re-reading the datasheet. Both packages' theta_ja values are recorded, since the array field exists for exactly that. Genuinely absent and deliberately NOT invented: any dissipation or dissipation model (an ESD diode's dissipation is entirely event-driven -- the datasheet gives a 45 W peak pulse power at 8/20 us, which is a survival rating, not a steady-state figure, and was left in design_notes rather than emissions.thermal.dissipation where it would be read as continuous); junction temperature maximum (never stated); any conducted, radiated or mechanical emissions; and any leakage specification away from 25 C beyond the Figure 5-4 curve. There is no safety block: this is not an isolation device and the datasheet publishes no creepage or clearance. The IEC 61000-4-2 ratings (+/-12 kV contact, +/-15 kV air-gap) and IEC 61000-4-5 surge rating (3.0 A, 8/20 us) are immunity levels with no schema field and were left in the description rather than forced into susceptibility.conducted, which expects a frequency band."
+  }
+}

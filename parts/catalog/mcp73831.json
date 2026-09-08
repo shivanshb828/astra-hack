@@ -1,0 +1,84 @@
+{
+  "id": "mcp73831",
+  "mpn": "MCP73831",
+  "manufacturer": "Microchip",
+  "role": "lipo_charger",
+
+  "mechanical": {
+    "package": "SOT-23-5",
+    "thermal_pad": false,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 230, "unit": "C/W", "qualifier": "typ",
+          "conditions": "SOT-23-5, 4-layer JC51-7 standard board, natural convection",
+          "source": { "doc": "DS20001984H", "page": 5, "section": "Thermal Package Resistances" },
+          "review_status": "extracted"
+        },
+        {
+          "value": 130, "unit": "C/W", "qualifier": "typ",
+          "conditions": "SOT-23-5, large copper area on PCB",
+          "source": { "doc": "DS20001984H", "page": 5, "section": "Note 2" },
+          "review_status": "extracted"
+        },
+        {
+          "value": 76, "unit": "C/W", "qualifier": "typ",
+          "conditions": "8-lead 2x3 mm DFN, 4-layer JC51-7 standard board, natural convection",
+          "source": { "doc": "DS20001984H", "page": 5, "section": "Thermal Package Resistances" },
+          "review_status": "extracted"
+        }
+      ],
+      "dissipation_model": {
+        "expression": "(v_in_max - v_bat_min) * i_charge",
+        "variables": {
+          "v_in_max": "Maximum supply voltage seen at VDD -- from the mission operating point (USB 5V, or a preceding regulator)",
+          "v_bat_min": "Battery voltage at the preconditioning-to-constant-current transition, the worst case",
+          "i_charge": "Fast-charge current, SET BY AN EXTERNAL RESISTOR on PROG -- a design choice, not a part property"
+        },
+        "unit": "W",
+        "source": { "doc": "DS20001984H", "page": 18, "section": "6.1.1.3 Thermal Considerations" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "specified ambient temperature range",
+        "source": { "doc": "DS20001984H", "page": 1 },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 85, "unit": "C", "qualifier": "max",
+        "conditions": "specified ambient temperature range",
+        "source": { "doc": "DS20001984H", "page": 1 },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "design_notes": [
+    {
+      "note": "Worst-case dissipation occurs at maximum input voltage during the transition from preconditioning to constant-current mode -- not at steady state. Thermal checks must use this transition point, not the average charge condition.",
+      "source": { "doc": "DS20001984H", "page": 18, "section": "6.1.1.3" }
+    },
+    {
+      "note": "Theta-JA is dominated by board copper area, not the package. The 230 C/W table figure is the minimum-copper case; a generous pour reaches 130 C/W. Any thermal claim must state which condition was assumed.",
+      "source": { "doc": "DS20001984H", "page": 5, "section": "Note 2" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://ww1.microchip.com/downloads/en/DeviceDoc/MCP73831-Family-Data-Sheet-DS20001984H.pdf",
+    "doc_revision": "DS20001984H",
+    "review_status": "extracted",
+    "notes": "Package body dimensions not yet extracted from the mechanical drawing -- deliberately absent rather than guessed. No conducted-emissions entry: this is a linear charger, so it has no switching node. Its dominant emission is heat."
+  }
+}

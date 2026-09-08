@@ -1,0 +1,93 @@
+{
+  "id": "jst_zh_electrode",
+  "mpn": "B2B-ZR",
+  "manufacturer": "JST",
+  "role": "electrode_conn",
+
+  "mechanical": {
+    "package": "ZH series 1.5 mm pitch wire-to-board header, 2 circuits, through-hole top entry, 2.7 mm soldering length",
+    "length_mm": {
+      "value": 4.5, "unit": "mm", "qualifier": "nominal",
+      "conditions": "Dimension B (overall header length along the pitch axis) for the 2-circuit B2B-ZR. Dimension A, the span between the outer pins, is 1.5 mm. B grows by 1.5 mm per added circuit across the whole table (4.5 at 2 circuits, 6.0 at 3, 7.5 at 4 ...), so a different electrode count changes only this axis. No tolerance is published in the header table.",
+      "source": { "doc": "JST eZH (ZH CONNECTOR catalogue)", "page": 4, "section": "Header/ Through-hole type -- Top entry type, dimension table" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 3.5, "unit": "mm", "qualifier": "nominal",
+      "conditions": "Front-to-back depth of the top-entry through-hole header, dimensioned on the side view. Constant across all circuit counts. JST repeats this figure on page 1 as the mated depth: '3.5 mm in depth when mated with the top-entry type through-hole header'.",
+      "source": { "doc": "JST eZH (ZH CONNECTOR catalogue)", "page": 4, "section": "Header/ Through-hole type -- Top entry type, side view" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 4.5, "unit": "mm", "qualifier": "nominal",
+      "conditions": "Height of the unmated header above the PCB surface, from the top-entry side view; constant across circuit counts. MATED height is 5.9 mm -- page 1 states the connector is '5.9 mm in mounting height ... when mated with the top-entry type through-hole header', and the assembly layout on page 2 carries the same (5.9). 5.9 mm is the figure an enclosure lid-clearance check must use, since an electrode connector is mated in service. Pins additionally protrude 2.7 mm BELOW the board (3.4 mm for the -3.4 variants).",
+      "source": { "doc": "JST eZH (ZH CONNECTOR catalogue)", "page": 4, "section": "Header/ Through-hole type -- Top entry type, side view" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": false,
+    "mounting": "through_hole",
+    "access_required": true
+  },
+
+  "electrical": {
+    "v_in_max": {
+      "value": 50, "unit": "V", "qualifier": "max",
+      "conditions": "Voltage rating, 50 V AC/DC, series-wide specification for the ZH connector",
+      "source": { "doc": "JST eZH (ZH CONNECTOR catalogue)", "page": 1, "section": "Specifications" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 1.0, "unit": "A", "qualifier": "max",
+      "conditions": "Current rating, 1.0 A AC/DC with AWG #26 wire (the largest the series accepts). Applicable wire range AWG #32 to #26, conductor 0.032 to 0.13 mm2, insulation OD 0.5 to 1.1 mm. Vastly above what an electrode lead carries; the binding electrical property here is contact resistance, not ampacity.",
+      "source": { "doc": "JST eZH (ZH CONNECTOR catalogue)", "page": 1, "section": "Specifications" },
+      "review_status": "extracted"
+    }
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -25, "unit": "C", "qualifier": "min",
+        "conditions": "Series temperature range, -25 C to +85 C",
+        "source": { "doc": "JST eZH (ZH CONNECTOR catalogue)", "page": 1, "section": "Specifications" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 85, "unit": "C", "qualifier": "max",
+        "conditions": "Series temperature range ceiling. JST states the range is INCLUSIVE of the temperature rise caused by applying electrical current, so the allowable ambient is 85 C minus the connector's own rise.",
+        "source": { "doc": "JST eZH (ZH CONNECTOR catalogue)", "page": 1, "section": "Specifications" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "design_notes": [
+    {
+      "note": "This connector carries the electrode leads and must remain reachable after enclosure assembly. It is a top-entry (vertical) header, so the leads are mated along the board normal and the enclosure needs vertical insertion clearance above it, not a side aperture. Mated height is 5.9 mm and mated depth 3.5 mm -- JST publishes these as the headline figures for exactly this configuration.",
+      "source": { "doc": "JST eZH (ZH CONNECTOR catalogue)", "page": 1, "section": "Description" }
+    },
+    {
+      "note": "Contact resistance is 20 mohm max initially and 30 mohm max after environmental tests. On an electrode lead this sits directly in series with a signal measured in microvolts, so the connector's ageing behaviour is part of the analog front-end's source impedance, not a nuisance spec. Insulation resistance is 500 Mohm min and the dielectric test is 500 VAC for one minute without breakdown or flashover.",
+      "source": { "doc": "JST eZH (ZH CONNECTOR catalogue)", "page": 1, "section": "Specifications" }
+    },
+    {
+      "note": "JST's stated design intent is mechanical robustness under lead stress: the header is fully shrouded, which JST says 'ensures durability with a secure connection reducing the risk of stress and misalignment', and the housing lance plus high contact force with round pins is described as giving stable contact performance. This is the relevant property for a lead that gets tugged in use.",
+      "source": { "doc": "JST eZH (ZH CONNECTOR catalogue)", "page": 1, "section": "Description / Features" }
+    },
+    {
+      "note": "Through-hole part: pins protrude 2.7 mm below the board for 0.6-1.2 mm board thickness, or 3.4 mm (the -3.4 model suffix) for 1.6 mm board. The soldering-length variant must be matched to the actual stack-up, and the protrusion consumes clearance on the underside of the board.",
+      "source": { "doc": "JST eZH (ZH CONNECTOR catalogue)", "page": 4, "section": "Header/ Through-hole type -- Note 2" }
+    },
+    {
+      "note": "PCB hole layout: 0.7 +/-0.03 mm diameter holes on 1.5 +/-0.05 mm pitch, non-accumulating. JST warns that hole dimensions differ with PCB material and drilling method and that a larger hole should be considered for hard fiberglass-cloth board, and labels the published layout as reference values only.",
+      "source": { "doc": "JST eZH (ZH CONNECTOR catalogue)", "page": 2, "section": "PC board layout and Assembly layout/ Through-hole type, Notes 1-3" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.jst-mfg.com/product/pdf/eng/eZH.pdf",
+    "doc_revision": "JST eZH catalogue, ZH CONNECTOR, 1.5 mm pitch wire-to-board, crimp style and mating style (6 pages, undated)",
+    "review_status": "extracted",
+    "notes": "VARIANT SELECTION: this is a SERIES catalogue covering 2-13 circuits in four header families (through-hole top-entry B*B-ZR, through-hole side-entry S*B-ZR, SMT SM2 side-entry S*B-ZR-SM2-TF, SMT SM4 B*B-ZR-SM4-TF / S*B-ZR-SM4A-TF), plus ZHR housings and SZH contacts. parts/sources.json names only the series, the manufacturer and the role -- it specifies NO circuit count and NO header style -- so a variant had to be chosen. I used B2B-ZR: 2 circuits, THROUGH-HOLE TOP ENTRY, 2.7 mm soldering length (suited to 0.6-1.2 mm board). That configuration is the one JST itself uses for the headline dimensions on page 1 (5.9 mm mated height, 3.5 mm depth), and 2 circuits is the first table row. Substituting a different electrode count changes ONLY length_mm, by +1.5 mm per circuit (B = 4.5 + 1.5 x (n - 2)); depth and height are constant across the table. A different header style would change everything and would need re-extraction. Dimension-to-axis assignment was verified by rendering page 4 as an image, since plain text extraction does not preserve drawing geometry. Genuinely absent from this catalogue and deliberately NOT invented: any tolerance on the header body dimensions; creepage and clearance (never stated, so there is no safety block); mating/withdrawal force; durability or insertion-cycle count; any thermal resistance or self-heating figure; and anything at all about patient contact, biocompatibility or medical certification -- the catalogue makes no such claim, so none is recorded. Per the extraction brief no 'patient_contact' field was added: patient contact is a role assigned at placement, not a property of this part, and the schema has no such field. The 500 VAC one-minute withstanding voltage was deliberately NOT mapped to safety.isolation_v_rms -- it is an ordinary inter-circuit dielectric test on an unrated connector, not a certified isolation barrier; it is preserved in design_notes instead."
+  }
+}

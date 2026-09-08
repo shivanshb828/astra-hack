@@ -1,0 +1,132 @@
+{
+  "id": "tps62740",
+  "mpn": "TPS62740",
+  "manufacturer": "Texas Instruments",
+  "role": "buck",
+
+  "mechanical": {
+    "package": "WSON-12 (DSS)",
+    "length_mm": {
+      "value": 3.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "package outline DSS0012A, body length toleranced 2.9-3.1 mm",
+      "source": { "doc": "SLVSB02B", "page": 30, "section": "PACKAGE OUTLINE DSS0012A" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 2.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "package outline DSS0012A, body width toleranced 1.9-2.1 mm",
+      "source": { "doc": "SLVSB02B", "page": 30, "section": "PACKAGE OUTLINE DSS0012A" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 0.8, "unit": "mm", "qualifier": "max",
+      "conditions": "WSON - 0.8 mm max height, seating plane to top",
+      "source": { "doc": "SLVSB02B", "page": 30, "section": "PACKAGE OUTLINE DSS0012A" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": true,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 2.2, "unit": "V", "qualifier": "min",
+      "conditions": "recommended operating conditions, supply voltage VIN; minimum required for startup is 2.15 V (UVLO rising)",
+      "source": { "doc": "SLVSB02B", "page": 5, "section": "8.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 5.5, "unit": "V", "qualifier": "max",
+      "conditions": "recommended operating conditions, supply voltage VIN",
+      "source": { "doc": "SLVSB02B", "page": 5, "section": "8.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 360, "unit": "nA", "qualifier": "typ",
+      "conditions": "EN = VIN, CTRL = GND, IOUT = 0 uA, VOUT = 1.8 V, device not switching, VIN = 3.6 V, TA = 25 C",
+      "source": { "doc": "SLVSB02B", "page": 5, "section": "8.5 Electrical Characteristics, IQ" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 300, "unit": "mA", "qualifier": "max",
+      "conditions": "TPS62740 device output current (sum of IOUT and ILOAD), VOUTnom + 0.7 V <= VIN <= 5.5 V",
+      "source": { "doc": "SLVSB02B", "page": 5, "section": "8.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 61.8, "unit": "C/W", "qualifier": "typ",
+          "conditions": "DSS / 12 pins (WSON 2x3 mm with exposed thermal pad); TI Thermal Information table, board condition not stated in the table",
+          "source": { "doc": "SLVSB02B", "page": 5, "section": "8.4 Thermal Information" },
+          "review_status": "extracted"
+        }
+      ]
+    },
+    "conducted": [
+      {
+        "mechanism": "switching",
+        "f_fundamental_hz": {
+          "value": 2000000, "unit": "Hz", "qualifier": "max",
+          "conditions": "PWM mode, continuous conduction. DCS-Control quasi-fixed frequency at medium/high load, up to 2 MHz with controlled variation depending on input voltage. In Power Save Mode (PFM) the switching frequency varies nearly linearly with load current, so the fundamental sweeps down toward DC at light load.",
+          "source": { "doc": "SLVSB02B", "page": 9, "section": "9.3.1 DCS-Control" },
+          "review_status": "extracted"
+        },
+        "harmonics_modeled": 5
+      }
+    ]
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "recommended ambient temperature range TA",
+        "source": { "doc": "SLVSB02B", "page": 5, "section": "8.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 85, "unit": "C", "qualifier": "max",
+        "conditions": "recommended ambient temperature range TA",
+        "source": { "doc": "SLVSB02B", "page": 5, "section": "8.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_junction_max": {
+        "value": 125, "unit": "C", "qualifier": "max",
+        "conditions": "recommended operating junction temperature range TJ; absolute maximum operating junction temperature is 150 C (page 4)",
+        "source": { "doc": "SLVSB02B", "page": 5, "section": "8.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "design_notes": [
+    {
+      "note": "The SW line is explicitly named as a noise source: the VOUT line must be connected to the output capacitor and routed AWAY from noisy components and traces (e.g. the SW line) or other noise sources. A layout that is not carefully done produces EMI problems and interference with RF circuits.",
+      "source": { "doc": "SLVSB02B", "page": 23, "section": "12.1 Layout Guidelines" }
+    },
+    {
+      "note": "Input capacitor must be placed as close as possible to the IC pins VIN and GND, and the output capacitor close between VOUT and GND, to keep the switching current loop area small. Wide, short traces are required for the main current paths to provide a low inductance, low impedance ground path.",
+      "source": { "doc": "SLVSB02B", "page": 23, "section": "12.1 Layout Guidelines" }
+    },
+    {
+      "note": "The exposed thermal pad and the GND pin must be connected; the exposed pad is not electrically connected to the IC but must be soldered and used as a central GND plane. This makes theta_JA and the return-current path the same design decision.",
+      "source": { "doc": "SLVSB02B", "page": 3, "section": "7 Pin Configuration and Functions" }
+    },
+    {
+      "note": "Once VIN falls close to VOUT the part enters no-ripple 100% mode: it stops switching entirely and connects the output to the input. Conducted switching emission therefore disappears at low battery voltage and is worst at high VIN, which is the opposite of most thermal worst cases.",
+      "source": { "doc": "SLVSB02B", "page": 1, "section": "3 Description" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps62740.pdf",
+    "doc_revision": "SLVSB02B (November 2013, revised July 2014)",
+    "review_status": "extracted",
+    "notes": "Output voltage ripple is NOT specified numerically anywhere in this datasheet -- it appears only as oscilloscope captures (Figures 23-27, pages 17-18) and as a qualitative 'low output ripple voltage' claim, so emissions.conducted[0].ripple is deliberately absent rather than read off a plot. di_dt is not stated. Only one theta_JA entry exists because the part ships in a single package (DSS/WSON-12) and TI's table gives no second copper-area condition; unlike the MCP73831 there is no large-copper alternate figure. Switching frequency is given only as an upper bound ('up to 2 MHz'), not as a typical fixed value, because DCS-Control is a quasi-fixed-frequency hysteretic topology; the fundamental drops with load current in Power Save Mode. Page numbers are PDF page numbers, which coincide with the printed page numbers in this document."
+  }
+}

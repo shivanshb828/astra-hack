@@ -1,0 +1,171 @@
+{
+  "id": "afe4404",
+  "mpn": "AFE4404",
+  "manufacturer": "Texas Instruments",
+  "role": "ppg_afe",
+
+  "mechanical": {
+    "package": "DSBGA-15 (YZP0015), 2.6 x 1.6 mm, 0.5 mm pitch",
+    "length_mm": {
+      "value": 2.6, "unit": "mm", "qualifier": "nominal",
+      "conditions": "YZP0015 package outline, D = 2.6 mm",
+      "source": { "doc": "SBAS689D", "page": 79, "section": "YZP0015 DSBGA package outline" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 1.6, "unit": "mm", "qualifier": "nominal",
+      "conditions": "YZP0015 package outline, E = 1.6 mm",
+      "source": { "doc": "SBAS689D", "page": 79, "section": "YZP0015 DSBGA package outline" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 0.5, "unit": "mm", "qualifier": "max",
+      "conditions": "YZP0015 overall height from seating plane, '0.5 MAX'",
+      "source": { "doc": "SBAS689D", "page": 79, "section": "YZP0015 DSBGA package outline" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": false,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 2.0, "unit": "V", "qualifier": "min",
+      "conditions": "RX_SUP receiver supply, Recommended Operating Conditions. Three separate rails: RX_SUP 2-3.6 V, IO_SUP 1.7 V to min(3.6, RX_SUP), TX_SUP 3.0-5.25 V.",
+      "source": { "doc": "SBAS689D", "page": 6, "section": "7.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 5.25, "unit": "V", "qualifier": "max",
+      "conditions": "TX_SUP transmitter supply, Recommended Operating Conditions (the highest of the three rails; RX_SUP maxes at 3.6 V)",
+      "source": { "doc": "SBAS689D", "page": 6, "section": "7.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 3, "unit": "uA", "qualifier": "typ",
+      "conditions": "RX_SUP current in hardware power-down (PWDN) mode, external clock mode with the external clock switched off (IO_SUP 3 uA, TX_SUP 2 uA in the same state)",
+      "source": { "doc": "SBAS689D", "page": 8, "section": "7.5 Electrical Characteristics -- CURRENT CONSUMPTION" },
+      "review_status": "extracted"
+    },
+    "i_typ": {
+      "value": 300, "unit": "uA", "qualifier": "typ",
+      "conditions": "RX_SUP current, normal operation in dynamic power-down mode (dynamic power-down 90% / active 10% of the period); TX_SUP = 4 V, RX_SUP = IO_SUP = 3 V, 100-Hz PRF. Excludes LED drive current.",
+      "source": { "doc": "SBAS689D", "page": 8, "section": "7.5 Electrical Characteristics -- CURRENT CONSUMPTION" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 100, "unit": "mA", "qualifier": "max",
+      "conditions": "Peak LED drive current sourced through TX_SUP in 100-mA LED current mode (ILED_2X = 1); 50 mA in the default ILED_2X = 0 mode. Pulsed, limited to 3% cumulative duty cycle at 100 mA and 10% at 50 mA by the Absolute Maximum Ratings.",
+      "source": { "doc": "SBAS689D", "page": 7, "section": "7.5 Electrical Characteristics -- TRANSMITTER, LED current range" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 67.5, "unit": "C/W", "qualifier": "typ",
+          "conditions": "YZP (DSBGA) 15 balls, junction-to-ambient thermal resistance per TI thermal metrics (JEDEC standard board)",
+          "source": { "doc": "SBAS689D", "page": 6, "section": "7.4 Thermal Information" },
+          "review_status": "extracted"
+        }
+      ],
+      "dissipation_model": {
+        "expression": "v_tx_sup * i_led * led_duty_cycle",
+        "variables": {
+          "v_tx_sup": "TX_SUP rail voltage, 3.0 V to 5.25 V -- a design choice set by the LED forward drop (TX_SUP must be at least 0.5 + VLED in 50-mA mode, 1.0 + VLED in 100-mA mode)",
+          "i_led": "Programmed LED current, 0-50 mA (ILED_2X = 0) or 0-100 mA (ILED_2X = 1), 6-bit programmable -- a design choice, not a part property",
+          "led_duty_cycle": "Cumulative sum of all LED phase durations over the total period; the Absolute Maximum Ratings cap this at 10% in 50-mA mode and 3% in 100-mA mode"
+        },
+        "unit": "W",
+        "source": { "doc": "SBAS689D", "page": 6, "section": "7.1 Absolute Maximum Ratings / 7.3 Recommended Operating Conditions" },
+        "review_status": "assumed"
+      }
+    },
+
+    "conducted": [
+      {
+        "mechanism": "load_transient",
+        "f_fundamental_hz": {
+          "value": 100, "unit": "Hz", "qualifier": "typ",
+          "conditions": "Pulse repetition frequency (PRF), the rate at which the LED phases fire. Programmable 10 SPS to 1000 SPS; 100-Hz PRF is the datasheet's Electrical Characteristics test condition. Each pulse steps the TX_SUP current between ~0 and the programmed LED current (up to 50 or 100 mA).",
+          "source": { "doc": "SBAS689D", "page": 7, "section": "7.5 Electrical Characteristics -- PULSE REPETITION FREQUENCY" },
+          "review_status": "extracted"
+        },
+        "harmonics_modeled": 5
+      },
+      {
+        "mechanism": "digital_clock",
+        "f_fundamental_hz": {
+          "value": 4000000, "unit": "Hz", "qualifier": "typ",
+          "conditions": "Internal oscillator frequency, 4 MHz, +/-1% accuracy at room temperature. In external clock mode the input clock may be 4 MHz to 60 MHz instead.",
+          "source": { "doc": "SBAS689D", "page": 7, "section": "7.5 Electrical Characteristics -- CLOCKING (Internal Oscillator)" },
+          "review_status": "extracted"
+        },
+        "harmonics_modeled": 5
+      }
+    ]
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -20, "unit": "C", "qualifier": "min",
+        "conditions": "Operating temperature range, Recommended Operating Conditions. Note this is a narrower range than most of the BOM (-20 C, not -40 C).",
+        "source": { "doc": "SBAS689D", "page": 6, "section": "7.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 70, "unit": "C", "qualifier": "max",
+        "conditions": "Operating temperature range, Recommended Operating Conditions",
+        "source": { "doc": "SBAS689D", "page": 6, "section": "7.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      }
+    },
+
+    "conducted": [
+      {
+        "band_hz": [0, 2500],
+        "reason": "PPG receive chain passband. The switched-RC filter after the transimpedance amplifier has a 2.5-kHz bandwidth (which scales down with sampling duty cycle -- roughly 50 Hz at a 2% sampling width). The photodiode input nets INP/INN are the vulnerable nodes; anything conducted into them inside this band lands directly on the heart-rate signal.",
+        "noise_floor": {
+          "value": 100, "unit": "dBFS", "qualifier": "typ",
+          "conditions": "Receiver SNR over a 20-Hz bandwidth, 500-kOhm gain setting, 50% FS output, 2% LED and sampling pulse duration, ADC averages = 16. dBFS refers to a 2-V full scale, so this is an SNR figure, not an absolute input-referred noise voltage.",
+          "source": { "doc": "SBAS689D", "page": 7, "section": "7.5 Electrical Characteristics -- PERFORMANCE" },
+          "review_status": "extracted"
+        }
+      }
+    ]
+  },
+
+  "design_notes": [
+    {
+      "note": "TX1, TX2 and TX3 are fast-switching LED drive lines and must be routed away from the sensitive INP/INN photodiode inputs. This is the device's own primary layout rule: the AFE is simultaneously the noise source and the victim, so the two net classes must be physically separated on the board.",
+      "source": { "doc": "SBAS689D", "page": 77, "section": "11.1 Layout Guidelines" }
+    },
+    {
+      "note": "The device draws high switching currents from the TX_SUP pin; a decoupling capacitor must be electrically close to that pin. The LED pulse is a hard load transient on TX_SUP, so the loop area between the cap, the pin, and the LED return must be minimised.",
+      "source": { "doc": "SBAS689D", "page": 77, "section": "11.1 Layout Guidelines" }
+    },
+    {
+      "note": "Ambient light adds to the LED-phase output because it reaches the photodiode the same way LED light does. Ambient subtraction only cancels it if the effect on the LED and ambient phases is equal; any periodic modulation of ambient light produces spurious tones in the (LED-Ambient) data. Keep t1 (start of LED to start of sampling) above 25 us, prevent any phase output from saturating the TIA, and minimise the spacing between LED and ambient sampling instants.",
+      "source": { "doc": "SBAS689D", "page": 70, "section": "9.2.2.2 Reducing Sensitivity to Ambient Light Modulation" }
+    },
+    {
+      "note": "TIA output saturation disturbs the photodiode bias, and the recovery transient can span into the following phases -- e.g. saturation in the LED3 phase can corrupt both LED1 and Ambient1. Every phase must be kept out of saturation by periodic gain adjustment, even phases whose data the heart-rate algorithm ignores.",
+      "source": { "doc": "SBAS689D", "page": 70, "section": "9.2.2.2 Reducing Sensitivity to Ambient Light Modulation" }
+    },
+    {
+      "note": "Supply sequencing is prescribed: RX_SUP first, then IO_SUP, then TX_SUP, then release RESETZ, before any I2C device settings are written. A power tree that brings TX_SUP up before RX_SUP violates the documented sequence.",
+      "source": { "doc": "SBAS689D", "page": 75, "section": "10 Power Supply Recommendations, Figure 96" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/afe4404.pdf",
+    "doc_revision": "SBAS689D, June 2015, revised December 2016",
+    "review_status": "extracted",
+    "notes": "Only one package is offered (YZP DSBGA, 15 balls), so theta_ja has a single entry. No junction-temperature limit is published -- the Absolute Maximum Ratings table lists storage temperature (-60 to 150 C) but no TJ max -- so t_junction_max is deliberately absent. No dissipation number is given either; the dissipation_model is marked 'assumed' because the datasheet states the LED current range, the TX_SUP range and the duty-cycle limits but never writes the product as a dissipation formula, so the expression is our composition of those three stated facts and must be reviewed as such. No radiated-emissions entry: no intentional transmitter (the 'transmitter' here is an LED driver, an optical source, not RF). susceptibility.conducted noise_floor is recorded as the datasheet's receiver SNR in dBFS because TI publishes no input-referred current or voltage noise density for this part."
+  }
+}

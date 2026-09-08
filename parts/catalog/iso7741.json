@@ -1,0 +1,163 @@
+{
+  "id": "iso7741",
+  "mpn": "ISO7741",
+  "manufacturer": "Texas Instruments",
+  "role": "digital_isolator",
+
+  "mechanical": {
+    "package": "SOIC-WB (DW-16)",
+    "length_mm": {
+      "value": 10.5, "unit": "mm", "qualifier": "max",
+      "conditions": "DW0016B package outline, body length excluding mold flash (10.1 min / 10.5 max); does not include lead span, which is 10.63/9.97 typ",
+      "source": { "doc": "SLLSEP4K", "page": 46, "section": "PACKAGE OUTLINE DW0016B" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 7.6, "unit": "mm", "qualifier": "max",
+      "conditions": "DW0016B package outline, body width excluding interlead flash (7.4 min / 7.6 max); lead-tip-to-lead-tip span is 10.5/10.1",
+      "source": { "doc": "SLLSEP4K", "page": 46, "section": "PACKAGE OUTLINE DW0016B" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 2.65, "unit": "mm", "qualifier": "max",
+      "conditions": "DW0016B, seated height above PCB, 'SOIC - 2.65 mm max height'",
+      "source": { "doc": "SLLSEP4K", "page": 46, "section": "PACKAGE OUTLINE DW0016B" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": false,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 2.25, "unit": "V", "qualifier": "min",
+      "conditions": "VCC1, VCC2 recommended supply voltage",
+      "source": { "doc": "SLLSEP4K", "page": 7, "section": "5.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 5.5, "unit": "V", "qualifier": "max",
+      "conditions": "VCC1, VCC2 recommended supply voltage",
+      "source": { "doc": "SLLSEP4K", "page": 7, "section": "5.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "i_typ": {
+      "value": 3.2, "unit": "mA", "qualifier": "typ",
+      "conditions": "ISO7741 ICC1 (side 1 only), VCC1 = VCC2 = 5 V, all channels switching with 1-Mbps square-wave clock, CL = 15 pF. Side 2 draws ICC2 = 2.8 mA typ under the same condition; the two sides are separately supplied and must be budgeted separately.",
+      "source": { "doc": "SLLSEP4K", "page": 14, "section": "5.10 Supply Current Characteristics--5-V Supply" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 1.0, "unit": "mA", "qualifier": "typ",
+      "conditions": "ISO7741 ICC1 with both outputs disabled (EN1 = EN2 = 0 V, VI = VCCI), VCC = 5 V. ICC2 = 0.8 mA typ in the same state.",
+      "source": { "doc": "SLLSEP4K", "page": 14, "section": "5.10 Supply Current Characteristics--5-V Supply" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 83.4, "unit": "C/W", "qualifier": "typ",
+          "conditions": "DW (SOIC) 16-pin, junction-to-ambient thermal resistance, JEDEC standard board",
+          "source": { "doc": "SLLSEP4K", "page": 8, "section": "5.4 Thermal Information" },
+          "review_status": "extracted"
+        },
+        {
+          "value": 109, "unit": "C/W", "qualifier": "typ",
+          "conditions": "DBQ (QSOP) 16-pin, junction-to-ambient thermal resistance, JEDEC standard board",
+          "source": { "doc": "SLLSEP4K", "page": 8, "section": "5.4 Thermal Information" },
+          "review_status": "extracted"
+        },
+        {
+          "value": 75.2, "unit": "C/W", "qualifier": "typ",
+          "conditions": "DUW (SSOP, ultra-wide-creepage ISO7741U) 16-pin, junction-to-ambient thermal resistance",
+          "source": { "doc": "SLLSEP4K", "page": 8, "section": "5.4 Thermal Information" },
+          "review_status": "extracted"
+        }
+      ],
+      "dissipation": {
+        "value": 215, "unit": "mW", "qualifier": "max",
+        "conditions": "ISO7741 PD, both sides combined, VCC1 = VCC2 = 5.5 V, TJ = 150 C, CL = 15 pF, 50-MHz 50% duty-cycle square-wave input. Split PD1 = 75 mW (side 1), PD2 = 140 mW (side 2). This is the absolute worst case at full rate, not the ECG-patch operating point.",
+        "source": { "doc": "SLLSEP4K", "page": 8, "section": "5.5 Power Ratings" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -55, "unit": "C", "qualifier": "min",
+        "conditions": "TA, ambient temperature, recommended operating conditions",
+        "source": { "doc": "SLLSEP4K", "page": 7, "section": "5.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 125, "unit": "C", "qualifier": "max",
+        "conditions": "TA, ambient temperature, recommended operating conditions",
+        "source": { "doc": "SLLSEP4K", "page": 7, "section": "5.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_junction_max": {
+        "value": 150, "unit": "C", "qualifier": "abs_max",
+        "conditions": "TJ, junction temperature, absolute maximum rating",
+        "source": { "doc": "SLLSEP4K", "page": 6, "section": "5.1 Absolute Maximum Ratings" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "safety": {
+    "isolation_v_rms": {
+      "value": 5000, "unit": "V", "qualifier": "max",
+      "conditions": "VISO, maximum withstanding isolation voltage, DW-16 package, per UL 1577. VTEST = VISO for t = 60 s (qualification), VTEST = 1.2 x VISO for t = 1 s (100% production). The DBQ-16 package is rated 3000 VRMS and the DUW-16 5700 VRMS.",
+      "source": { "doc": "SLLSEP4K", "page": 10, "section": "5.6 Insulation Specifications" },
+      "review_status": "extracted"
+    },
+    "creepage_mm": {
+      "value": 8, "unit": "mm", "qualifier": "min",
+      "conditions": "CPG, external creepage, DW-16 package: shortest terminal-to-terminal distance across the package surface, specified as '>8 mm'. DBQ-16 is >3.7 mm; the ultra-wide DUW-16 (ISO7741U) is >21.2 mm.",
+      "source": { "doc": "SLLSEP4K", "page": 9, "section": "5.6 Insulation Specifications" },
+      "review_status": "extracted"
+    },
+    "clearance_mm": {
+      "value": 8, "unit": "mm", "qualifier": "min",
+      "conditions": "CLR, external clearance, DW-16 package: shortest terminal-to-terminal distance through air, specified as '>8 mm'. DBQ-16 is >3.7 mm; DUW-16 is >21.2 mm.",
+      "source": { "doc": "SLLSEP4K", "page": 9, "section": "5.6 Insulation Specifications" },
+      "review_status": "extracted"
+    }
+  },
+
+  "design_notes": [
+    {
+      "note": "The package creepage and clearance figures are a ceiling, not a guarantee: the datasheet warns that the isolator's own PCB mounting pads can reduce the achieved distance below the package rating, and that on a printed circuit board creepage and clearance become equal in certain cases. Board spacing must be checked independently of the part number, and grooves or ribs in the board can be used to restore the distance.",
+      "source": { "doc": "SLLSEP4K", "page": 10, "section": "5.6 Insulation Specifications, Note 1" }
+    },
+    {
+      "note": "TI publishes two land patterns for DW0016B: an IPC-7351 nominal pattern that yields 7.3 mm board clearance/creepage, and an HV/isolation-option pattern that yields 8.1 mm. Choosing the nominal footprint silently degrades the barrier from the package's >8 mm rating to 7.3 mm. For a patient-connected barrier the HV/isolation land pattern is the one to use.",
+      "source": { "doc": "SLLSEP4K", "page": 47, "section": "EXAMPLE BOARD LAYOUT DW0016B" }
+    },
+    {
+      "note": "The board region directly beneath the isolation barrier must be kept free from planes, traces, pads and vias. A ground or power pour continued under the package bridges the barrier and destroys the isolation regardless of the part's rating.",
+      "source": { "doc": "SLLSEP4K", "page": 35, "section": "8.4.2 Layout Example, Figure 8-8" }
+    },
+    {
+      "note": "Creepage and clearance requirements must be applied according to the specific equipment isolation standard of the application; the part is suitable for safe electrical insulation only within its safety ratings, and compliance must be ensured by suitable protective circuits. The device carries IEC 60601-1 certification via CSA, which is the relevant standard for a patient-connected device.",
+      "source": { "doc": "SLLSEP4K", "page": 11, "section": "5.7 Safety-Related Certifications" }
+    },
+    {
+      "note": "A 0.1-uF bypass capacitor is required at both VCC1 and VCC2, placed as close to the supply pins as possible. If only one primary-side supply exists, the secondary side needs isolated power (e.g. a transformer driver) -- the isolator does not carry power across the barrier.",
+      "source": { "doc": "SLLSEP4K", "page": 34, "section": "8.3 Power Supply Recommendations" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/iso7741.pdf",
+    "doc_revision": "SLLSEP4K (March 2016, revised August 2026)",
+    "review_status": "extracted",
+    "notes": "Extracted for the DW-16 (SOIC-WB) package, the 5000-VRMS reinforced option, because that is the variant whose creepage/clearance (>8 mm) supports a patient-isolation barrier; the DBQ-16 QSOP alternative is only >3.7 mm / 3000 VRMS and is recorded in the conditions strings rather than as separate records. Datasheet is a family document covering ISO7740/ISO7741/ISO7742; all electrical and power figures here are taken from the ISO7741 rows specifically. Creepage and clearance are given by TI as inequalities ('>8 mm'); recorded as value 8 with qualifier 'min', which is exactly what '>8' asserts. No conducted or radiated emissions entries: the datasheet claims low emissions and quantifies EMC only as immunity levels (IEC 61000-4-2 +/-8 kV across the barrier, +/-100 kV/us typical CMTI), giving no emitted spectrum or amplitude to record. No mechanical emissions or susceptibility. Barrier capacitance (CIO ~1 pF) and isolation resistance (>1e12 ohm) are in the datasheet but have no schema field and were omitted rather than forced into an unrelated one."
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "id": "iso1541",
+  "mpn": "ISO1541",
+  "manufacturer": "Texas Instruments",
+  "role": "i2c_isolator",
+
+  "mechanical": {
+    "package": "SOIC-8 (D)",
+    "length_mm": {
+      "value": 5.0, "unit": "mm", "qualifier": "max",
+      "conditions": "D0008A package outline, body length 4.81-5.00 mm excluding mold flash; lead span across the body ends is 5.80-6.19 mm typ",
+      "source": { "doc": "SLLSEB6F", "page": 33, "section": "PACKAGE OUTLINE D0008A" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 3.98, "unit": "mm", "qualifier": "max",
+      "conditions": "D0008A package outline, body width 3.81-3.98 mm excluding interlead flash; lead-tip-to-lead-tip span is 5.80-6.19 mm",
+      "source": { "doc": "SLLSEB6F", "page": 33, "section": "PACKAGE OUTLINE D0008A" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 1.75, "unit": "mm", "qualifier": "max",
+      "conditions": "D0008A, seated height above PCB, 'SOIC - 1.75 mm max height'",
+      "source": { "doc": "SLLSEB6F", "page": 33, "section": "PACKAGE OUTLINE D0008A" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": false,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 3, "unit": "V", "qualifier": "min",
+      "conditions": "VCC1, VCC2 supply voltage, recommended operating conditions",
+      "source": { "doc": "SLLSEB6F", "page": 6, "section": "6.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 5.5, "unit": "V", "qualifier": "max",
+      "conditions": "VCC1, VCC2 supply voltage, recommended operating conditions",
+      "source": { "doc": "SLLSEB6F", "page": 6, "section": "6.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "i_typ": {
+      "value": 2.3, "unit": "mA", "qualifier": "typ",
+      "conditions": "ISO1541 ICC1 (side 1 only), 3 V <= VCC <= 3.6 V, bus lines idle high (VSDA1/VSCL1 = VCC1, VSDA2/VSCL2 = VCC2), R1/R2 and C1/C2 open. Side 2 draws ICC2 = 1.9 mA typ under the same condition; the two sides are separately supplied and must be budgeted separately. With bus lines held low, ICC1 rises to 2.1 mA typ but its max more than doubles (6.1 mA).",
+      "source": { "doc": "SLLSEB6F", "page": 11, "section": "6.10 Supply Current Characteristics" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 3.6, "unit": "mA", "qualifier": "max",
+      "conditions": "ISO1541 ICC1 (side 1 only), 3 V <= VCC <= 3.6 V, bus lines idle high, R1/R2 and C1/C2 open. Worst case over all conditions in this table is 6.1 mA (ICC1, bus lines held low).",
+      "source": { "doc": "SLLSEB6F", "page": 11, "section": "6.10 Supply Current Characteristics" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 114.6, "unit": "C/W", "qualifier": "typ",
+          "conditions": "D (SOIC) 8-pin, junction-to-ambient thermal resistance, device installed on a high-K test board for leaded surface-mount packages",
+          "source": { "doc": "SLLSEB6F", "page": 7, "section": "6.4 Thermal Information" },
+          "review_status": "extracted"
+        }
+      ],
+      "dissipation": {
+        "value": 105, "unit": "mW", "qualifier": "max",
+        "conditions": "PD, both sides combined, VCC1 = VCC2 = 5.5 V, TJ = 150 C, C1 = 20 pF, C2 = 400 pF, R1 = 1.4 kohm, R2 = 94 ohm, 1-MHz 50% duty-cycle clock. Split PD1 = 37 mW (side 1), PD2 = 68 mW (side 2). This is worst case at full bus load and 1 MHz, not the ECG-patch operating point.",
+        "source": { "doc": "SLLSEB6F", "page": 7, "section": "6.5 Power Ratings" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "TA, ambient temperature, recommended operating conditions",
+        "source": { "doc": "SLLSEB6F", "page": 6, "section": "6.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 125, "unit": "C", "qualifier": "max",
+        "conditions": "TA, ambient temperature, recommended operating conditions",
+        "source": { "doc": "SLLSEB6F", "page": 6, "section": "6.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_junction_max": {
+        "value": 136, "unit": "C", "qualifier": "max",
+        "conditions": "TJ, recommended-operating-conditions junction temperature ceiling. The absolute-maximum TJ(MAX) is 150 C, and an on-die thermal shutdown trips somewhere between 139 C and 197 C, so operation above 136 C risks the part shutting itself off rather than merely degrading.",
+        "source": { "doc": "SLLSEB6F", "page": 6, "section": "6.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "safety": {
+    "isolation_v_rms": {
+      "value": 2500, "unit": "V", "qualifier": "max",
+      "conditions": "VISO, withstand isolation voltage per UL 1577. VTEST = VISO = 2500 VRMS for t = 60 s (qualification); VTEST = 3000 VRMS for t = 1 s (100% production). This is BASIC insulation, not reinforced -- see design notes.",
+      "source": { "doc": "SLLSEB6F", "page": 8, "section": "6.6 Insulation Specifications, UL 1577" },
+      "review_status": "extracted"
+    },
+    "creepage_mm": {
+      "value": 4, "unit": "mm", "qualifier": "min",
+      "conditions": "CPG, external creepage: shortest terminal-to-terminal distance across the package surface, specified as '>4 mm' for the SOIC-8 (D) package -- the only package this device is offered in.",
+      "source": { "doc": "SLLSEB6F", "page": 8, "section": "6.6 Insulation Specifications" },
+      "review_status": "extracted"
+    },
+    "clearance_mm": {
+      "value": 4, "unit": "mm", "qualifier": "min",
+      "conditions": "CLR, external clearance: shortest terminal-to-terminal distance through air, specified as '>4 mm' for the SOIC-8 (D) package.",
+      "source": { "doc": "SLLSEB6F", "page": 8, "section": "6.6 Insulation Specifications" },
+      "review_status": "extracted"
+    }
+  },
+
+  "design_notes": [
+    {
+      "note": "This part provides BASIC insulation only. The datasheet states the coupler is suitable for basic electrical insulation only within the maximum operating ratings, and the CQC and CSA certifications are both explicitly basic-insulation entries (300 VRMS basic working voltage per CSA/IEC 62368-1, 250 VRMS maximum working voltage per GB4943.1). Unlike the ISO7741 DW-16, it carries no IEC 60601-1 certification. A single ISO1541 is therefore not a means of patient protection on its own; a patient-connected barrier built on it needs a second independent means of protection.",
+      "source": { "doc": "SLLSEB6F", "page": 9, "section": "6.7 Safety-Related Certifications" }
+    },
+    {
+      "note": "Creepage and clearance are only >4 mm -- half the ISO7741 DW-16's >8 mm. The datasheet's own caveat applies with more force at this size: the isolator's PCB mounting pads can reduce the achieved distance below the package figure, and on a printed circuit board creepage and clearance become equal in certain cases. Grooves or ribs in the board are the stated remedy.",
+      "source": { "doc": "SLLSEB6F", "page": 8, "section": "6.6 Insulation Specifications, Note 1" }
+    },
+    {
+      "note": "Safety limiting: a failure of the I/O circuitry can present a low resistance to ground or supply and, without current limiting, dissipate enough power to overheat the die and damage the isolation barrier, leading to secondary system failures. The safety input/output/supply current limit is 198 mA at VI = 5.5 V (303 mA at 3.6 V) with RthetaJA = 114.6 C/W, TJ = 150 C, TA = 25 C, and derates with ambient temperature per the thermal derating curve. The barrier's integrity is therefore a thermal question, not only a voltage question.",
+      "source": { "doc": "SLLSEB6F", "page": 9, "section": "6.8 Safety Limiting Values" }
+    },
+    {
+      "note": "The board region directly beneath the isolation barrier must be kept free from planes, traces, pads and vias. A pour continued under the package bridges the barrier regardless of the part's rating.",
+      "source": { "doc": "SLLSEB6F", "page": 27, "section": "10.2 Layout Example, Figure 10-1" }
+    },
+    {
+      "note": "A 0.1-uF bypass capacitor is required at both VCC1 and VCC2, and the typical hookup diagrams call out a 2 mm maximum distance from each capacitor to its supply pin. Both sides also need I2C pull-ups (1 kohm shown in the reference hookup); the isolator does not carry power across the barrier, so side 2 needs its own isolated supply.",
+      "source": { "doc": "SLLSEB6F", "page": 25, "section": "8.2.2 / 9 Power Supply Recommendations, Figure 8-6" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/iso1541.pdf",
+    "doc_revision": "SLLSEB6F (July 2012, revised December 2022)",
+    "review_status": "extracted",
+    "notes": "Family datasheet covering ISO1540 and ISO1541; only one package (SOIC-8, D) is offered, so the insulation table has a single column and needs no variant choice. All supply-current figures are taken from the ISO1541-labelled rows specifically (verified against the -layout rendering of the table, since the plain text flow interleaves the ISO1540 and ISO1541 rows). Creepage and clearance are stated as '>4 mm'; recorded as value 4 with qualifier 'min', which is exactly what '>4' asserts. Distance through insulation (0.014 mm) has no schema field and was omitted, as were barrier capacitance (~1 pF) and isolation resistance (>1e12 ohm). No conducted, radiated or mechanical emissions entries: the datasheet quantifies EMC only as immunity (CMTI 25 kV/us min, 50 kV/us typ) and gives no emitted spectrum. No mechanical susceptibility."
+  }
+}

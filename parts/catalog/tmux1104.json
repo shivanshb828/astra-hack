@@ -1,0 +1,155 @@
+{
+  "id": "tmux1104",
+  "mpn": "TMUX1104",
+  "manufacturer": "Texas Instruments",
+  "role": "analog_mux",
+
+  "mechanical": {
+    "package": "USON-10 (DQA0010A), 2.5 x 1.0 mm, 0.5 mm pitch",
+    "length_mm": {
+      "value": 2.5, "unit": "mm", "qualifier": "nominal",
+      "conditions": "DQA0010A package outline, body dimension A: 2.6 max / 2.4 min",
+      "source": { "doc": "SCDS392C", "page": 35, "section": "DQA0010A PACKAGE OUTLINE" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 1.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "DQA0010A package outline, body dimension B: 1.1 max / 0.9 min",
+      "source": { "doc": "SCDS392C", "page": 35, "section": "DQA0010A PACKAGE OUTLINE" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 0.55, "unit": "mm", "qualifier": "max",
+      "conditions": "DQA0010A overall height from seating plane, 'USON - 0.55 mm max height'",
+      "source": { "doc": "SCDS392C", "page": 35, "section": "DQA0010A PACKAGE OUTLINE" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": false,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 1.08, "unit": "V", "qualifier": "min",
+      "conditions": "VDD positive power supply voltage, Recommended Operating Conditions",
+      "source": { "doc": "SCDS392C", "page": 4, "section": "5.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 5.5, "unit": "V", "qualifier": "max",
+      "conditions": "VDD positive power supply voltage, Recommended Operating Conditions (absolute maximum 6 V)",
+      "source": { "doc": "SCDS392C", "page": 4, "section": "5.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 0.005, "unit": "uA", "qualifier": "typ",
+      "conditions": "IDD, VDD supply current at TA = 25 C, VDD = 5 V, logic inputs = 0 V or 5.5 V",
+      "source": { "doc": "SCDS392C", "page": 6, "section": "5.5 Electrical Characteristics (VDD = 5V +/-10%) -- POWER SUPPLY" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 1, "unit": "uA", "qualifier": "max",
+      "conditions": "IDD, VDD supply current over TA = -40 C to +125 C, VDD = 5 V. This is the device's own supply draw; the signal path separately carries up to IDC = 150 mA continuous at TJ = 25 C (derating to 50 mA at TJ = 130 C).",
+      "source": { "doc": "SCDS392C", "page": 6, "section": "5.5 Electrical Characteristics (VDD = 5V +/-10%) -- POWER SUPPLY" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 173.0, "unit": "C/W", "qualifier": "typ",
+          "conditions": "DQA (USON) 10 pins, junction-to-ambient thermal resistance per TI thermal metrics (JEDEC standard board)",
+          "source": { "doc": "SCDS392C", "page": 5, "section": "5.4 Thermal Information" },
+          "review_status": "extracted"
+        },
+        {
+          "value": 193.9, "unit": "C/W", "qualifier": "typ",
+          "conditions": "DGS (VSSOP) 10 pins, junction-to-ambient thermal resistance per TI thermal metrics (JEDEC standard board)",
+          "source": { "doc": "SCDS392C", "page": 5, "section": "5.4 Thermal Information" },
+          "review_status": "extracted"
+        }
+      ],
+      "dissipation": {
+        "value": 500, "unit": "mW", "qualifier": "abs_max",
+        "conditions": "Ptot, total power dissipation, Absolute Maximum Ratings. Derates linearly above TA = 63 C by 5.78 mW/C for the DQA (USON) package, and above TA = 53 C by 5.16 mW/C for the DGS (VSSOP) package. Actual dissipation is I^2 x RON, with RON = 2 ohms typ at VDD = 5 V.",
+        "source": { "doc": "SCDS392C", "page": 4, "section": "5.1 Absolute Maximum Ratings, notes 5 and 6" },
+        "review_status": "extracted"
+      }
+    },
+
+    "conducted": [
+      {
+        "mechanism": "load_transient",
+        "harmonics_modeled": 5
+      }
+    ]
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "TA ambient temperature, Recommended Operating Conditions",
+        "source": { "doc": "SCDS392C", "page": 4, "section": "5.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 125, "unit": "C", "qualifier": "max",
+        "conditions": "TA ambient temperature, Recommended Operating Conditions",
+        "source": { "doc": "SCDS392C", "page": 4, "section": "5.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_junction_max": {
+        "value": 150, "unit": "C", "qualifier": "abs_max",
+        "conditions": "TJ junction temperature, Absolute Maximum Ratings. Note the current ratings in the Recommended Operating Conditions are themselves indexed to TJ (150 mA continuous at TJ = 25 C, 50 mA at TJ = 130 C), so junction heating directly limits how much signal current the switch may carry."
+        ,
+        "source": { "doc": "SCDS392C", "page": 4, "section": "5.1 Absolute Maximum Ratings" },
+        "review_status": "extracted"
+      }
+    },
+
+    "conducted": [
+      {
+        "band_hz": [0, 155000000],
+        "reason": "The switch is transparent, by design, from DC to its 155 MHz -3 dB bandwidth, so it does not attenuate anything coupled onto the Sx or D nets inside that range -- whatever reaches the mux input reaches the ADC. Its own rejection of the OFF channels is finite and degrades fast with frequency: off-isolation and channel-to-channel crosstalk are both -65 dB at 1 MHz but only -45 dB at 10 MHz (RL = 50 ohm, CL = 5 pF, 25 C). An aggressor on a deselected channel is therefore 20 dB less suppressed at 10 MHz than at 1 MHz."
+      }
+    ]
+  },
+
+  "design_notes": [
+    {
+      "note": "Do not run sensitive analog traces in parallel with digital traces; avoid crossing analog and digital traces, and make only perpendicular crossings where a crossing is unavoidable. Keep the input lines as short as possible and use a solid ground plane to reduce EMI pickup.",
+      "source": { "doc": "SCDS392C", "page": 25, "section": "8.4.1 Layout Guidelines" }
+    },
+    {
+      "note": "Decouple VDD with 0.1 uF placed as close to the pin as possible, on a wide low-inductance power trace. TI recommends MLCCs (low ESR/ESL) and a 0.1 uF to 10 uF range for supply noise immunity. For very sensitive systems or harsh noise environments, avoiding vias between the capacitor and the device pins offers superior noise immunity; use multiple parallel vias for ground-plane connections to lower inductance.",
+      "source": { "doc": "SCDS392C", "page": 24, "section": "8.3 Power Supply Recommendations / 8.4.1 Layout Guidelines" }
+    },
+    {
+      "note": "Switching a channel injects charge into the signal path: QC = 1.5 pC typ (VS = 1 V, RS = 0 ohm, CL = 1 nF, 25 C). Into a high-impedance source this appears as a settling glitch on every channel change, so the mux is a transient source on the very net it is protecting. Transition time between channels is 14 ns typ and break-before-make is 8 ns typ, guaranteed at least 1 ns, so channels never short together during a switch.",
+      "source": { "doc": "SCDS392C", "page": 6, "section": "5.5 Electrical Characteristics (VDD = 5V +/-10%) -- DYNAMIC CHARACTERISTICS" }
+    },
+    {
+      "note": "Ultra-low leakage is what makes this switch usable in front of a high-impedance analog front end: channel on-leakage is +/-3 pA typ at 25 C (VDD = 5 V, VD = VS = 2.5 V), rising to +/-0.95 nA max over -40 C to +125 C. Leakage into a large source impedance is a DC offset error, and it is temperature-dependent -- a nearby heat source degrades it by roughly two orders of magnitude across the operating range.",
+      "source": { "doc": "SCDS392C", "page": 5, "section": "5.5 Electrical Characteristics (VDD = 5V +/-10%) -- ANALOG SWITCH" }
+    },
+    {
+      "note": "A 90-degree PCB trace corner widens the trace by a factor of 1.414 at the apex, upsetting the distributed capacitance and self-inductance and causing a reflection. Where a signal trace must turn, use a rounded corner that maintains constant trace width.",
+      "source": { "doc": "SCDS392C", "page": 25, "section": "8.4.1 Layout Guidelines" }
+    },
+    {
+      "note": "The device needs no external components beyond supply decoupling. If a disabled power-up state is required, EN needs a weak pull-down and MCU GPIO control. All muxed inputs must stay inside the Recommended Operating Conditions -- 0 V to VDD signal range and the continuous current limit.",
+      "source": { "doc": "SCDS392C", "page": 24, "section": "8.2.2 Detailed Design Procedure" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/tmux1104.pdf",
+    "doc_revision": "SCDS392C, November 2018, revised February 2024",
+    "review_status": "extracted",
+    "notes": "Both offered packages (DGS VSSOP-10 and DQA USON-10) are in theta_ja; mechanical records the DQA USON as the space-constrained choice. Neither package has an exposed thermal pad -- RthJC(bot) is listed as N/A for both. The conducted-emissions entry carries only its mechanism: the mux has no free-running oscillator and no switching regulator, so there is no f_fundamental to record; its emission is the 1.5 pC charge-injection glitch at each channel change, whose rate is set entirely by the host's switching cadence. The pC figure cannot be expressed in the 'ripple' measurement field without misrepresenting its units, so it is recorded verbatim in design_notes instead. Electrical characteristics are quoted from the VDD = 5 V table; the datasheet has separate full tables at 3.3 V, 1.8 V and 1.2 V (pages 7-11) whose numbers differ. No radiated emissions and no mechanical channel: it is a passive CMOS switch."
+  }
+}

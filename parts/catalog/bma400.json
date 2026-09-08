@@ -1,0 +1,116 @@
+{
+  "id": "bma400",
+  "mpn": "BMA400",
+  "manufacturer": "Bosch Sensortec",
+  "role": "accelerometer",
+
+  "mechanical": {
+    "package": "LGA-12, 2.0 x 2.0 mm",
+    "length_mm": {
+      "value": 2.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "Package outline dimensions, top view, datum B: 2.00 mm",
+      "source": { "doc": "BST-BMA400-DS000-14", "page": 111, "section": "8.1 Package outline dimensions" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 2.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "Package outline dimensions, top view, datum A: 2.00 mm",
+      "source": { "doc": "BST-BMA400-DS000-14", "page": 111, "section": "8.1 Package outline dimensions" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 1.0, "unit": "mm", "qualifier": "max",
+      "conditions": "Package outline dimensions, side view: '1.00 MAX' overall height (0.82 mm shown as a reference dimension). The Basic Description on page 2 quotes the package height as 0.95 mm.",
+      "source": { "doc": "BST-BMA400-DS000-14", "page": 111, "section": "8.1 Package outline dimensions" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": false,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 1.72, "unit": "V", "qualifier": "min",
+      "conditions": "VDD, supply voltage internal domains (1.8 V typ). The separate VDDIO I/O rail goes down to 1.2 V.",
+      "source": { "doc": "BST-BMA400-DS000-14", "page": 9, "section": "1. Specification -- Parameter Specification" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 3.6, "unit": "V", "qualifier": "max",
+      "conditions": "VDD, supply voltage internal domains (VDDIO shares the same 3.6 V maximum). Absolute maximum at either supply pin is 4 V.",
+      "source": { "doc": "BST-BMA400-DS000-14", "page": 9, "section": "1. Specification -- Parameter Specification" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 160, "unit": "nA", "qualifier": "typ",
+      "conditions": "IDDsum, total supply current in sleep mode, nominal VDD and VDDIO, 25 C",
+      "source": { "doc": "BST-BMA400-DS000-14", "page": 9, "section": "1. Specification -- Parameter Specification" },
+      "review_status": "extracted"
+    },
+    "i_typ": {
+      "value": 14.5, "unit": "uA", "qualifier": "typ",
+      "conditions": "IDD, total supply current in normal mode at nominal VDD and VDDIO, 25 C, OSR = 3 (highest performance). Drops to 3.5 uA at OSR = 0, and 850 nA in low-power mode at 25 Hz ODR / OSR = 0.",
+      "source": { "doc": "BST-BMA400-DS000-14", "page": 9, "section": "1. Specification -- Parameter Specification" },
+      "review_status": "extracted"
+    }
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "TA, operating temperature",
+        "source": { "doc": "BST-BMA400-DS000-14", "page": 9, "section": "1. Specification -- Parameter Specification" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 85, "unit": "C", "qualifier": "max",
+        "conditions": "TA, operating temperature",
+        "source": { "doc": "BST-BMA400-DS000-14", "page": 9, "section": "1. Specification -- Parameter Specification" },
+        "review_status": "extracted"
+      },
+      "accuracy_note": "Reading drifts with temperature even inside the operating range: sensitivity temperature drift TCS = 0.025 %/K and zero-g offset temperature drift TCO = 1 mg/K over lifetime at nominal supply, gFS4g (page 10). A local hot spot of 10 K therefore moves the zero-g offset by about 10 mg, on top of the 50 mg lifetime zero-g offset."
+    },
+
+    "mechanical_susceptibility": [
+      {
+        "band_hz": [0, 384],
+        "reason": "This is the part the whole mechanical channel exists for: its job is to measure acceleration, so any board vibration inside its measurement band is read as real motion and cannot be filtered out downstream. Normal-mode output data rate is selectable from 12.5 Hz to 800 Hz, with a selectable 3 dB low-pass cutoff of 0.24x to 0.48x ODR (page 10), so the widest measurement band is DC to 384 Hz (0.48 x 800 Hz). In the low-power mode used for step counting the ODR is 25 Hz, giving a band of DC to about 12 Hz. Output noise density is 180 ug/rtHz on X and Y and 240 ug/rtHz on Z in high-performance mode (page 10), which sets how small a coupled vibration still has to be to disappear into the noise."
+      },
+      {
+        "reason": "Shock, distinct from vibration: absolute maximum mechanical shock is 10,000 g for durations up to 200 us, 2,000 g for durations up to 1.0 ms, and free fall onto hard surfaces from 1.8 m (page 11). Bosch further warns that a hammer blow on or NEXT TO the sensor can exceed these limits, so the hazard includes impacts delivered elsewhere on the assembly, not just directly to the part."
+      }
+    ]
+  },
+
+  "design_notes": [
+    {
+      "note": "Avoid any wiring underneath the BMA400 -- Bosch's recommended landing pattern marks the area under the package as a shaded no-route zone.",
+      "source": { "doc": "BST-BMA400-DS000-14", "page": 114, "section": "8.3 Landing pattern recommendation" }
+    },
+    {
+      "note": "Use 100 nF decoupling capacitors at pin 3 (VDDIO) and pin 7 (VDD). This is the only supply-decoupling requirement Bosch states, and it applies to every interface configuration (I2C, 3-wire SPI, 4-wire SPI).",
+      "source": { "doc": "BST-BMA400-DS000-14", "page": 109, "section": "7. Application hints -- interface connection diagrams" }
+    },
+    {
+      "note": "MEMS handling: the sensor element contains highly sensitive micromechanical structures. Bosch recommends avoiding g-forces beyond the specified limits during transport, handling and mounting, in a defined and qualified installation process. Extreme shock loads such as a hammer blow on or next to the sensor, or dropping onto hard surfaces, can exceed the ratings.",
+      "source": { "doc": "BST-BMA400-DS000-14", "page": 117, "section": "8.5 Handling instructions" }
+    },
+    {
+      "note": "Alignment error relative to the package outline is 0.5 degrees typ and cross-axis sensitivity is 2% typ, so the placement rotation of the footprint on the board is itself part of the measurement accuracy -- the part's axes are defined relative to its own package outline (sensing axis orientation figure, page 112).",
+      "source": { "doc": "BST-BMA400-DS000-14", "page": 10, "section": "1. Specification -- MECHANICAL CHARACTERISTICS" }
+    },
+    {
+      "note": "Moisture sensitivity level is JEDEC Level 1 and the part is qualified for lead-free reflow with a peak temperature up to 260 C.",
+      "source": { "doc": "BST-BMA400-DS000-14", "page": 116, "section": "8.4 Soldering guidelines" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bma400-ds000.pdf",
+    "doc_revision": "BST-BMA400-DS000-14, revision 2.3, July 2025",
+    "review_status": "extracted",
+    "notes": "No thermal data whatsoever: a full-text search of all 121 pages for 'thermal resistance', 'theta', 'RthJA' and 'junction' returns nothing, so emissions.thermal is absent entirely -- Bosch publishes no theta_ja and no junction temperature for this part, and neither may be assumed. There is no dissipation figure either; the part draws at most 14.5 uA, so its thermal output is negligible but is still not a published number. No conducted or radiated emissions: the device has no switching converter and no published internal oscillator frequency, and its digital interfaces (I2C / SPI up to the host's clock) are driven by the host, not by this part. Package dimensions were read off the outline drawing on page 111, which is a vector figure with no extractable text -- the page was rendered to an image and the dimensions read from it (2.00 x 2.00 top view, 1.00 MAX side view); the Basic Description on page 2 independently quotes '2mm x 2mm, height 0.95 mm'. The 384 Hz band edge is 0.48 x 800 Hz, both figures taken verbatim from the page 10 bandwidth and ODR rows; the multiplication is stated in the reason text so it can be checked."
+  }
+}
