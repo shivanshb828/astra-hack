@@ -39,9 +39,76 @@ Use Blender for the first prototype because it is fast, scriptable, visual, and 
 
 Fusion or other CAD tools may become useful later for CAD-grade enclosure import, manufacturing workflows, or enterprise integrations. For the hack/demo, Blender is the fastest path to an impressive simulation.
 
+## Demo Mission: Single-Lead ECG Chest Patch
+
+The demo is built around one concrete product: a single-lead ECG chest patch.
+It was chosen because a single BOM exercises every constraint type in the brief
+at once — patient-contact surface (temperature limit), microvolt biosignal
+(noise floor), BLE radio (RF separation), LiPo cell (battery safety), and a
+thin sealed enclosure (mechanical fit). Nothing else in medtech gives that
+coverage as cheaply.
+
+## Architecture: judgment versus arithmetic
+
+The system splits in two, and keeping the split clean is the whole design.
+
+**A language model decides what the rules are.** "Worn against skin all day"
+and "shouldn't look like a medical device" are real hardware constraints with
+no closed form. Turning them into `skin_contact: true` and
+`max_surface_temp_c: 43` is judgment, and only a model can do it. The same is
+true on the way out: `REG→AFE 6.0mm < 15mm FAIL` is a linter, while "the
+regulator sits under the skin-contact face and will push that surface past the
+43 °C limit during a charge cycle" is an engineer.
+
+**Deterministic code decides whether the rules are met.** Once something has
+asserted that the front end needs 15 mm, measuring 6.0 mm is subtraction. Never
+ask a model to compute a distance: it will be right most of the time and wrong
+unpredictably, which is the one failure you cannot reproduce afterwards.
+Computing it in code is free, exact, and identical every run.
+
+The constraint engine is the second half. It is stdlib-only and fully
+deterministic, and it imports directly into Blender's bundled Python.
+
+```
+Mission (LLM)  ->  parts + layout JSON  ->  constraint engine  ->  results + overlays  ->  Blender
+                                                     |
+                                                     +->  explain brief  ->  write-up (LLM)
+```
+
+## Try it
+
+```bash
+./run_demo.sh
+```
+
+Validates a deliberately constraint-blind layout (10 failures across every
+constraint family), solves for a corrected one, re-validates it through the
+same code path, and emits the LLM explanation brief.
+
+```
+ECG Patch - Naive Layout        FAIL     35     10
+ECG Patch - MissionPCB Layout   PASS     45      0
+ECG Patch - MissionPCB Solved   PASS     45      0
+```
+
+Tests: `PYTHONPATH=src python3 -m pytest tests/ -q`
+
 ## Main Docs
 
 Start here:
 
-- [MissionPCB product and build brief](docs/missionpcb-product-build-brief.md)
+- [MissionPCB product and build brief](docs/missionpcb-product-build-brief.md) — product thesis and roadmap
+- [Constraint engine contract](docs/constraint-engine-contract.md) — the JSON interface between parts data, the engine, and Blender
+- [Mission intake](docs/mission-intake.md) — how plain English becomes structured constraints
+
+## Repo Layout
+
+```text
+src/constraint_engine/   deterministic checker, solver, and report generator
+parts/                   parts libraries (generic seed + ECG patch BOM)
+layouts/                 enclosure, board, and placements per design variant
+tests/                   172 tests, including the demo's golden behaviour
+docs/                    product brief and interface contracts
+run_demo.sh              one-button pipeline
+```
 
