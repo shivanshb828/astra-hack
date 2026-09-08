@@ -1,4 +1,4 @@
-# Dhruva Handoff: MissionPCB As A Native-Tool Widget
+# Dhruva Handoff: MissionPCB Widget Only
 
 MissionPCB should not be a separate CAD web app for this demo. The product is
 an AI EE widget that sits on top of the tools electrical engineers already use:
@@ -6,7 +6,20 @@ Blender for the 3D/enclosure simulation view, and later KiCad for schematic,
 PCB, ERC/DRC, and board-source workflows.
 
 The user interacts with the widget in natural language. The native tool remains
-the main workspace.
+the main workspace. The intelligence/model layer lives in Astra, not inside the
+widget.
+
+Dhruva's scope is the widget and native-tool integration only:
+
+- render the MissionPCB widget inside Blender
+- collect user text and short answers
+- send requests to Astra
+- receive structured results/proposals from Astra
+- select, frame, highlight, and update native Blender objects
+- export widget/native-tool artifacts
+
+Dhruva should not build a second advisor, LLM prompt path, or model reasoning
+layer inside Blender.
 
 ## Product Shape
 
@@ -17,7 +30,7 @@ Blender / KiCad main window
 └── MissionPCB widget
     ├── natural-language command box
     ├── short follow-up questions
-    ├── constraint findings
+    ├── Astra-returned constraint findings
     ├── highlighted objects in the native viewport
     └── apply / reject / export actions
 ```
@@ -32,18 +45,21 @@ replacement editor.
 3. Widget asks: `What are we building?`
 4. User types the natural-language mission.
 5. Widget asks at most three short follow-up questions.
-6. Advisor runs over the catalog and current scene.
-7. Blender viewport highlights the relevant parts/volumes directly.
-8. Widget lists grounded considerations and blockers.
-9. User says a natural-language edit, for example:
+6. Widget sends mission, answers, and current scene state to Astra.
+7. Astra runs the advisor/model layer and returns structured findings,
+   proposals, and highlight instructions.
+8. Blender viewport highlights the relevant parts/volumes directly.
+9. Widget lists Astra-returned considerations and blockers.
+10. User says a natural-language edit, for example:
    - `Move the regulator farther from the AFE.`
    - `Show me why the battery is failing.`
    - `Try a buck-boost instead of this regulator.`
    - `Keep the antenna edge clear.`
-10. Widget proposes a change.
-11. User applies or rejects.
-12. Scene updates, constraints rerun, highlights update.
-13. Export produces design state, advisor report, and model artifacts.
+11. Widget sends the request to Astra.
+12. Astra returns a structured proposal.
+13. User applies or rejects.
+14. Scene updates, widget asks Astra to rerun, highlights update.
+15. Export produces design state, advisor report, and model artifacts.
 
 ## What We Should Stop Building
 
@@ -64,9 +80,9 @@ Build a Blender add-on/sidebar panel for MissionPCB.
 Minimum controls:
 
 - Natural-language input box.
-- `Run advisor` button.
+- `Ask Astra` / `Run advisor` button.
 - `Apply proposal` / `Reject` buttons.
-- Findings list grouped by category:
+- Findings list grouped by Astra-returned category:
   - safety
   - mechanical
   - thermal
@@ -82,6 +98,8 @@ Preferred location:
 ### 2. Native Viewport Highlighting
 
 The widget should drive Blender-native highlights, not draw an external overlay.
+Highlight geometry and labels should be created from Astra's structured
+instructions. The widget should not decide which constraint failed.
 
 For each finding:
 
@@ -115,15 +133,16 @@ The widget should never infer identity from object shape or display label.
 
 ### 4. Advisor Bridge
 
-The widget should call or embed Shivansh's advisor/app layer.
+The widget should call Astra's advisor/model layer. It should not embed the
+advisor, duplicate prompts, or locally decide engineering recommendations.
 
 Input:
 
 - mission text
 - short interview answers
 - current component transforms from Blender
-- catalog records
-- optional current engine/advisor findings
+- stable object metadata from Blender
+- optional current findings/proposal state
 
 Output:
 
@@ -134,8 +153,9 @@ Output:
 - viewport highlight instructions
 - report/export payload
 
-The widget can start with local Python calls. A local HTTP bridge is fine if it
-makes iteration easier, but it should not require cloud credentials for the demo.
+Transport can be a local HTTP bridge or direct Python call for the hack demo,
+but the contract should still read as `widget -> Astra -> widget`. The widget
+must not require model credentials itself.
 
 ### 5. Proposal Application
 
@@ -144,11 +164,12 @@ Natural-language edits should not mutate the scene immediately.
 Flow:
 
 1. User asks for a change.
-2. Widget creates a structured proposal.
-3. Widget previews affected objects/highlights.
-4. User clicks `Apply`.
-5. Blender transforms update.
-6. Advisor/constraints rerun.
+2. Widget sends request to Astra.
+3. Astra creates a structured proposal.
+4. Widget previews affected objects/highlights.
+5. User clicks `Apply`.
+6. Blender transforms update.
+7. Widget asks Astra to rerun advisor/constraints.
 
 Every applied change should be written to a revision/history log.
 
@@ -168,7 +189,7 @@ Export these artifacts:
 
 ## What Shivansh Owns
 
-- Advisor call and schema.
+- Astra advisor/model call and schema.
 - Natural-language-to-proposal logic.
 - Grounded consideration/blocker output from catalog records.
 - Constraint/advisor response shape for the widget.
@@ -181,7 +202,16 @@ Export these artifacts:
 - Realistic component geometry.
 - Stable object metadata.
 - Scene export/capture.
+- Widget-to-Astra request/response plumbing.
 - Making the demo feel like an EE is using Blender/KiCad with an AI copilot.
+
+Dhruva does not own:
+
+- advisor reasoning
+- LLM calls
+- prompt design for the model
+- choosing engineering recommendations
+- deciding whether a constraint passes or fails
 
 ## What Aayush/UI Should Own
 
@@ -200,8 +230,8 @@ If time is tight, build only this:
 2. MissionPCB side panel with:
    - `What are we building?` prompt
    - three follow-up questions
-   - `Run advisor`
-   - findings list
+   - `Ask Astra`
+   - Astra-returned findings list
 3. Highlight four blockers:
    - battery too tall for enclosure
    - charger/protection missing
@@ -211,4 +241,3 @@ If time is tight, build only this:
    - `Move noisy power away from the analog front end.`
 5. Apply/reject proposal.
 6. Export report.
-
