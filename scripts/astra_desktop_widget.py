@@ -45,13 +45,14 @@ class AstraWidget(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
         self.title("Astra KiCad")
-        self.geometry("430x245+970+120")
-        self.minsize(360, 210)
+        self.geometry("430x220+970+120")
+        self.minsize(390, 200)
         self.attributes("-topmost", True)
-        self.configure(bg="#171717")
+        self.configure(bg="#141414")
         self.pending_proposal: str | None = None
         self.auto_apply = tk.BooleanVar(value=False)
         self.status = tk.StringVar(value="Connecting...")
+        self.reply = tk.StringVar(value="")
         self.input = tk.StringVar(value="")
         self._build()
         self.after(100, self.refresh_status)
@@ -61,17 +62,16 @@ class AstraWidget(tk.Tk):
         style.theme_use("clam")
         style.configure("TButton", padding=(7, 5), relief="flat")
         style.configure("Primary.TButton", background="#f4f4f0", foreground="#111111")
-        style.configure("Ghost.TButton", background="#242424", foreground="#f4f4f0")
-        style.configure("TCheckbutton", background="#171717", foreground="#d8d8d2")
+        style.configure("TCheckbutton", background="#141414", foreground="#d8d8d2")
 
-        shell = tk.Frame(self, bg="#171717", padx=14, pady=14)
+        shell = tk.Frame(self, bg="#141414", padx=18, pady=16)
         shell.pack(fill="both", expand=True)
 
-        prompt = tk.Frame(shell, bg="#202020")
+        prompt = tk.Frame(shell, bg="#202020", padx=8, pady=7)
         prompt.pack(fill="x", pady=(0, 12))
         mark = tk.Label(prompt, text="*", fg="#ff7a3d", bg="#202020", width=2,
                         font=("Helvetica", 20, "bold"))
-        mark.pack(side="left", padx=(12, 6), pady=8)
+        mark.pack(side="left", padx=(4, 8))
         entry = tk.Entry(
             prompt,
             textvariable=self.input,
@@ -81,54 +81,36 @@ class AstraWidget(tk.Tk):
             insertbackground="#f4f4f0",
             font=("Helvetica", 14, "bold"),
         )
-        entry.pack(side="left", fill="x", expand=True, padx=(0, 12), pady=10)
+        entry.pack(side="left", fill="x", expand=True, padx=(0, 8))
         entry.insert(0, "How can I help with this board?")
         entry.bind("<FocusIn>", self._clear_placeholder)
         entry.bind("<Return>", lambda _event: self.send())
 
-        self.log = tk.Text(
-            shell,
-            wrap="word",
-            bg="#171717",
-            fg="#f4f4f0",
-            relief="flat",
-            padx=0,
-            pady=0,
-            height=4,
-            font=("Helvetica", 11),
-        )
-        self.log.pack(fill="both", expand=True, pady=(0, 10))
-        self.log.configure(state="disabled")
-
-        actions = tk.Frame(shell, bg="#171717")
+        actions = tk.Canvas(shell, height=78, bg="#141414", highlightthickness=0)
         actions.pack(fill="x")
-        for label, command in (
-            ("Ki", self.open_kicad),
-            ("Bl", self.open_blender),
-            ("R", self.reload_kicad),
-            ("OK", self.apply),
-        ):
-            tk.Button(
-                actions,
-                text=label,
-                command=command,
-                width=5,
-                height=2,
-                relief="flat",
-                bg="#242424",
-                fg="#f4f4f0",
-                activebackground="#303030",
-                activeforeground="#ffffff",
-                font=("Helvetica", 12, "bold"),
-            ).pack(side="left", padx=(0, 16))
+        self._circle_button(actions, 39, "Ki", self.open_kicad)
+        self._circle_button(actions, 141, "Bl", self.open_blender)
+        self._circle_button(actions, 243, "R", self.reload_kicad)
+        self._circle_button(actions, 345, "OK", self.apply)
 
-        footer = tk.Frame(shell, bg="#171717")
-        footer.pack(fill="x", pady=(8, 0))
+        tk.Label(
+            shell,
+            textvariable=self.reply,
+            anchor="w",
+            justify="left",
+            wraplength=380,
+            bg="#141414",
+            fg="#e7e7e2",
+            font=("Helvetica", 10),
+        ).pack(fill="x", pady=(0, 6))
+
+        footer = tk.Frame(shell, bg="#141414")
+        footer.pack(fill="x")
         tk.Label(
             footer,
             textvariable=self.status,
             anchor="w",
-            bg="#171717",
+            bg="#141414",
             fg="#969696",
             font=("Helvetica", 9),
         ).pack(side="left", fill="x", expand=True)
@@ -141,15 +123,35 @@ class AstraWidget(tk.Tk):
             side="right", padx=(8, 0)
         )
 
+    def _circle_button(self, canvas: tk.Canvas, x: int, label: str, command) -> None:
+        y = 38
+        radius = 31
+        oval = canvas.create_oval(
+            x - radius,
+            y - radius,
+            x + radius,
+            y + radius,
+            fill="#242424",
+            outline="#242424",
+        )
+        text = canvas.create_text(
+            x,
+            y,
+            text=label,
+            fill="#f4f4f0",
+            font=("Helvetica", 13, "bold"),
+        )
+        for item in (oval, text):
+            canvas.tag_bind(item, "<Button-1>", lambda _event, cmd=command: cmd())
+            canvas.tag_bind(item, "<Enter>", lambda _event, oid=oval: canvas.itemconfig(oid, fill="#303030", outline="#303030"))
+            canvas.tag_bind(item, "<Leave>", lambda _event, oid=oval: canvas.itemconfig(oid, fill="#242424", outline="#242424"))
+
     def _clear_placeholder(self, _event: object) -> None:
         if self.input.get() == "How can I help with this board?":
             self.input.set("")
 
     def append(self, who: str, text: str) -> None:
-        self.log.configure(state="normal")
-        self.log.insert("end", f"{who}: {text.strip()}\n")
-        self.log.see("end")
-        self.log.configure(state="disabled")
+        self.reply.set(f"{who}: {text.strip()}")
 
     def run_bg(self, fn) -> None:
         threading.Thread(target=fn, daemon=True).start()
@@ -183,12 +185,15 @@ class AstraWidget(tk.Tk):
     def reload_kicad(self) -> None:
         def task() -> None:
             try:
-                request("/api/kicad/reload", {})
+                self._reload_now()
                 self.append("Astra", "Reload signal sent. If KiCad prompts, choose Reload.")
             except Exception as exc:
                 self.append("Astra", f"Reload failed: {exc}")
 
         self.run_bg(task)
+
+    def _reload_now(self) -> None:
+        request("/api/kicad/reload", {})
 
     def annotate(self, ref: str) -> None:
         notes = {
@@ -200,6 +205,7 @@ class AstraWidget(tk.Tk):
         def task() -> None:
             try:
                 res = request("/api/kicad/annotate", {"ref": ref, "note": notes[ref]})
+                self._reload_now()
                 self.append("Astra", f"Marked {res['ref']} in KiCad: {res['note']}")
             except Exception as exc:
                 self.append("Astra", f"Mark failed: {exc}")
@@ -265,6 +271,7 @@ class AstraWidget(tk.Tk):
                 res = request(f"/api/proposals/{proposal_id}/apply", {})
                 kicad = res.get("native_tool", {}).get("kicad", {})
                 if kicad.get("synced"):
+                    self._reload_now()
                     self.append("Astra", "Applied. KiCad board file updated; reload if prompted.")
                 else:
                     self.append("Astra", "Applied to design state; no matching KiCad footprint reported.")
