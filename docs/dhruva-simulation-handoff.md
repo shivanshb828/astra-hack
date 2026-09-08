@@ -1,5 +1,11 @@
 # Dhruva Handoff: MissionPCB Widget Only
 
+> **Scope and ownership doc.** For the field-level data contract — exact JSON
+> keys, current dimensions, the nine real refs, overlay shapes, and the live
+> API — see [`renderer-contract.md`](renderer-contract.md). Where the two
+> disagree on a number, that one is right; it is read off the committed
+> `render/*.json`.
+
 MissionPCB should not be a separate CAD web app for this demo. The product is
 an AI EE widget that sits on top of the tools electrical engineers already use:
 Blender for the 3D/enclosure simulation view, and later KiCad for schematic,
@@ -109,13 +115,23 @@ For each finding:
 - Use category colors consistently.
 - Add short 3D labels only where they clarify the demo.
 
-Examples:
+Examples, using the nine refs that actually exist (`ELEC_A`, `ELEC_B`, `ESD`,
+`AFE`, `BUCK`, `CHG`, `CELL`, `BATCON`, `BLE`):
 
-- `CELL`: show 5.6 mm battery height against 4.0 mm enclosure headroom.
-- `ANT`: show RF keep-out volume.
-- `REG -> AFE`: show conducted/noise separation line.
-- `REG`: show thermal plume.
-- `CHG`: show charge-access window alignment.
+- `BLE`: show the antenna keep-out volume — 6 × 10 mm rect at `[64.5, 17.0]`.
+  The MDBT42Q has an integrated antenna, so the zone surrounds the module.
+  There is no separate `ANT` object.
+- `BUCK -> AFE`: show the conducted/noise separation line.
+- `BUCK`: show the 6 mm thermal plume. `CHG`: 8 mm.
+- `ELEC_A -> ELEC_B`: show the 35 mm lead-vector span. This is the most
+  legible blocker on the naive board (measured 6 mm, needs 35 mm).
+- `CELL`: show the coin cell against the enclosure lid.
+
+Two corrections to earlier versions of this list: the regulator is `BUCK`, not
+`REG`. And `CELL` (VARTA CP1254, 12.1 mm coin, 5.6 mm tall) now **fits** — the
+enclosure was reconciled to 104 × 34 × 8.5 mm with a 6.5 mm component height
+budget, so 5.6 mm passes. "Battery too tall" is no longer a blocker and should
+not be demoed as one.
 
 ### 3. Stable Object Contract
 
@@ -232,11 +248,22 @@ If time is tight, build only this:
    - three follow-up questions
    - `Ask Astra`
    - Astra-returned findings list
-3. Highlight four blockers:
-   - battery too tall for enclosure
-   - charger/protection missing
-   - regulator architecture issue
-   - RF/AFE placement concern
+3. Highlight the failures the engine actually reports on the naive board.
+   Do not invent blockers — these are read straight out of
+   `render/naive.json`, which has exactly 7 fails and 1 skip:
+
+   | `id` | severity | subjects |
+   |---|---|---|
+   | `mission.lead_vector` | blocker | `ELEC_A`, `ELEC_B` |
+   | `safety.battery_thermal::CELL\|CHG` | blocker | `CELL`, `CHG` |
+   | `mission.esd_at_the_boundary` | major | `ESD`, `ELEC_A` |
+   | `sep.noise::AFE\|BUCK` | major | `AFE`, `BUCK` |
+   | `sep.thermal::AFE\|BUCK` | major | `AFE`, `BUCK` |
+   | `sep.thermal::AFE\|CHG` | major | `AFE`, `CHG` |
+   | `zone.heat_overlap::BUCK\|AFE` | major | `BUCK`, `AFE` |
+
+   Lead the demo with the two blockers. `access.connector` skips (top-entry
+   BOM, no opening) — show it as "not checked", not as a pass.
 4. One natural-language edit:
    - `Move noisy power away from the analog front end.`
 5. Apply/reject proposal.
