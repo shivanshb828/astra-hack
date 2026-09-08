@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MissionPCB Demo Workspace</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="mark"></span>
+          <span>MissionPCB</span>
+        </div>
+        <nav class="topnav" aria-label="Workspace views">
+          <button class="nav-button active" type="button">Design</button>
+          <button class="nav-button" type="button">Constraints</button>
+          <button class="nav-button" type="button">3D model</button>
+          <button class="nav-button" type="button">Report</button>
+        </nav>
+        <div class="top-actions">
+          <label class="auto-toggle">
+            <input id="autoMode" type="checkbox" checked>
+            <span>Auto</span>
+          </label>
+          <button id="exportButton" class="primary-button" type="button">Export</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="mission-panel">
+          <section class="panel-section">
+            <div class="section-label">Mission</div>
+            <textarea id="missionPrompt" class="mission-input">Build a rechargeable single-lead ECG patch for continuous 7-day wear. It should stream over BLE, fit in a thin sealed enclosure, and be safe against patient skin.</textarea>
+            <button id="startButton" class="wide-button" type="button">Start review</button>
+          </section>
+
+          <section class="panel-section">
+            <div class="section-row">
+              <div class="section-label">Fast interview</div>
+              <button id="recommendedButton" class="ghost-button" type="button">Use recommended</button>
+            </div>
+            <div id="interviewList" class="interview-list"></div>
+          </section>
+
+          <section class="panel-section grow">
+            <div class="section-label">AI electrical engineer</div>
+            <div id="chatLog" class="chat-log"></div>
+          </section>
+        </aside>
+
+        <section class="canvas-stage">
+          <div class="stage-toolbar" aria-label="Editor tools">
+            <div class="viewer-title">3D Viewer</div>
+            <button class="tool-button active" type="button" data-tool="select" title="Select">SEL</button>
+            <button class="tool-button" type="button" data-tool="move" title="Move">MOV</button>
+            <button class="tool-button" type="button" data-tool="highlight" title="Highlight">HLT</button>
+            <button class="tool-button" type="button" data-tool="comment" title="Comment">COM</button>
+            <span class="toolbar-divider"></span>
+            <button class="icon-button" type="button" title="Refresh view">↻</button>
+            <button class="icon-button" type="button" title="Zoom in">＋</button>
+            <button class="icon-button" type="button" title="Zoom out">−</button>
+            <button class="icon-button" type="button" title="Fit board">□</button>
+            <span class="toolbar-divider"></span>
+            <button class="icon-button blue" type="button" title="Pan left">←</button>
+            <button class="icon-button blue" type="button" title="Pan right">→</button>
+            <button class="icon-button blue" type="button" title="Pan up">↑</button>
+            <button class="icon-button blue" type="button" title="Pan down">↓</button>
+            <span class="toolbar-divider"></span>
+            <button class="icon-button active-cube" type="button" title="PCB layers">▣</button>
+          </div>
+
+          <div class="viewport kicad-viewport">
+            <canvas id="modelCanvas" width="1180" height="760"></canvas>
+            <div class="constraint-strip" aria-label="Constraint overlay modes">
+              <button class="constraint-chip active" type="button" data-layer="all">All</button>
+              <button class="constraint-chip" type="button" data-layer="thermal">Thermal</button>
+              <button class="constraint-chip" type="button" data-layer="conducted">Conducted</button>
+              <button class="constraint-chip" type="button" data-layer="radiated">Radiated</button>
+              <button class="constraint-chip" type="button" data-layer="mechanical">Mechanical</button>
+              <button class="constraint-chip" type="button" data-layer="safety">Safety</button>
+            </div>
+            <aside class="appearance-panel" aria-label="Appearance layers">
+              <div class="appearance-title">Appearance</div>
+              <div id="layerList" class="layer-list"></div>
+              <div class="appearance-spacer"></div>
+              <label class="layer-option"><input type="checkbox"> Use board stackup colors</label>
+              <label class="layer-option"><input type="checkbox"> Use PCB editor</label>
+              <div class="preset-label">Presets (Ctrl+Tab):</div>
+              <button class="preset-button" type="button">Follow PCB Plot Settings</button>
+            </aside>
+            <div class="viewport-hud">
+              <div>
+                <span id="revisionLabel">Revision 0</span>
+                <strong id="verdictLabel">Awaiting mission</strong>
+              </div>
+              <div id="selectedLabel">No selection</div>
+            </div>
+          </div>
+
+          <footer class="timeline">
+            <button id="prevRevision" class="small-button" type="button">Prev</button>
+            <input id="revisionSlider" type="range" min="0" max="0" value="0">
+            <button id="nextRevision" class="small-button" type="button">Next</button>
+            <div id="timelineStatus" class="timeline-status">Ready</div>
+          </footer>
+        </section>
+
+        <aside class="inspector-panel">
+          <section class="panel-section">
+            <div class="section-row">
+              <div class="section-label">Considerations</div>
+              <span id="stagePill" class="pill">Intake</span>
+            </div>
+            <div id="considerations" class="considerations"></div>
+          </section>
+
+          <section class="panel-section">
+            <div class="section-label">Constraint findings</div>
+            <div id="findings" class="findings"></div>
+          </section>
+
+          <section class="panel-section">
+            <div class="section-row">
+              <div class="section-label">Comments</div>
+              <button id="addCommentButton" class="ghost-button" type="button">Add</button>
+            </div>
+            <div id="comments" class="comments"></div>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <div id="exportMenu" class="export-menu hidden" role="menu">
+      <button type="button" data-export="state">Design JSON</button>
+      <button type="button" data-export="report">Validation report</button>
+      <button type="button" data-export="model">3D model package</button>
+      <button type="button" data-export="snapshot">Viewport snapshot</button>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
