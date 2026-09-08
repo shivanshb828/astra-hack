@@ -1,0 +1,6 @@
+# Datasheet PDFs are copyrighted; we store URLs + extracted facts, not the PDFs.
+parts/datasheets/
+__pycache__/
+*.pyc
+.venv/
+.DS_Store

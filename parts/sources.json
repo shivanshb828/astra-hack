@@ -1,0 +1,50 @@
+{
+  "_comment": "Datasheet manifest for the MissionPCB single-lead ECG chest patch BOM. PDFs are gitignored (copyright); only URLs and extracted facts are committed. Re-fetch with ./parts/fetch_datasheets.sh",
+  "device": "single-lead ECG chest patch, BLE, rechargeable",
+  "parts": [
+    { "id": "ads1292r",        "mfr": "TI",       "role": "ecg_afe",        "flags": ["sensitive_high"],              "url": "https://www.ti.com/lit/ds/symlink/ads1292r.pdf", "note": "Also covers ADS1291 / ADS1292 (free alternates)" },
+    { "id": "afe4404",         "mfr": "TI",       "role": "ppg_afe",        "flags": ["sensitive_high"],              "url": "https://www.ti.com/lit/ds/symlink/afe4404.pdf" },
+    { "id": "opa333",          "mfr": "TI",       "role": "precision_opamp","flags": ["sensitive_high"],              "url": "https://www.ti.com/lit/ds/symlink/opa333.pdf" },
+    { "id": "tmp117",          "mfr": "TI",       "role": "temp_sensor",    "flags": ["thermally_sensitive"],         "url": "https://www.ti.com/lit/ds/symlink/tmp117.pdf" },
+    { "id": "bma400",          "mfr": "Bosch",    "role": "accelerometer",  "flags": ["vibration_sensitive"],         "url": "https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bma400-ds000.pdf" },
+    { "id": "tmux1104",        "mfr": "TI",       "role": "analog_mux",     "flags": ["sensitive_medium"],            "url": "https://www.ti.com/lit/ds/symlink/tmux1104.pdf" },
+
+    { "id": "msp430fr2433",    "mfr": "TI",       "role": "mcu",            "flags": [],                              "url": "https://www.ti.com/lit/ds/symlink/msp430fr2433.pdf" },
+    { "id": "cc2652r",         "mfr": "TI",       "role": "ble_soc",        "flags": ["rf_source"],                   "url": "https://www.ti.com/lit/ds/symlink/cc2652r.pdf" },
+    { "id": "mdbt42q",         "mfr": "Raytac",   "role": "ble_module",     "flags": ["rf_source", "keepout"],        "url": "https://www.raytac.com/download/index.php?index_id=27" },
+    { "id": "2450at18a100",    "mfr": "Johanson", "role": "chip_antenna",   "flags": ["keepout_hard"],                "url": "https://www.johansontechnology.com/datasheets/2450AT18A100/2450AT18A100.pdf" },
+
+    { "id": "tps62740",        "mfr": "TI",       "role": "buck",           "flags": ["noise_source"],                "url": "https://www.ti.com/lit/ds/symlink/tps62740.pdf" },
+    { "id": "tps63020",        "mfr": "TI",       "role": "buck_boost",     "flags": ["heat_source", "noise_source"], "url": "https://www.ti.com/lit/ds/symlink/tps63020.pdf" },
+    { "id": "tps61099",        "mfr": "TI",       "role": "boost",          "flags": ["noise_source"],                "url": "https://www.ti.com/lit/ds/symlink/tps61099.pdf" },
+    { "id": "mcp73831",        "mfr": "Microchip","role": "lipo_charger",   "flags": ["heat_source"],                 "url": "https://ww1.microchip.com/downloads/en/DeviceDoc/MCP73831-Family-Data-Sheet-DS20001984H.pdf" },
+    { "id": "bq24040",         "mfr": "TI",       "role": "lipo_charger",   "flags": ["heat_source"],                 "url": "https://www.ti.com/lit/ds/symlink/bq24040.pdf" },
+    { "id": "tps7a02",         "mfr": "TI",       "role": "ldo",            "flags": [],                              "url": "https://www.ti.com/lit/ds/symlink/tps7a02.pdf" },
+    { "id": "mcp1700",         "mfr": "Microchip","role": "ldo",            "flags": [],                              "url": "https://ww1.microchip.com/downloads/en/DeviceDoc/MCP1700-Low-Quiescent-Current-LDO-20001826E.pdf" },
+    { "id": "tps22916",        "mfr": "TI",       "role": "load_switch",    "flags": [],                              "url": "https://www.ti.com/lit/ds/symlink/tps22916.pdf" },
+    { "id": "tps3839",         "mfr": "TI",       "role": "supervisor",     "flags": [],                              "url": "https://www.ti.com/lit/ds/symlink/tps3839.pdf" },
+    { "id": "bq27441-g1",      "mfr": "TI",       "role": "fuel_gauge",     "flags": [],                              "url": "https://www.ti.com/lit/ds/symlink/bq27441-g1.pdf" },
+    { "id": "drv2605l",        "mfr": "TI",       "role": "haptic_driver",  "flags": ["noise_source", "vibration_source"], "url": "https://www.ti.com/lit/ds/symlink/drv2605l.pdf" },
+
+    { "id": "iso7741",         "mfr": "TI",       "role": "digital_isolator","flags": ["creepage_barrier"],           "url": "https://www.ti.com/lit/ds/symlink/iso7741.pdf" },
+    { "id": "iso1541",         "mfr": "TI",       "role": "i2c_isolator",   "flags": ["creepage_barrier"],            "url": "https://www.ti.com/lit/ds/symlink/iso1541.pdf" },
+    { "id": "tpd4e1b06",       "mfr": "TI",       "role": "esd_protection", "flags": [],                              "url": "https://www.ti.com/lit/ds/symlink/tpd4e1b06.pdf" },
+
+    { "id": "mx25r6435f",      "mfr": "Macronix", "role": "spi_flash",      "flags": [],                              "url": "https://www.macronix.com/Lists/Datasheet/Attachments/8868/MX25R6435F,%20Wide%20Range,%2064Mb,%20v1.6.pdf" },
+    { "id": "abs07",           "mfr": "Abracon",  "role": "crystal_32k",    "flags": ["vibration_sensitive"],         "url": "https://abracon.com/Resonators/ABS07.pdf" },
+
+    { "id": "varta_cp1254",    "mfr": "VARTA",    "role": "battery",        "flags": ["heat_source", "tall", "safety_critical"], "url": "https://www.elektronik.ropla.eu/pdf/stock/vmb/cp1254a4.pdf" },
+    { "id": "bm02b_srss",      "mfr": "JST",      "role": "batt_connector", "flags": ["access_required", "tall"],     "url": "https://www.jst-mfg.com/product/pdf/eng/eSH.pdf" },
+    { "id": "jst_zh_electrode","mfr": "JST",      "role": "electrode_conn", "flags": ["patient_side", "access_required"], "url": "https://www.jst-mfg.com/product/pdf/eng/eZH.pdf" }
+  ],
+  "partial": [
+    { "id": "nrf52832", "mfr": "Nordic", "reason": "Only a 5-page product brief retrievable; full Product Spec is 403 on infocenter and bot-blocked on Mouser. Superseded by cc2652r + mdbt42q for the radio role." }
+  ],
+  "unreachable_hosts": {
+    "analog.com": "Connection times out on HTTP/2, HTTP/1.1 and IPv4 (MAX30003, MAX30102, ADuM3160)",
+    "st.com": "Same timeout behavior (STM32L071KB, STM32WB55)",
+    "mouser.com": "Bot-blocked: serves an 'Access denied' HTML page with HTTP 200",
+    "infocenter.nordicsemi.com": "403",
+    "winbond.com": "404 on published datasheet paths; replaced by Macronix MX25R6435F"
+  }
+}
