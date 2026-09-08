@@ -13,3 +13,6 @@ parts/datasheets/
 
 # macOS
 .DS_Store
+
+# Advisor output
+out/advisor/
