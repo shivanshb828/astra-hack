@@ -1,0 +1,267 @@
+{
+  "id": "tmp117",
+  "mpn": "TMP117",
+  "manufacturer": "Texas Instruments",
+  "role": "temp_sensor",
+  "mechanical": {
+    "package": "WSON-6 (DRV0006B), 2.0 x 2.0 mm",
+    "length_mm": {
+      "value": 2.0,
+      "unit": "mm",
+      "qualifier": "nominal",
+      "conditions": "DRV0006B package outline, body dimension A: 2.1 max / 1.9 min",
+      "source": {
+        "doc": "SNOSD82D",
+        "page": 40,
+        "section": "DRV0006B PACKAGE OUTLINE"
+      },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 2.0,
+      "unit": "mm",
+      "qualifier": "nominal",
+      "conditions": "DRV0006B package outline, body dimension B: 2.1 max / 1.9 min",
+      "source": {
+        "doc": "SNOSD82D",
+        "page": 40,
+        "section": "DRV0006B PACKAGE OUTLINE"
+      },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 0.8,
+      "unit": "mm",
+      "qualifier": "max",
+      "conditions": "DRV0006B overall height from seating plane, 'WSON - 0.8 mm max height'",
+      "source": {
+        "doc": "SNOSD82D",
+        "page": 40,
+        "section": "DRV0006B PACKAGE OUTLINE"
+      },
+      "review_status": "extracted"
+    },
+    "thermal_pad": true,
+    "mounting": "smt",
+    "access_required": false
+  },
+  "electrical": {
+    "v_in_min": {
+      "value": 1.8,
+      "unit": "V",
+      "qualifier": "min",
+      "conditions": "V+ supply voltage over the full TA = -55 C to 150 C range (1.7 V min is permitted only over the restricted TA = -55 C to 70 C range); 3.3 V nominal",
+      "source": {
+        "doc": "SNOSD82D",
+        "page": 5,
+        "section": "6.3 Recommended Operating Conditions"
+      },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 5.5,
+      "unit": "V",
+      "qualifier": "max",
+      "conditions": "V+ supply voltage, Recommended Operating Conditions",
+      "source": {
+        "doc": "SNOSD82D",
+        "page": 5,
+        "section": "6.3 Recommended Operating Conditions"
+      },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 3.5,
+      "unit": "uA",
+      "qualifier": "typ",
+      "conditions": "IQ, duty cycle 1 Hz, averaging mode off, serial bus inactive, TA = 25 C (5 uA max). Standby current between conversions ISB = 1.25 uA typ; shutdown 0.15 uA typ.",
+      "source": {
+        "doc": "SNOSD82D",
+        "page": 6,
+        "section": "6.5 Electrical Characteristics -- POWER SUPPLY"
+      },
+      "review_status": "extracted"
+    },
+    "i_typ": {
+      "value": 135,
+      "unit": "uA",
+      "qualifier": "typ",
+      "conditions": "IQ_ACTIVE, quiescent current during active conversion, serial bus inactive",
+      "source": {
+        "doc": "SNOSD82D",
+        "page": 6,
+        "section": "6.5 Electrical Characteristics -- POWER SUPPLY"
+      },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 220,
+      "unit": "uA",
+      "qualifier": "max",
+      "conditions": "IQ_ACTIVE, quiescent current during active conversion, serial bus inactive. EEPROM write draws 240 uA typ with the ADC off.",
+      "source": {
+        "doc": "SNOSD82D",
+        "page": 6,
+        "section": "6.5 Electrical Characteristics -- POWER SUPPLY"
+      },
+      "review_status": "extracted"
+    }
+  },
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 70.7,
+          "unit": "C/W",
+          "qualifier": "typ",
+          "conditions": "DRV (WSON) 6 pins, junction-to-ambient thermal resistance per TI thermal metrics (JEDEC standard board). Package thermal mass MT = 5.1 mJ/C.",
+          "source": {
+            "doc": "SNOSD82D",
+            "page": 5,
+            "section": "6.4 Thermal Information"
+          },
+          "review_status": "extracted"
+        },
+        {
+          "value": 133.2,
+          "unit": "C/W",
+          "qualifier": "typ",
+          "conditions": "YBG (DSBGA) 6 pins, junction-to-ambient thermal resistance per TI thermal metrics (JEDEC standard board). Package thermal mass MT = 0.8 mJ/C.",
+          "source": {
+            "doc": "SNOSD82D",
+            "page": 5,
+            "section": "6.4 Thermal Information"
+          },
+          "review_status": "extracted"
+        }
+      ],
+      "dissipation": {
+        "value": 410,
+        "unit": "uW",
+        "qualifier": "typ",
+        "conditions": "Continuous-conversion mode without duty cycling, 3.3 V supply, TA = 25 C. This dissipation produces roughly 40 m C of self-heating in still air on an 11 x 20 x 1.1 mm coupon board, rising to 52 m C at 150 C.",
+        "source": {
+          "doc": "SNOSD82D",
+          "page": 34,
+          "section": "8.2.2.2 Self-Heating Effect (SHE)"
+        },
+        "review_status": "extracted"
+      }
+    }
+  },
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -55,
+        "unit": "C",
+        "qualifier": "min",
+        "conditions": "TA, operating free-air temperature, Recommended Operating Conditions",
+        "source": {
+          "doc": "SNOSD82D",
+          "page": 5,
+          "section": "6.3 Recommended Operating Conditions"
+        },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 150,
+        "unit": "C",
+        "qualifier": "max",
+        "conditions": "TA, operating free-air temperature, Recommended Operating Conditions",
+        "source": {
+          "doc": "SNOSD82D",
+          "page": 5,
+          "section": "6.3 Recommended Operating Conditions"
+        },
+        "review_status": "extracted"
+      },
+      "t_junction_max": {
+        "value": 155,
+        "unit": "C",
+        "qualifier": "abs_max",
+        "conditions": "Operating junction temperature TJ, Absolute Maximum Ratings",
+        "source": {
+          "doc": "SNOSD82D",
+          "page": 5,
+          "section": "6.1 Absolute Maximum Ratings"
+        },
+        "review_status": "extracted"
+      },
+      "accuracy_note": "This part's READING is what nearby heat corrupts, long before the part itself is at risk -- damage begins at 155 C, but the specification fails at fractions of a degree. Temperature accuracy is +/-0.1 C max over -20 C to 50 C and +/-0.15 C max over -40 C to 70 C (typ +/-0.05 C), with 7.8125 m C of LSB resolution (page 6). Against that budget, the device's OWN dissipation of 410 uW in continuous-conversion mode already produces about 40 m C of self-heating error in still air, roughly 40% of the -20 to 50 C accuracy spec (page 34). Any external heat arriving through the board consumes the same budget: a heat source that lifts the sensor by 0.1 C has, by itself, doubled the worst-case error. TI states this explicitly at the layout level -- 'in some cases, the pullup resistor can be the heat source, therefore, maintain some distance between the resistor and the device' -- and prescribes maximising the air gap between the sensor and surrounding copper (anti-etch) especially near a heat source, cutting the PCB between the sensor and other circuits leaving only a narrow routing bridge away from heat-source components, and routing signals on the opposite side of the board from a top-side heat source (pages 36-37). DC power-supply sensitivity is 6 m C/V, so rail droop is a second, smaller reading error. Separately, mechanical stress is an error source: soldering the thermal pad on a rigid PCB introduces stress that degrades precision, so TI recommends leaving it unsoldered unless the system is calibrated."
+    },
+    "conducted": [
+      {
+        "band_hz": [
+          0,
+          1
+        ],
+        "reason": "Body-temperature measurement band. The device's specified operating point is a 1-Hz conversion cycle with 8 averages, so the quantity of interest is effectively DC to about 1 Hz; supply disturbances in this band appear directly in the reading through the 6 m C/V DC power-supply sensitivity.",
+        "psrr_db": {
+          "value": 6,
+          "unit": "mC/V",
+          "qualifier": "typ",
+          "conditions": "DC power supply sensitivity, one-shot mode, 8 averages. Expressed by TI as reading error per volt of supply change, not as a dB ratio.",
+          "source": {
+            "doc": "SNOSD82D",
+            "page": 6,
+            "section": "6.5 Electrical Characteristics -- TEMPERATURE TO DIGITAL CONVERTER"
+          },
+          "review_status": "extracted"
+        }
+      }
+    ],
+    "mechanical_susceptibility": [
+      {
+        "reason": "Package mechanical stress shifts the temperature reading. Soldering the WSON thermal pad on a rigid PCB introduces stress that is 'a source of additional measurement error', and PCB bending must be prevented when measuring a solid surface. Manual (hand) soldering adds further stress; TI requires a standard reflow oven process to avoid precision degradation. (SNOSD82D page 36, section 10.1 Layout Guidelines, items 1 and 2)"
+      }
+    ]
+  },
+  "design_notes": [
+    {
+      "note": "For a high-precision reading on a rigid PCB, do NOT solder the thermal pad. Soldering it lowers thermal resistance to the board and speeds response, but injects mechanical stress that becomes measurement error. If it is soldered (flexible PCB, board-level reliability), it must go to ground or be left floating. Because the package thermal mass is small, leaving it unsoldered costs little in response time.",
+      "source": {
+        "doc": "SNOSD82D",
+        "page": 36,
+        "section": "10.1 Layout Guidelines"
+      }
+    },
+    {
+      "note": "In some cases the I2C pullup resistor is itself the heat source; maintain distance between the pullup resistors and the device. Place the 0.1 uF supply bypass capacitor as close as possible to the supply and ground pins.",
+      "source": {
+        "doc": "SNOSD82D",
+        "page": 36,
+        "section": "10.1 Layout Guidelines"
+      }
+    },
+    {
+      "note": "For still-air (ambient) measurement: thermal isolation is required to avoid thermal coupling from heat-source components through the PCB. Avoid running a copper plane underneath the sensor, maximise the air gap (anti-etch) between the sensor and surrounding copper especially near a heat source, and create a PCB cutout between the sensor and other circuits with only a narrow routing bridge, placed away from heat-source components. If the heat source is on the top side, route all signals on the bottom side instead.",
+      "source": {
+        "doc": "SNOSD82D",
+        "page": 37,
+        "section": "10.1 Layout Guidelines, item 4 (continued)"
+      }
+    },
+    {
+      "note": "Self-heating error is proportional to dissipated power, so it is a design variable, not a fixed offset: use one-shot mode where practical, or a conversion cycle with significant standby time. An 8-sample average (125 ms) on a 1-second conversion cycle gives the die enough time to cool to ambient and effectively removes the self-heating error. System calibration removes self-heating, PSRR effects, and the sensor-to-object thermal-resistance offset together.",
+      "source": {
+        "doc": "SNOSD82D",
+        "page": 34,
+        "section": "8.2.2.2 Self-Heating Effect (SHE)"
+      }
+    },
+    {
+      "note": "For solid-surface (skin) measurement the opposite copper strategy applies: use a thin PCB, cover the bottom with a copper plane, extend unused internal layers under the sensor, minimise copper wires on top, use thermally conductive paste to the object, and locate the sensor where air movement is minimal.",
+      "source": {
+        "doc": "SNOSD82D",
+        "page": 36,
+        "section": "10.1 Layout Guidelines, item 2"
+      }
+    }
+  ],
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/tmp117.pdf",
+    "doc_revision": "SNOSD82D, June 2018, revised September 2022",
+    "review_status": "extracted",
+    "notes": "Both offered packages (DRV WSON-6 and YBG DSBGA-6) are recorded in theta_ja; mechanical records the DRV WSON, which is the one with the exposed thermal pad the layout section discusses. The datasheet has no dedicated emissions story -- it is an I2C sensor with no switching node and no internal oscillator frequency published, so emissions.conducted and emissions.radiated are absent by design; the only thing it puts out is its own 410 uW of self-heating. susceptibility.conducted psrr_db carries TI's units (m C/V) rather than dB, because TI specifies supply sensitivity for this part as reading error per volt; no dB figure exists in the document and converting would invent one. The 0-1 Hz susceptibility band is the datasheet's own 1-Hz conversion-cycle specification condition, not a guess at a physiological bandwidth. Accuracy figures in accuracy_note are the TMP117 (not TMP117M/N) grade rows."
+  }
+}

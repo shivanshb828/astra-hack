@@ -1,0 +1,165 @@
+{
+  "id": "mdbt42q",
+  "mpn": "MDBT42Q-512KV2",
+  "manufacturer": "Raytac",
+  "role": "ble_module",
+
+  "mechanical": {
+    "package": "Raytac MDBT42Q shielded module, 16 x 10 x 2.2 mm, 41-pad castellated/LGA",
+    "length_mm": {
+      "value": 16.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "PCB Size table, L, normal value; tolerance -0.15 / +0.20 mm",
+      "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 6, "section": "2.1 PCB dimensions & pin indication" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 10.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "PCB Size table, W, normal value; tolerance -0.15 / +0.20 mm",
+      "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 6, "section": "2.1 PCB dimensions & pin indication" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 2.2, "unit": "mm", "qualifier": "nominal",
+      "conditions": "PCB Size table, H, normal value; tolerance -0.15 / +0.20 mm. This is a shielded module, so the height includes the metal can.",
+      "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 6, "section": "2.1 PCB dimensions & pin indication" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": false,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 1.7, "unit": "V", "qualifier": "min",
+      "conditions": "VDD supply voltage, independent of DC/DC enable (3.0 V nominal). Supply rise time from 0 V to 1.7 V must be under 60 ms or the on-chip power-on-set circuitry may not function properly.",
+      "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 21, "section": "5.2 Operation conditions" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 3.6, "unit": "V", "qualifier": "max",
+      "conditions": "VDD supply voltage, independent of DC/DC enable (absolute maximum +3.9 V)",
+      "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 21, "section": "5.2 Operation conditions" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 0.3, "unit": "uA", "qualifier": "typ",
+      "conditions": "System OFF, no RAM retention, wake on reset or on GPIO. System ON with full RAM retention and wake on any event is 1.5 uA; System OFF with full 64 kB RAM retention is 0.7 uA.",
+      "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 26, "section": "5.3.11 Power management" },
+      "review_status": "extracted"
+    },
+    "i_typ": {
+      "value": 5.3, "unit": "mA", "qualifier": "typ",
+      "conditions": "ITX,0dBM,DCDC -- TX-only run current at PRF = 0 dBm with the on-chip DC/DC enabled at 3 V. Without the DC/DC (LDO mode, which is Raytac's factory default) the same condition draws 11.6 mA. RX at 1 Msps is 5.4 mA with DC/DC, 11.7 mA without.",
+      "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 22, "section": "5.3.2 Radio current consumption (Transmitter)" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 16.6, "unit": "mA", "qualifier": "typ",
+      "conditions": "ITX,PLUS4dBM -- TX-only run current at PRF = +4 dBm in LDO mode, the highest published radio current. With the DC/DC enabled the same setting draws 7.5 mA. Raytac publishes no MAX column for these currents, so this is a typical at the worst-case setting, not a guaranteed maximum.",
+      "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 22, "section": "5.3.2 Radio current consumption (Transmitter)" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "conducted": [
+      {
+        "mechanism": "switching",
+        "harmonics_modeled": 5
+      },
+      {
+        "mechanism": "digital_clock",
+        "f_fundamental_hz": {
+          "value": 32000000, "unit": "Hz", "qualifier": "nominal",
+          "conditions": "Main crystal frequency of the Nordic nRF52832 inside the module. A separate external 32.768 kHz crystal is required by Raytac's factory firmware (X2 with C12/C13 in the reference circuit) unless the internal RC oscillator is selected.",
+          "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 15, "section": "3. Main chip solution" },
+          "review_status": "extracted"
+        },
+        "harmonics_modeled": 5
+      }
+    ],
+
+    "radiated": [
+      {
+        "band_hz": [2360000000, 2500000000],
+        "tx_power_dbm": {
+          "value": 4, "unit": "dBm", "qualifier": "typ",
+          "conditions": "PRF, maximum output power, typical 4 dBm (6 dBm max), with a 24 dB RF power control range below it and +/-4 dB power accuracy. Operating frequency range fOP is 2360-2500 MHz with 1 MHz PLL channel spacing.",
+          "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 23, "section": "5.3.4 Transmitter specification" },
+          "review_status": "extracted"
+        },
+        "intentional": true
+      }
+    ]
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "TA, operating temperature (25 C nominal)",
+        "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 21, "section": "5.2 Operation conditions" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 85, "unit": "C", "qualifier": "max",
+        "conditions": "TA, operating temperature. Flash retention inside the module is 10 years at 85 C, so this is also the point at which nonvolatile storage lifetime is defined.",
+        "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 21, "section": "5.2 Operation conditions" },
+        "review_status": "extracted"
+      }
+    },
+
+    "radiated": [
+      {
+        "band_hz": [2360000000, 2500000000],
+        "rx_sensitivity_dbm": {
+          "value": -96, "unit": "dBm", "qualifier": "typ",
+          "conditions": "PSENS,IT,SP,1M,BLE -- sensitivity at 1 Msps BLE with an ideal transmitter, packets <= 37 bytes, BER = 1e-3, per Bluetooth Core Specification v4.0 Vol 6. Long-packet (>=128 byte) sensitivity is -95 dBm; 2 Msps BLE is -93 dBm; Nordic proprietary 1 Msps mode is -93 dBm. Typical sensitivity degrades by 3 dB when ADDR[1..7] rather than ADDR0 is used for receiver address correlation.",
+          "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 23, "section": "5.3.5 Receiver operation" },
+          "review_status": "extracted"
+        },
+        "keepout_mm": {
+          "value": 3.8, "unit": "mm", "qualifier": "nominal",
+          "conditions": "Raytac's stated 'No Ground-Pad Area': a 3.8 mm deep, full-module-width (10 mm) copper-free band at the antenna end of the module, which must be repeated in EACH LAYER of the host PCB. It is a copper/ground keepout, not a component-to-component spacing, though nothing may be placed there either.",
+          "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 10, "section": "2.3 RF layout suggestion (AKA, antenna keep-out area)" },
+          "review_status": "extracted"
+        }
+      }
+    ]
+  },
+
+  "design_notes": [
+    {
+      "note": "Antenna keep-out is the module's hard placement rule: keep the 'No Ground Pad' area as wide as you can regardless of PCB size, repeat it in EVERY layer at the corresponding antenna position, and place the module towards the edge of the PCB rather than in the centre for better performance. The dimensioned figure shows 3.8 mm of clearance beyond the 16 mm module length across its full 10 mm width. Raytac offers free layout review by email, which is a strong signal that this is the failure-prone part of the design.",
+      "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 10, "section": "2.3 RF layout suggestion (AKA, antenna keep-out area)" }
+    },
+    {
+      "note": "Nine GPIOs sit physically near the radio and are restricted to LOW DRIVE, LOW FREQUENCY use only -- module pins 38, 41, 40, 2, 3, 4, 5, 6 and 7 (P0.22 to P0.30). Raytac defines low frequency as up to 10 kHz and explicitly states that SPI, I2C, UART and PWM are NOT low frequency. Routing a sensor bus to those pins degrades RF performance.",
+      "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 15, "section": "2.6 GPIO located near the radio" }
+    },
+    {
+      "note": "Reference-circuit conditions: the module ships pre-programmed in LDO mode and Raytac's firmware expects an external 32.768 kHz crystal, so one must be fitted. To use DC/DC mode, L2/L3/C14 must be added externally -- meaning the module's switching converter and its inductors are the integrator's components, on the integrator's board. If NFC is unused, remove NFC1/C19/C21; if the internal 32.768 kHz RC oscillator is used, remove X2/C12/C13. The DEC4 decoupling capacitor (1 uF) is already inside the module.",
+      "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 30, "section": "8. Reference circuit" }
+    },
+    {
+      "note": "Handling and environment: eliminate static electricity when working with the module, and Raytac recommends adding anti-ESD components to the circuit and anti-ESD measures in the mechanical design. Avoid physical shock or intense stress to the module or its surface. Do not wash the module -- no-clean paste is used in production and washing oxidises the metal shield and reacts with the paste, after which function is not guaranteed. Keep it out of direct sunlight, humid or salty air and corrosive gases.",
+      "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 47, "section": "10. Notes and cautions" }
+    },
+    {
+      "note": "Be careful with the solder paste volume on pads P0.23 and P0.24 (module pins 41 and 40): excess solder can lift the module. Those two pads may be omitted from the footprint if the GPIOs are unused.",
+      "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 6, "section": "2.1 PCB dimensions & pin indication" }
+    },
+    {
+      "note": "Adjacent-channel transmit power is -25 dBc at the 1st adjacent channel and -50 dBc at the 2nd in Nordic proprietary modes (-20 dBc / -50 dBc in 2 Msps BLE mode), and the receiver saturates above 0 dBm received signal strength (absolute maximum RF input level 10 dBm). A second 2.4 GHz radiator close by can therefore both desensitise and, at short range, overdrive this receiver.",
+      "source": { "doc": "MDBT42Q Approval Sheet Version P (2025/07/14)", "page": 23, "section": "5.3.4 Transmitter specification / 5.3.5 Receiver operation" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.raytac.com/download/index.php?index_id=27",
+    "doc_revision": "MDBT42Q Approval Sheet, Version P, issued 2025/07/14",
+    "review_status": "extracted",
+    "notes": "This is a Raytac approval sheet for a module, not an IC datasheet, and it says so: 'any technical spec shall refer to Nordic's official documents as final reference', with the electrical tables reproduced from the nRF52832 Product Specification v1.9. Two variants share the document -- MDBT42Q-512KV2 (chip antenna) and MDBT42Q-P512KV2 (PCB antenna); everything recorded here is for the chip-antenna MDBT42Q, whose 16 x 10 x 2.2 mm outline and 3.8 mm keep-out are on pages 6 and 10. NO THERMAL DATA AT ALL: the document contains no theta_ja, no junction temperature and no dissipation figure -- it is a module, and Raytac publishes only ambient limits (-40 to +85 C operating, -40 to +125 C storage), so emissions.thermal and t_junction_max are absent rather than assumed. Most of Section 5 is delivered as raster tables that pdftotext cannot read; pages 6, 10, 21, 22, 23 and 26 were rendered to images and the values read from the rendered tables. The first conducted-emissions entry carries only its mechanism: the nRF52832's DC/DC is optional (off by default in Raytac's firmware, requiring external L2/L3/C14) and its switching frequency, ripple and di/dt are nowhere in this document. i_max is labelled 'typ' honestly -- no MAX column exists for radio currents."
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "id": "tps3839",
+  "mpn": "TPS3839",
+  "manufacturer": "Texas Instruments",
+  "role": "supervisor",
+
+  "mechanical": {
+    "package": "X2SON-4 (DQN), 1x1 mm; also offered as SOT-23-3 (DBZ), 2.92 x 2.37 mm",
+    "length_mm": {
+      "value": 1.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "package outline DQN0004A (X2SON-4), body toleranced 0.95-1.05 mm",
+      "source": { "doc": "SBVS193D", "page": 29, "section": "PACKAGE OUTLINE DQN0004A" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 1.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "package outline DQN0004A (X2SON-4), body toleranced 0.95-1.05 mm",
+      "source": { "doc": "SBVS193D", "page": 29, "section": "PACKAGE OUTLINE DQN0004A" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 0.4, "unit": "mm", "qualifier": "max",
+      "conditions": "package outline DQN0004A, X2SON - 0.4 mm max height. The SOT-23-3 (DBZ) alternate is 1.12 mm max height (page 32).",
+      "source": { "doc": "SBVS193D", "page": 29, "section": "PACKAGE OUTLINE DQN0004A" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": true,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 0.9, "unit": "V", "qualifier": "min",
+      "conditions": "VDD recommended input supply voltage, over operating free-air temperature range. Output logic state remains valid down to V(POR) = 0.6 V.",
+      "source": { "doc": "SBVS193D", "page": 6, "section": "7.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 6.5, "unit": "V", "qualifier": "max",
+      "conditions": "VDD recommended input supply voltage; absolute maximum on VDD and RESET is 7 V",
+      "source": { "doc": "SBVS193D", "page": 6, "section": "7.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 150, "unit": "nA", "qualifier": "typ",
+      "conditions": "IDD supply current into the VDD pin, output not connected, TA = -40 C to 85 C, 0.9 V < VDD < 6.5 V, typical at 25 C; 500 nA max. This is the AVERAGE: dc current is about 100 nA and rises to about 15 uA for roughly 200 us during each input-voltage sampling event.",
+      "source": { "doc": "SBVS193D", "page": 7, "section": "7.5 Electrical Characteristics, IDD" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 8, "unit": "mA", "qualifier": "max",
+      "conditions": "IRESET, recommended RESET pin current (push-pull output); absolute maximum RESET pin current is +/-10 mA. The device has no power output beyond this pin.",
+      "source": { "doc": "SBVS193D", "page": 6, "section": "7.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 216.1, "unit": "C/W", "qualifier": "typ",
+          "conditions": "DQN (X2SON) 4 pins, 1x1 mm; TI Thermal Information table, board condition not stated in the table",
+          "source": { "doc": "SBVS193D", "page": 6, "section": "7.4 Thermal Information" },
+          "review_status": "extracted"
+        },
+        {
+          "value": 346.6, "unit": "C/W", "qualifier": "typ",
+          "conditions": "DBZ (SOT23-3) 3 pins, TPS3839 only; TI Thermal Information table, board condition not stated in the table",
+          "source": { "doc": "SBVS193D", "page": 6, "section": "7.4 Thermal Information" },
+          "review_status": "extracted"
+        }
+      ]
+    },
+    "conducted": [
+      {
+        "mechanism": "load_transient",
+        "harmonics_modeled": 5
+      }
+    ]
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "operating ambient temperature TA. Note 2 states that because dissipated power in this device is so low, the junction temperature is assumed equal to the ambient temperature.",
+        "source": { "doc": "SBVS193D", "page": 6, "section": "7.1 Absolute Maximum Ratings" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 85, "unit": "C", "qualifier": "max",
+        "conditions": "operating ambient temperature TA; also stated as the specified temperature range in Features. Note 2 states the junction temperature is assumed equal to ambient because dissipated power is so low.",
+        "source": { "doc": "SBVS193D", "page": 6, "section": "7.1 Absolute Maximum Ratings" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "design_notes": [
+    {
+      "note": "This part draws a periodic current pulse, not a steady load: average IDD is 150 nA but the device pulls roughly 15 uA for about 200 us whenever it samples VDD. On a high-impedance rail that pulse pulls VDD down far enough to trigger a FALSE RESET -- the supervisor trips on its own load transient.",
+      "source": { "doc": "SBVS193D", "page": 14, "section": "9.2.2.1 Input Capacitor" }
+    },
+    {
+      "note": "Layout requirement stated directly: the connection to VDD must be low impedance and able to carry 15 uA without a significant voltage drop; add a 0.1 uF bypass capacitor near the VDD pin if the sampling current causes too much droop. This is a supply-impedance constraint, not just a decoupling suggestion.",
+      "source": { "doc": "SBVS193D", "page": 15, "section": "11.1 Layout Guidelines" }
+    },
+    {
+      "note": "The device has built-in rejection of fast transients on VDD, but rejection depends on BOTH duration and amplitude (measured from the bottom of the transient up to VIT-). A neighbouring switcher's rail dip is therefore only ignored if it falls inside the rejection curve of Figure 13; a slower, deeper sag asserts RESET and reboots the system.",
+      "source": { "doc": "SBVS193D", "page": 11, "section": "8.3.1 VDD Transient Rejection" }
+    },
+    {
+      "note": "The X2SON thermal pad is NOT a heat path here: the pin table instructs connecting it to ground or to a floating copper plane for mechanical stability. Do not treat a copper pour under this part as a thermal-design element.",
+      "source": { "doc": "SBVS193D", "page": 5, "section": "6 Pin Configuration and Functions, Pin Functions" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps3839.pdf",
+    "doc_revision": "SBVS193D (June 2012, revised July 2015)",
+    "review_status": "extracted",
+    "notes": "This is a supervisor, not a converter: there is no switch node, no oscillator specification and therefore no f_fundamental_hz or ripple. The one conducted-emissions entry uses mechanism 'load_transient' for the periodic VDD sampling pulse and carries NO measurements. The sampling pulse is real and cited (about 15 uA for about 200 us, page 14) but the datasheet states neither a di/dt nor the sampling repetition rate, so the pulse cannot be expressed as a frequency, and a current amplitude in amperes was deliberately NOT written into the di_dt field, whose units are a rate. The figure is preserved in electrical.i_quiescent.conditions and in design_notes instead. No dissipation figure or model: the datasheet asserts (page 6, Note 2) that dissipated power is low enough that junction temperature equals ambient, so no dissipation expression is given anywhere. susceptibility.thermal.t_junction_max is absent for the same reason -- no junction temperature limit is specified, only the ambient range. Both orderable-package theta_JA values are kept; mechanical.* describes the X2SON since it is the small option and the one common to both TPS3831 and TPS3839. Page numbers are PDF page numbers, which coincide with the printed page numbers through the body of the document."
+  }
+}

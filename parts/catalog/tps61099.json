@@ -1,0 +1,126 @@
+{
+  "id": "tps61099",
+  "mpn": "TPS61099",
+  "manufacturer": "Texas Instruments",
+  "role": "boost",
+
+  "mechanical": {
+    "package": "WSON-6 (DRV), 2x2 mm; also offered as 6-ball WCSP (YFF) 1.23 x 0.88 mm",
+    "length_mm": {
+      "value": 2.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "package outline DRV0006A (WSON-6), body toleranced 1.9-2.1 mm",
+      "source": { "doc": "SLVSD88M", "page": 28, "section": "PACKAGE OUTLINE DRV0006A" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 2.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "package outline DRV0006A (WSON-6), body toleranced 1.9-2.1 mm",
+      "source": { "doc": "SLVSD88M", "page": 28, "section": "PACKAGE OUTLINE DRV0006A" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 0.8, "unit": "mm", "qualifier": "max",
+      "conditions": "package outline DRV0006A, WSON - 0.8 mm max height (toleranced 0.7-0.8). The alternate YFF WCSP is 0.625 mm max height (page 31).",
+      "source": { "doc": "SLVSD88M", "page": 28, "section": "PACKAGE OUTLINE DRV0006A" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": true,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 0.7, "unit": "V", "qualifier": "min",
+      "conditions": "recommended input voltage range; input UVLO rising threshold is 0.7 V typ with 200 mV hysteresis",
+      "source": { "doc": "SLVSD88M", "page": 4, "section": "6.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 5.5, "unit": "V", "qualifier": "max",
+      "conditions": "recommended input voltage range",
+      "source": { "doc": "SLVSD88M", "page": 4, "section": "6.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 0.6, "unit": "uA", "qualifier": "typ",
+      "conditions": "quiescent current into VOUT pin, IC enabled, no load, no switching, boost or down mode, TJ = -40 C to 85 C; 1.5 uA max. Quiescent current into the VIN pin is 0.4 uA typ / 1.1 uA max under the same conditions.",
+      "source": { "doc": "SLVSD88M", "page": 5, "section": "6.5 Electrical Characteristics, IQ" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 300, "unit": "mA", "qualifier": "max",
+      "conditions": "output current supported for 3.3 V to 5 V conversion, per Description; switch peak current limit is 0.8 A min / 1 A typ for VOUT >= 2.5 V in boost operation (page 5)",
+      "source": { "doc": "SLVSD88M", "page": 1, "section": "3 Description" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 71.7, "unit": "C/W", "qualifier": "typ",
+          "conditions": "DRV (6 pins, WSON 2x2 mm) with exposed PowerPAD; TI Thermal Information table, board condition not stated in the table",
+          "source": { "doc": "SLVSD88M", "page": 4, "section": "6.4 Thermal Information" },
+          "review_status": "extracted"
+        },
+        {
+          "value": 134.4, "unit": "C/W", "qualifier": "typ",
+          "conditions": "YFF (6 balls, WCSP 1.23 x 0.88 mm), no exposed thermal pad; TI Thermal Information table, board condition not stated in the table",
+          "source": { "doc": "SLVSD88M", "page": 4, "section": "6.4 Thermal Information" },
+          "review_status": "extracted"
+        }
+      ]
+    },
+    "conducted": [
+      {
+        "mechanism": "switching",
+        "harmonics_modeled": 5
+      }
+    ]
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "recommended operating virtual junction temperature TJ; this datasheet specifies no separate ambient range",
+        "source": { "doc": "SLVSD88M", "page": 4, "section": "6.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_junction_max": {
+        "value": 125, "unit": "C", "qualifier": "max",
+        "conditions": "recommended operating virtual junction temperature TJ; absolute maximum TJ is 150 C (page 4) and overtemperature protection trips at 150 C typ with 25 C hysteresis (page 6)",
+        "source": { "doc": "SLVSD88M", "page": 4, "section": "6.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "design_notes": [
+    {
+      "note": "This is a hysteretic current-mode boost, NOT a fixed-frequency converter: the controller holds inductor ripple current constant (ILH, 300 mA typ at VOUT = 3.3 V) and varies the offset with load, so the switching frequency is set by the operating point (L, VIN, VOUT) and is not specified as a number. Any band-overlap check must sweep a frequency range rather than test a single fundamental.",
+      "source": { "doc": "SLVSD88M", "page": 10, "section": "7.3.1 Boost Controller Operation" }
+    },
+    {
+      "note": "Estimated switching frequency in continuous conduction is f = VIN * (VOUT - VIN * eta) / (L * ILH * VOUT). ILH is fixed by design (350 mA at VOUT = 5.0 V, 300 mA at 3.3 V, 250 mA at 1.8 V, page 5), so the designer's inductor choice directly sets where this part's emission lands in frequency.",
+      "source": { "doc": "SLVSD88M", "page": 16, "section": "8.2.2 Equation 5" }
+    },
+    {
+      "note": "At light load the inductor current goes discontinuous and the converter enters Burst mode: it ramps the output over several switching cycles then stops switching entirely. The emission is therefore bursty and low-duty-cycle at low load, not a continuous tone.",
+      "source": { "doc": "SLVSD88M", "page": 10, "section": "7.3.1 Boost Controller Operation" }
+    },
+    {
+      "note": "Layout is called out as critical because of high peak currents and high switching frequencies; a careless layout produces stability problems as well as EMI problems. Use wide, short traces for the main current path and the power ground paths, and place the input capacitor, output capacitor and inductor as close as possible to the IC.",
+      "source": { "doc": "SLVSD88M", "page": 18, "section": "8.4.1 Layout Guidelines" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps61099.pdf",
+    "doc_revision": "SLVSD88M (July 2016, revised August 2026)",
+    "review_status": "extracted",
+    "notes": "f_fundamental_hz is DELIBERATELY ABSENT. A full-document search for 'frequency' returns only statements that the switching frequency is not fixed (pages 10 and 16) plus Equation 5, which computes it from L, VIN, VOUT and efficiency. No numeric switching frequency appears anywhere in the datasheet, so none was recorded; the formula is preserved in design_notes instead. Output VOLTAGE ripple is likewise not specified numerically (page 16 only says a larger output capacitor makes ripple smaller in PWM mode), so emissions.conducted[0].ripple is omitted. The 300 mA figure in the design notes is inductor CURRENT ripple ILH, not output voltage ripple, and was deliberately not put in the ripple field to avoid a unit/meaning mismatch. di_dt is not stated. The part ships in two packages with very different theta_JA (71.7 vs 134.4 C/W); mechanical.package records the WSON since it carries the thermal pad, and both entries are kept in the theta_ja array. t_op_max is absent because the Recommended Operating Conditions table gives only a junction temperature range, no ambient range. Page numbers are PDF page numbers, which coincide with the printed page numbers in this document."
+  }
+}

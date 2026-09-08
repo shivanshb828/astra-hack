@@ -1,0 +1,94 @@
+{
+  "id": "2450at18a100",
+  "mpn": "2450AT18A100",
+  "manufacturer": "Johanson Technology",
+  "role": "chip_antenna",
+
+  "mechanical": {
+    "package": "0805 ceramic chip antenna (3.2 x 1.6 x 1.3 mm)",
+    "length_mm": {
+      "value": 3.2, "unit": "mm", "qualifier": "nominal",
+      "conditions": "L, tolerance +/-0.20 mm",
+      "source": { "doc": "2450AT18A100 Detail Specification Ver 1.0 (12/22/2017)", "page": 1, "section": "Mechanical Dimensions" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 1.6, "unit": "mm", "qualifier": "nominal",
+      "conditions": "W, tolerance +/-0.20 mm",
+      "source": { "doc": "2450AT18A100 Detail Specification Ver 1.0 (12/22/2017)", "page": 1, "section": "Mechanical Dimensions" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 1.3, "unit": "mm", "qualifier": "nominal",
+      "conditions": "T, tolerance +0.10/-0.20 mm",
+      "source": { "doc": "2450AT18A100 Detail Specification Ver 1.0 (12/22/2017)", "page": 1, "section": "Mechanical Dimensions" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": false,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "emissions": {
+    "radiated": [
+      {
+        "band_hz": [2400000000, 2500000000],
+        "intentional": true
+      }
+    ]
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "Operating Temperature, General Specifications",
+        "source": { "doc": "2450AT18A100 Detail Specification Ver 1.0 (12/22/2017)", "page": 1, "section": "General Specifications" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 125, "unit": "C", "qualifier": "max",
+        "conditions": "Operating Temperature, General Specifications",
+        "source": { "doc": "2450AT18A100 Detail Specification Ver 1.0 (12/22/2017)", "page": 1, "section": "General Specifications" },
+        "review_status": "extracted"
+      }
+    },
+    "radiated": [
+      {
+        "band_hz": [2400000000, 2500000000],
+        "keepout_mm": {
+          "value": 6.5, "unit": "mm", "qualifier": "nominal",
+          "conditions": "Vendor reference layout (2450AT18A100-EB1SMA evaluation board): the antenna sits in a 6.5 mm 'No Ground' region at the board end, spanning the full 20 mm board width; the ground plane starts 6.5 mm away along the antenna axis. This is a copper/ground keepout stated by the vendor, not a component-to-component spacing.",
+          "source": { "doc": "2450AT18A100 Detail Specification Ver 1.0 (12/22/2017)", "page": 2, "section": "Typical Electrical Characteristics -- Test Board layout" },
+          "review_status": "extracted"
+        }
+      }
+    ]
+  },
+
+  "design_notes": [
+    {
+      "note": "The antenna must sit in a ground-free region: the vendor's own evaluation board places it in a 6.5 mm 'No Ground' cutout at the end of a 39.5 mm ground plane. Ground pour, and by extension any grounded copper or component, encroaching on that region detunes the antenna.",
+      "source": { "doc": "2450AT18A100 Detail Specification Ver 1.0 (12/22/2017)", "page": 2, "section": "Test Board layout" }
+    },
+    {
+      "note": "Leave slots for a 'pi' (shunt-series-shunt) matching network next to the feed point. The values printed on the datasheet (3.9 nH / 1.0 pF / 2.7 nH) are only valid on Johanson's evaluation board; on any other PCB the matching topology and values must be re-tuned, so the matching-component footprints must exist on the board even if depopulated.",
+      "source": { "doc": "2450AT18A100 Detail Specification Ver 1.0 (12/22/2017)", "page": 1, "section": "Mounting Considerations" }
+    },
+    {
+      "note": "The feed trace from the matching network to the feed point must be a 50 ohm controlled-impedance line; the vendor notes the feedline can be as short as needed, so it should be routed as short as the layout permits.",
+      "source": { "doc": "2450AT18A100 Detail Specification Ver 1.0 (12/22/2017)", "page": 2, "section": "Test Board layout" }
+    },
+    {
+      "note": "Passive element with 2 W max CW input power and 50 ohm impedance; peak gain 0.5 dBi typ and average gain -0.5 dBi typ in the XZ-V cut. It radiates whatever the transmitter feeds it, so its emission band is the radio's band, not an independent source.",
+      "source": { "doc": "2450AT18A100 Detail Specification Ver 1.0 (12/22/2017)", "page": 1, "section": "General Specifications" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.johansontechnology.com/datasheets/2450AT18A100/2450AT18A100.pdf",
+    "doc_revision": "Ver 1.0, dated 12/22/2017",
+    "review_status": "extracted",
+    "notes": "4-page detail specification, printed for P/N 2450AT18A100E-AEC ('E' is a tape-and-reel packaging suffix; S/R are the bulk and reverse-reel variants of the same 2450AT18A100 part). No theta_ja, no junction temperature, no quiescent/operating current: it is a passive ceramic element with no active dissipation, and the vendor publishes none. No rx_sensitivity_dbm -- that belongs to the radio the antenna is attached to, not to the antenna. tx_power_dbm omitted for the same reason; the only power figure given is a 2 W max CW input rating, recorded in design_notes. The 6.5 mm keepout is the vendor's 'No Ground' clearance from its reference layout drawing on page 2, read off the dimensioned figure."
+  }
+}

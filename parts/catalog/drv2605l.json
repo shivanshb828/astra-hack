@@ -1,0 +1,158 @@
+{
+  "id": "drv2605l",
+  "mpn": "DRV2605L",
+  "manufacturer": "Texas Instruments",
+  "role": "haptic_driver",
+
+  "mechanical": {
+    "package": "DSBGA-9 (YZF), 1.50 x 1.50 mm; also offered as VSSOP-10 (DGS), 3.00 x 3.00 mm",
+    "length_mm": {
+      "value": 1.5, "unit": "mm", "qualifier": "max",
+      "conditions": "DSBGA (9) body size (MAX) from the Device Information table; the D and E dimensions on the YZF0009 outline drawing are given as symbols only and were not text-extractable",
+      "source": { "doc": "SLOS854D", "page": 1, "section": "3 Description, Device Information" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 1.5, "unit": "mm", "qualifier": "max",
+      "conditions": "DSBGA (9) body size (MAX) from the Device Information table; the D and E dimensions on the YZF0009 outline drawing are given as symbols only and were not text-extractable",
+      "source": { "doc": "SLOS854D", "page": 1, "section": "3 Description, Device Information" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 0.625, "unit": "mm", "qualifier": "max",
+      "conditions": "package outline YZF0009, DSBGA - 0.625 mm max height. The VSSOP-10 (DGS) alternate is 1.1 mm max height (page 70).",
+      "source": { "doc": "SLOS854D", "page": 73, "section": "PACKAGE OUTLINE YZF0009" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": false,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 2, "unit": "V", "qualifier": "min",
+      "conditions": "VDD recommended supply voltage, over operating free-air temperature range",
+      "source": { "doc": "SLOS854D", "page": 6, "section": "6.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 5.2, "unit": "V", "qualifier": "max",
+      "conditions": "VDD recommended supply voltage; absolute maximum VDD is 5.5 V",
+      "source": { "doc": "SLOS854D", "page": 6, "section": "6.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 0.5, "unit": "mA", "qualifier": "typ",
+      "conditions": "IQ with V(EN) = 1.8 V, STANDBY = 0, no signal, TA = 25 C, VDD = 3.6 V; 0.65 mA max. Standby current is 4.1 uA typ (STANDBY = 1) and shutdown current 4 uA typ (V(EN) = 0 V).",
+      "source": { "doc": "SLOS854D", "page": 7, "section": "6.5 Electrical Characteristics, IQ" },
+      "review_status": "extracted"
+    },
+    "i_typ": {
+      "value": 2.4, "unit": "mA", "qualifier": "typ",
+      "conditions": "I(BAT_AV), average battery current during operation at 90% duty cycle in LRA mode with NO LOAD (2.3 mA typ in ERM mode), 3.5 mA max, TA = 25 C, VDD = 3.6 V. This excludes the actuator current itself, which is set by the motor and the load impedance (8 ohm minimum at VDD = 5.2 V).",
+      "source": { "doc": "SLOS854D", "page": 7, "section": "6.5 Electrical Characteristics, I(BAT_AV)" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 145.2, "unit": "C/W", "qualifier": "typ",
+          "conditions": "YZF (DSBGA) 9 pins, 1.5 x 1.5 mm, no thermal pad; TI Thermal Information table, board condition not stated in the table. No thermal figures are published for the VSSOP-10 (DGS) option.",
+          "source": { "doc": "SLOS854D", "page": 6, "section": "6.4 Thermal Information" },
+          "review_status": "extracted"
+        }
+      ]
+    },
+    "conducted": [
+      {
+        "mechanism": "switching",
+        "f_fundamental_hz": {
+          "value": 20500, "unit": "Hz", "qualifier": "typ",
+          "conditions": "fO(PWM), PWM output frequency of the differential switching (trinary-modulated) output stage driving OUT+/OUT-, TA = 25 C, VDD = 3.6 V; 19.5 kHz min, 21.5 kHz max. This is the carrier the motor leads carry, distinct from the 125-300 Hz mechanical output.",
+          "source": { "doc": "SLOS854D", "page": 7, "section": "6.7 Switching Characteristics" },
+          "review_status": "extracted"
+        },
+        "harmonics_modeled": 5
+      },
+      {
+        "mechanism": "digital_clock",
+        "f_fundamental_hz": {
+          "value": 400000, "unit": "Hz", "qualifier": "max",
+          "conditions": "f(SCL), frequency at the SCL pin with no wait states, TA = 25 C, VDD = 3.6 V. Host-driven, but present on the SCL/SDA traces at this device.",
+          "source": { "doc": "SLOS854D", "page": 7, "section": "6.6 Timing Requirements" },
+          "review_status": "extracted"
+        },
+        "harmonics_modeled": 5
+      }
+    ],
+    "mechanical_emissions": [
+      {
+        "mechanism": "vibration",
+        "band_hz": [125, 300]
+      }
+    ]
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "operating free-air temperature TA, Absolute Maximum Ratings",
+        "source": { "doc": "SLOS854D", "page": 6, "section": "6.1 Absolute Maximum Ratings" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 85, "unit": "C", "qualifier": "max",
+        "conditions": "operating free-air temperature TA, Absolute Maximum Ratings",
+        "source": { "doc": "SLOS854D", "page": 6, "section": "6.1 Absolute Maximum Ratings" },
+        "review_status": "extracted"
+      },
+      "t_junction_max": {
+        "value": 150, "unit": "C", "qualifier": "abs_max",
+        "conditions": "operating junction temperature TJ, Absolute Maximum Ratings (-40 C to 150 C). No separate recommended junction temperature is given.",
+        "source": { "doc": "SLOS854D", "page": 6, "section": "6.1 Absolute Maximum Ratings" },
+        "review_status": "extracted"
+      }
+    },
+    "mechanical_susceptibility": [
+      {
+        "band_hz": [125, 300],
+        "reason": "Closed-loop drive depends on reading the actuator's back-EMF between drive pulses to track resonance. External vibration coupled into the same actuator, or into the OUT+/OUT- traces, corrupts that back-EMF measurement; the datasheet notes the device falls back to open-loop operation when the LRA is not producing a valid back-EMF voltage, which loses resonance tracking and drive quality."
+      }
+    ]
+  },
+
+  "design_notes": [
+    {
+      "note": "This part emits on two channels at once and they are three orders of magnitude apart: a 20.5 kHz differential switching carrier on the OUT+/OUT- motor leads, and 125-300 Hz mechanical vibration from the actuator itself. A separation rule derived only from the electrical carrier will miss the mechanical coupling, and vice versa.",
+      "source": { "doc": "SLOS854D", "page": 6, "section": "6.3 Recommended Operating Conditions / 6.7 Switching Characteristics" }
+    },
+    {
+      "note": "The output stage is trinary-modulated (a switching, not linear, driver) which is why it is efficient -- and also why it puts fast edges on the two long traces that run out to the actuator. Those traces are typically the longest high-current nets on a wearable board.",
+      "source": { "doc": "SLOS854D", "page": 11, "section": "8.1 Overview" }
+    },
+    {
+      "note": "LRAs have a high-Q response: vibration performance drops rapidly just 3 to 5 Hz off resonance, and the resonant frequency itself drifts with temperature, aging, the mass of the product the LRA is mounted to, and how the product is held. The mounting mechanics of the enclosure are therefore part of this part's operating point, not a fixed property.",
+      "source": { "doc": "SLOS854D", "page": 57, "section": "9.2.2.1.2 Linear Resonance Actuators (LRA)" }
+    },
+    {
+      "note": "The drive energy is bounded by the load, not by a current spec: minimum load impedance ZL is 8 ohms at VDD = 5.2 V, and over-current detection trips below ZL(th) = 4 ohms. There is no stated maximum output current, so the actuator's own impedance and the supply rail together set how hard this part pulls on the shared battery node during an effect.",
+      "source": { "doc": "SLOS854D", "page": 6, "section": "6.3 Recommended Operating Conditions / 6.5 Electrical Characteristics" }
+    },
+    {
+      "note": "Place the VDD decoupling capacitor close to the device supply pin and the REG filtering capacitor close to the REG pin. For the WCSP option use non-solder-mask-defined lands with 75-100 um traces in the exposed area, and keep trace routing balanced in X and Y around the device so solder-wetting forces do not move it during reflow.",
+      "source": { "doc": "SLOS854D", "page": 61, "section": "11.1 Layout Guidelines" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/drv2605l.pdf",
+    "doc_revision": "SLOS854D (May 2014, revised March 2018)",
+    "review_status": "extracted",
+    "notes": "emissions.mechanical_emissions[0] carries a band but NO amplitude. That is deliberate: the datasheet specifies no acceleration, displacement or force anywhere, because the mechanical output is a property of the LRA or ERM actuator the designer attaches, not of this driver. If a consumer of this record needs g or mm it must come from the actuator's own datasheet. The load impedance limits (8 ohm min, 4 ohm over-current threshold) that do bound the drive energy are recorded as a design note rather than written into the amplitude field, whose units are not ohms. band_hz [125, 300] is the specified f(LRA) LRA Frequency Range from Recommended Operating Conditions; note revision A of this document raised the lower bound from 50 Hz to 125 Hz. ERM operation has no stated frequency band and is not represented. No output ripple or di_dt is specified. electrical.i_max is absent: the datasheet gives no maximum output current, only a minimum load impedance (8 ohm) and an over-current detection threshold (4 ohm). Only one theta_JA entry exists because TI publishes thermal metrics for the YZF DSBGA only, not for the VSSOP-10; that gap is why mechanical.* describes the DSBGA. No dissipation model is given. Page numbers are PDF page numbers, which coincide with the printed page numbers through the body of the document."
+  }
+}

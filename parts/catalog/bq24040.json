@@ -1,0 +1,121 @@
+{
+  "id": "bq24040",
+  "mpn": "BQ24040",
+  "manufacturer": "Texas Instruments",
+  "role": "lipo_charger",
+
+  "mechanical": {
+    "package": "WSON-10 (DSQ), 2x2 mm",
+    "length_mm": {
+      "value": 2.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "package outline DSQ0010A (WSON-10), body toleranced 1.9-2.1 mm",
+      "source": { "doc": "SLUS941H", "page": 37, "section": "PACKAGE OUTLINE DSQ0010A" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 2.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "package outline DSQ0010A (WSON-10), body toleranced 1.9-2.1 mm",
+      "source": { "doc": "SLUS941H", "page": 37, "section": "PACKAGE OUTLINE DSQ0010A" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 0.8, "unit": "mm", "qualifier": "max",
+      "conditions": "package outline DSQ0010A, WSON - 0.8 mm max height (toleranced 0.7-0.8)",
+      "source": { "doc": "SLUS941H", "page": 37, "section": "PACKAGE OUTLINE DSQ0010A" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": true,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 3.5, "unit": "V", "qualifier": "min",
+      "conditions": "recommended IN voltage range. The IN operating voltage range restricted by VDPM and VOVP is 4.45 V to 6.45 V; UVLO exit is 3.3 V typ.",
+      "source": { "doc": "SLUS941H", "page": 6, "section": "7.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 28, "unit": "V", "qualifier": "max",
+      "conditions": "recommended IN voltage range (30 V absolute maximum rating). Input overvoltage protection trips at 6.65 V typ on BQ24040/45, so useful operation is bounded well below this.",
+      "source": { "doc": "SLUS941H", "page": 6, "section": "7.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 0.8, "unit": "mA", "qualifier": "typ",
+      "conditions": "ICC active supply current into IN terminal; TS = open, VIN = 6 V, TTDM, no load on OUT, VOUT > VOUT(REG), IC enabled; 1 mA max. Standby current into IN is 125 uA max (TS = LO, VIN <= 6 V); battery current into OUT with VIN = 0 V is 1 uA max.",
+      "source": { "doc": "SLUS941H", "page": 7, "section": "7.5 Electrical Characteristics, QUIESCENT CURRENT" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 1, "unit": "A", "qualifier": "max",
+      "conditions": "recommended current at OUT terminal (and at IN terminal); absolute maximum continuous output current is 1.25 A. Programmed fast-charge current range is 10 mA to 1000 mA set by RISET.",
+      "source": { "doc": "SLUS941H", "page": 6, "section": "7.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 63.5, "unit": "C/W", "qualifier": "typ",
+          "conditions": "DSQ (WSON) 10 pins, 2x2 mm, with exposed thermal pad; TI Thermal Information table, board condition not stated in the table",
+          "source": { "doc": "SLUS941H", "page": 7, "section": "7.4 Thermal Information" },
+          "review_status": "extracted"
+        }
+      ],
+      "dissipation_model": {
+        "expression": "(v_in - v_out) * i_out + (v_out - v_bat) * i_bat",
+        "variables": {
+          "v_in": "Voltage at the IN terminal -- from the mission operating point (USB 5 V or an unregulated adapter). Worst case dissipation is at maximum VIN.",
+          "v_out": "Voltage at the OUT terminal, the shared battery/system node",
+          "i_out": "Total current leaving the OUT terminal (battery charge current plus any parallel system load)",
+          "v_bat": "Battery pack voltage. Section 11.3 instructs using 3.4 V as the minimum for maximum-dissipation calculations, because the pack reaches ~3.4 V within the first 2 minutes of fast charge and the thermal time constant of the assembly is longer than that.",
+          "i_bat": "Current actually flowing into the battery pack, set by the RISET fast-charge programming resistor (IOUT = KISET / RISET) -- a design choice, not a part property"
+        },
+        "unit": "W",
+        "source": { "doc": "SLUS941H", "page": 31, "section": "11.3 Thermal Considerations, Equation 9" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_junction_max": {
+        "value": 125, "unit": "C", "qualifier": "max",
+        "conditions": "recommended operating junction temperature; absolute maximum TJ is 150 C. The internal thermal regulation loop begins reducing charge current at TJ(REG) = 125 C typ and thermal shutdown occurs at TJ(OFF) = 155 C typ (page 8).",
+        "source": { "doc": "SLUS941H", "page": 6, "section": "7.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "design_notes": [
+    {
+      "note": "Maximum power dissipation occurs at the START of the charge cycle, when the battery voltage is lowest -- not at steady state. TI directs using 3.4 V as the battery voltage for worst-case dissipation, since the pack reaches roughly that within 2 minutes and the assembly's thermal time constant is longer.",
+      "source": { "doc": "SLUS941H", "page": 31, "section": "11.3 Thermal Considerations" }
+    },
+    {
+      "note": "The part self-limits: an internal control loop monitors junction temperature and reduces charge current once TJ(REG) = 125 C is exceeded, so the thermal emission saturates rather than running away, at the cost of a longer charge. TI recommends the design NOT run in thermal regulation under nominal input voltage and nominal ambient.",
+      "source": { "doc": "SLUS941H", "page": 31, "section": "11.3 Thermal Considerations" }
+    },
+    {
+      "note": "The thermal pad is BOTH the heat path and the main ground connection for the device. Use multiple 10 mil vias in the power pad conducting to a bottom ground plane, and do not let traces cut off that thermal path. A thinner PCB gives less temperature rise; the EVM uses 0.031 in board with 2 oz copper top and bottom as the optimal-performance reference.",
+      "source": { "doc": "SLUS941H", "page": 30, "section": "11.1 Layout Guidelines" }
+    },
+    {
+      "note": "Keep all low-current GND connections separate from the high-current charge/discharge paths from the battery, joining them with a single-point ground that ties small-signal ground and power ground together at one place. High charge-path traces into IN and out of OUT must be sized for the maximum charge current to avoid voltage drops.",
+      "source": { "doc": "SLUS941H", "page": 30, "section": "11.1 Layout Guidelines" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/bq24040.pdf",
+    "doc_revision": "SLUS941H (September 2009, revised February 2021)",
+    "review_status": "extracted",
+    "notes": "No emissions.conducted entry: the BQ2404x is a LINEAR charger with an internal PowerFET pass element, so it has no switch node and no switching fundamental. Its dominant emission is heat, and dissipation is captured as a formula (Equation 9) rather than a number because it depends on the input source, the shared OUT-node voltage, and the RISET-programmed charge current. susceptibility.thermal.t_op_min and t_op_max are ABSENT: this datasheet specifies no ambient temperature range at all -- Recommended Operating Conditions give only TJ (max 125 C), Absolute Maximum Ratings give TJ -40 C to 150 C, and Electrical Characteristics are specified over 0 C <= TJ <= 125 C. A full-text search for 'ambient temperature' returns only the theta_JA definition on page 31. Only one theta_JA entry exists: the part ships in a single DSQ/WSON-10 package and TI gives no second copper-area condition. Page numbers are PDF page numbers, which coincide with the printed page numbers in this document."
+  }
+}

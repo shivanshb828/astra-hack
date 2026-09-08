@@ -1,0 +1,126 @@
+{
+  "id": "tps63020",
+  "mpn": "TPS63020",
+  "manufacturer": "Texas Instruments",
+  "role": "buck_boost",
+
+  "mechanical": {
+    "package": "VSON-14 (DSJ)",
+    "length_mm": {
+      "value": 4.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "14-pin VSON package measuring 3 mm x 4 mm (DSJ), per Description; toleranced package outline drawing is an image-only page and was not text-extractable",
+      "source": { "doc": "SLVS916I", "page": 1, "section": "3 Description" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 3.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "14-pin VSON package measuring 3 mm x 4 mm (DSJ), per Description; toleranced package outline drawing is an image-only page and was not text-extractable",
+      "source": { "doc": "SLVS916I", "page": 1, "section": "3 Description" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": true,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 1.8, "unit": "V", "qualifier": "min",
+      "conditions": "recommended supply voltage at VIN, VINA; minimum input voltage for start-up is 1.8 V typ (2.0 V max)",
+      "source": { "doc": "SLVS916I", "page": 5, "section": "6.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 5.5, "unit": "V", "qualifier": "max",
+      "conditions": "recommended supply voltage at VIN, VINA",
+      "source": { "doc": "SLVS916I", "page": 5, "section": "6.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 25, "unit": "uA", "qualifier": "typ",
+      "conditions": "IOUT = 0 mA, VEN = VIN = VINA = 3.6 V, VOUT = 3.3 V, current into VIN and VINA; 50 uA max. Shutdown current is 0.1 uA typ at VEN = 0 V.",
+      "source": { "doc": "SLVS916I", "page": 6, "section": "6.5 Electrical Characteristics, Iq" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 2, "unit": "A", "qualifier": "max",
+      "conditions": "output current for VIN > 2.5 V, VOUT = 3.3 V. The Description states output currents up to 3 A are supported at other operating points; average switch current limit is 4 A typ (page 6).",
+      "source": { "doc": "SLVS916I", "page": 1, "section": "1 Features" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 41.8, "unit": "C/W", "qualifier": "typ",
+          "conditions": "DSJ (VSON) 14 pins with exposed thermal pad; TI Thermal Information table, board condition not stated in the table",
+          "source": { "doc": "SLVS916I", "page": 5, "section": "6.4 Thermal Information" },
+          "review_status": "extracted"
+        }
+      ]
+    },
+    "conducted": [
+      {
+        "mechanism": "switching",
+        "f_fundamental_hz": {
+          "value": 2400000, "unit": "Hz", "qualifier": "typ",
+          "conditions": "oscillator frequency, fixed-frequency PWM mode, over recommended free-air temperature and input voltage range; 2200 kHz min, 2600 kHz max. At light load the part enters power save mode and the fundamental drops with load current unless PS/SYNC forces fixed-frequency operation. The device can also be synchronized to an external clock over the same 2200-2600 kHz range.",
+          "source": { "doc": "SLVS916I", "page": 6, "section": "6.5 Electrical Characteristics, f" },
+          "review_status": "extracted"
+        },
+        "harmonics_modeled": 5
+      }
+    ]
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "recommended operating free air temperature TA",
+        "source": { "doc": "SLVS916I", "page": 5, "section": "6.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 85, "unit": "C", "qualifier": "max",
+        "conditions": "recommended operating free air temperature TA",
+        "source": { "doc": "SLVS916I", "page": 5, "section": "6.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_junction_max": {
+        "value": 125, "unit": "C", "qualifier": "max",
+        "conditions": "recommended operating junction temperature TJ; absolute maximum TJ is 150 C (page 5) and the internal overtemperature protection trips at 140 C typ with 20 C hysteresis (page 6)",
+        "source": { "doc": "SLVS916I", "page": 5, "section": "6.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "design_notes": [
+    {
+      "note": "High peak currents (4 A switch limit) at 2.4 MHz make this the most aggressive conducted emitter of the supply set. Use wide and short traces for the main current path and the power ground tracks; place the input capacitor, output capacitor and the inductor as close as possible to the IC, or the regulator shows both stability and EMI problems.",
+      "source": { "doc": "SLVS916I", "page": 23, "section": "10.1 Layout Guidelines" }
+    },
+    {
+      "note": "Use a common ground node for POWER ground and a separate node for CONTROL ground, joined only close to one of the IC ground pins. Superimposing power-ground current on control-ground current causes ground-shift problems. Any sensitive analog ground sharing this plane inherits that shift.",
+      "source": { "doc": "SLVS916I", "page": 23, "section": "10.1 Layout Guidelines" }
+    },
+    {
+      "note": "The feedback divider must be placed as close as possible to the control ground pin, with short traces separated from the power ground traces. The FB node is a high-impedance analog node adjacent to a 2.4 MHz switch node.",
+      "source": { "doc": "SLVS916I", "page": 23, "section": "10.1 Layout Guidelines" }
+    },
+    {
+      "note": "Thermal performance is set by the board, not the package: improve PCB power dissipation capability, solder the exposed thermal pad to couple the component to the PCB, and consider airflow. Thermal coupling to other heat-generating components is called out explicitly as affecting the dissipation limit.",
+      "source": { "doc": "SLVS916I", "page": 24, "section": "10.3 Thermal Considerations" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps63020.pdf",
+    "doc_revision": "SLVS916I (July 2010, revised October 2019)",
+    "review_status": "extracted",
+    "notes": "Output voltage ripple is NOT specified numerically: section 8.2.2.3 (page 15) only says larger output capacitance gives lower ripple, so emissions.conducted[0].ripple is omitted rather than guessed. di_dt is not stated; the only related figure is the L1/L2 absolute-maximum AC rating of -3 V to 10 V for pulses shorter than 10 ns (page 5), which implies fast edges but is not a di/dt. No dissipation_model: the datasheet gives no power-loss formula for this part, only inductor-current Equation 2. NOTE a documented internal inconsistency -- the Electrical Characteristics table (page 6) specifies the oscillator at 2400 kHz typ, while the variable list under Equation 2 (page 14) says 'f = converter switching frequency (typical 2.5 MHz)'; the specification table value was used. Package body dimensions come from the Description text (3 mm x 4 mm) because the toleranced mechanical drawing pages (31-33) contain no extractable text; package height was therefore not extracted. Page numbers are PDF page numbers, which coincide with the printed page numbers in this document."
+  }
+}

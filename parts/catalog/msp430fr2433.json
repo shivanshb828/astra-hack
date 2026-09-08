@@ -1,0 +1,173 @@
+{
+  "id": "msp430fr2433",
+  "mpn": "MSP430FR2433",
+  "manufacturer": "Texas Instruments",
+  "role": "mcu",
+
+  "mechanical": {
+    "package": "VQFN-24 (RGE0024H), 4 x 4 mm, 0.5 mm pitch",
+    "length_mm": {
+      "value": 4.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "RGE0024H package outline, body dimension A: 4.1 max / 3.9 min",
+      "source": { "doc": "SLASE59F", "page": 89, "section": "RGE0024H PACKAGE OUTLINE (drawing 4219016/A)" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 4.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "RGE0024H package outline, body dimension B: 4.1 max / 3.9 min",
+      "source": { "doc": "SLASE59F", "page": 89, "section": "RGE0024H PACKAGE OUTLINE (drawing 4219016/A)" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 1.0, "unit": "mm", "qualifier": "max",
+      "conditions": "RGE0024H overall height from seating plane, '1 MAX'",
+      "source": { "doc": "SLASE59F", "page": 89, "section": "RGE0024H PACKAGE OUTLINE (drawing 4219016/A)" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": true,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 1.8, "unit": "V", "qualifier": "min",
+      "conditions": "VCC applied at the DVCC pin, Recommended Operating Conditions. The minimum is defined by the SVS levels.",
+      "source": { "doc": "SLASE59F", "page": 16, "section": "5.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 3.6, "unit": "V", "qualifier": "max",
+      "conditions": "VCC applied at the DVCC pin, Recommended Operating Conditions (absolute maximum 4.1 V). Supply changes faster than 0.2 V/us can trigger a BOR reset even inside this range.",
+      "source": { "doc": "SLASE59F", "page": 16, "section": "5.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 0.49, "unit": "uA", "qualifier": "typ",
+      "conditions": "ILPM4 (low-power mode 4, excludes SVS), VCC = 3 V, TA = 25 C. Deeper states go lower: LPM4.5 excluding SVS is 0.016 uA typ at 25 C; LPM3 with a 12.5-pF 32768-Hz crystal and SVS is 1.18 uA typ.",
+      "source": { "doc": "SLASE59F", "page": 18, "section": "5.7 Low-Power Mode (LPM3 and LPM4) Supply Currents" },
+      "review_status": "extracted"
+    },
+    "i_typ": {
+      "value": 625, "unit": "uA", "qualifier": "typ",
+      "conditions": "IAM,FRAM(100%), active mode from FRAM at 100% cache hit ratio, fMCLK = fSMCLK = 8 MHz, 0 wait states, VCC = 3 V, TA = 25 C. Active-mode current scales at 126 uA/MHz (75% cache hit, no wait states).",
+      "source": { "doc": "SLASE59F", "page": 17, "section": "5.4 Active Mode Supply Current Into VCC / 5.5 Active Mode Supply Current Per MHz" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 3480, "unit": "uA", "qualifier": "max",
+      "conditions": "IAM,FRAM(0%), active mode from FRAM at 0% cache hit ratio, fMCLK = fSMCLK = 16 MHz, 1 wait state, VCC = 3 V, TA = 25 C -- the worst-case documented active current. Excludes any current sourced or sunk by I/O pins.",
+      "source": { "doc": "SLASE59F", "page": 17, "section": "5.4 Active Mode Supply Current Into VCC Excluding External Current" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 32.6, "unit": "C/W", "qualifier": "typ",
+          "conditions": "VQFN 24 pin (RGE), junction-to-ambient thermal resistance in still air, JEDEC-defined 2S2P system per JESD51-2/3/7/9",
+          "source": { "doc": "SLASE59F", "page": 20, "section": "5.10 Thermal Resistance Characteristics" },
+          "review_status": "extracted"
+        },
+        {
+          "value": 63.7, "unit": "C/W", "qualifier": "typ",
+          "conditions": "DSBGA 24 pin (YQW), junction-to-ambient thermal resistance in still air, JEDEC-defined 2S2P system per JESD51-2/3/7/9",
+          "source": { "doc": "SLASE59F", "page": 20, "section": "5.10 Thermal Resistance Characteristics" },
+          "review_status": "extracted"
+        }
+      ],
+      "dissipation_model": {
+        "expression": "v_cc * i_active",
+        "variables": {
+          "v_cc": "DVCC rail voltage, 1.8 V to 3.6 V -- a design choice; the supply-current tables are characterised at 3 V",
+          "i_active": "Active-mode supply current, which depends on clock frequency, execution memory and cache hit ratio: 203 uA at 1 MHz / 100% cache hit, 3047 uA at 16 MHz / 0% cache hit, scaling at 126 uA/MHz for the 75%-cache no-wait-state case (page 17). Duty-cycling between active mode and LPM3/LPM4 (about 1 uA and 0.5 uA respectively) is the dominant term in the average."
+        },
+        "unit": "W",
+        "source": { "doc": "SLASE59F", "page": 17, "section": "5.4 / 5.5 / 5.6 supply current tables" },
+        "review_status": "assumed"
+      }
+    },
+
+    "conducted": [
+      {
+        "mechanism": "digital_clock",
+        "f_fundamental_hz": {
+          "value": 16000000, "unit": "Hz", "qualifier": "max",
+          "conditions": "fSYSTEM, maximum MCLK frequency (16 MHz with one FRAM wait state; 8 MHz with none). fSMCLK has the same 16 MHz ceiling and drives the peripherals, including SPI/I2C to the AFEs. Cycle-to-cycle jitter at 16 MHz is 0.25% and long-term jitter 0.022% with an XT1 crystal reference.",
+          "source": { "doc": "SLASE59F", "page": 16, "section": "5.3 Recommended Operating Conditions" },
+          "review_status": "extracted"
+        },
+        "harmonics_modeled": 5
+      },
+      {
+        "mechanism": "digital_clock",
+        "f_fundamental_hz": {
+          "value": 40000, "unit": "Hz", "qualifier": "max",
+          "conditions": "fACLK, maximum ACLK frequency. In practice sourced from the 32768 Hz LFXT crystal on XIN/XOUT -- the only external crystal this device supports -- which keeps running in LPM3/LPM3.5.",
+          "source": { "doc": "SLASE59F", "page": 16, "section": "5.3 Recommended Operating Conditions" },
+          "review_status": "extracted"
+        },
+        "harmonics_modeled": 5
+      }
+    ]
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "TA, operating free-air temperature (TJ has the same -40 C lower limit)",
+        "source": { "doc": "SLASE59F", "page": 16, "section": "5.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 85, "unit": "C", "qualifier": "max",
+        "conditions": "TA, operating free-air temperature. Note this equals the absolute-maximum junction temperature, so there is effectively zero self-heating headroom at the top of the ambient range.",
+        "source": { "doc": "SLASE59F", "page": 16, "section": "5.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_junction_max": {
+        "value": 85, "unit": "C", "qualifier": "abs_max",
+        "conditions": "Maximum junction temperature TJ, Absolute Maximum Ratings. Unusually low for an MCU -- most of this BOM is rated to 125 C or 150 C -- because FRAM retention limits it.",
+        "source": { "doc": "SLASE59F", "page": 16, "section": "5.1 Absolute Maximum Ratings" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "design_notes": [
+    {
+      "note": "Avoid routing any high-frequency signal close to an analog signal line: keep digital switching signals such as PWM or JTAG away from the oscillator circuit and from ADC signals. Keep the external crystal traces short with proper grounding to reduce parasitic capacitance.",
+      "source": { "doc": "SLASE59F", "page": 73, "section": "7.1.6 General Layout Recommendations" }
+    },
+    {
+      "note": "Decouple DVCC/DVSS with a 10 uF plus 100 nF low-ESR ceramic pair placed within a few millimetres of the pins. TI additionally recommends separated analog and digital grounds joined at a single point, for noise isolation from digital-to-analog circuits on the board and for analog accuracy. The Recommended Operating Conditions make the bulk capacitor mandatory (CDVCC = 4.7 to 10 uF, +/-20% or better) because it is what limits the supply slew rate below the 0.2 V/us that would trip a BOR.",
+      "source": { "doc": "SLASE59F", "page": 70, "section": "7.1.1 Power Supply Decoupling and Bulk Capacitors" }
+    },
+    {
+      "note": "ADC layout: ground loops form when ADC return current shares a path with other analog or digital circuitry, generating small offset voltages that add to the reference or input. Quickly switching digital signals and noisy supply lines corrupt conversion results, so the ADC input trace must be shielded from them. Putting the MCU into a low-power mode during the conversion improves ADC performance in a noisy environment.",
+      "source": { "doc": "SLASE59F", "page": 73, "section": "7.2.1.2 ADC Design Requirements" }
+    },
+    {
+      "note": "This device supports only a low-frequency (32 kHz) crystal on XIN/XOUT, and external load capacitors for it are required. A digital clock may be applied to XIN instead in XT1BYPASS mode, freeing XOUT. Unused XIN/XOUT pins must be terminated per Section 4.6.",
+      "source": { "doc": "SLASE59F", "page": 70, "section": "7.1.2 External Oscillator" }
+    },
+    {
+      "note": "The VQFN thermal pad (pin 25, 2.7 x 2.7 mm) must be soldered to the PCB for thermal and mechanical performance.",
+      "source": { "doc": "SLASE59F", "page": 89, "section": "RGE0024H PACKAGE OUTLINE, Note 3" }
+    },
+    {
+      "note": "DVCC must never exceed the Absolute Maximum limits during power-up, power-down or operation: exceeding them can cause erroneous writes to RAM and FRAM, i.e. silent data corruption rather than a clean failure. System-level ESD protection must be applied in compliance with the device-level ESD specification to prevent electrical overstress or disturbance of data or code memory.",
+      "source": { "doc": "SLASE59F", "page": 73, "section": "7.1.7 Do's and Don'ts" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/msp430fr2433.pdf",
+    "doc_revision": "SLASE59F, October 2015, revised December 2019",
+    "review_status": "extracted",
+    "notes": "Both offered packages (RGE VQFN-24 4x4 mm and YQW DSBGA-24 2.29 x 2.34 mm) appear in theta_ja; mechanical records the VQFN. Package dimensions were read from the RGE0024H outline drawing on PDF page 89, which pdftotext cannot decode (the page uses an unsupported AutoCAD character collection), so the page was rendered to an image and the dimensions read from the drawing. The dissipation_model is marked 'assumed': TI publishes supply-current tables but never writes a dissipation formula for this part, so P = VCC x I_active is our composition of stated facts and must be reviewed as such. No radiated emissions: no transmitter. The two conducted-emissions entries are the device's clock domains, taken from the Recommended Operating Conditions ceilings rather than from any measured emission -- TI publishes no emission amplitude, di/dt or ripple for this part, so those fields are absent. Note the unusually low 85 C junction limit, which equals the maximum ambient: this part has effectively no thermal headroom above a hot board."
+  }
+}

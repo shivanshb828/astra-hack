@@ -1,0 +1,186 @@
+{
+  "id": "cc2652r",
+  "mpn": "CC2652R",
+  "manufacturer": "Texas Instruments",
+  "role": "ble_soc",
+
+  "mechanical": {
+    "package": "VQFN-48 (RGZ0048A), 7 x 7 mm",
+    "length_mm": {
+      "value": 7.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "RGZ0048A package outline, body dimension A: 7.1 max / 6.9 min",
+      "source": { "doc": "SWRS207J", "page": 58, "section": "RGZ0048A PACKAGE OUTLINE" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 7.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "RGZ0048A package outline, body dimension B: 7.1 max / 6.9 min",
+      "source": { "doc": "SWRS207J", "page": 58, "section": "RGZ0048A PACKAGE OUTLINE" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 1.0, "unit": "mm", "qualifier": "max",
+      "conditions": "RGZ0048A overall height from seating plane, '1 MAX'",
+      "source": { "doc": "SWRS207J", "page": 58, "section": "RGZ0048A PACKAGE OUTLINE" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": true,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 1.8, "unit": "V", "qualifier": "min",
+      "conditions": "VDDS operating supply voltage, Recommended Operating Conditions. VDDS_DCDC, VDDS2 and VDDS3 must sit at the same potential as VDDS.",
+      "source": { "doc": "SWRS207J", "page": 9, "section": "8.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 3.8, "unit": "V", "qualifier": "max",
+      "conditions": "VDDS operating supply voltage, Recommended Operating Conditions (absolute maximum 4.1 V). Supply slew rate is also constrained: 100 mV/us max rising, 20 mV/us max falling.",
+      "source": { "doc": "SWRS207J", "page": 9, "section": "8.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 0.94, "unit": "uA", "qualifier": "typ",
+      "conditions": "Icore in standby without cache retention, RTC running, CPU / 80 kB RAM / partial register retention, RCOSC_LF; CC26x2REM-7ID reference design, Tc = 25 C, VDDS = 3.0 V, DC/DC enabled. Shutdown is 150 nA.",
+      "source": { "doc": "SWRS207J", "page": 10, "section": "8.5 Power Consumption - Power Modes" },
+      "review_status": "extracted"
+    },
+    "i_typ": {
+      "value": 7.0, "unit": "mA", "qualifier": "typ",
+      "conditions": "Radio transmit current, 2.4 GHz PA (BLE), 0 dBm output power setting, 2440 MHz; CC26x2REM-7ID reference design, Tc = 25 C, VDDS = 3.0 V, DC/DC enabled. Radio receive current at 2440 MHz is 6.9 mA; MCU active running CoreMark at 48 MHz is 3.39 mA.",
+      "source": { "doc": "SWRS207J", "page": 11, "section": "8.6 Power Consumption - Radio Modes" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 9.2, "unit": "mA", "qualifier": "typ",
+      "conditions": "Radio transmit current at the +5 dBm output power setting, 2440 MHz -- the highest radio current the datasheet publishes. TI gives no MAX column for these figures, so this is a typical at the worst-case power setting, not a guaranteed maximum. Flash sector erase adds 10.7 mA average delta current while it runs.",
+      "source": { "doc": "SWRS207J", "page": 11, "section": "8.6 Power Consumption - Radio Modes" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 23.4, "unit": "C/W", "qualifier": "typ",
+          "conditions": "RGZ (VQFN) 48 pins, junction-to-ambient thermal resistance per TI thermal metrics. RthJC(bot) is 1.7 C/W, so the exposed pad dominates the heat path. psi_JT = 0.1 C/W and psi_JB = 7.9 C/W for the alternative junction-temperature estimates.",
+          "source": { "doc": "SWRS207J", "page": 11, "section": "8.8 Thermal Resistance Characteristics" },
+          "review_status": "extracted"
+        }
+      ],
+      "dissipation_model": {
+        "expression": "v_dds * i_mode",
+        "variables": {
+          "v_dds": "VDDS supply voltage, 1.8 V to 3.8 V -- the datasheet's own worked example uses 3 V",
+          "i_mode": "Current consumption in the operating mode of interest: 6.9 mA RX, 7.0 mA TX at 0 dBm, 9.2 mA TX at +5 dBm, 3.39 mA MCU active at 48 MHz, plus per-peripheral delta currents (RF core 210.9 uA, UART 167.5 uA, SSI 82.9 uA, ...). TI's example: continuous TX at 0 dBm and 85 C draws 7.8 mA, giving P = 23.4 mW and TJ = TA + 0.6 C via RthJA."
+        },
+        "unit": "W",
+        "source": { "doc": "SWRS207J", "page": 47, "section": "10.2 Junction Temperature Calculation, Equations 1-4" },
+        "review_status": "extracted"
+      }
+    },
+
+    "conducted": [
+      {
+        "mechanism": "switching",
+        "harmonics_modeled": 5
+      },
+      {
+        "mechanism": "digital_clock",
+        "f_fundamental_hz": {
+          "value": 48000000, "unit": "Hz", "qualifier": "nominal",
+          "conditions": "48 MHz crystal oscillator on X48M_P / X48M_N, which also clocks the Arm Cortex-M4F. A separate 32 kHz crystal sits on X32K_Q1 / X32K_Q2.",
+          "source": { "doc": "SWRS207J", "page": 8, "section": "7.2 Signal Descriptions - RGZ Package" },
+          "review_status": "extracted"
+        },
+        "harmonics_modeled": 5
+      }
+    ],
+
+    "radiated": [
+      {
+        "band_hz": [2360000000, 2500000000],
+        "tx_power_dbm": {
+          "value": 5, "unit": "dBm", "qualifier": "max",
+          "conditions": "Max output power, differential mode, delivered to a single-ended 50 ohm load through a balun, fRF = 2440 MHz, VDDS = 3.0 V, Tc = 25 C, measured conducted on the CC26x2REM-7ID reference design. Output power is programmable over a 26 dB range below this.",
+          "source": { "doc": "SWRS207J", "page": 15, "section": "8.11 Bluetooth Low Energy - Transmit (TX)" },
+          "review_status": "extracted"
+        },
+        "intentional": true
+      }
+    ]
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "Operating junction temperature, Recommended Operating Conditions. TI specifies this device by junction, not ambient, temperature.",
+        "source": { "doc": "SWRS207J", "page": 9, "section": "8.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 105, "unit": "C", "qualifier": "max",
+        "conditions": "Operating junction temperature, Recommended Operating Conditions. Flash retention is specified as 11.4 years at 105 C, so sustained operation at the top of this range trades away nonvolatile-memory lifetime.",
+        "source": { "doc": "SWRS207J", "page": 9, "section": "8.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_junction_max": {
+        "value": 105, "unit": "C", "qualifier": "max",
+        "conditions": "Operating junction temperature, Recommended Operating Conditions. The Absolute Maximum Ratings table gives only a storage temperature (-40 to 150 C) and no separate abs-max TJ, so this recommended limit is the binding junction figure.",
+        "source": { "doc": "SWRS207J", "page": 9, "section": "8.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      }
+    },
+
+    "radiated": [
+      {
+        "band_hz": [2360000000, 2500000000],
+        "rx_sensitivity_dbm": {
+          "value": -97, "unit": "dBm", "qualifier": "typ",
+          "conditions": "Bluetooth Low Energy 1 Mbps (LE 1M) receiver sensitivity, differential mode, BER = 1e-3, fRF = 2440 MHz, VDDS = 3.0 V, Tc = 25 C, measured conducted at the antenna input on the CC26x2REM-7ID reference design. Coded PHYs are more sensitive still: -100 dBm at 500 kbps and -105 dBm at 125 kbps (LE Coded); LE 2M is -91 dBm.",
+          "source": { "doc": "SWRS207J", "page": 13, "section": "8.10 Bluetooth Low Energy - Receive (RX)" },
+          "review_status": "extracted"
+        }
+      }
+    ]
+  },
+
+  "design_notes": [
+    {
+      "note": "TI states that the reference designs (CC26x2REM-7ID, LAUNCHXL-CC26X2R1) 'should be followed closely', with special attention to RF component placement, decoupling capacitors and DC/DC regulator components, and to the ground connections for all of these. Every RF and power number in the datasheet is measured on the CC26x2REM-7ID board, so departing from that layout invalidates the specified performance.",
+      "source": { "doc": "SWRS207J", "page": 46, "section": "10.1 Reference Designs" }
+    },
+    {
+      "note": "Junction temperature is derived, not measured: TJ = psi_JT x P + Tcase, TJ = psi_JB x P + Tboard, or TJ = RthJA x P + TA, where P = current consumption x supply voltage. TI's worked example (continuous TX at 0 dBm, 85 C ambient, 3 V, 7.8 mA) gives P = 23.4 mW and only 0.6 C of rise -- this part's own self-heating is small, so its junction temperature is set almost entirely by what is around it.",
+      "source": { "doc": "SWRS207J", "page": 47, "section": "10.2 Junction Temperature Calculation" }
+    },
+    {
+      "note": "The on-chip buck DC/DC converter switches on the DCDC_SW pin (pin 33) into an external inductor, with a 22 uF capacitor on the VDDR net. If the DC/DC is not used, the inductor can be removed, but VDDR and VDDR_RF must still be connected and the 22 uF capacitor kept on VDDR. This switching node is the device's main conducted-noise source and sits on the same die as a -97 dBm receiver.",
+      "source": { "doc": "SWRS207J", "page": 8, "section": "7.3 Connections for Unused Pins and Modules, note 2" }
+    },
+    {
+      "note": "Spurious emissions and harmonics at the +5 dBm setting are specified as < -36 dBm below 1 GHz (< -54 dBm in ETSI restricted bands, < -55 dBm in FCC restricted bands) and < -42 dBm above 1 GHz including the second and third harmonics -- suitable for ETSI EN 300 328 / EN 300 440 Class 2, FCC CFR47 Part 15 and ARIB STD-T66. The second harmonic lands near 4.9 GHz and the third near 7.3 GHz.",
+      "source": { "doc": "SWRS207J", "page": 15, "section": "8.11 Bluetooth Low Energy - Transmit (TX)" }
+    },
+    {
+      "note": "For small coin cells with a high end-of-life source resistance, a 22 uF VDDS input capacitor is required to keep the falling supply slew rate within the 20 mV/us limit.",
+      "source": { "doc": "SWRS207J", "page": 9, "section": "8.3 Recommended Operating Conditions, note 1" }
+    },
+    {
+      "note": "Receiver selectivity degrades sharply close in: co-channel rejection is -1.5 dB and adjacent-channel (+/-1 MHz) selectivity only 8 / 4.5 dB at 125 kbps, versus 44 dB or better at +/-2 MHz and beyond. Interference within about 1 MHz of the wanted channel is essentially unrejected. Absolute maximum input level at the RF pins is +5 dBm.",
+      "source": { "doc": "SWRS207J", "page": 12, "section": "8.10 Bluetooth Low Energy - Receive (RX)" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/cc2652r.pdf",
+    "doc_revision": "SWRS207J, January 2018, revised November 2023",
+    "review_status": "extracted",
+    "notes": "Only one package (RGZ VQFN-48, 7x7 mm) is offered, so theta_ja has a single entry; the package has a 5.15 mm exposed thermal pad. The first conducted-emissions entry carries only its mechanism: the device has an on-chip buck DC/DC converter (DCDC_SW, pin 33) but the datasheet nowhere states its switching frequency, ripple or di/dt, so those fields are deliberately absent rather than guessed -- the switching frequency would have to come from the CC13xx/CC26xx Hardware Configuration and PCB Design Considerations application report, which is outside this document. emissions.radiated band_hz uses the RF Frequency Bands row (2360-2500 MHz, page 11), which is wider than the BLE band the TX/RX tables are measured in (2440 MHz), because that is the range the silicon can be tuned across. i_max is labelled 'typ' honestly: TI publishes no MAX column for radio currents, so the value recorded is the typical at the highest power setting. All RF figures are conducted measurements at the antenna input on the CC26x2REM-7ID reference design, not radiated measurements -- the datasheet says so explicitly. No keepout_mm: TI states no numeric keepout for this device, only 'follow the reference design closely'."
+  }
+}

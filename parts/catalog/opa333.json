@@ -1,0 +1,169 @@
+{
+  "id": "opa333",
+  "mpn": "OPA333",
+  "manufacturer": "Texas Instruments",
+  "role": "precision_opamp",
+
+  "mechanical": {
+    "package": "SOT-23-5 (DBV0005A)",
+    "length_mm": {
+      "value": 2.9, "unit": "mm", "qualifier": "nominal",
+      "conditions": "DBV0005A package outline, body dimension A: 3.0 max / 2.6 min; front-page Device Information gives 2.90 mm nominal",
+      "source": { "doc": "SBOS351E", "page": 33, "section": "DBV0005A PACKAGE OUTLINE" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 1.6, "unit": "mm", "qualifier": "nominal",
+      "conditions": "DBV0005A package outline, body dimension B: 1.75 max / 1.45 min; front-page Device Information gives 1.60 mm nominal",
+      "source": { "doc": "SBOS351E", "page": 33, "section": "DBV0005A PACKAGE OUTLINE" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 1.45, "unit": "mm", "qualifier": "max",
+      "conditions": "DBV0005A overall height, 'SOT-23 - 1.45 mm max height'",
+      "source": { "doc": "SBOS351E", "page": 33, "section": "DBV0005A PACKAGE OUTLINE" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": false,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 1.8, "unit": "V", "qualifier": "min",
+      "conditions": "Supply voltage VS, Recommended Operating Conditions (+/-0.9 V split supply)",
+      "source": { "doc": "SBOS351E", "page": 5, "section": "6.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 5.5, "unit": "V", "qualifier": "max",
+      "conditions": "Supply voltage VS, Recommended Operating Conditions (+/-2.75 V split supply); absolute maximum supply is 7 V",
+      "source": { "doc": "SBOS351E", "page": 5, "section": "6.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 17, "unit": "uA", "qualifier": "typ",
+      "conditions": "IQ per amplifier, IO = 0 A, TA = 25 C, RL = 10 kOhm to VS/2",
+      "source": { "doc": "SBOS351E", "page": 7, "section": "6.6 Electrical Characteristics -- POWER SUPPLY" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 28, "unit": "uA", "qualifier": "max",
+      "conditions": "IQ per amplifier over TA = -40 C to 125 C (25 uA max at 25 C). Excludes load current; output short-circuit current is +/-5 mA typ.",
+      "source": { "doc": "SBOS351E", "page": 7, "section": "6.6 Electrical Characteristics -- POWER SUPPLY" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 220.8, "unit": "C/W", "qualifier": "typ",
+          "conditions": "OPA333 DBV (SOT-23), 5 pins, junction-to-ambient thermal resistance per TI thermal metrics (JEDEC standard board)",
+          "source": { "doc": "SBOS351E", "page": 6, "section": "6.4 Thermal Information: OPA333" },
+          "review_status": "extracted"
+        },
+        {
+          "value": 298.4, "unit": "C/W", "qualifier": "typ",
+          "conditions": "OPA333 DCK (SC70), 5 pins, junction-to-ambient thermal resistance per TI thermal metrics (JEDEC standard board)",
+          "source": { "doc": "SBOS351E", "page": 6, "section": "6.4 Thermal Information: OPA333" },
+          "review_status": "extracted"
+        },
+        {
+          "value": 140.1, "unit": "C/W", "qualifier": "typ",
+          "conditions": "OPA333 D (SOIC), 8 pins, junction-to-ambient thermal resistance per TI thermal metrics (JEDEC standard board)",
+          "source": { "doc": "SBOS351E", "page": 6, "section": "6.4 Thermal Information: OPA333" },
+          "review_status": "extracted"
+        }
+      ]
+    },
+
+    "conducted": [
+      {
+        "mechanism": "digital_clock",
+        "f_fundamental_hz": {
+          "value": 125000, "unit": "Hz", "qualifier": "typ",
+          "conditions": "Internal auto-calibration (chopper) rate. The datasheet states the time-continuous 350-kHz signal-path amplifier is 'zero-corrected every 8 us'; 125 kHz is that 8 us period expressed as a frequency. TI publishes no amplitude for the resulting switching artifact and states the architecture has no aliasing or flicker noise.",
+          "source": { "doc": "SBOS351E", "page": 13, "section": "7.3.3 Internal Offset Correction" },
+          "review_status": "extracted"
+        },
+        "harmonics_modeled": 5
+      }
+    ]
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "Specified temperature, Recommended Operating Conditions (operating range extends to 150 C but is not specified there)",
+        "source": { "doc": "SBOS351E", "page": 5, "section": "6.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 125, "unit": "C", "qualifier": "max",
+        "conditions": "Specified temperature, Recommended Operating Conditions (operating range in the Electrical Characteristics extends to 150 C, but parameters are only specified to 125 C)",
+        "source": { "doc": "SBOS351E", "page": 5, "section": "6.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_junction_max": {
+        "value": 150, "unit": "C", "qualifier": "abs_max",
+        "conditions": "Operating junction temperature TJ, Absolute Maximum Ratings",
+        "source": { "doc": "SBOS351E", "page": 5, "section": "6.1 Absolute Maximum Ratings" },
+        "review_status": "extracted"
+      },
+      "accuracy_note": "Not a temperature sensor, but its accuracy is temperature-gradient sensitive in a way that matters for placement: the datasheet warns that thermoelectric (Seebeck) junctions formed by dissimilar conductors generate 0.1 uV/C or more, against a 10 uV maximum input offset voltage. A gradient of only a few degrees across the two input terminals is therefore comparable to the part's entire offset budget."
+    },
+
+    "conducted": [
+      {
+        "band_hz": [0.5, 150],
+        "reason": "ECG signal band. TI's own single-supply, very-low-power ECG circuit built around this device (Figure 33) sets fHPF = 0.5 Hz and fLPF = 150 Hz, so this is the vendor's stated passband for this part in this application.",
+        "noise_floor": {
+          "value": 1.1, "unit": "uVpp", "qualifier": "typ",
+          "conditions": "Input voltage noise, f = 0.1 Hz to 10 Hz, TA = 25 C (0.3 uVpp over 0.01 Hz to 1 Hz)",
+          "source": { "doc": "SBOS351E", "page": 7, "section": "6.6 Electrical Characteristics -- NOISE" },
+          "review_status": "extracted"
+        },
+        "cmrr_db": {
+          "value": 130, "unit": "dB", "qualifier": "typ",
+          "conditions": "(V-) - 0.1 V < VCM < (V+) + 0.1 V, TA = -40 C to 125 C; 106 dB minimum",
+          "source": { "doc": "SBOS351E", "page": 7, "section": "6.6 Electrical Characteristics -- INPUT VOLTAGE" },
+          "review_status": "extracted"
+        }
+      }
+    ]
+  },
+
+  "design_notes": [
+    {
+      "note": "Thermal gradients across the two input terminals are a first-order error source. Dissimilar-metal junctions produce thermoelectric potentials of 0.1 uV/C or more against a 10 uV max offset spec, so the amplifier and its input network must be thermally isolated from power supplies and other heat sources, shielded from air currents, and laid out so both inputs sit at the same temperature.",
+      "source": { "doc": "SBOS351E", "page": 12, "section": "7.3 Feature Description" }
+    },
+    {
+      "note": "Run the input traces as far away from the supply lines as possible, and place the gain-setting components close to the device and to each other to reduce parasitic errors. Use a low-ESR ceramic bypass capacitor (0.1 uF) directly across the supply pins.",
+      "source": { "doc": "SBOS351E", "page": 23, "section": "10.1.1 General Layout Guidelines / 10.2 Layout Example" }
+    },
+    {
+      "note": "RFI susceptibility shows up as a shift in offset voltage or DC level with the interfering RF signal. The OPA333 is specifically designed to minimise RFI susceptibility, but TI still warns that strong RF fields can cause varying offset levels -- relevant on a board that also carries a 2.4 GHz transmitter.",
+      "source": { "doc": "SBOS351E", "page": 23, "section": "10.1.1 General Layout Guidelines" }
+    },
+    {
+      "note": "Power-supply rejection is specified as 1 uV/V typ, 5 uV/V max over VS = 1.8 V to 5.5 V and -40 C to 125 C -- i.e. referred to the input, not in dB. A 100 mV rail excursion becomes at most 0.5 uV of input-referred error, which is small against the 1.1 uVpp 0.1-10 Hz noise floor.",
+      "source": { "doc": "SBOS351E", "page": 7, "section": "6.6 Electrical Characteristics -- OFFSET VOLTAGE" }
+    },
+    {
+      "note": "Input terminals are diode-clamped to the rails. Input signals that can swing more than 0.3 V beyond the supply rails must be current limited to 10 mA or less (a series resistor), which matters for electrode nets exposed to defibrillation or ESD.",
+      "source": { "doc": "SBOS351E", "page": 5, "section": "6.1 Absolute Maximum Ratings, Note 2" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/opa333.pdf",
+    "doc_revision": "SBOS351E, March 2006, revised December 2015",
+    "review_status": "extracted",
+    "notes": "Datasheet covers OPA333 (single) and OPA2333 (dual). Only the three OPA333 packages (D SOIC, DBV SOT-23, DCK SC70) are recorded in theta_ja; the OPA2333 table on the same page adds DGK VSSOP (180.3 C/W) and DRB VSON (46.7 C/W) if the dual is used instead. Mechanical records the DBV SOT-23-5. psrr_db is deliberately absent: TI specifies PSRR for this part in uV/V (1 typ, 5 max), not in dB, and converting it would manufacture a number -- the raw figure is kept verbatim in design_notes. The 125 kHz conducted-emission entry is the reciprocal of the datasheet's stated 8 us auto-zero interval; the datasheet never prints a chopping frequency or an artifact amplitude, so ripple is absent. The susceptibility band 0.5-150 Hz comes from TI's own ECG application circuit on page 22, not from a generic assumption. No radiated emissions: passive analog part, no transmitter."
+  }
+}

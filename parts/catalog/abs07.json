@@ -1,0 +1,99 @@
+{
+  "id": "abs07",
+  "mpn": "ABS07-32.768kHz",
+  "manufacturer": "Abracon",
+  "role": "crystal_32k",
+
+  "mechanical": {
+    "package": "2-pad ceramic SMD, seam-sealed, 3.2 x 1.5 x 0.9 mm",
+    "length_mm": {
+      "value": 3.2, "unit": "mm", "qualifier": "nominal",
+      "conditions": "Package body length, 3.2 +/-0.1 mm (0.126 +/-0.004 in)",
+      "source": { "doc": "Abracon ABS07 datasheet, rev 08-10-22", "page": 4, "section": "Mechanical Dimensions" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 1.50, "unit": "mm", "qualifier": "nominal",
+      "conditions": "Package body width, 1.50 +/-0.1 mm (0.059 +/-0.004 in)",
+      "source": { "doc": "Abracon ABS07 datasheet, rev 08-10-22", "page": 4, "section": "Mechanical Dimensions" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 0.9, "unit": "mm", "qualifier": "max",
+      "conditions": "Height H per the part-number height table: ABS07 = 0.9 mm max. The ABS071 option is 0.65 mm max in the same footprint, and the ordering code's first field selects between them (blank = 0.9 mm max, 1 = 0.65 mm max). Note the 4 pF load-capacitance option is only available at the 0.9 mm height.",
+      "source": { "doc": "Abracon ABS07 datasheet, rev 08-10-22", "page": 4, "section": "Mechanical Dimensions -- Part Number / Height (H) table" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": false,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "emissions": {
+    "conducted": [
+      {
+        "mechanism": "digital_clock",
+        "f_fundamental_hz": {
+          "value": 32768, "unit": "Hz", "qualifier": "nominal",
+          "conditions": "Nominal resonant frequency. Frequency tolerance at +25 C is +/-20 ppm for the standard option (+/-10 ppm and +/-30 ppm options exist), and first-year aging is +/-3 ppm at 25 +/-3 C.",
+          "source": { "doc": "Abracon ABS07 datasheet, rev 08-10-22", "page": 1, "section": "Key Electrical Specifications -- Frequency" },
+          "review_status": "extracted"
+        }
+      }
+    ]
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "Operating temperature, standard ordering option 'blank'. Wider options exist: 'H' = -40 to +125 C, 'W' = -55 to +125 C, but they carry a higher ESR limit (95 kohm instead of 70 kohm).",
+        "source": { "doc": "Abracon ABS07 datasheet, rev 08-10-22", "page": 1, "section": "Key Electrical Specifications -- Operating Temperature" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 85, "unit": "C", "qualifier": "max",
+        "conditions": "Operating temperature ceiling, standard ordering option 'blank'. Storage range is -55 to +125 C.",
+        "source": { "doc": "Abracon ABS07 datasheet, rev 08-10-22", "page": 1, "section": "Key Electrical Specifications -- Operating Temperature" },
+        "review_status": "extracted"
+      },
+      "accuracy_note": "This part's READING -- its frequency -- is corrupted by heat well before any damage limit. It is a tuning-fork cut with a parabolic frequency-vs-temperature curve: turnover temperature is +25 C typ (+20 to +30 C range) and the temperature coefficient is -0.036 ppm/T^2 typ (-0.040 ppm/T^2 min), where T is the departure from turnover in degrees C. Frequency therefore falls off on BOTH sides of +25 C. The datasheet also plots this as a Frequency vs. Temperature Characteristics curve on page 2. Because a warm neighbour biases the crystal away from turnover in one direction only, a nearby steady heat source produces a systematic timekeeping error, not a random one. For scale, the standard grade's own room-temperature tolerance is only +/-20 ppm, so a sustained offset of roughly 24 C from turnover costs about as much accuracy as the entire initial tolerance budget. Source: page 1, Key Electrical Specifications; page 2, Frequency vs. Temperature Characteristics."
+    },
+    "mechanical_susceptibility": [
+      {
+        "band_hz": [32768, 32768],
+        "reason": "The datasheet states the operation mode is 'Flexural Mode (Tuning Fork)' (page 1, Key Electrical Specifications). The resonant element is a physically flexing tuning fork at 32.768 kHz, so external mechanical energy at or near that frequency couples directly into the resonating structure rather than merely shaking the package. This is the one part in the BOM whose sensing element is itself mechanical. NOTE: Abracon publishes NO shock, vibration, or g-sensitivity specification anywhere in this 6-page datasheet, so no numeric threshold is recorded here -- the band and the mechanism are datasheet-supported, the magnitude is not available."
+      }
+    ]
+  },
+
+  "design_notes": [
+    {
+      "note": "Drive level must not exceed 0.5 uW (0.1 uW typical). A tuning-fork crystal is damaged by overdrive, so the oscillator's drive strength -- an MCU configuration setting, not a part property -- is a reliability parameter for this component.",
+      "source": { "doc": "Abracon ABS07 datasheet, rev 08-10-22", "page": 1, "section": "Key Electrical Specifications -- Drive Level" }
+    },
+    {
+      "note": "Load capacitance is 12.5 pF for the standard option, with 9 / 7 / 6 / 4 pF variants selectable in the ordering code. The oscillator's actual load -- external capacitors plus board and pin stray -- must match the ordered CL or the part runs off frequency regardless of its tolerance grade, which makes trace length and routing around the crystal a frequency-accuracy issue.",
+      "source": { "doc": "Abracon ABS07 datasheet, rev 08-10-22", "page": 3, "section": "Options and Part Identification" }
+    },
+    {
+      "note": "Equivalent series resistance is 70 kohm max over -40 to +85 C, rising to 95 kohm max for the extended-temperature options. ESR that high means the oscillator's negative-resistance margin is thin; series resistance added by contamination or flux residue around the pads directly attacks start-up.",
+      "source": { "doc": "Abracon ABS07 datasheet, rev 08-10-22", "page": 1, "section": "Key Electrical Specifications -- Equivalent series resistance (R1)" }
+    },
+    {
+      "note": "Reflow is limited to 2 cycles max, with peak package body temperature per JEDEC J-STD-020 classification (260 C for a Pb-free process at this package thickness) and a maximum 8 minutes from 25 C to peak. The package is seam-sealed ceramic, which Abracon cites as giving excellent environmental and heat resistance.",
+      "source": { "doc": "Abracon ABS07 datasheet, rev 08-10-22", "page": 5, "section": "Reflow Profile [JEDEC J-STD-020]" }
+    },
+    {
+      "note": "Abracon states its products are COTS, 'not specifically designed for Military, Aviation, Aerospace, Life-dependent Medical applications or any application requiring high reliability where component failure could result in loss of life and/or property', and that written consent and authorization from Abracon is required for such use. This is a supplier-qualification flag for a patient-worn device, not a technical limitation.",
+      "source": { "doc": "Abracon ABS07 datasheet, rev 08-10-22", "page": 6, "section": "ATTENTION notice" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://abracon.com/Resonators/ABS07.pdf",
+    "doc_revision": "Abracon ABS07, revised 08-10-22",
+    "review_status": "extracted",
+    "notes": "Six-page datasheet, extracted for the ABS07 (0.9 mm max height) at the standard ordering options: 12.5 pF load capacitance, -40 to +85 C operating range, +/-20 ppm tolerance. The alternative options are recorded in the conditions strings and design notes rather than as separate records. Body dimensions were read from the page-4 mechanical drawing rendered as an image, since that page is a graphic and yields no text. MECHANICAL SUSCEPTIBILITY: the entry is grounded in the datasheet's explicit 'Flexural Mode (Tuning Fork)' operation-mode statement and the 32.768 kHz frequency, both on page 1. Abracon publishes NO vibration, shock, drop or acceleration-sensitivity number anywhere in the document, so no magnitude is recorded and none was invented -- the entry carries a band and a reason only, which is all the schema requires. EMISSIONS: the conducted entry carries only the datasheet's nominal 32.768 kHz frequency; the classification of that as a 'digital_clock' mechanism is our reading of what the part does in circuit, not an Abracon claim, and no amplitude, ripple or di/dt figure is recorded because the datasheet gives none. A crystal is a passive resonator -- the driving energy comes from the MCU's oscillator, and the only related datasheet figure is the 0.5 uW max drive level. Genuinely absent and deliberately NOT invented: shock/vibration limits, g-sensitivity, any thermal resistance or self-heating figure (there is no emissions.thermal block), moisture sensitivity level (stated as 'MSL Level = N/A'), and mass. Recorded on the datasheet but with no schema field, so omitted: shunt capacitance C0 (0.9-1.2 pF typ, 2.0 pF max), Q value (10000 min / 30000 typ), insulation resistance (500 Mohm min at 100 Vdc), and the recommended land pattern (1.9 x 1.4 mm pads on 1.1 mm gap). No 'assumed' entries appear in this record."
+  }
+}

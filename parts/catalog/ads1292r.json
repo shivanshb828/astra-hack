@@ -1,0 +1,172 @@
+{
+  "id": "ads1292r",
+  "mpn": "ADS1292R",
+  "manufacturer": "Texas Instruments",
+  "role": "ecg_afe",
+
+  "mechanical": {
+    "package": "VQFN-32 (RSM0032B), 4 x 4 mm, 0.4 mm pitch",
+    "length_mm": {
+      "value": 4.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "RSM0032B package outline, body dimension A: 4.1 max / 3.9 min",
+      "source": { "doc": "SBAS502C", "page": 80, "section": "RSM0032B PACKAGE OUTLINE (drawing 4219108/B)" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 4.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "RSM0032B package outline, body dimension B: 4.1 max / 3.9 min",
+      "source": { "doc": "SBAS502C", "page": 80, "section": "RSM0032B PACKAGE OUTLINE (drawing 4219108/B)" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 1.0, "unit": "mm", "qualifier": "max",
+      "conditions": "RSM0032B overall height, '1 MAX' from seating plane",
+      "source": { "doc": "SBAS502C", "page": 80, "section": "RSM0032B PACKAGE OUTLINE (drawing 4219108/B)" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": true,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 2.7, "unit": "V", "qualifier": "min",
+      "conditions": "AVDD analog power supply, AVDD to AVSS (Recommended Operating Conditions). Digital supply DVDD is a separate rail, 1.7 V min.",
+      "source": { "doc": "SBAS502C", "page": 6, "section": "6.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 5.25, "unit": "V", "qualifier": "max",
+      "conditions": "AVDD analog power supply, AVDD to AVSS (Recommended Operating Conditions). Digital supply DVDD is a separate rail, 3.6 V max.",
+      "source": { "doc": "SBAS502C", "page": 6, "section": "6.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "i_typ": {
+      "value": 205, "unit": "uA", "qualifier": "typ",
+      "conditions": "IAVDD, ADS1292/ADS1292R, AVDD - AVSS = 3 V, RLD amplifier turned off, normal mode. Digital rail adds IDVDD = 32 uA typ at DVDD = 1.8 V (75 uA at 3.3 V).",
+      "source": { "doc": "SBAS502C", "page": 10, "section": "6.5 Electrical Characteristics -- SUPPLY CURRENT (RLD Amplifier Turned Off)" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 33.7, "unit": "C/W", "qualifier": "typ",
+          "conditions": "RSM (VQFN) 32-pin, 4 x 4 mm, junction-to-ambient thermal resistance per TI thermal metrics (JEDEC standard board)",
+          "source": { "doc": "SBAS502C", "page": 6, "section": "6.4 Thermal Information" },
+          "review_status": "extracted"
+        },
+        {
+          "value": 68.4, "unit": "C/W", "qualifier": "typ",
+          "conditions": "PBS (TQFP) 32-pin, 5 x 5 mm, junction-to-ambient thermal resistance per TI thermal metrics (JEDEC standard board)",
+          "source": { "doc": "SBAS502C", "page": 6, "section": "6.4 Thermal Information" },
+          "review_status": "extracted"
+        }
+      ],
+      "dissipation": {
+        "value": 335, "unit": "uW", "qualifier": "typ",
+        "conditions": "ADS1292R, normal mode, analog supply = 3 V, RLD amplifier turned off, per channel. Total quiescent power dissipation in normal mode is 670 uW (160 uW in standby).",
+        "source": { "doc": "SBAS502C", "page": 10, "section": "6.5 Electrical Characteristics -- POWER DISSIPATION" },
+        "review_status": "extracted"
+      }
+    },
+
+    "conducted": [
+      {
+        "mechanism": "charge_pump",
+        "f_fundamental_hz": {
+          "value": 512000, "unit": "Hz", "qualifier": "nominal",
+          "conditions": "Internal oscillator clock frequency, nominal 512 kHz (default fCLK; the alternate CLK_DIV = 1 setting runs at 2.048 MHz). AVDD supplies the on-chip charge pump and carries transients at fCLK.",
+          "source": { "doc": "SBAS502C", "page": 9, "section": "6.5 Electrical Characteristics -- CLOCK" },
+          "review_status": "extracted"
+        },
+        "harmonics_modeled": 5
+      }
+    ]
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "TA, operating ambient temperature, Recommended Operating Conditions",
+        "source": { "doc": "SBAS502C", "page": 6, "section": "6.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 85, "unit": "C", "qualifier": "max",
+        "conditions": "TA, operating ambient temperature, Recommended Operating Conditions",
+        "source": { "doc": "SBAS502C", "page": 6, "section": "6.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_junction_max": {
+        "value": 150, "unit": "C", "qualifier": "abs_max",
+        "conditions": "Maximum junction temperature (TJ), Absolute Maximum Ratings",
+        "source": { "doc": "SBAS502C", "page": 6, "section": "6.1 Absolute Maximum Ratings" },
+        "review_status": "extracted"
+      }
+    },
+
+    "conducted": [
+      {
+        "band_hz": [0, 150],
+        "reason": "ECG biopotential passband. The device's headline input-referred noise is specified in a 150-Hz bandwidth at gain 6, so any conducted disturbance landing inside this band is indistinguishable from the patient signal.",
+        "noise_floor": {
+          "value": 8, "unit": "uVpp", "qualifier": "typ",
+          "conditions": "Input-referred noise, gain = 6, 150-Hz bandwidth, input shorted, 10 seconds of data (11 uVpp max at 256 points / 0.5 s)",
+          "source": { "doc": "SBAS502C", "page": 7, "section": "6.5 Electrical Characteristics -- CHANNEL PERFORMANCE (DC Performance)" },
+          "review_status": "extracted"
+        },
+        "psrr_db": {
+          "value": 90, "unit": "dB", "qualifier": "typ",
+          "conditions": "Power-supply rejection ratio at fPS = 50 Hz and 60 Hz, DVDD = 1.8 V, AVDD - AVSS = 3 V, gain = 6",
+          "source": { "doc": "SBAS502C", "page": 7, "section": "6.5 Electrical Characteristics -- CHANNEL PERFORMANCE (AC performance)" },
+          "review_status": "extracted"
+        },
+        "cmrr_db": {
+          "value": 120, "unit": "dB", "qualifier": "typ",
+          "conditions": "Common-mode rejection ratio at fCM = 50 Hz and 60 Hz, common-mode signal AVSS + 0.3 V to AVDD - 0.3 V; value is the minimum of the two channels",
+          "source": { "doc": "SBAS502C", "page": 7, "section": "6.5 Electrical Characteristics -- CHANNEL PERFORMANCE (AC performance)" },
+          "review_status": "extracted"
+        }
+      }
+    ]
+  },
+
+  "design_notes": [
+    {
+      "note": "The analog input pins are high-impedance and extremely sensitive to extraneous noise; AVSS must be treated as a sensitive analog signal and shielded. PCB leakage currents between traces can exceed the device's 200 pA input bias current if shielding is not implemented, so the input nets need a guard/shield and must be kept physically distant from digital signals.",
+      "source": { "doc": "SBAS502C", "page": 68, "section": "11.1.1.2 Shielding Analog Signal Paths" }
+    },
+    {
+      "note": "AVDD must be as quiet as possible. It supplies the on-chip charge pump and therefore already carries transients at fCLK (512 kHz nominal); noise on AVDD that is NOT synchronous with device operation must be eliminated. This makes AVDD a poor rail to share with a switching regulator running at an unrelated frequency.",
+      "source": { "doc": "SBAS502C", "page": 66, "section": "11.1.1.1 Power Supplies and Grounding" }
+    },
+    {
+      "note": "Place digital circuits (DSP, microcontroller, FPGA) so their return currents do not cross the device's analog return path. Bypass each supply with 10 uF plus 0.1 uF solid ceramic, and place the supply, reference, VCAP1 and VCAP2 capacitors as close to the package as possible.",
+      "source": { "doc": "SBAS502C", "page": 66, "section": "11.1.1.1 Power Supplies and Grounding" }
+    },
+    {
+      "note": "The VCAP1 capacitor must be a non-ferroelectric type (tantalum, or class 1 C0G/NPO) on any board subject to high or low frequency vibration. X7R/X5R class 2 dielectrics are piezoelectric and turn mechanical vibration into electrical noise on VCAP1, which degrades performance when the internal reference is used. This makes the AFE's reference node mechanically susceptible, not just electrically.",
+      "source": { "doc": "SBAS502C", "page": 66, "section": "11.1.1.1 Power Supplies and Grounding" }
+    },
+    {
+      "note": "The delta-sigma passband repeats at every fMOD (the modulator clock derived from fCLK), so interference at frequencies around multiples of fMOD aliases straight into the ECG band. External R-C anti-aliasing filters at the inputs must attenuate those frequencies -- a nearby switcher whose harmonics land near a multiple of fMOD is an aliasing hazard, not just an in-band one.",
+      "source": { "doc": "SBAS502C", "page": 26, "section": "8.3 Feature Description -- Digital Decimation Filter" }
+    },
+    {
+      "note": "The VQFN thermal pad (pin 33, 2.8 x 2.8 mm exposed) must be soldered to the PCB for thermal and mechanical performance and must be connected to AVSS -- it is an analog-ground connection, not a free thermal pour, so it cannot be tied to a digital or chassis ground.",
+      "source": { "doc": "SBAS502C", "page": 80, "section": "RSM0032B PACKAGE OUTLINE, Note 3" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/ads1292r.pdf",
+    "doc_revision": "SBAS502C, December 2011, revised April 2020",
+    "review_status": "extracted",
+    "notes": "Datasheet covers ADS1291 / ADS1292 / ADS1292R jointly; figures here are the ADS1292R column where the parts differ. Two packages are offered (PBS TQFP 5x5 mm and RSM VQFN 4x4 mm); the VQFN was recorded in mechanical as the patch-appropriate choice, and both theta_ja values are kept in the array. Page numbers are PDF pages, which match the printed page numbers for the body of the document; pages 79-82 are the appended TI package drawings, which carry drawing numbers (4219108/B) rather than printed page numbers. i_max and i_quiescent omitted: the Electrical Characteristics table gives only typical supply currents with no MAX column, and standby is specified as power (160 uW) rather than current. No radiated emissions entry -- there is no intentional transmitter. The conducted-emissions entry is the charge-pump/clock transient on AVDD that the Layout Guidelines explicitly call out; the datasheet gives no ripple amplitude or di/dt figure, so those fields are absent. susceptibility.conducted band upper limit of 150 Hz is the datasheet's own noise-specification bandwidth; the lower corner is set by external high-pass components and is not a device property, so 0 was used rather than inventing a 0.05 Hz corner."
+  }
+}
