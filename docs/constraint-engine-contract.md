@@ -171,7 +171,7 @@ dropped.
   ],
 
   "enclosure": {
-    "interior_mm": { "length": 100, "width": 40, "height": 7 },
+    "interior_mm": { "length": 104, "width": 34, "height": 8.5 },
     "wall_thickness_mm": 1.5,
     "wall_keepout_mm": 2.0,
     "openings": [{
@@ -185,10 +185,10 @@ dropped.
 
   "board": {
     "id": "PCB_Naive",
-    "size_mm": { "length": 92, "width": 30, "thickness": 1.0 },
-    "origin_mm": [4, 5, 2],           // board min-corner in enclosure coords
+    "size_mm": { "length": 94, "width": 26, "thickness": 1.0 },
+    "origin_mm": [5, 4, 1],           // board min-corner in enclosure coords
     "edge_margin_mm": 1.5,
-    "max_component_height_mm": 4.0,
+    "max_component_height_mm": 6.5,
     "min_component_gap_mm": 0.5       // IPC-7351 courtyard
   },
 

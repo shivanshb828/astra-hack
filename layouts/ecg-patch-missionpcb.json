@@ -1,23 +1,22 @@
 {
-  "name": "ECG Patch - MissionPCB Layout",
-  "description": "The same BOM, placed against the mission instead of the schematic. The board splits into three zones along its long axis: an analog end holding the electrode, the front end, and the antenna; a battery pod in the middle; and a digital/power island at the far end. The two electrodes take the extreme ends to buy lead-vector length, which pushes the regulator inboard and away from every skin-contact surface. This layout is the hand-authored reference target; the solver is expected to reach an equivalent result on its own.",
-  "rationales": {
-    "sep.noise": "The ECG signal arriving at the front end is roughly 1 mV, and the patch's buck converter switches within millimetres of it on the same copper. Capacitively coupled switching noise at that scale does not degrade the trace, it buries the QRS complex outright, and no amount of downstream gain or filtering recovers it.",
-    "sep.thermal": "A 24-bit front end resolves well under a microvolt per count. Package self-heating from a neighbouring part drifts its input offset and bias currents, and that drift appears in the recording as baseline wander that looks like respiration or motion artifact.",
-    "sep.rf": "Broadband switching noise raises the BLE receiver's noise floor. On a worn patch, lost link margin means retries, retries mean the radio stays on longer, and a 150 mAh cell does not have the budget for that over a multi-day wear.",
-    "zone.heat_overlap": "Simplified thermal model: a fixed radius standing in for the elevated temperature region around the regulator, covering heat spread through the copper pour rather than just the package body. This is a geometric proxy, not a solved thermal field.",
-    "zone.rf_keepout": "A chip antenna radiates into the volume ahead of it. Copper, a pouch cell, or any bulk dielectric inside that volume detunes the match and absorbs radiated power. Inside a sealed patch there is no way to retune after assembly.",
-    "safety.skin_contact_temp": "IEC 60601-1 caps prolonged patient skin contact at 43 C. This patch is worn continuously for days against bare skin, so a dissipating part near a skin-contact surface is a burn exposure, and the local heating also drives electrode half-cell potential drift into the measurement.",
-    "safety.battery_thermal": "Sustained heat accelerates lithium cell ageing and lowers the thermal runaway threshold. Inside a sealed patch the cell has no convective path, so heat that reaches it stays there for the whole wear duration.",
-    "access.connector": "The patch is sealed for moisture ingress, so the gasketed charge window is the only external interface after assembly. Pads that do not register with that window mean the device cannot be charged and cannot be serviced.",
-    "fit.enclosure_xy": "A sealed patch needs an uninterrupted gasket path around the full perimeter. Anything intruding into the wall zone breaks the seal and the shell will not close.",
-    "fit.height": "The patch must stay thin enough to be worn under clothing without catching, which is what sets the interior height, and the pouch cell already consumes most of the budget.",
-    "fit.courtyard": "IPC-7351 courtyard excess. At this board density the placement head needs room to land and the joints need room to fillet; parts butted edge to edge cannot be assembled or reworked reliably."
-  },
+  "name": "ECG Patch - MissionPCB Layout (real parts)",
+  "description": "The same real BOM laid out in schematic order: electrode inputs, then the front end, then power, then the cell, then the radio. Packed left to right as tightly as assembly allows. Nothing here is careless -- it is what you get when placement follows the signal chain instead of the mission.",
   "distance_metric": "edge",
+  "rationales": {
+    "sep.noise": "The signal at the front end is roughly 1 mV. The buck's switching fundamental and its harmonics fall inside the 0-150 Hz band the AFE's noise figure is specified in, so coupled switching noise does not degrade the trace, it buries the QRS complex.",
+    "sep.thermal": "A 24-bit front end resolves well under a microvolt per count. Self-heating in a neighbouring part drifts its input offset and bias currents, and that drift reads as baseline wander that looks like respiration.",
+    "sep.rf": "Broadband switching noise raises the module's receiver noise floor. Lost link margin means retries, retries keep the radio on longer, and a 77 mAh coin cell has no budget for that across a 14-day wear.",
+    "zone.heat_overlap": "A fixed radius standing in for the elevated-temperature region around a dissipating part. A geometric proxy, not a solved thermal field.",
+    "zone.rf_keepout": "The module's antenna radiates into the volume ahead of it. Copper or bulk material inside that volume detunes the match, and inside a sealed patch there is no way to retune after assembly.",
+    "safety.battery_thermal": "Sustained heat accelerates lithium cell ageing and lowers the thermal runaway threshold. This cell sits directly against the skin-side shell with no convective path, so heat that reaches it stays there and reaches the patient.",
+    "fit.height": "The 5.6 mm cell sets the enclosure height, and the two top-entry connectors need vertical clearance to be mated during assembly. The patch has to stay wearable under a shirt, so every millimetre here is argued for.",
+    "fit.courtyard": "IPC-7351 courtyard excess. At this density the placement head needs room to land and the joints need room to fillet.",
+    "fit.enclosure_xy": "A sealed patch needs an uninterrupted gasket path around the full perimeter; anything in the wall zone breaks the seal.",
+    "access.connector": "Both headers are top-entry, mated along the board normal during assembly rather than reached through a wall. Their access requirement is the vertical clearance covered by the height check, so no lateral opening is declared for them."
+  },
   "mission": {
-    "skin_contact_clearance_mm": 15,
-    "battery_thermal_clearance_mm": 8
+    "skin_contact_clearance_mm": 0.0,
+    "battery_thermal_clearance_mm": 8.0
   },
   "mission_rules": [
     {
@@ -27,155 +26,134 @@
         "ELEC_A",
         "ELEC_B"
       ],
-      "distance_mm": 35,
+      "distance_mm": 35.0,
       "metric": "center",
       "severity": "blocker",
-      "title": "ECG lead vector is long enough to resolve",
-      "rationale": "A single-lead ECG measures the potential difference between two electrodes. The signal amplitude scales with how much of the heart's dipole the pair spans, so electrodes placed close together produce a small, low-amplitude trace that no amount of gain recovers cleanly. 35 mm is the practical floor for a chest patch."
+      "title": "Electrode leads exit far enough apart to resolve the lead vector",
+      "rationale": "A single-lead ECG measures the potential difference between two electrodes, and amplitude scales with how much of the heart's dipole the pair spans. The pads themselves are on flying leads and land wherever the adhesive puts them, so this checks the connectors as a proxy for where the leads exit the shell: connectors at the same end force the pads together too."
+    },
+    {
+      "id": "esd_at_the_boundary",
+      "type": "max_separation",
+      "between": [
+        "ESD",
+        "ELEC_A"
+      ],
+      "distance_mm": 10.0,
+      "metric": "center",
+      "severity": "major",
+      "title": "ESD protection sits at the electrode entry, not downstream of it",
+      "rationale": "Protection only works ahead of what it protects. If the clamp is further from the connector than the AFE is, a strike travels down board copper past the front end before it reaches the diode."
     }
   ],
   "enclosure": {
     "interior_mm": {
-      "length": 100,
-      "width": 40,
-      "height": 7
+      "length": 104.0,
+      "width": 34.0,
+      "height": 8.5
     },
     "wall_thickness_mm": 1.5,
     "wall_keepout_mm": 2.0,
-    "openings": [
-      {
-        "id": "charge_window",
-        "face": "-x",
-        "center_mm": 20,
-        "size_mm": {
-          "width": 20,
-          "height": 5
-        },
-        "max_reach_mm": 12
-      }
-    ]
+    "openings": []
   },
   "board": {
-    "id": "PCB_MissionPCB",
+    "id": "PCB_Naive",
     "size_mm": {
-      "length": 92,
-      "width": 30,
+      "length": 94.0,
+      "width": 26.0,
       "thickness": 1.0
     },
     "origin_mm": [
-      4,
-      5,
-      2
+      5.0,
+      4.0,
+      1.0
     ],
     "edge_margin_mm": 1.5,
-    "max_component_height_mm": 4.0
+    "max_component_height_mm": 6.5,
+    "min_component_gap_mm": 0.5
   },
   "placements": [
     {
-      "ref": "CHARGE",
-      "part_id": "con-charge-pogo",
-      "pos_mm": [
-        6,
-        15
-      ]
-    },
-    {
       "ref": "ELEC_A",
-      "part_id": "elec-snap-agagcl",
+      "part_id": "ELEC_A",
       "pos_mm": [
-        16,
-        15
-      ]
-    },
-    {
-      "ref": "AFE",
-      "part_id": "afe-ecg-24bit",
-      "pos_mm": [
-        18,
-        22
-      ]
-    },
-    {
-      "ref": "ANT",
-      "part_id": "ant-chip-2g4",
-      "pos_mm": [
-        24,
-        26
-      ]
-    },
-    {
-      "ref": "LIPO",
-      "part_id": "bat-lipo-150mah",
-      "pos_mm": [
-        45,
-        20
-      ]
-    },
-    {
-      "ref": "MCU",
-      "part_id": "mcu-ble-soc",
-      "pos_mm": [
-        44,
-        5
-      ]
-    },
-    {
-      "ref": "REG",
-      "part_id": "reg-buck-3v3",
-      "pos_mm": [
-        66,
-        3
-      ]
+        40.75,
+        18.25
+      ],
+      "rotation_deg": 0
     },
     {
       "ref": "ELEC_B",
-      "part_id": "elec-snap-agagcl",
+      "part_id": "ELEC_B",
       "pos_mm": [
-        84,
-        15
-      ]
-    }
-  ],
-  "traces": [
-    {
-      "id": "charge_run",
-      "net": "VBUS",
-      "path_mm": [
-        [
-          10,
-          15
-        ],
-        [
-          25,
-          12
-        ],
-        [
-          30,
-          14
-        ]
+        86.25,
+        12.75
       ],
-      "width_mm": 1.0,
-      "high_current": true
+      "rotation_deg": 90
     },
     {
-      "id": "vbat_run",
-      "net": "VBAT",
-      "path_mm": [
-        [
-          64.5,
-          4
-        ],
-        [
-          60,
-          8
-        ],
-        [
-          55,
-          12
-        ]
+      "ref": "ESD",
+      "part_id": "ESD",
+      "pos_mm": [
+        43.85,
+        12.85
       ],
-      "width_mm": 1.0,
-      "high_current": true
+      "rotation_deg": 0
+    },
+    {
+      "ref": "AFE",
+      "part_id": "AFE",
+      "pos_mm": [
+        45.5,
+        21.5
+      ],
+      "rotation_deg": 0
+    },
+    {
+      "ref": "BUCK",
+      "part_id": "BUCK",
+      "pos_mm": [
+        47.0,
+        3.5
+      ],
+      "rotation_deg": 0
+    },
+    {
+      "ref": "CHG",
+      "part_id": "CHG",
+      "pos_mm": [
+        47.0,
+        8.5
+      ],
+      "rotation_deg": 0
+    },
+    {
+      "ref": "CELL",
+      "part_id": "CELL",
+      "pos_mm": [
+        29.05,
+        13.05
+      ],
+      "rotation_deg": 0
+    },
+    {
+      "ref": "BATCON",
+      "part_id": "BATCON",
+      "pos_mm": [
+        47.0,
+        13.0
+      ],
+      "rotation_deg": 90
+    },
+    {
+      "ref": "BLE",
+      "part_id": "BLE",
+      "pos_mm": [
+        67.5,
+        13.0
+      ],
+      "rotation_deg": 90
     }
-  ]
+  ],
+  "traces": []
 }

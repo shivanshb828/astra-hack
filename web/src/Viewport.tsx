@@ -1,6 +1,14 @@
 import { Canvas, ThreeEvent, useFrame, useThree } from '@react-three/fiber'
 import { Grid, Line, OrbitControls, useGLTF } from '@react-three/drei'
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import {
+  Component,
+  Suspense,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from 'react'
 import * as THREE from 'three'
 import type { AnalysisResult, DesignState, PartInfo, VizInstruction } from './types'
 
@@ -72,7 +80,7 @@ function ComponentMesh({
   design,
   parts,
   refName,
-  geometry,
+  asset,
   selected,
   highlighted,
   explode,
@@ -84,7 +92,7 @@ function ComponentMesh({
   design: DesignState
   parts: Record<string, PartInfo>
   refName: string
-  geometry: THREE.BufferGeometry | null
+  asset: { geometry: THREE.BufferGeometry; scale: [number, number, number] } | null
   selected: boolean
   highlighted: boolean
   explode: number
@@ -95,15 +103,24 @@ function ComponentMesh({
 }) {
   const placed = componentCenter(design, refName, parts)
   const mesh = useRef<THREE.Mesh>(null)
-  const { camera, gl } = useThree()
+  const { camera, gl, controls } = useThree() as any
+  const orbit = controls as { enabled: boolean } | null
   const [dragging, setDragging] = useState(false)
   // Live position during a drag, so the visual updates immediately while the
-  // committed design state waits for pointer-up.
+  // committed design state waits for pointer-up. The ref mirrors it because the
+  // window pointer-up handler would otherwise close over a stale value.
   const [live, setLive] = useState<[number, number] | null>(null)
+  const liveRef = useRef<[number, number] | null>(null)
+  const startRef = useRef<[number, number] | null>(null)
 
   useEffect(() => {
     if (!dragging) setLive(null)
   }, [design.revision, dragging])
+
+  useEffect(() => {
+    const comp = design.components.find((c) => c.ref === refName)
+    if (dragging && comp) startRef.current = [comp.pos_mm[0], comp.pos_mm[1]]
+  }, [dragging, design, refName])
 
   if (!placed) return null
   const comp = design.components.find((c) => c.ref === refName)!
@@ -122,54 +139,96 @@ function ComponentMesh({
     onSelect(refName)
     setDragging(true)
     onDragStart()
-    ;(e.target as Element)?.setPointerCapture?.(e.pointerId)
   }
 
-  const onPointerMove = (e: ThreeEvent<PointerEvent>) => {
+  // The drag is driven from window listeners rather than mesh events. Mesh
+  // pointer events only fire while the cursor is actually over the mesh, so a
+  // fast drag -- or a pointer-up released off the part -- would otherwise
+  // strand `dragging` as true, and every later mouse movement anywhere on the
+  // page would keep dragging the component and commit spurious edits.
+  useEffect(() => {
     if (!dragging) return
-    e.stopPropagation()
-    // Intersect the pointer ray with the board plane (scene Y = board top).
+    const el = gl.domElement
+    const raycaster = new THREE.Raycaster()
+    const ndc = new THREE.Vector2()
     const planeY = toScene([0, 0, placed.center[2]])[1]
     const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -planeY)
-    const hit = new THREE.Vector3()
-    if (!e.ray.intersectPlane(plane, hit)) return
-    // Back out of scene space into board-local millimetres.
-    let bx = hit.x / MM - design.board.origin_mm[0]
-    let by = -hit.z / MM - design.board.origin_mm[1]
-    if (snapMm > 0) {
-      bx = Math.round(bx / snapMm) * snapMm
-      by = Math.round(by / snapMm) * snapMm
-    }
-    setLive([Number(bx.toFixed(3)), Number(by.toFixed(3))])
-  }
+    // Orbiting while dragging fights the pointer; suspend it for the duration.
+    const previousOrbit = orbit ? orbit.enabled : null
+    if (orbit) orbit.enabled = false
 
-  const onPointerUp = (e: ThreeEvent<PointerEvent>) => {
-    if (!dragging) return
-    e.stopPropagation()
-    setDragging(false)
-    gl.domElement.style.cursor = 'auto'
-    // Exactly one history event per drag, committed on release.
-    if (live) onDragEnd(refName, live)
-  }
+    const onMove = (ev: PointerEvent) => {
+      const rect = el.getBoundingClientRect()
+      ndc.x = ((ev.clientX - rect.left) / rect.width) * 2 - 1
+      ndc.y = -((ev.clientY - rect.top) / rect.height) * 2 + 1
+      raycaster.setFromCamera(ndc, camera)
+      const hit = new THREE.Vector3()
+      if (!raycaster.ray.intersectPlane(plane, hit)) return
+      // Back out of scene space into board-local millimetres.
+      let bx = hit.x / MM - design.board.origin_mm[0]
+      let by = -hit.z / MM - design.board.origin_mm[1]
+      if (snapMm > 0) {
+        bx = Math.round(bx / snapMm) * snapMm
+        by = Math.round(by / snapMm) * snapMm
+      }
+      const next: [number, number] = [
+        Number(bx.toFixed(3)),
+        Number(by.toFixed(3)),
+      ]
+      liveRef.current = next
+      setLive(next)
+    }
+
+    const onUp = () => {
+      setDragging(false)
+      el.style.cursor = 'auto'
+      if (orbit && previousOrbit !== null) orbit.enabled = previousOrbit
+      const moved = liveRef.current
+      liveRef.current = null
+      if (!moved) return
+      // A click that never moved must not record an edit, so only commit once
+      // the part has travelled past a small threshold.
+      const start = startRef.current
+      if (
+        start &&
+        Math.hypot(moved[0] - start[0], moved[1] - start[1]) < 0.05
+      ) {
+        setLive(null)
+        return
+      }
+      onDragEnd(refName, moved) // exactly one history event per drag
+    }
+
+    window.addEventListener('pointermove', onMove)
+    window.addEventListener('pointerup', onUp)
+    window.addEventListener('pointercancel', onUp)
+    return () => {
+      window.removeEventListener('pointermove', onMove)
+      window.removeEventListener('pointerup', onUp)
+      window.removeEventListener('pointercancel', onUp)
+      if (orbit && previousOrbit !== null) orbit.enabled = previousOrbit
+    }
+  }, [dragging, camera, gl, snapMm, design.board.origin_mm, orbit, refName])
 
   return (
     <mesh
       ref={mesh}
       position={pos}
       onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={onPointerUp}
       onPointerOver={() => (gl.domElement.style.cursor = 'grab')}
       onPointerOut={() => !dragging && (gl.domElement.style.cursor = 'auto')}
-      geometry={geometry ?? undefined}
+      geometry={asset?.geometry ?? undefined}
       scale={
-        geometry
-          ? [1, 1, 1]
+        // Exported asset carries its size in the node scale. Without an asset,
+        // fall back to a placeholder box built from nominal catalogue
+        // dimensions, in glTF axis order (length, height, width).
+        asset
+          ? asset.scale
           : [placed.size[0] * MM, placed.size[2] * MM, placed.size[1] * MM]
       }
       renderOrder={2}
     >
-      {!geometry && <boxGeometry args={[1, 1, 1]} />}
+      {!asset && <boxGeometry args={[1, 1, 1]} />}
       <meshStandardMaterial
         color={selected ? '#ffffff' : highlighted ? '#ff9d2e' : colour}
         emissive={selected ? '#3d7dff' : highlighted ? '#a3520f' : '#000000'}
@@ -281,11 +340,23 @@ function Scene(props: ViewportProps) {
 
   // Map GLB objects to stable component ids by name. This is the asset
   // contract: components arrive individually addressable, not merged.
-  const geoms = useMemo(() => {
-    const out: Record<string, THREE.BufferGeometry> = {}
+  //
+  // The node's world scale is captured alongside its geometry. glTF keeps the
+  // size in the node transform rather than baked into vertices, so reusing the
+  // geometry without that scale renders every part as a unit cube -- which at
+  // this scale is a 1 m box swallowing the camera, and the parts vanish.
+  const assets = useMemo(() => {
+    const out: Record<
+      string,
+      { geometry: THREE.BufferGeometry; scale: [number, number, number] }
+    > = {}
+    gltf?.scene?.updateMatrixWorld?.(true)
     gltf?.scene?.traverse?.((o: THREE.Object3D) => {
       const m = o as THREE.Mesh
-      if (m.isMesh && m.geometry) out[o.name] = m.geometry
+      if (m.isMesh && m.geometry) {
+        const s = o.getWorldScale(new THREE.Vector3())
+        out[o.name] = { geometry: m.geometry, scale: [s.x, s.y, s.z] }
+      }
     })
     return out
   }, [gltf])
@@ -336,7 +407,7 @@ function Scene(props: ViewportProps) {
           design={design}
           parts={parts}
           refName={c.ref}
-          geometry={geoms[c.ref] ?? null}
+          asset={assets[c.ref] ?? null}
           selected={props.selected === c.ref}
           highlighted={highlighted.has(c.ref)}
           explode={props.explode}
@@ -393,19 +464,56 @@ function Scene(props: ViewportProps) {
   )
 }
 
+/** Keeps a renderer failure inside the viewport.
+ *
+ * Without this, a machine that cannot create a WebGL context (a VM, a remote
+ * desktop, older hardware) loses the entire workspace rather than just the 3D
+ * view -- the issue list, inspector and history are still perfectly usable
+ * without a canvas, so they must survive it.
+ */
+class ViewportBoundary extends Component<
+  { children: ReactNode },
+  { error: Error | null }
+> {
+  state: { error: Error | null } = { error: null }
+
+  static getDerivedStateFromError(error: Error) {
+    return { error }
+  }
+
+  render() {
+    if (this.state.error) {
+      return (
+        <div className="viewport-fallback">
+          <h3>3D viewport unavailable</h3>
+          <p>
+            This browser could not create a WebGL context, so the interactive
+            view is disabled. Everything else — components, issues, history and
+            chat — still works, and analysis is unaffected.
+          </p>
+          <pre>{String(this.state.error.message ?? this.state.error)}</pre>
+        </div>
+      )
+    }
+    return this.props.children
+  }
+}
+
 export default function Viewport(props: ViewportProps) {
   return (
-    <Canvas
-      camera={{ position: [0.12, 0.09, 0.12], fov: 42, near: 0.001, far: 20 }}
-      orthographic={props.ortho}
-      onPointerMissed={() => props.onSelect(null)}
-      gl={{ antialias: true }}
-      style={{ background: '#11141a' }}
-    >
-      <Suspense fallback={null}>
-        <Scene {...props} />
-      </Suspense>
-    </Canvas>
+    <ViewportBoundary>
+      <Canvas
+        camera={{ position: [0.12, 0.09, 0.12], fov: 42, near: 0.001, far: 20 }}
+        orthographic={props.ortho}
+        onPointerMissed={() => props.onSelect(null)}
+        gl={{ antialias: true }}
+        style={{ background: '#11141a' }}
+      >
+        <Suspense fallback={null}>
+          <Scene {...props} />
+        </Suspense>
+      </Canvas>
+    </ViewportBoundary>
   )
 }
 

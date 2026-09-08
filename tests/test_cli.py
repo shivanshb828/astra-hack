@@ -83,7 +83,7 @@ class TestSolve:
         main(["solve", "--parts", PARTS, "--layout", NAIVE, "--out", str(out)])
         layout, warnings = load_layout(out)
         assert not warnings
-        assert len(layout.placements) == 8
+        assert len(layout.placements) == 9
 
     def test_name_flag_renames_the_layout(self, tmp_path):
         out = tmp_path / "solved.json"
@@ -139,13 +139,13 @@ class TestExplain:
     def test_brief_lists_every_failure(self, tmp_path):
         main(["explain", "--parts", PARTS, "--layout", NAIVE, "--out", str(tmp_path)])
         brief = json.loads((tmp_path / "explain_brief.json").read_text())
-        assert len(brief["findings"]) == 10
+        assert len(brief["findings"]) == 7
 
     def test_include_passes_widens_the_brief(self, tmp_path):
         main(["explain", "--parts", PARTS, "--layout", NAIVE,
               "--out", str(tmp_path), "--include-passes"])
         brief = json.loads((tmp_path / "explain_brief.json").read_text())
-        assert len(brief["findings"]) == 45
+        assert len(brief["findings"]) == 52  # every check, not just failures
 
     def test_stdout_prints_the_brief(self, capsys, tmp_path):
         main(["explain", "--parts", PARTS, "--layout", NAIVE,
@@ -179,11 +179,19 @@ class TestBadInput:
 
 
 class TestWarningsSurface:
-    def test_loader_warnings_reach_stderr_and_the_report(self, tmp_path, capsys):
-        main(["validate", "--parts", PARTS, "--layout", NAIVE, "--out", str(tmp_path)])
-        captured = capsys.readouterr()
-        assert "avoid_near" in captured.err
-        report = (tmp_path / "validation_report.md").read_text()
+    def test_a_bad_parts_file_surfaces_its_warnings(self, tmp_path, capsys):
+        # The shipped library is generated and loads clean, so exercise the
+        # warning path with a deliberately vague hand-written one.
+        bad = tmp_path / "vague.json"
+        bad.write_text(json.dumps([
+            {"id": "reg", "category": "power",
+             "dimensions_mm": {"length": 3, "width": 3, "height": 1},
+             "avoid_near": ["sensor"]},
+        ]), encoding="utf-8")
+        main(["validate", "--parts", str(bad), "--layout", NAIVE,
+              "--out", str(tmp_path / "o")])
+        assert "avoid_near" in capsys.readouterr().err
+        report = (tmp_path / "o" / "validation_report.md").read_text()
         assert "Data warnings" in report
 
 

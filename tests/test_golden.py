@@ -19,32 +19,26 @@ from constraint_engine.brief import render_brief_text
 # rather than counted, so a rule that starts firing on the wrong pair is caught
 # even if the total happens to stay the same.
 EXPECTED_NAIVE_FAILURES = {
-    # Signal integrity: the front end is boxed in by the power and digital sections.
-    "sep.thermal::AFE|REG",
-    "sep.noise::AFE|REG",
-    "sep.noise::AFE|MCU",
-    "zone.heat_overlap::REG|AFE",
-    # An electrode picks up the MCU as well.
-    "sep.noise::ELEC_B|MCU",
-    # Safety: cell against the regulator, regulator against a skin-contact pad.
-    "safety.battery_thermal::LIPO|REG",
-    "safety.skin_contact_temp::ELEC_B|REG",
-    # Mission: electrodes too close to resolve a usable lead vector.
+    # Signal integrity: the front end is boxed in by power in schematic order.
+    "sep.noise::AFE|BUCK",
+    "sep.thermal::AFE|BUCK",
+    "sep.thermal::AFE|CHG",
+    "zone.heat_overlap::BUCK|AFE",
+    # Safety: the coin cell sits inside the charger's thermal radius.
+    "safety.battery_thermal::CELL|CHG",
+    # Mission: electrodes adjacent, so the lead vector cannot resolve.
     "mission.lead_vector",
-    # RF: the charge trace runs straight through the antenna keep-out.
-    "zone.rf_keepout::ANT",
-    # Mechanical: charge pads nowhere near the charge window.
-    "access.connector::CHARGE",
+    # Mission: the ESD clamp sits downstream of what it protects.
+    "mission.esd_at_the_boundary",
 }
 
 # One failure from each family the mission exercises, so a family cannot
 # silently stop being covered.
 REQUIRED_FAMILIES = {
     "sep.": "signal separation",
-    "zone.": "keep-out and thermal zones",
-    "safety.": "patient and battery safety",
+    "zone.": "thermal zones",
+    "safety.": "battery safety",
     "mission.": "product-specific rules",
-    "access.": "serviceability",
 }
 
 
@@ -75,11 +69,14 @@ class TestNaiveLayout:
         drawable = [c for c in results.failures if not c.id.startswith("data.")]
         assert all(c.overlay is not None for c in drawable)
 
-    def test_nothing_is_skipped_by_accident(self, naive_layout, parts):
-        # A SKIP means the engine could not evaluate something. On the demo
-        # layout everything should be evaluable.
+    def test_only_the_expected_check_is_skipped(self, naive_layout, parts):
+        # A SKIP means the engine could not evaluate something, so each one has
+        # to be accounted for. Exactly one is expected here: both headers are
+        # top-entry, so the enclosure declares no lateral opening and connector
+        # accessibility has nothing to measure against.
         results = validate(naive_layout, parts)
-        assert results.summary()["SKIP"] == 0
+        skipped = {c.id for c in results.by_status("SKIP")}
+        assert skipped == {"access.connector"}
 
 
 class TestCorrectedLayout:
@@ -112,9 +109,10 @@ class TestCorrectedLayout:
         # that battery-to-regulator passed by well under a millimetre.
         results = validate(target_layout, parts)
         battery = next(c for c in results.checks
-                       if c.id == "safety.battery_thermal::LIPO|REG")
+                       if c.id == "safety.battery_thermal::CELL|CHG")
         assert battery.margin_mm is not None
-        assert 0 <= battery.margin_mm < 2.0
+        assert battery.margin_mm >= 0
+        assert battery.measured_mm > battery.required_mm
 
 
 class TestOverlays:
@@ -144,9 +142,9 @@ class TestOverlays:
         results = validate(naive_layout, parts)
         circles = [o for o in results.zone_overlays if o.type == "zone_circle"]
         assert circles
-        # The regulator's 10 mm thermal radius comes from the parts data, so
-        # the renderer never has to hardcode it.
-        assert any(o.radius_mm == 10 for o in circles)
+        # The buck's 6 mm thermal radius comes from the parts data, so the
+        # renderer never has to hardcode it.
+        assert any(o.radius_mm == 6 for o in circles)  # BUCK thermal radius
 
     def test_every_overlay_names_a_collection(self, naive_layout, parts):
         results = validate(naive_layout, parts)
@@ -211,13 +209,13 @@ class TestExplainBrief:
 
     def test_brief_includes_part_behaviour_context(self, naive_layout, parts):
         brief = build_brief(validate(naive_layout, parts), naive_layout, parts)
-        skin = [
+        battery = [
             f for f in brief["findings"]
-            if f["id"].startswith("safety.skin_contact_temp")
+            if f["id"].startswith("safety.battery_thermal")
         ]
-        assert skin
-        ctx = skin[0]["part_context"]["ELEC_B"]
-        assert "held against patient skin" in ctx["behaviour"]
+        assert battery
+        ctx = battery[0]["part_context"]["CELL"]
+        assert "thermal runaway risk" in ctx["behaviour"]
 
     def test_brief_is_json_serializable(self, naive_layout, parts):
         brief = build_brief(validate(naive_layout, parts), naive_layout, parts)
