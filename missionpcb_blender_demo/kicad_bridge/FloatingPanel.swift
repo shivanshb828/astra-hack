@@ -1,5 +1,6 @@
 import Cocoa
 import SwiftUI
+import WebKit
 
 struct ChatMessage: Identifiable { let id=UUID();let text:String;let user:Bool }
 final class ChatModel: ObservableObject {
@@ -27,27 +28,41 @@ final class ChatModel: ObservableObject {
  }
  func finish(_ text:String,ok:Bool){messages.append(ChatMessage(text:text,user:false));busy=false;status=ok ? "\(target) · local commands" : "Connection needs attention"}
 }
+struct ReviewDashboard: NSViewRepresentable {
+ func makeNSView(context:Context)->WKWebView {
+  let view=WKWebView();view.load(URLRequest(url:URL(string:"http://127.0.0.1:8768/")!));return view
+ }
+ func updateNSView(_ view:WKWebView,context:Context){}
+}
 struct ChatView: View {
  @ObservedObject var model:ChatModel
  @State private var compact=true
+ @State private var dashboard=false
  @Environment(\.accessibilityReduceMotion) var reduceMotion
  var body: some View {
  VStack(spacing:0){
-  if compact {
+  if dashboard {
+   HStack {
+    Button("← Chat"){dashboard=false;NotificationCenter.default.post(name:Notification.Name("MissionPCBExpand"),object:nil)}
+    Spacer()
+    Button("Collapse"){dashboard=false;compact=true;NotificationCenter.default.post(name:Notification.Name("MissionPCBCollapse"),object:nil)}
+   }.buttonStyle(.plain).padding(14)
+   ReviewDashboard()
+  } else if compact {
    Button {
-    compact=false
-    NotificationCenter.default.post(name:Notification.Name("MissionPCBExpand"),object:nil)
+    compact=false;dashboard=true
+    NotificationCenter.default.post(name:Notification.Name("MissionPCBDashboard"),object:nil)
    } label: {
     HStack(spacing:12){
      Circle().fill(model.busy ? Color.mint : Color.white.opacity(0.35)).frame(width:8,height:8)
      VStack(alignment:.leading,spacing:4){
       Text("MissionPCB").font(.system(size:16,weight:.semibold))
-      Text(model.busy ? model.status : "Ready · Open controls").font(.system(size:14)).foregroundStyle(.secondary).lineLimit(1)
+      Text(model.busy ? model.status : "Ready · Open review dashboard").font(.system(size:14)).foregroundStyle(.secondary).lineLimit(1)
      }
      Spacer()
      Image(systemName:"chevron.up").font(.system(size:11,weight:.medium)).foregroundStyle(.secondary)
     }.padding(.horizontal,24).frame(maxWidth:.infinity,maxHeight:.infinity).contentShape(Rectangle())
-   }.buttonStyle(.plain).accessibilityLabel("Expand MissionPCB controls")
+   }.buttonStyle(.plain).accessibilityLabel("Expand MissionPCB dashboard")
   } else {
   HStack(spacing:10){ZStack{RoundedRectangle(cornerRadius:11).fill(Color.mint.opacity(0.15)).frame(width:35,height:35);Image(systemName:"waveform.path.ecg").foregroundStyle(.mint)}
    VStack(alignment:.leading,spacing:3){Text("MissionPCB").font(.system(size:14,weight:.semibold));Text(model.status).font(.system(size:10)).foregroundStyle(.secondary)}
@@ -55,7 +70,7 @@ struct ChatView: View {
     compact=true
     NotificationCenter.default.post(name:Notification.Name("MissionPCBCollapse"),object:nil)
    } label: {Image(systemName:"chevron.down").foregroundStyle(.secondary)}.buttonStyle(.plain).help("Collapse to status card")
-   Button{NSWorkspace.shared.open(URL(string:"http://127.0.0.1:8768/")!)}label:{Image(systemName:"arrow.up.right.square").foregroundStyle(.secondary)}.buttonStyle(.plain).help("Open live dashboard")
+   Button{dashboard=true;NotificationCenter.default.post(name:Notification.Name("MissionPCBDashboard"),object:nil)}label:{Image(systemName:"arrow.up.right.square").foregroundStyle(.secondary)}.buttonStyle(.plain).help("Expand to full review dashboard")
   }.padding(.horizontal,20).padding(.top,17).padding(.bottom,13)
   Picker("Application",selection:$model.target){Text("KiCad").tag("KiCad");Text("Blender").tag("Blender")}.pickerStyle(.segmented).disabled(model.busy).padding(.horizontal,20).padding(.bottom,10)
   Divider().opacity(0.2)
@@ -86,12 +101,18 @@ final class Controller:NSObject,NSApplicationDelegate {
  func applicationDidFinishLaunching(_ notification:Notification){let screen=NSScreen.main!.visibleFrame
   panel=FloatingPanel(contentRect:NSRect(x:screen.midX-235,y:screen.minY+16,width:470,height:86),styleMask:[.titled,.closable,.fullSizeContentView,.nonactivatingPanel,.resizable],backing:.buffered,defer:false)
   panel.title="MissionPCB Assistant";panel.titleVisibility = .hidden;panel.titlebarAppearsTransparent=true;panel.level = .floating;panel.collectionBehavior=[.canJoinAllSpaces,.fullScreenAuxiliary];panel.hidesOnDeactivate=false;panel.isMovableByWindowBackground=true;panel.isReleasedWhenClosed=false;panel.minSize=NSSize(width:390,height:86);panel.isOpaque=false;panel.backgroundColor = .clear;panel.hasShadow=true
+  NotificationCenter.default.addObserver(forName:Notification.Name("MissionPCBDashboard"),object:nil,queue:.main){[weak self] _ in self?.resizePanel(height:760,width:1100)}
   NotificationCenter.default.addObserver(forName:Notification.Name("MissionPCBExpand"),object:nil,queue:.main){[weak self] _ in self?.resizePanel(height:420)}
   NotificationCenter.default.addObserver(forName:Notification.Name("MissionPCBCollapse"),object:nil,queue:.main){[weak self] _ in self?.resizePanel(height:86)}
   panel.contentView=NSHostingView(rootView:ChatView(model:model));panel.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true)
  }
- func resizePanel(height:CGFloat){
-  var frame=panel.frame;frame.size.height=height
+ func resizePanel(height:CGFloat,width:CGFloat=470){
+  let screen=(panel.screen ?? NSScreen.main)!.visibleFrame
+  var frame=panel.frame
+  let center=frame.midX
+  frame.size=NSSize(width:min(width,screen.width-32),height:min(height,screen.height-32))
+  frame.origin.x=max(screen.minX+16,min(center-frame.width/2,screen.maxX-frame.width-16))
+  frame.origin.y=max(screen.minY+16,min(frame.minY,screen.maxY-frame.height-16))
   panel.setFrame(frame,display:true,animate:!NSWorkspace.shared.accessibilityDisplayShouldReduceMotion)
  }
  func applicationShouldTerminateAfterLastWindowClosed(_ sender:NSApplication)->Bool{true}

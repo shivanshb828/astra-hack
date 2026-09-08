@@ -1,0 +1,362 @@
+{
+  "status": "PASS",
+  "board": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_kicad/MissionPCB.kicad_pcb",
+  "resolved": {
+    "id": "4aaa99f00fc9422493d2ce2b3f7f55e3",
+    "timestamp": "2026-09-08T22:12:48.168431+00:00",
+    "kind": "engine_review",
+    "payload": {
+      "findings": [
+        {
+          "id": "access.connector",
+          "title": "Connector accessibility",
+          "status": "SKIP",
+          "severity": "info",
+          "subjects": [
+            "Battery"
+          ],
+          "metric": "",
+          "message": "The enclosure declares no openings, so accessibility could not be evaluated.",
+          "rationale": "Requires at least one entry in enclosure.openings.",
+          "kicad_refs": [
+            "J1"
+          ],
+          "unmapped_refs": []
+        }
+      ],
+      "summary": {
+        "PASS": 26,
+        "FAIL": 0,
+        "WARN": 0,
+        "SKIP": 1
+      },
+      "native_board_revision": "2900db83bbfbe6a78fa97e39659659df626841466b192f982cbf3213cce91b4d",
+      "annotated": false,
+      "revision": null,
+      "source": "local compute engine; cached part data and authored policies",
+      "new_failures": [],
+      "reopened": [],
+      "resolved": [
+        "mission.afe_MCU",
+        "mission.afe_Regulator",
+        "zone.heat_overlap::Driver|Sensor",
+        "zone.heat_overlap::Regulator|RF",
+        "zone.heat_overlap::Regulator|Sensor"
+      ]
+    }
+  },
+  "reopened": {
+    "id": "234c70eb55ba4180a0c8b50c88e793c2",
+    "timestamp": "2026-09-08T22:12:51.304901+00:00",
+    "kind": "engine_review",
+    "payload": {
+      "findings": [
+        {
+          "id": "mission.afe_MCU",
+          "title": "afe_MCU",
+          "status": "FAIL",
+          "severity": "major",
+          "subjects": [
+            "Sensor",
+            "MCU"
+          ],
+          "metric": "center_distance",
+          "message": "Sensor and MCU are only 11.18 mm apart, 18 mm required.",
+          "rationale": "Authored demo policy, not solved physics.",
+          "measured_mm": 11.18,
+          "required_mm": 18.0,
+          "margin_mm": -6.82,
+          "center_distance_mm": 11.18,
+          "edge_gap_mm": 6.083,
+          "suggestion": "Adjust Sensor/MCU spacing by 6.82 mm.",
+          "overlay": {
+            "type": "measure_line",
+            "color": [
+              0.9,
+              0.15,
+              0.15
+            ],
+            "collection": "03_Constraint_Overlays",
+            "from": [
+              50.0,
+              25.0,
+              6.6
+            ],
+            "to": [
+              45.0,
+              15.0,
+              6.6
+            ],
+            "label": "11.2 mm \u2717 (needs 18.0)",
+            "label_at": [
+              47.5,
+              20.0,
+              12.6
+            ],
+            "marker": "x",
+            "marker_at": [
+              47.5,
+              20.0,
+              6.6
+            ]
+          },
+          "kicad_refs": [
+            "U2",
+            "U1"
+          ],
+          "unmapped_refs": []
+        },
+        {
+          "id": "mission.afe_Regulator",
+          "title": "afe_Regulator",
+          "status": "FAIL",
+          "severity": "major",
+          "subjects": [
+            "Sensor",
+            "Regulator"
+          ],
+          "metric": "center_distance",
+          "message": "Sensor and Regulator are only 14.14 mm apart, 20 mm required.",
+          "rationale": "Authored demo policy, not solved physics.",
+          "measured_mm": 14.142,
+          "required_mm": 20.0,
+          "margin_mm": -5.858,
+          "center_distance_mm": 14.142,
+          "edge_gap_mm": 9.908,
+          "suggestion": "Adjust Sensor/Regulator spacing by 5.86 mm.",
+          "overlay": {
+            "type": "measure_line",
+            "color": [
+              0.9,
+              0.15,
+              0.15
+            ],
+            "collection": "03_Constraint_Overlays",
+            "from": [
+              50.0,
+              25.0,
+              6.6
+            ],
+            "to": [
+              40.0,
+              35.0,
+              6.6
+            ],
+            "label": "14.1 mm \u2717 (needs 20.0)",
+            "label_at": [
+              45.0,
+              30.0,
+              12.6
+            ],
+            "marker": "x",
+            "marker_at": [
+              45.0,
+              30.0,
+              6.6
+            ]
+          },
+          "kicad_refs": [
+            "U2",
+            "U4"
+          ],
+          "unmapped_refs": []
+        },
+        {
+          "id": "zone.heat_overlap::Driver|Sensor",
+          "title": "Sensor is outside the Driver heat zone",
+          "status": "FAIL",
+          "severity": "major",
+          "subjects": [
+            "Driver",
+            "Sensor"
+          ],
+          "metric": "zone_penetration",
+          "message": "Sensor reaches 10.82 mm inside the 22 mm thermal zone around Driver.",
+          "rationale": "Simplified thermal model: a fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field.",
+          "measured_mm": 10.82,
+          "required_mm": 0.0,
+          "margin_mm": -10.82,
+          "suggestion": "Move Sensor 10.82 mm further from Driver, or cut Driver dissipation.",
+          "overlay": {
+            "type": "measure_line",
+            "color": [
+              0.9,
+              0.15,
+              0.15
+            ],
+            "collection": "03_Constraint_Overlays",
+            "from": [
+              63.0,
+              21.0,
+              6.6
+            ],
+            "to": [
+              50.0,
+              25.0,
+              6.6
+            ],
+            "label": "heat zone \u2717",
+            "label_at": [
+              56.5,
+              23.0,
+              12.6
+            ],
+            "marker": "x",
+            "marker_at": [
+              56.5,
+              23.0,
+              6.6
+            ]
+          },
+          "kicad_refs": [
+            "U5",
+            "U2"
+          ],
+          "unmapped_refs": []
+        },
+        {
+          "id": "zone.heat_overlap::Regulator|RF",
+          "title": "RF is outside the Regulator heat zone",
+          "status": "FAIL",
+          "severity": "major",
+          "subjects": [
+            "Regulator",
+            "RF"
+          ],
+          "metric": "zone_penetration",
+          "message": "RF reaches 11.00 mm inside the 18 mm thermal zone around Regulator.",
+          "rationale": "Simplified thermal model: a fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field.",
+          "measured_mm": 11.0,
+          "required_mm": 0.0,
+          "margin_mm": -11.0,
+          "suggestion": "Move RF 11.00 mm further from Regulator, or cut Regulator dissipation.",
+          "overlay": {
+            "type": "measure_line",
+            "color": [
+              0.9,
+              0.15,
+              0.15
+            ],
+            "collection": "03_Constraint_Overlays",
+            "from": [
+              40.0,
+              35.0,
+              6.6
+            ],
+            "to": [
+              25.0,
+              34.0,
+              6.6
+            ],
+            "label": "heat zone \u2717",
+            "label_at": [
+              32.5,
+              34.5,
+              12.6
+            ],
+            "marker": "x",
+            "marker_at": [
+              32.5,
+              34.5,
+              6.6
+            ]
+          },
+          "kicad_refs": [
+            "U4",
+            "U3"
+          ],
+          "unmapped_refs": []
+        },
+        {
+          "id": "zone.heat_overlap::Regulator|Sensor",
+          "title": "Sensor is outside the Regulator heat zone",
+          "status": "FAIL",
+          "severity": "major",
+          "subjects": [
+            "Regulator",
+            "Sensor"
+          ],
+          "metric": "zone_penetration",
+          "message": "Sensor reaches 6.69 mm inside the 18 mm thermal zone around Regulator.",
+          "rationale": "Simplified thermal model: a fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field.",
+          "measured_mm": 6.686,
+          "required_mm": 0.0,
+          "margin_mm": -6.686,
+          "suggestion": "Move Sensor 6.69 mm further from Regulator, or cut Regulator dissipation.",
+          "overlay": {
+            "type": "measure_line",
+            "color": [
+              0.9,
+              0.15,
+              0.15
+            ],
+            "collection": "03_Constraint_Overlays",
+            "from": [
+              40.0,
+              35.0,
+              6.6
+            ],
+            "to": [
+              50.0,
+              25.0,
+              6.6
+            ],
+            "label": "heat zone \u2717",
+            "label_at": [
+              45.0,
+              30.0,
+              12.6
+            ],
+            "marker": "x",
+            "marker_at": [
+              45.0,
+              30.0,
+              6.6
+            ]
+          },
+          "kicad_refs": [
+            "U4",
+            "U2"
+          ],
+          "unmapped_refs": []
+        },
+        {
+          "id": "access.connector",
+          "title": "Connector accessibility",
+          "status": "SKIP",
+          "severity": "info",
+          "subjects": [
+            "Battery"
+          ],
+          "metric": "",
+          "message": "The enclosure declares no openings, so accessibility could not be evaluated.",
+          "rationale": "Requires at least one entry in enclosure.openings.",
+          "kicad_refs": [
+            "J1"
+          ],
+          "unmapped_refs": []
+        }
+      ],
+      "summary": {
+        "PASS": 21,
+        "FAIL": 5,
+        "WARN": 0,
+        "SKIP": 1
+      },
+      "native_board_revision": "1d40b00532f575fb0d675cbd8e4a3e1a9a24eba319162e1559412cd6761c5de9",
+      "annotated": false,
+      "revision": null,
+      "source": "local compute engine; cached part data and authored policies",
+      "new_failures": [],
+      "reopened": [
+        "mission.afe_MCU",
+        "mission.afe_Regulator",
+        "zone.heat_overlap::Driver|Sensor",
+        "zone.heat_overlap::Regulator|RF",
+        "zone.heat_overlap::Regulator|Sensor"
+      ],
+      "resolved": []
+    }
+  },
+  "note": "Actual local engine reviews on live KiCad placements. Original placements restored. Not circuit/ERC verification."
+}

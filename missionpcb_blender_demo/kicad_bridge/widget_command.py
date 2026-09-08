@@ -26,6 +26,14 @@ def parse(text):
  return ('unknown',)
 
 def run(text):
+ if text.strip().lower() in ('show review markers','hide review markers'):
+  from kipy.board_types import BoardLayer
+  board=bridge.connect();layers=set(board.get_visible_layers());layer=BoardLayer.BL_Cmts_User
+  if text.strip().lower().startswith('show'):layers.add(layer)
+  else:layers.discard(layer)
+  board.set_visible_layers(list(layers))
+  visible=layer in board.get_visible_layers()
+  return 'Review markers '+('visible' if visible else 'hidden')+' in the PCB Editor. Geometry unchanged.'
  if re.fullmatch(r"select (?:U[1-5]|J1)(?:,(?:U[1-5]|J1))*",text.strip(),re.I):
   refs=text.strip().upper().split(' ',1)[1].split(',')
   board=bridge.connect();fps={f.reference_field.text.value:f for f in board.get_footprints()}
@@ -51,7 +59,8 @@ def run(text):
   outcome=roundtrip.apply(archive)
   with zipfile.ZipFile(archive) as package:
    report=json.loads(package.read('findings.json'))
-  record_review(report['findings'],report['summary'],bridge.snapshot(bridge.connect())['revision'],annotated=True,revision=revision)
+  try:record_review(report['findings'],report['summary'],bridge.snapshot(bridge.connect())['revision'],annotated=True,revision=revision)
+  except Exception as exc:raise RuntimeError('Native review annotations were applied and saved, but the transcript could not be saved. Inspect the board before retrying: '+str(exc)) from exc
   return 'ENGINE REVIEW → NATIVE KICAD FLAGS\n'+str(outcome['summary'])+'\n'+str(outcome['annotations_applied'])+' review labels/comments applied on Cmts.User.\nBoard saved. One Undo reverses annotations. Component positions preserved.\nRevision: '+revision+'\nCoverage incomplete; geometry policies only.'
  intent=parse(text)
  if intent[0] in ('help','unknown'):
@@ -81,7 +90,8 @@ def run(text):
  blocked=[m['ref'] for m in moves if pins.get(m['ref']) and any(m[k]!=old_positions[m['ref']][k] for k in ('x_mm','y_mm','rotation_deg'))]
  if blocked:raise ValueError('Pinned components would move: '+', '.join(blocked)+'. Unpin them in the dashboard before applying.')
  result=bridge.apply({'board':state['board'],'base_revision':state['revision'],'moves':moves})
- review_journal.append_event(state['board'],'design_change',{'command':text,'before':result['before'],'after':result['after'],'moves':moves,'source':'cached placement' if command in ('improve','reset') else 'user command','review_required':True})
+ try:review_journal.append_event(state['board'],'design_change',{'command':text,'before':result['before'],'after':result['after'],'moves':moves,'source':'cached placement' if command in ('improve','reset') else 'user command','review_required':True})
+ except Exception as exc:raise RuntimeError('The native component move succeeded, but the transcript could not be saved. Inspect KiCad before retrying; one Undo reverses the move. '+str(exc)) from exc
  return 'Applied and verified %d component moves in KiCad.\nOne Undo reverses the change. Not saved to disk.\nThis checks placement commands, not circuit correctness.'%len(moves)
 
 def record_review(findings,summary,native_revision,annotated=False,revision=None):

@@ -36,4 +36,10 @@ class WorkflowTests(unittest.TestCase):
    event=review_journal.get_state(str(bridge.TARGET))['events'][-1]
    self.assertEqual(event['kind'],'design_change');self.assertEqual(event['payload']['before'],before)
    self.assertEqual(event['payload']['after'],after)
+ def test_journal_failure_after_move_reports_actual_native_outcome(self):
+  before={'board':str(bridge.TARGET),'revision':'a','parts':[{'ref':'U1','x_mm':136,'y_mm':129,'rotation_deg':0}]}
+  with patch.object(bridge,'connect'),patch.object(bridge,'snapshot',return_value=before),patch.object(bridge,'apply',return_value={'before':before,'after':before}) as apply,patch.object(review_journal,'append_event',side_effect=OSError('disk full')):
+   with self.assertRaisesRegex(RuntimeError,'native component move succeeded'):
+    widget_command.run('Move U1 2 mm right')
+   apply.assert_called_once()
 if __name__=='__main__':unittest.main()

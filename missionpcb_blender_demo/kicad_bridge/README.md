@@ -43,3 +43,27 @@ placement in a finally block. Latest result: `missionpcb_kicad/verification/widg
 Native review assumes the demo board outline and cached package dimensions.
 Native DRC is separately labeled saved-file-only. Zero placement failures is
 not a complete electrical or manufacturing pass.
+
+## Interactive review cycle
+
+Expand the widget into the KiCad dashboard. Run **Full check** for a read-only
+engine review, or **Review & annotate** to save a review package and replace
+generated component markers in KiCad. Each finding can retain a user comment.
+Component pins prevent widget placement commands from moving that component;
+these are assistant-enforced pins, not KiCad native locks.
+
+Explicit cached improvement/reset and individual move commands record before/after
+positions. A new review records resolved and reopened finding IDs. User notes are
+retained across those revisions and never silently converted into numeric rules.
+Runtime history is local under `runtime/review-journal` and excluded from git.
+
+`verify_dashboard_cycle.py` tests authenticated HTTP comments/pins, blocked and
+permitted moves, stale review, native annotations, and exact placement/model
+restoration. It saves the reviewed board and leaves labeled E2E audit records;
+use the canonical demo, not a personal design. It preserves the initial U1 pin.
+Evidence: `missionpcb_kicad/verification/dashboard-cycle-e2e.json`.
+
+The separate blank `MissionPCB-Test` project is not bound to this adapter. The
+expanded dashboard identifies its supported KiCad target. Blender's existing
+inspect/check/focus session adapter is a separate stage; arbitrary CAD assembly
+and live Astra calls are not part of this cached cycle.
