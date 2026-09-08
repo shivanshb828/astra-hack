@@ -227,6 +227,7 @@ if bpy is not None:
             name="Priority", default=QUESTION_DEFAULTS["priority"]
         )
         auto_mode: bpy.props.BoolProperty(name="Auto mode", default=False)
+        dashboard_open: bpy.props.BoolProperty(name="Dashboard", default=False)
         selected_finding: bpy.props.IntProperty(name="Finding", default=0, min=0)
         response_json: bpy.props.StringProperty(name="Astra response", default="")
         transcript: bpy.props.StringProperty(
@@ -344,35 +345,52 @@ if bpy is not None:
             row = chat.row(align=True)
             row.operator("missionpcb.ask_astra", text="Send")
             row.prop(state, "auto_mode", text="Auto")
-
-            interview = layout.box()
-            interview.label(text="Fast interview")
-            interview.prop(state, "wear_duration", text="Wear")
-            interview.prop(state, "power_strategy", text="Power")
-            interview.prop(state, "priority", text="Priority")
-
-            layout.separator()
-            actions = layout.row(align=True)
+            actions = chat.row(align=True)
             actions.operator("missionpcb.apply_proposal", text="Apply")
             actions.operator("missionpcb.export_widget", text="Export")
 
-            layout.separator()
+            dashboard_toggle = layout.row()
+            dashboard_toggle.prop(state, "dashboard_open", text="Expand dashboard")
             layout.label(text=state.status)
             transcript = layout.box()
             for line in state.transcript.splitlines()[-4:]:
                 transcript.label(text=line[:56])
 
-            if state.response_json:
-                response = json.loads(state.response_json)
-                blockers = response.get("blockers", [])
-                if blockers:
-                    findings = layout.box()
-                    findings.label(text="Findings")
-                    findings.prop(state, "selected_finding", text="Index")
-                    findings.operator("missionpcb.focus_finding", text="Focus")
-                    for i, blocker in enumerate(blockers[:6]):
-                        row = findings.row()
-                        row.label(text=f"{i}: {blocker.get('title', blocker.get('id', 'Finding'))[:46]}")
+            if state.dashboard_open:
+                dashboard = layout.box()
+                dashboard.label(text="Astra dashboard")
+
+                interview = dashboard.box()
+                interview.label(text="Fast interview")
+                interview.prop(state, "wear_duration", text="Wear")
+                interview.prop(state, "power_strategy", text="Power")
+                interview.prop(state, "priority", text="Priority")
+
+                loop = dashboard.box()
+                loop.label(text="Loop")
+                loop.label(text="1 Prompt + parts")
+                loop.label(text="2 Considerations")
+                loop.label(text="3 Review or auto")
+                loop.label(text="4 Native actions")
+                loop.label(text="5 Re-run")
+
+                export = dashboard.box()
+                export.label(text="Export readiness")
+                export.label(text="Render contract: ready")
+                export.label(text="BOM package: ready")
+                export.label(text="KiCad/Gerbers: pending")
+
+                if state.response_json:
+                    response = json.loads(state.response_json)
+                    blockers = response.get("blockers", [])
+                    if blockers:
+                        findings = dashboard.box()
+                        findings.label(text="Findings")
+                        findings.prop(state, "selected_finding", text="Index")
+                        findings.operator("missionpcb.focus_finding", text="Focus")
+                        for i, blocker in enumerate(blockers[:8]):
+                            row = findings.row()
+                            row.label(text=f"{i}: {blocker.get('title', blocker.get('id', 'Finding'))[:46]}")
 
 
     CLASSES = (
