@@ -1,14 +1,16 @@
 """Review current exact-target KiCad placement; no CAD writes."""
-import json,time,urllib.request,subprocess
+import json,time,urllib.request,subprocess,sys
 from pathlib import Path
 import bridge
 ROOT=Path(__file__).resolve().parents[2]
-MAP={'U1':('MCU','msp430fr2433'),'U2':('Sensor','ads1292r'),'U3':('RF','mdbt42q'),'U4':('Regulator','tps62740'),'U5':('Driver','mcp73831'),'J1':('Battery','bm02b_srss')}
+if str(ROOT/'missionpcb_review') not in sys.path:
+ sys.path.insert(0,str(ROOT/'missionpcb_review'))
+from board_profile import CORE_MAP,component_map
+MAP=component_map()
 def run():
  board=bridge.connect();before=bridge.snapshot(board)
- if set(p['ref'] for p in before['parts'])!=set(MAP):raise ValueError('Expected the six known MissionPCB components')
- placements=[dict(ref=MAP[p['ref']][0],part_id=MAP[p['ref']][1],pos_mm=[round(p['x_mm']-100,6),round(138-p['y_mm'],6)],rotation_deg=(-(p['rotation_deg']-(90 if p['ref']=='U3' else 0)))%360) for p in before['parts']]
- payload=dict(design_id='missionpcb-native-six',revision=time.time_ns(),part_library='native-six',brief='ECG chest patch. Review current six-component placement against authored demo spacing policies.',kicad_refs={v[0]:k for k,v in MAP.items()},layout=dict(name='Live MissionPCB KiCad placement',distance_metric='center',enclosure=dict(interior_mm=dict(length=90,width=50,height=10),wall_keepout_mm=0),board=dict(id='MissionPCB',size_mm=dict(length=72,width=38,thickness=1.6),origin_mm=[9,6,2],edge_margin_mm=1,max_component_height_mm=6.4,min_component_gap_mm=.5),placements=placements,mission_rules=[dict(id='afe_'+ref,type='min_separation',between=['Sensor',ref],distance_mm=dist,metric='center',rationale='Authored demo policy, not solved physics.') for ref,dist in [('MCU',18),('RF',20),('Regulator',20)]]))
+ from layout_adapter import payload_for
+ payload=payload_for(before)
  req=urllib.request.Request('http://127.0.0.1:8769/review',data=json.dumps(payload).encode(),headers={'Content-Type':'application/json'},method='POST')
  result=json.load(urllib.request.urlopen(req,timeout=15))
  if bridge.snapshot(board)['revision']!=before['revision']:raise ValueError('Board changed during review; run again')

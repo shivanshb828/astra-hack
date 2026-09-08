@@ -50,8 +50,8 @@ def validate(proposal, before):
     if proposal['base_revision'] != before['revision']:
         raise ValueError('Stale proposal: inspect again before applying')
     moves = proposal['moves']
-    if not isinstance(moves, list) or not 1 <= len(moves) <= 6:
-        raise ValueError('Expected 1–6 moves')
+    if not isinstance(moves, list) or not 1 <= len(moves) <= len(before['parts']):
+        raise ValueError('Expected 1 to the current component count in moves')
     known = {p['ref'] for p in before['parts']}
     seen = set()
     for move in moves:

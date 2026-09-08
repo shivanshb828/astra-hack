@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "description": "18-part cached ECG placement candidate; original six cores preserved. No nets or routes added.",
+  "project_root": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_kicad",
+  "model_attribution": {
+    "creator": "KiCad Library Team and contributors",
+    "source": "https://gitlab.com/kicad/libraries/kicad-packages3D",
+    "license": "CC-BY-SA-4.0 with KiCad libraries exception",
+    "license_url": "https://www.kicad.org/libraries/license/",
+    "scope": "Copied support STEP models; unmodified files from installed KiCad 10 library."
+  },
+  "parts": [
+    {
+      "ref": "C1",
+      "engine_ref": "C1",
+      "part_id": "support_c1",
+      "role": "MCU decoupling",
+      "value": "TBD",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.8
+      },
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "model_path": "models/support/C_0603_1608Metric.step",
+      "model_source": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Capacitor_SMD.3dshapes/C_0603_1608Metric.step",
+      "model_available": true,
+      "model_sha256": "4857b3dc717675bf1fb22edda622ac3b3ae03cf44d81eefaf3fa3ba3a86d84c1",
+      "limitation": "Placement-only package; value, rating and circuit connectivity require schematic design. Generic 0603 model; capacitance/DC-bias/rating suitability is unverified.",
+      "anchor_ref": "U1",
+      "offset_mm": [
+        -4,
+        0
+      ],
+      "value_source": null
+    },
+    {
+      "ref": "C2",
+      "engine_ref": "C2",
+      "part_id": "support_c2",
+      "role": "AFE decoupling",
+      "value": "TBD",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.8
+      },
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "model_path": "models/support/C_0603_1608Metric.step",
+      "model_source": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Capacitor_SMD.3dshapes/C_0603_1608Metric.step",
+      "model_available": true,
+      "model_sha256": "4857b3dc717675bf1fb22edda622ac3b3ae03cf44d81eefaf3fa3ba3a86d84c1",
+      "limitation": "Placement-only package; value, rating and circuit connectivity require schematic design. Generic 0603 model; capacitance/DC-bias/rating suitability is unverified.",
+      "anchor_ref": "U2",
+      "offset_mm": [
+        -4,
+        0
+      ],
+      "value_source": null
+    },
+    {
+      "ref": "C3",
+      "engine_ref": "C3",
+      "part_id": "support_c3",
+      "role": "RF decoupling",
+      "value": "TBD",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.8
+      },
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "model_path": "models/support/C_0603_1608Metric.step",
+      "model_source": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Capacitor_SMD.3dshapes/C_0603_1608Metric.step",
+      "model_available": true,
+      "model_sha256": "4857b3dc717675bf1fb22edda622ac3b3ae03cf44d81eefaf3fa3ba3a86d84c1",
+      "limitation": "Placement-only package; value, rating and circuit connectivity require schematic design. Generic 0603 model; capacitance/DC-bias/rating suitability is unverified.",
+      "anchor_ref": "U3",
+      "offset_mm": [
+        10,
+        0
+      ],
+      "value_source": null
+    },
+    {
+      "ref": "C4",
+      "engine_ref": "C4",
+      "part_id": "support_c4",
+      "role": "Buck input capacitor",
+      "value": "10uF",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.8
+      },
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "model_path": "models/support/C_0603_1608Metric.step",
+      "model_source": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Capacitor_SMD.3dshapes/C_0603_1608Metric.step",
+      "model_available": true,
+      "model_sha256": "4857b3dc717675bf1fb22edda622ac3b3ae03cf44d81eefaf3fa3ba3a86d84c1",
+      "limitation": "Placement-only package; value, rating and circuit connectivity require schematic design. Generic 0603 model; capacitance/DC-bias/rating suitability is unverified.",
+      "anchor_ref": "U4",
+      "offset_mm": [
+        4,
+        0
+      ],
+      "value_source": "https://www.ti.com/lit/ds/symlink/tps62740.pdf (typical application, page 1)"
+    },
+    {
+      "ref": "C5",
+      "engine_ref": "C5",
+      "part_id": "support_c5",
+      "role": "Buck output capacitor",
+      "value": "10uF",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.8
+      },
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "model_path": "models/support/C_0603_1608Metric.step",
+      "model_source": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Capacitor_SMD.3dshapes/C_0603_1608Metric.step",
+      "model_available": true,
+      "model_sha256": "4857b3dc717675bf1fb22edda622ac3b3ae03cf44d81eefaf3fa3ba3a86d84c1",
+      "limitation": "Placement-only package; value, rating and circuit connectivity require schematic design. Generic 0603 model; capacitance/DC-bias/rating suitability is unverified.",
+      "anchor_ref": "U4",
+      "offset_mm": [
+        0,
+        4
+      ],
+      "value_source": "https://www.ti.com/lit/ds/symlink/tps62740.pdf (typical application, page 1)"
+    },
+    {
+      "ref": "C6",
+      "engine_ref": "C6",
+      "part_id": "support_c6",
+      "role": "Charger capacitor",
+      "value": "TBD",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.8
+      },
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "model_path": "models/support/C_0603_1608Metric.step",
+      "model_source": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Capacitor_SMD.3dshapes/C_0603_1608Metric.step",
+      "model_available": true,
+      "model_sha256": "4857b3dc717675bf1fb22edda622ac3b3ae03cf44d81eefaf3fa3ba3a86d84c1",
+      "limitation": "Placement-only package; value, rating and circuit connectivity require schematic design. Generic 0603 model; capacitance/DC-bias/rating suitability is unverified.",
+      "anchor_ref": "U5",
+      "offset_mm": [
+        0,
+        4
+      ],
+      "value_source": null
+    },
+    {
+      "ref": "R1",
+      "engine_ref": "R1",
+      "part_id": "support_r1",
+      "role": "AFE input series resistor",
+      "value": "TBD",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.5
+      },
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "model_path": "models/support/R_0603_1608Metric.step",
+      "model_source": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Resistor_SMD.3dshapes/R_0603_1608Metric.step",
+      "model_available": true,
+      "model_sha256": "1875571c326d0d9e96f36b4efeb8094068ef7619f0a449c781caf0b49c2e5861",
+      "limitation": "Placement-only package; value, rating and circuit connectivity require schematic design.",
+      "anchor_ref": "U2",
+      "offset_mm": [
+        -4,
+        4
+      ],
+      "value_source": null
+    },
+    {
+      "ref": "R2",
+      "engine_ref": "R2",
+      "part_id": "support_r2",
+      "role": "AFE input series resistor",
+      "value": "TBD",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.5
+      },
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "model_path": "models/support/R_0603_1608Metric.step",
+      "model_source": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Resistor_SMD.3dshapes/R_0603_1608Metric.step",
+      "model_available": true,
+      "model_sha256": "1875571c326d0d9e96f36b4efeb8094068ef7619f0a449c781caf0b49c2e5861",
+      "limitation": "Placement-only package; value, rating and circuit connectivity require schematic design.",
+      "anchor_ref": "U2",
+      "offset_mm": [
+        -4,
+        -4
+      ],
+      "value_source": null
+    },
+    {
+      "ref": "R3",
+      "engine_ref": "R3",
+      "part_id": "support_r3",
+      "role": "Charge programming resistor",
+      "value": "TBD",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.5
+      },
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "model_path": "models/support/R_0603_1608Metric.step",
+      "model_source": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Resistor_SMD.3dshapes/R_0603_1608Metric.step",
+      "model_available": true,
+      "model_sha256": "1875571c326d0d9e96f36b4efeb8094068ef7619f0a449c781caf0b49c2e5861",
+      "limitation": "Placement-only package; value, rating and circuit connectivity require schematic design.",
+      "anchor_ref": "U5",
+      "offset_mm": [
+        4,
+        0
+      ],
+      "value_source": null
+    },
+    {
+      "ref": "L1",
+      "engine_ref": "L1",
+      "part_id": "support_l1",
+      "role": "Buck inductor",
+      "value": "2.2uH",
+      "dimensions_mm": {
+        "length": 3.3,
+        "width": 3.3,
+        "height": 1.4
+      },
+      "footprint": "Inductor_SMD:L_Coilcraft_LPS3314",
+      "model_path": null,
+      "model_source": null,
+      "model_available": false,
+      "model_sha256": null,
+      "limitation": "Placement-only package; value, rating and circuit connectivity require schematic design. Official footprint available but matching STEP unavailable; no substitute 3D body.",
+      "anchor_ref": "U4",
+      "offset_mm": [
+        -4,
+        0
+      ],
+      "value_source": "https://www.ti.com/lit/ds/symlink/tps62740.pdf (typical application, page 1)"
+    },
+    {
+      "ref": "J2",
+      "engine_ref": "J2",
+      "part_id": "support_j2",
+      "role": "Electrode lead connector",
+      "value": "JST SH 3 pin",
+      "dimensions_mm": {
+        "length": 5,
+        "width": 4.25,
+        "height": 3
+      },
+      "footprint": "Connector_JST:JST_SH_SM03B-SRSS-TB_1x03-1MP_P1.00mm_Horizontal",
+      "model_path": "models/support/JST_SH_SM03B-SRSS-TB_1x03-1MP_P1.00mm_Horizontal.step",
+      "model_source": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Connector_JST.3dshapes/JST_SH_SM03B-SRSS-TB_1x03-1MP_P1.00mm_Horizontal.step",
+      "model_available": true,
+      "model_sha256": "2d236e5b20c8cc3dd36f10f0ea2096fe09667d6a6a22ecd1d9b6c3fe2392ca93",
+      "limitation": "Placement-only package; value, rating and circuit connectivity require schematic design. Connector body/envelope dimensions are conservative; not a complete mating cable or electrode assembly.",
+      "anchor_ref": "U2",
+      "offset_mm": [
+        -10,
+        0
+      ],
+      "value_source": null
+    },
+    {
+      "ref": "J3",
+      "engine_ref": "J3",
+      "part_id": "support_j3",
+      "role": "Debug connector",
+      "value": "JST SH 4 pin",
+      "dimensions_mm": {
+        "length": 6,
+        "width": 4.25,
+        "height": 3
+      },
+      "footprint": "Connector_JST:JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal",
+      "model_path": "models/support/JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal.step",
+      "model_source": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Connector_JST.3dshapes/JST_SH_SM04B-SRSS-TB_1x04-1MP_P1.00mm_Horizontal.step",
+      "model_available": true,
+      "model_sha256": "4b0f89a75d3758add0041ca9e5ded3a780c23ef4e3e99bcc398b41177dff5d0f",
+      "limitation": "Placement-only package; value, rating and circuit connectivity require schematic design. Connector body/envelope dimensions are conservative; not a complete mating cable or electrode assembly.",
+      "anchor_ref": "U1",
+      "offset_mm": [
+        5.5,
+        0
+      ],
+      "value_source": null
+    }
+  ],
+  "limitations": [
+    "L1 has no available matching STEP model.",
+    "Existing U2/U4 package approximations remain unchanged.",
+    "Not an electrically complete or validated medical device."
+  ]
+}

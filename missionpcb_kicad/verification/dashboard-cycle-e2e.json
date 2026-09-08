@@ -1,12 +1,12 @@
 {
   "board": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_kicad/MissionPCB.kicad_pcb",
-  "started_at": 1788905549.638648,
+  "started_at": 1788907003.4683788,
   "steps": {
     "initial_review": "LIVE KICAD PLACEMENT REVIEW\n21 passed \u00b7 5 failed \u00b7 1 skipped\nU2,U1: Sensor and MCU are only 11.18 mm apart, 18 mm required.\nU2,U4: Sensor and Regulator are only 14.14 mm apart, 20 mm required.\nU5,U2: Sensor reaches 10.82 mm inside the 22 mm thermal zone around Driver.\nU4,U3: RF reaches 11.00 mm inside the 18 mm thermal zone around Regulator.\nU4,U2: Sensor reaches 6.69 mm inside the 18 mm thermal zone around Regulator.\nJ1: The enclosure declares no openings, so accessibility could not be evaluated.\nSAVED BOARD DRC (not unsaved edits): 2 violations\nItems not allowed (keepout area of U3)\nItems not allowed (keepout area of U3)\nCoverage incomplete: no circuit/ERC validation. Approximate U2/U4 packages. Placement rules use cached dimensions and authored proxies.",
     "pin_blocks_move": true,
     "move": "Applied and verified 1 component moves in KiCad.\nOne Undo reverses the change. Not saved to disk.\nThis checks placement commands, not circuit correctness.",
-    "review_and_annotate": "ENGINE REVIEW \u2192 NATIVE KICAD FLAGS\n{'PASS': 21, 'FAIL': 5, 'WARN': 0, 'SKIP': 1}\n6 review labels/comments applied on Cmts.User.\nBoard saved. One Undo reverses annotations. Component positions preserved.\nRevision: widget-1788905552882195000\nCoverage incomplete; geometry policies only.",
-    "restored_review": "ENGINE REVIEW \u2192 NATIVE KICAD FLAGS\n{'PASS': 21, 'FAIL': 5, 'WARN': 0, 'SKIP': 1}\n6 review labels/comments applied on Cmts.User.\nBoard saved. One Undo reverses annotations. Component positions preserved.\nRevision: widget-1788905553228845000\nCoverage incomplete; geometry policies only."
+    "review_and_annotate": "ENGINE REVIEW \u2192 NATIVE KICAD FLAGS\n{'PASS': 21, 'FAIL': 5, 'WARN': 0, 'SKIP': 1}\n6 review labels/comments applied on Cmts.User.\nBoard saved. One Undo reverses annotations. Component positions preserved.\nRevision: widget-1788907024841192000\nCoverage incomplete; geometry policies only.",
+    "restored_review": "ENGINE REVIEW \u2192 NATIVE KICAD FLAGS\n{'PASS': 21, 'FAIL': 5, 'WARN': 0, 'SKIP': 1}\n6 review labels/comments applied on Cmts.User.\nBoard saved. One Undo reverses annotations. Component positions preserved.\nRevision: widget-1788907034818039000\nCoverage incomplete; geometry policies only."
   },
   "placements_and_models_restored": true,
   "comment_persisted": true,

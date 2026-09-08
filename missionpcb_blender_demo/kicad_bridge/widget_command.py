@@ -17,10 +17,10 @@ def parse(text):
  if command in ('reset','reset the board','restore the initial layout','go back to the original layout','reset the layout'):
   return ('reset',)
  aliases={'mcu':'U1','sensor':'U2','ecg front end':'U2','radio':'U3','regulator':'U4','charger':'U5','battery connector':'J1'}
- match=re.fullmatch(r'move (u[1-5]|j1|mcu|sensor|ecg front end|radio|regulator|charger|battery connector) (?:to )?(-?\d+(?:\.\d+)?)\s*(?:,\s*|\s+)(-?\d+(?:\.\d+)?)(?: mm)?',command)
+ match=re.fullmatch(r'move ([ucrlj][1-9][0-9]*|mcu|sensor|ecg front end|radio|regulator|charger|battery connector) (?:to )?(-?\d+(?:\.\d+)?)\s*(?:,\s*|\s+)(-?\d+(?:\.\d+)?)(?: mm)?',command)
  if match:
   ref,x,y=match.groups();return ('move',aliases.get(ref,ref.upper()),float(x),float(y))
- match=re.fullmatch(r'move (u[1-5]|j1|mcu|sensor|ecg front end|radio|regulator|charger|battery connector) (\d+(?:\.\d+)?)\s*mm (left|right|up|down)',command)
+ match=re.fullmatch(r'move ([ucrlj][1-9][0-9]*|mcu|sensor|ecg front end|radio|regulator|charger|battery connector) (\d+(?:\.\d+)?)\s*mm (left|right|up|down)',command)
  if match:
   ref,distance,direction=match.groups();return ('relative',aliases.get(ref,ref.upper()),float(distance),direction)
  return ('unknown',)
@@ -34,7 +34,7 @@ def run(text):
   board.set_visible_layers(list(layers))
   visible=layer in board.get_visible_layers()
   return 'Review markers '+('visible' if visible else 'hidden')+' in the PCB Editor. Geometry unchanged.'
- if re.fullmatch(r"select (?:U[1-5]|J1)(?:,(?:U[1-5]|J1))*",text.strip(),re.I):
+ if re.fullmatch(r"select (?:[UCRLJ][1-9][0-9]*)(?:,(?:[UCRLJ][1-9][0-9]*))*",text.strip(),re.I):
   refs=text.strip().upper().split(' ',1)[1].split(',')
   board=bridge.connect();fps={f.reference_field.text.value:f for f in board.get_footprints()}
   if any(r not in fps for r in refs):raise ValueError('Unknown component')
@@ -49,7 +49,7 @@ def run(text):
   import native_review
   response=native_review.run()
   report=json.loads((bridge.TARGET.parent/'verification/live-review.json').read_text())
-  record_review(report['findings'],report['result']['summary'],report['native_board_revision'],annotated=False)
+  record_review(report['findings'],report['result']['summary'],report['native_board_revision'],annotated=False,checks=report['result']['checks'])
   return response
  if text.strip().lower() in ("review cycle","flag board","flag and comment","review and annotate board"):
   sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'missionpcb_review'))
@@ -59,7 +59,7 @@ def run(text):
   outcome=roundtrip.apply(archive)
   with zipfile.ZipFile(archive) as package:
    report=json.loads(package.read('findings.json'))
-  try:record_review(report['findings'],report['summary'],bridge.snapshot(bridge.connect())['revision'],annotated=True,revision=revision)
+  try:record_review(report['findings'],report['summary'],bridge.snapshot(bridge.connect())['revision'],annotated=True,revision=revision,checks=report.get('checks',[]))
   except Exception as exc:raise RuntimeError('Native review annotations were applied and saved, but the transcript could not be saved. Inspect the board before retrying: '+str(exc)) from exc
   return 'ENGINE REVIEW → NATIVE KICAD FLAGS\n'+str(outcome['summary'])+'\n'+str(outcome['annotations_applied'])+' review labels/comments applied on Cmts.User.\nBoard saved. One Undo reverses annotations. Component positions preserved.\nRevision: '+revision+'\nCoverage incomplete; geometry policies only.'
  intent=parse(text)
@@ -75,6 +75,8 @@ def run(text):
   data=json.loads((bridge.TARGET.parent/'cache/results.json').read_text())['results'][key]
   mapping={'MCU':'U1','Sensor':'U2','RF':'U3','Regulator':'U4','Driver':'U5','Battery':'J1'}
   moves=[{'ref':mapping[p['ref']],'x_mm':100+p['board_xy_mm'][0],'y_mm':138-p['board_xy_mm'][1],'rotation_deg':90 if p['ref']=='RF' else 0} for p in data['component_positions']]
+  from board_profile import expand_moves
+  moves=expand_moves(moves,{p['ref'] for p in state['parts']})
  else:
   ref=intent[1]
   old=next((p for p in state['parts'] if p['ref']==ref),None)
@@ -94,13 +96,15 @@ def run(text):
  except Exception as exc:raise RuntimeError('The native component move succeeded, but the transcript could not be saved. Inspect KiCad before retrying; one Undo reverses the move. '+str(exc)) from exc
  return 'Applied and verified %d component moves in KiCad.\nOne Undo reverses the change. Not saved to disk.\nThis checks placement commands, not circuit correctness.'%len(moves)
 
-def record_review(findings,summary,native_revision,annotated=False,revision=None):
+def record_review(findings,summary,native_revision,annotated=False,revision=None,checks=None):
  """Persist review snapshots and stable finding transitions for the dashboard."""
  previous=[e['payload'] for e in review_journal.get_state(str(bridge.TARGET))['events'] if e['kind']=='engine_review']
  old={c['id'] for c in previous[-1]['findings'] if c['status']=='FAIL'} if previous else set()
  current={c['id'] for c in findings if c['status']=='FAIL'}
  ever={c['id'] for p in previous for c in p['findings'] if c['status']=='FAIL'}
  payload={'findings':findings,'summary':summary,'native_board_revision':native_revision,'annotated':annotated,'revision':revision,'source':'local compute engine; cached part data and authored policies','new_failures':sorted(current-old-ever),'reopened':sorted((current-old)&ever),'resolved':sorted(old-current)}
+ from mission_constraints import revision as constraint_revision
+ payload['constraint_revision']=constraint_revision();payload['checks']=checks or findings
  return review_journal.append_event(str(bridge.TARGET),'engine_review',payload)
 
 def log_event(command, status, message):

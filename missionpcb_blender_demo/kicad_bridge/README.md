@@ -67,3 +67,13 @@ The separate blank `MissionPCB-Test` project is not bound to this adapter. The
 expanded dashboard identifies its supported KiCad target. Blender's existing
 inspect/check/focus session adapter is a separate stage; arbitrary CAD assembly
 and live Astra calls are not part of this cached cycle.
+
+## Brief-derived constraint workflow
+
+The expanded widget displays the ECG brief as requirement cards and a constraint list. Placement policies show affected references, minimum/maximum limits, current measurements and pass/fail/stale status. Runtime, ingress, patient protection and the brief’s enclosure are explicitly not evaluated. The distance policies are authored engineering assumptions; this is not live model extraction from arbitrary briefs.
+
+Save limit persists an engineering threshold locally and invalidates the prior review. Full check evaluates the new limit; Review & annotate updates visible component labels on KiCad’s Cmts.User layer. Show components selects the affected native footprints.
+
+Verified on the six-component live board: 24 bridge unit tests, 6 package/review tests, dashboard-cycle-e2e (comments, pins, native moves, annotations, restoration), and constraint-limits-e2e (save limit, stale status, engine measurement, recheck, restored limit). The 18-component support profile is supported by source/tests; its board candidate is not installed in the active editor.
+
+The floating app uses a borderless panel and remains running if its window is closed; opening the app restores the panel. Rebuild through launch.py after Swift changes.

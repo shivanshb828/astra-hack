@@ -50,10 +50,10 @@ def review(outbound):
  for ref,issues in grouped.items():
   pos=positions[ref];status='FAIL' if any(s=='FAIL' for _,s in issues) else 'REVIEW'
   annotations.append({'text':PREFIX+f"{ref} {status} ["+','.join(str(n) for n,_ in issues)+']','x':pos['x_mm'],'y':pos['y_mm']-3})
- reviewed={'revision':revision,'source_board_sha256':meta['source_board_sha256'],'findings':findings,'summary':result['summary'],'annotations':annotations,'limitations':meta['assumptions']+['Distance proxies do not establish temperatures or medical compliance.']}
+ reviewed={'revision':revision,'source_board_sha256':meta['source_board_sha256'],'findings':findings,'checks':result['checks'],'summary':result['summary'],'annotations':annotations,'limitations':meta['assumptions']+['Distance proxies do not establish temperatures or medical compliance.']}
  data['findings.json']=json.dumps(reviewed,indent=2).encode()
  source=' '.join(packages.without_review(data[manifest['board']].decode()));idx=source.rfind(')')
- drawings='\n'.join('(gr_text '+json.dumps(a['text'])+f' (at {a["x"]} {a["y"]}) (layer "Cmts.User") (uuid "{uuid.uuid4()}") (effects (font (size 0.7 0.7) (thickness 0.1))))' for a in annotations)
+ drawings='\n'.join('(gr_text '+json.dumps(a['text'])+f' (at {a["x"]} {a["y"]}) (layer "Cmts.User") (uuid "{uuid.uuid4()}") (effects (font (size 1.2 1.2) (thickness 0.1))))' for a in annotations)
  data[manifest['board']]=(source[:idx]+drawings+'\n'+source[idx:]).encode()
  output=Path(outbound).with_name(Path(outbound).stem+'-return.zip')
  if output.exists():raise ValueError('Return archive exists')
@@ -76,7 +76,7 @@ def apply(archive):
   if not isinstance(a['text'],str) or not a['text'].startswith(PREFIX) or len(a['text'])>500:raise ValueError('Invalid review text')
   if not all(isinstance(a[k],(float,int)) and -1000<a[k]<1000 for k in ('x','y')):raise ValueError('Invalid annotation coordinates')
   item=BoardText();item.value=a['text'];item.position=Vector2.from_xy_mm(a['x'],a['y']);item.layer=BoardLayer.BL_Cmts_User
-  item.attributes.size=Vector2.from_xy_mm(.7,.7);item.attributes.stroke_width=100000
+  item.attributes.size=Vector2.from_xy_mm(1.2,1.2);item.attributes.stroke_width=100000
   changes.append(item)
  old=[t for t in board.get_text() if isinstance(t,BoardText) and t.value.startswith((PREFIX,LEGACY_PREFIX))]
  tx=board.begin_commit()
@@ -89,6 +89,7 @@ def apply(archive):
  if bridge.snapshot(board)['revision']!=before['revision']:raise RuntimeError('Unexpected placement change; inspect Undo')
  found=[t for t in board.get_text() if isinstance(t,BoardText) and t.value.startswith((PREFIX,LEGACY_PREFIX))]
  if len(found)!=len(changes):raise RuntimeError('Annotation readback failed')
+ layers=set(board.get_visible_layers());layers.add(BoardLayer.BL_Cmts_User);board.set_visible_layers(list(layers))
  board.save()
  return {'reviewed_board':str(staged),'annotations_applied':len(found),'summary':result['summary'],'undo':'One KiCad Undo removes this import; save afterward to persist undo.'}
 if __name__=='__main__':

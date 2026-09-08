@@ -88,6 +88,174 @@
       "noise_source": false,
       "sensitivity": "low",
       "heat_zone_radius_mm": null
+    },
+    {
+      "id": "support_c1",
+      "name": "TBD",
+      "category": "passive",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.8
+      },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitivity": "low",
+      "heat_zone_radius_mm": null
+    },
+    {
+      "id": "support_c2",
+      "name": "TBD",
+      "category": "passive",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.8
+      },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitivity": "low",
+      "heat_zone_radius_mm": null
+    },
+    {
+      "id": "support_c3",
+      "name": "TBD",
+      "category": "passive",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.8
+      },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitivity": "low",
+      "heat_zone_radius_mm": null
+    },
+    {
+      "id": "support_c4",
+      "name": "10uF",
+      "category": "passive",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.8
+      },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitivity": "low",
+      "heat_zone_radius_mm": null
+    },
+    {
+      "id": "support_c5",
+      "name": "10uF",
+      "category": "passive",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.8
+      },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitivity": "low",
+      "heat_zone_radius_mm": null
+    },
+    {
+      "id": "support_c6",
+      "name": "TBD",
+      "category": "passive",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.8
+      },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitivity": "low",
+      "heat_zone_radius_mm": null
+    },
+    {
+      "id": "support_r1",
+      "name": "TBD",
+      "category": "passive",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.5
+      },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitivity": "low",
+      "heat_zone_radius_mm": null
+    },
+    {
+      "id": "support_r2",
+      "name": "TBD",
+      "category": "passive",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.5
+      },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitivity": "low",
+      "heat_zone_radius_mm": null
+    },
+    {
+      "id": "support_r3",
+      "name": "TBD",
+      "category": "passive",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.5
+      },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitivity": "low",
+      "heat_zone_radius_mm": null
+    },
+    {
+      "id": "support_l1",
+      "name": "2.2uH",
+      "category": "passive",
+      "dimensions_mm": {
+        "length": 3.3,
+        "width": 3.3,
+        "height": 1.4
+      },
+      "heat_source": false,
+      "noise_source": true,
+      "sensitivity": "low",
+      "heat_zone_radius_mm": null
+    },
+    {
+      "id": "support_j2",
+      "name": "JST SH 3 pin",
+      "category": "connector",
+      "dimensions_mm": {
+        "length": 5,
+        "width": 4.25,
+        "height": 3
+      },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitivity": "low",
+      "heat_zone_radius_mm": null
+    },
+    {
+      "id": "support_j3",
+      "name": "JST SH 4 pin",
+      "category": "connector",
+      "dimensions_mm": {
+        "length": 6,
+        "width": 4.25,
+        "height": 3
+      },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitivity": "low",
+      "heat_zone_radius_mm": null
     }
   ],
   "notes": [

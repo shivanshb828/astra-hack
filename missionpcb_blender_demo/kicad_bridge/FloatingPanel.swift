@@ -99,7 +99,7 @@ final class FloatingPanel:NSPanel{override var canBecomeKey:Bool{true};override 
 final class Controller:NSObject,NSApplicationDelegate {
  var panel:FloatingPanel!;let model=ChatModel()
  func applicationDidFinishLaunching(_ notification:Notification){let screen=NSScreen.main!.visibleFrame
-  panel=FloatingPanel(contentRect:NSRect(x:screen.midX-235,y:screen.minY+16,width:470,height:86),styleMask:[.titled,.closable,.fullSizeContentView,.nonactivatingPanel,.resizable],backing:.buffered,defer:false)
+  panel=FloatingPanel(contentRect:NSRect(x:screen.midX-235,y:screen.minY+16,width:470,height:86),styleMask:[.borderless,.nonactivatingPanel,.resizable],backing:.buffered,defer:false)
   panel.title="MissionPCB Assistant";panel.titleVisibility = .hidden;panel.titlebarAppearsTransparent=true;panel.level = .floating;panel.collectionBehavior=[.canJoinAllSpaces,.fullScreenAuxiliary];panel.hidesOnDeactivate=false;panel.isMovableByWindowBackground=true;panel.isReleasedWhenClosed=false;panel.minSize=NSSize(width:390,height:86);panel.isOpaque=false;panel.backgroundColor = .clear;panel.hasShadow=true
   NotificationCenter.default.addObserver(forName:Notification.Name("MissionPCBDashboard"),object:nil,queue:.main){[weak self] _ in self?.resizePanel(height:760,width:1100)}
   NotificationCenter.default.addObserver(forName:Notification.Name("MissionPCBExpand"),object:nil,queue:.main){[weak self] _ in self?.resizePanel(height:420)}
@@ -120,6 +120,6 @@ final class Controller:NSObject,NSApplicationDelegate {
   resizePanel(height:panel.frame.height,width:panel.frame.width)
   panel.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true);return true
  }
- func applicationShouldTerminateAfterLastWindowClosed(_ sender:NSApplication)->Bool{true}
+ func applicationShouldTerminateAfterLastWindowClosed(_ sender:NSApplication)->Bool{false}
 }
 let app=NSApplication.shared;app.setActivationPolicy(.accessory);let controller=Controller();app.delegate=controller;app.run()

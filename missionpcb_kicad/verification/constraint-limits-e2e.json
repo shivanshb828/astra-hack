@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "constraint": "afe_MCU",
+  "limit_before_mm": 18,
+  "tested_limit_mm": 19,
+  "measured_mm": 11.18,
+  "stale_after_edit": true,
+  "fresh_after_review": true,
+  "original_limits_restored": true
+}
