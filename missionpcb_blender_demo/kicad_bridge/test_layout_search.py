@@ -43,3 +43,58 @@ class ApplyGuards(unittest.TestCase):
   with patch.object(s,'status',return_value=job),patch.object(s.bridge,'connect'),patch.object(s.bridge,'snapshot',return_value={'revision':'same','board':'test'}),patch.object(s.mission_constraints,'revision',return_value='rules'),patch.object(s.review_journal,'get_state',return_value={'pins':{'U1':True}}),patch.object(s.bridge,'apply') as apply:
    with self.assertRaisesRegex(ValueError,'pins changed'):s.apply_winner()
    apply.assert_not_called()
+
+class SearchRecoveryTests(unittest.TestCase):
+ def test_completed_result_survives_new_python_process(self):
+  import json,subprocess,sys,tempfile
+  from pathlib import Path
+  import layout_search as s
+  with tempfile.TemporaryDirectory() as directory:
+   path=Path(directory)/'search.json'
+   job={'status':'complete','before':{'board':str(s.bridge.TARGET)},'winner':{'id':4},'completed':10}
+   path.write_text(json.dumps(job))
+   code="import json,sys; from pathlib import Path; import layout_search as s; s.JOB_FILE=Path(sys.argv[1]); print(json.dumps(s.status()))"
+   result=subprocess.check_output([sys.executable,'-c',code,str(path)],cwd=Path(s.__file__).parent,text=True)
+   self.assertEqual(json.loads(result),job)
+ def test_interrupted_worker_is_reported_without_losing_candidates(self):
+  import json,tempfile
+  from pathlib import Path
+  from unittest.mock import patch
+  import layout_search as s
+  with tempfile.TemporaryDirectory() as directory:
+   path=Path(directory)/'search.json'
+   path.write_text(json.dumps({'status':'running','pid':123,'before':{'board':str(s.bridge.TARGET)},'candidates':[{'id':1}]}))
+   with patch.object(s,'JOB_FILE',path),patch.object(s,'process_running',return_value=False):result=s.status()
+   self.assertEqual(result['status'],'failed');self.assertEqual(result['candidates'],[{'id':1}])
+
+
+class BackgroundSearchTests(unittest.TestCase):
+ def setUp(self):
+  from unittest.mock import patch
+  import layout_search as s
+  self.s=s;s._pending_key=None
+  self.before={'board':'test','revision':'a','parts':[]}
+  self.patches=[patch.object(s.review_journal,'get_state',return_value={'pins':{}}),patch.object(s.mission_constraints,'revision',return_value='rules'),patch.object(s,'status',return_value=None),patch.object(s,'start')]
+  self.journal,self.rules,self.status,self.start=[p.start() for p in self.patches]
+  for p in self.patches:self.addCleanup(p.stop)
+ def test_edits_are_debounced_and_only_compute_starts(self):
+  s=self.s;s.ensure_background(self.before,now=0);s.ensure_background(self.before,now=1)
+  self.start.assert_not_called()
+  s.ensure_background(self.before,now=2)
+  self.start.assert_called_once_with(before=self.before,pins={},constraint_revision='rules')
+ def test_completed_or_failed_input_is_not_repeated(self):
+  s=self.s
+  for status in ('complete','failed','applied'):
+   self.status.return_value={'status':status,'before':self.before,'pins':{},'constraint_revision':'rules'}
+   s.ensure_background(self.before,now=0);s.ensure_background(self.before,now=3)
+  self.start.assert_not_called()
+ def test_new_pins_schedule_a_fresh_suggestion(self):
+  s=self.s;self.status.return_value={'status':'complete','before':self.before,'pins':{},'constraint_revision':'rules'}
+  s.ensure_background(self.before,now=0);self.journal.return_value={'pins':{'U1':True}}
+  s.ensure_background(self.before,now=2);s.ensure_background(self.before,now=4)
+  self.start.assert_called_once_with(before=self.before,pins={'U1':True},constraint_revision='rules')
+ def test_busy_worker_and_disconnected_board_never_start_search(self):
+  s=self.s;self.status.return_value={'status':'running'}
+  s.ensure_background(self.before,now=0);s.ensure_background(self.before,now=3)
+  s.ensure_background({'connected':False},now=5)
+  self.start.assert_not_called()

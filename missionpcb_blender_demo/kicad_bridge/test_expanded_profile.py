@@ -7,6 +7,11 @@ sys.path[:0]=[str(ROOT/'src'),str(ROOT/'missionpcb_review')]
 from layout_adapter import payload_for
 from constraint_engine import load_layout,load_parts,validate
 class ExpandedProfile(unittest.TestCase):
+ def setUp(self):
+  from unittest.mock import patch
+  # Cached-fixture expectations use baseline policies, independent of live widget edits.
+  limit_patch=patch('mission_constraints.limits',return_value={})
+  limit_patch.start();self.addCleanup(limit_patch.stop)
  def state(self,key):
   data=json.loads((ROOT/'missionpcb_kicad/cache/results.json').read_text())['results'][key]
   refs={role:ref for ref,(role,_) in board_profile.CORE_MAP.items()}

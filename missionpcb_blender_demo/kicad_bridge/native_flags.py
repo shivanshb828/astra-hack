@@ -23,8 +23,8 @@ def apply_findings(report):
   pos=rows[ref];dims=parts[mapped[ref][1]]['dimensions_mm'];w,h=dims['length']+3,dims['width']+3
   if int(pos['rotation_deg'])%180:w,h=h,w
   layer=BoardLayer.BL_User_1 if kind=='FAIL' else BoardLayer.BL_User_2
-  r=BoardRectangle();r.layer=layer;r.top_left=Vector2.from_xy_mm(pos['x_mm']-w/2,pos['y_mm']-h/2);r.bottom_right=Vector2.from_xy_mm(pos['x_mm']+w/2,pos['y_mm']+h/2);r.attributes.stroke.width=700000;generated.append(r)
-  text=BoardText();text.value='[MPCB AREA] '+ref+' '+('ERROR' if kind=='FAIL' else 'WATCH');text.layer=layer;text.position=Vector2.from_xy_mm(pos['x_mm'],pos['y_mm']-h/2-1.5);text.attributes.size=Vector2.from_xy_mm(1.1,1.1);generated.append(text)
+  r=BoardRectangle();r.layer=layer;r.top_left=Vector2.from_xy_mm(pos['x_mm']-w/2,pos['y_mm']-h/2);r.bottom_right=Vector2.from_xy_mm(pos['x_mm']+w/2,pos['y_mm']+h/2);r.attributes.stroke.width=1000000;generated.append(r)
+  text=BoardText();text.value=ref+' '+('ERROR' if kind=='FAIL' else 'WATCH');text.layer=layer;text.position=Vector2.from_xy_mm(pos['x_mm'],pos['y_mm']-h/2-1.5);text.attributes.size=Vector2.from_xy_mm(1.1,1.1);generated.append(text)
  registry=json.loads(REGISTRY.read_text()) if REGISTRY.exists() else {}
  oldids=set(registry.get('ids',[])) if registry.get('board')==str(bridge.TARGET) else set()
  old=[o for o in [*board.get_shapes(),*board.get_text()] if o.id.value in oldids]

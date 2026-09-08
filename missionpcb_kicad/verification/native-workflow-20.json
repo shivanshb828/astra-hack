@@ -1,0 +1,192 @@
+{
+  "project": "ECG20",
+  "component_count": 20,
+  "model_count": 19,
+  "missing_models": [
+    "L1"
+  ],
+  "candidate_count": 10,
+  "winner": 1,
+  "summary_at_apply": {
+    "PASS": 83,
+    "FAIL": 0,
+    "WARN": 0,
+    "SKIP": 1
+  },
+  "constraint_revision_at_apply": "9e40e6a0cf0059d8b3fde8f804f6096dfa0268c6add25c17b360fde27aded32d",
+  "candidates": [
+    {
+      "id": 1,
+      "rank": [
+        0,
+        0,
+        0,
+        1,
+        197.470045
+      ],
+      "summary": {
+        "PASS": 83,
+        "FAIL": 0,
+        "WARN": 0,
+        "SKIP": 1
+      }
+    },
+    {
+      "id": 2,
+      "rank": [
+        0,
+        2,
+        0.453,
+        1,
+        320.543464
+      ],
+      "summary": {
+        "PASS": 81,
+        "FAIL": 2,
+        "WARN": 0,
+        "SKIP": 1
+      }
+    },
+    {
+      "id": 3,
+      "rank": [
+        0,
+        0,
+        0,
+        1,
+        251.15426
+      ],
+      "summary": {
+        "PASS": 83,
+        "FAIL": 0,
+        "WARN": 0,
+        "SKIP": 1
+      }
+    },
+    {
+      "id": 4,
+      "rank": [
+        0,
+        1,
+        8.0,
+        1,
+        399.444713
+      ],
+      "summary": {
+        "PASS": 82,
+        "FAIL": 1,
+        "WARN": 0,
+        "SKIP": 1
+      }
+    },
+    {
+      "id": 5,
+      "rank": [
+        0,
+        2,
+        0.048,
+        1,
+        244.247105
+      ],
+      "summary": {
+        "PASS": 81,
+        "FAIL": 2,
+        "WARN": 0,
+        "SKIP": 1
+      }
+    },
+    {
+      "id": 6,
+      "rank": [
+        0,
+        1,
+        0.093,
+        1,
+        293.563377
+      ],
+      "summary": {
+        "PASS": 82,
+        "FAIL": 1,
+        "WARN": 0,
+        "SKIP": 1
+      }
+    },
+    {
+      "id": 7,
+      "rank": [
+        0,
+        2,
+        0.032,
+        1,
+        201.78869
+      ],
+      "summary": {
+        "PASS": 81,
+        "FAIL": 2,
+        "WARN": 0,
+        "SKIP": 1
+      }
+    },
+    {
+      "id": 8,
+      "rank": [
+        0,
+        1,
+        0.011,
+        1,
+        307.308971
+      ],
+      "summary": {
+        "PASS": 82,
+        "FAIL": 1,
+        "WARN": 0,
+        "SKIP": 1
+      }
+    },
+    {
+      "id": 9,
+      "rank": [
+        0,
+        1,
+        0.011,
+        1,
+        347.570679
+      ],
+      "summary": {
+        "PASS": 82,
+        "FAIL": 1,
+        "WARN": 0,
+        "SKIP": 1
+      }
+    },
+    {
+      "id": 10,
+      "rank": [
+        0,
+        0,
+        0,
+        1,
+        267.991376
+      ],
+      "summary": {
+        "PASS": 83,
+        "FAIL": 0,
+        "WARN": 0,
+        "SKIP": 1
+      }
+    }
+  ],
+  "verification": [
+    "Applied through live KiCad IPC",
+    "Re-reviewed live winning placement: 83 PASS, 0 FAIL, 1 SKIP",
+    "All 20 footprints and 19 model assignments present after apply",
+    "Red error areas and amber watch areas visually verified in native KiCad 3D Viewer after subsequent policy change",
+    "Restart recovery covered by separate-process test"
+  ],
+  "limitations": [
+    "Placement policies only; unrouted demo",
+    "U2/U4 models approximate; L1 missing",
+    "Connector access not evaluated",
+    "Later policy edits require fresh validation; this report describes the recorded apply"
+  ]
+}

@@ -25,29 +25,45 @@ def parse(text):
   ref,distance,direction=match.groups();return ('relative',aliases.get(ref,ref.upper()),float(distance),direction)
  return ('unknown',)
 
+def open_native_3d():
+ client,board=bridge.connect(return_client=True)
+ result=client.run_action('common.Control.show3DViewer')
+ status=result.DESCRIPTOR.fields_by_name['status'].enum_type.values_by_number[result.status].name
+ if status!='RAS_OK':raise RuntimeError('KiCad could not open its 3D Viewer: '+status)
+ __import__('subprocess').run(['open','-b','org.kicad.pcbnew'],check=True)
+ return 'Opened the PCB in KiCad’s native 3D Viewer. Choose MissionPCB - Review or MissionPCB - Showcase under Presets.'
+
+def refresh_native_flags_after_move():
+ """Review live geometry and replace native markers, without saving unrelated edits."""
+ try:
+  import native_review,native_flags
+  native_review.run()
+  report=json.loads((bridge.TARGET.parent/'verification/live-review.json').read_text())
+  result=native_flags.apply_findings(report)
+  record_review(report['findings'],report['result']['summary'],report['native_board_revision'],annotated=True,checks=report['result']['checks'])
+  return result+' Native red/amber areas now reflect this placement. Undo the markers, then the placement to restore both. Board edits remain unsaved.'
+ except Exception as exc:
+  # A review failure must never masquerade as a failed move or invite a duplicate move.
+  return 'The component move succeeded, but flags could not refresh: '+str(exc)+'. Run Show flagged areas to retry the review. Board edits remain unsaved.'
+
 def run(text):
- if text.strip().lower() in ('open kicad 3d viewer','render in kicad'):
-  from kipy import KiCad
-  for socket in sorted(Path('/tmp/kicad').glob('api*.sock')):
-   try:
-    client=KiCad(socket_path='ipc://'+str(socket),client_name='MissionPCB native viewer',timeout_ms=1500)
-    board=client.get_board()
-   except Exception:continue
-   if bridge.board_path(board)!=bridge.TARGET:continue
-   result=client.run_action('common.Control.show3DViewer')
-   if result.status!=1:raise ValueError('KiCad did not accept the native viewer action: '+str(result))
-   __import__('subprocess').run(['open','-b','org.kicad.pcbnew'],check=True)
-   return 'Opened KiCad’s native 3D Viewer for the active board.'
-  raise ValueError('Open the active MissionPCB board with the KiCad API enabled.')
+ if text.strip().lower() in ('open 3d in kicad','open kicad 3d viewer','open native 3d','render pcb','render in kicad'):
+  return open_native_3d()
  if text.strip().lower()=='show flagged areas':
   import native_review,native_flags
   native_review.run()
   report=json.loads((bridge.TARGET.parent/'verification/live-review.json').read_text())
-  return native_flags.apply_findings(report)
+  result=native_flags.apply_findings(report)
+  bridge.connect().save()
+  record_review(report['findings'],report['result']['summary'],report['native_board_revision'],annotated=True,checks=report['result']['checks'])
+  return result+'\n'+open_native_3d()
 
  if text.strip().lower() in ('find best of 10','search layouts','generate 10 layouts'):
   import layout_search
   return layout_search.start()
+ if text.strip().lower()=='recheck candidate layouts':
+  import layout_search
+  return layout_search.revalidate()
  if text.strip().lower()=='apply best layout':
   import layout_search
   return layout_search.apply_winner()
@@ -87,7 +103,11 @@ def run(text):
    report=json.loads(package.read('findings.json'))
   try:record_review(report['findings'],report['summary'],bridge.snapshot(bridge.connect())['revision'],annotated=True,revision=revision,checks=report.get('checks',[]))
   except Exception as exc:raise RuntimeError('Native review annotations were applied and saved, but the transcript could not be saved. Inspect the board before retrying: '+str(exc)) from exc
-  return 'ENGINE REVIEW → NATIVE KICAD FLAGS\n'+str(outcome['summary'])+'\n'+str(outcome['annotations_applied'])+' review labels/comments applied on Cmts.User.\nBoard saved. One Undo reverses annotations. Component positions preserved.\nRevision: '+revision+'\nCoverage incomplete; geometry policies only.'
+  import native_flags
+  areas=native_flags.apply_findings({**report,'native_board_revision':bridge.snapshot(bridge.connect())['revision']})
+  bridge.connect().save()
+  viewer=open_native_3d()
+  return areas+'\n'+viewer+'\nENGINE REVIEW → NATIVE KICAD FLAGS\n'+str(outcome['summary'])+'\n'+str(outcome['annotations_applied'])+' review labels/comments applied on Cmts.User.\nBoard saved. Two Undo steps reverse area flags and comment labels. Component positions preserved.\nRevision: '+revision+'\nCoverage incomplete; geometry policies only.'
  intent=parse(text)
  if intent[0] in ('help','unknown'):
   prefix="Hi! I can inspect and move components in your open MissionPCB board." if intent[0]=='help' else "I couldn't map that to a supported action, so I haven't changed the board."
@@ -96,8 +116,15 @@ def run(text):
  command=intent[0]
  if command in ('inspect','status',''):
   return 'Connected to MissionPCB · %d parts\n'%len(state['parts'])+'\n'.join('%s  (%.1f, %.1f) mm'%(p['ref'],p['x_mm'],p['y_mm']) for p in state['parts'])
- if command in ('improve','reset'):
-  key='MissionPCB' if command=='improve' else 'Naive'
+ if command=='improve':
+  import layout_search
+  job=layout_search.status()
+  if not job or job['status'] not in ('complete',):
+   layout_search.start()
+   return 'Preparing a placement suggestion in the background. Your KiCad placement is unchanged.'
+  return layout_search.apply_winner()
+ if command=='reset':
+  key='Naive'
   data=json.loads((bridge.TARGET.parent/'cache/results.json').read_text())['results'][key]
   mapping={'MCU':'U1','Sensor':'U2','RF':'U3','Regulator':'U4','Driver':'U5','Battery':'J1'}
   moves=[{'ref':mapping[p['ref']],'x_mm':100+p['board_xy_mm'][0],'y_mm':138-p['board_xy_mm'][1],'rotation_deg':90 if p['ref']=='RF' else 0} for p in data['component_positions']]
@@ -120,7 +147,7 @@ def run(text):
  result=bridge.apply({'board':state['board'],'base_revision':state['revision'],'moves':moves})
  try:review_journal.append_event(state['board'],'design_change',{'command':text,'before':result['before'],'after':result['after'],'moves':moves,'source':'cached placement' if command in ('improve','reset') else 'user command','review_required':True})
  except Exception as exc:raise RuntimeError('The native component move succeeded, but the transcript could not be saved. Inspect KiCad before retrying; one Undo reverses the move. '+str(exc)) from exc
- return 'Applied and verified %d component moves in KiCad.\nOne Undo reverses the change. Not saved to disk.\nThis checks placement commands, not circuit correctness.'%len(moves)
+ return 'Applied and verified %d component moves in KiCad.\n'%len(moves)+refresh_native_flags_after_move()
 
 def record_review(findings,summary,native_revision,annotated=False,revision=None,checks=None):
  """Persist review snapshots and stable finding transitions for the dashboard."""

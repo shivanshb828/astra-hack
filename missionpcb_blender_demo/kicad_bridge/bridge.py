@@ -16,19 +16,19 @@ def board_path(board):
     doc = board.document
     return (Path(doc.project.path) / doc.board_filename).resolve()
 
-def connect():
+def connect(return_client=False):
     matches = []
     for socket in sorted(Path('/tmp/kicad').glob('api*.sock')):
         try:
             client = KiCad(socket_path='ipc://' + str(socket), client_name='MissionPCB agent bridge', timeout_ms=1500)
             board = client.get_board()
             if board_path(board) == TARGET:
-                matches.append(board)
+                matches.append((client,board))
         except Exception:
             continue
     if len(matches) != 1:
         raise ValueError('Open exactly one MissionPCB board in KiCad with its API server enabled. Other projects are never selected.')
-    return matches[0]
+    return matches[0] if return_client else matches[0][1]
 
 def snapshot(board):
     if board_path(board) != TARGET:
