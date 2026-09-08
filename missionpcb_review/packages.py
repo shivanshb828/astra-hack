@@ -2,7 +2,8 @@
 import argparse,hashlib,json,re,zipfile
 from pathlib import Path,PurePosixPath
 ROOT=Path(__file__).resolve().parents[1]
-PROJECT=ROOT/'missionpcb_kicad'
+ACTIVE=ROOT/'missionpcb_blender_demo/kicad_bridge/runtime/active-project.json'
+PROJECT=Path(json.loads(ACTIVE.read_text())['project']) if ACTIVE.exists() else ROOT/'missionpcb_kicad'
 EXCHANGE=Path(__file__).parent/'exchange'
 def sha(data):return hashlib.sha256(data).hexdigest()
 def prepare(revision, metadata=None):

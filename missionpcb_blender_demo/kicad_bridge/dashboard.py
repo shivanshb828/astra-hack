@@ -9,6 +9,9 @@ TOKEN=(Path(__file__).resolve().parent/'.widget-token').read_text()
 ROOT=Path(__file__).resolve().parent
 class Handler(BaseHTTPRequestHandler):
  def do_POST(self):
+  if self.path.startswith('/assembly/'):
+   import assembly_http
+   return assembly_http.post(self,TOKEN)
   if self.path not in ('/command','/comment','/pin','/constraint') or self.headers.get('Host') not in ('127.0.0.1:8768','localhost:8768') or not secrets.compare_digest(self.headers.get('X-Widget-Token',''),TOKEN):
    self.send_error(403);return
   try:size=int(self.headers.get('Content-Length','0'))
@@ -45,7 +48,14 @@ class Handler(BaseHTTPRequestHandler):
  def do_GET(self):
   if self.headers.get('Host') not in ('127.0.0.1:8768','localhost:8768'):
    self.send_error(403);return
-  if self.path=='/state':
+  if self.path.startswith('/board-preview'):
+   self.send_response(303);self.send_header('Location','/design');self.end_headers();return
+  if self.path=='/assembly/state':
+   import assembly_http,blender_handoff
+   return assembly_http.reply(self,200,blender_handoff.state())
+  if self.path=='/assembly':
+   body=(ROOT/'assembly-dashboard.html').read_text().replace('__LOCAL_TOKEN__',json.dumps(TOKEN)).encode();mime='text/html'
+  elif self.path=='/state':
    try:
     board=bridge.connect();state={'connected':True,**bridge.snapshot(board)}
     from kipy.board_types import BoardLayer

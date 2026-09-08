@@ -16,7 +16,7 @@ def run():
  if bridge.snapshot(board)['revision']!=before['revision']:raise ValueError('Board changed during review; run again')
  result['native_board_revision']=before['revision'];result['source']='live KiCad footprint positions; fixed demo outline/enclosure and cached package dimensions'
  result['limitations'].append('No schematic/netlist completeness, patient/battery coverage, or exact package verification. Native DRC below is on saved disk board, not unsaved edits.')
- folder=ROOT/'missionpcb_kicad/verification';folder.mkdir(exist_ok=True)
+ folder=bridge.TARGET.parent/'verification';folder.mkdir(exist_ok=True)
  drc=folder/'widget-drc.json'
  proc=subprocess.run(['/Applications/KiCad/KiCad.app/Contents/MacOS/kicad-cli','pcb','drc','--format','json','-o',str(drc),str(bridge.TARGET)],capture_output=True,text=True,timeout=15)
  native=json.loads(drc.read_text()) if proc.returncode==0 and drc.exists() else {'error':proc.stderr}

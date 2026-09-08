@@ -1,0 +1,50 @@
+[
+  {
+    "role": "MCU",
+    "reference": "U1",
+    "footprint": "Package_DFN_QFN:Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm",
+    "model": "models/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.step",
+    "sha256": "7f57f4040117e2ef4f78a76d74424d6f4d23513883c32457503aaaa3beb70471",
+    "limitation": "Package matches RGE0024H"
+  },
+  {
+    "role": "Sensor",
+    "reference": "U2",
+    "footprint": "Package_DFN_QFN:QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm",
+    "model": "models/QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm.step",
+    "sha256": "036d57f4ca89806899156f4a3f615afd11af3273825e96ddd647df4605d590d1",
+    "limitation": "APPROXIMATE: exposed pad 2.65 versus 2.8 mm"
+  },
+  {
+    "role": "RF",
+    "reference": "U3",
+    "footprint": "RF_Module:Raytac_MDBT42Q",
+    "model": "models/mdbt42q.stp",
+    "sha256": "2b7e20fce563175e3ec471a5695b2aec474c14706a9ce1e88b2e6ce0a64354d5",
+    "limitation": "Manufacturer family outline"
+  },
+  {
+    "role": "Regulator",
+    "reference": "U4",
+    "footprint": "Package_DFN_QFN:Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm",
+    "model": "models/Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm.step",
+    "sha256": "f2001b3f9a6ae3d0c8b7e19aea57daac7f0bb7d40364983cd7bb958958273a6d",
+    "limitation": "APPROXIMATE: wrong pin count and body; placement demo only"
+  },
+  {
+    "role": "Driver",
+    "reference": "U5",
+    "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+    "model": "models/SOT-23-5.step",
+    "sha256": "720a6eab0024069bbee68e7cb4c3ff1149468a34611225cdc852662c5d0ec2b7",
+    "limitation": "Generic SOT23-5 package; height not verified"
+  },
+  {
+    "role": "Battery",
+    "reference": "J1",
+    "footprint": "Connector_JST:JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical",
+    "model": "models/JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical.step",
+    "sha256": "df87a44803f392435a972f8b8837b8c2700842cc58412c1a4338fcdcf449fc3d",
+    "limitation": "JST family package; connector only"
+  }
+]

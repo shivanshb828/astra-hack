@@ -26,6 +26,25 @@ def parse(text):
  return ('unknown',)
 
 def run(text):
+ if text.strip().lower() in ('open kicad 3d viewer','render in kicad'):
+  from kipy import KiCad
+  for socket in sorted(Path('/tmp/kicad').glob('api*.sock')):
+   try:
+    client=KiCad(socket_path='ipc://'+str(socket),client_name='MissionPCB native viewer',timeout_ms=1500)
+    board=client.get_board()
+   except Exception:continue
+   if bridge.board_path(board)!=bridge.TARGET:continue
+   result=client.run_action('common.Control.show3DViewer')
+   if result.status!=1:raise ValueError('KiCad did not accept the native viewer action: '+str(result))
+   __import__('subprocess').run(['open','-b','org.kicad.pcbnew'],check=True)
+   return 'Opened KiCad’s native 3D Viewer for the active board.'
+  raise ValueError('Open the active MissionPCB board with the KiCad API enabled.')
+ if text.strip().lower()=='show flagged areas':
+  import native_review,native_flags
+  native_review.run()
+  report=json.loads((bridge.TARGET.parent/'verification/live-review.json').read_text())
+  return native_flags.apply_findings(report)
+
  if text.strip().lower() in ('find best of 10','search layouts','generate 10 layouts'):
   import layout_search
   return layout_search.start()

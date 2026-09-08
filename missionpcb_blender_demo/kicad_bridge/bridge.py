@@ -7,7 +7,10 @@ from pathlib import Path
 from kipy import KiCad
 from kipy.geometry import Vector2, Angle
 
-TARGET = (Path(__file__).resolve().parents[2] / 'missionpcb_kicad/MissionPCB.kicad_pcb').resolve()
+_ROOT = Path(__file__).resolve().parents[2]
+_ACTIVE = Path(__file__).resolve().parent/'runtime/active-project.json'
+_PROJECT = Path(json.loads(_ACTIVE.read_text())['project']) if _ACTIVE.exists() else _ROOT/'missionpcb_kicad'
+TARGET = (_PROJECT/'MissionPCB.kicad_pcb').resolve()
 
 def board_path(board):
     doc = board.document

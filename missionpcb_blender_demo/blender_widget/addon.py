@@ -3,6 +3,15 @@ import bpy,json,time,math,re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent
 IPC=ROOT/'ipc';IPC.mkdir(exist_ok=True)
+import sys,importlib
+if str(ROOT) not in sys.path:sys.path.insert(0,str(ROOT))
+_assembly=None
+def assembly_module():
+ global _assembly
+ if _assembly is None:
+  _assembly=importlib.import_module("assembly");importlib.reload(_assembly)
+ return _assembly
+def assembly_active():return bool(bpy.context.scene.get("missionpcb_assembly"))
 TARGET=ROOT.parent/'component_pass/missionpcb_three_cad_components.blend'
 def atomic(path,data):
  tmp=path.with_suffix('.tmp');tmp.write_text(json.dumps(data,allow_nan=False));tmp.replace(path)
@@ -12,8 +21,12 @@ def guard():
  if not bpy.context.scene.get('use_upstream_engine'):raise ValueError('MissionPCB engine is not installed')
 def parts():return {o['component_id']:o for o in bpy.context.scene.objects if o.get('role')=='component' and o.get('layout_id')=='MissionPCB'}
 def snapshot():
+ if assembly_active():
+  assembly=assembly_module()
+  if assembly.signature()!=bpy.context.scene.get('assembly_signature'):assembly.check()
+  return dict(heartbeat=time.time(),file=bpy.data.filepath,assembly_api=1,assembly=assembly.snapshot())
  guard();r=runtime();payload=json.loads(bpy.context.scene.get('engine_results_json','{}'))
- return dict(heartbeat=time.time(),file=bpy.data.filepath,signature=r.signature(),stale=r.signature()!=bpy.context.scene.get('validated_signature'),parts=[dict(ref=k,position=list(o.location)) for k,o in parts().items()],result=payload.get('results',{}).get('MissionPCB'))
+ return dict(heartbeat=time.time(),file=bpy.data.filepath,assembly_api=1,signature=r.signature(),stale=r.signature()!=bpy.context.scene.get('validated_signature'),parts=[dict(ref=k,position=list(o.location)) for k,o in parts().items()],result=payload.get('results',{}).get('MissionPCB'))
 def highlight():
  result=json.loads(bpy.context.scene['engine_results_json'])['results']['MissionPCB']
  subjects={s for c in result['checks'] if c['status']=='FAIL' for s in c.get('subjects',[])}
@@ -33,6 +46,13 @@ def highlight():
   flag=bpy.data.objects.new('ATTENTION '+ref,curve);collection.objects.link(flag);flag.location=obj.matrix_world.translation;flag.location.z+=float(obj.dimensions.z)+1;flag.show_in_front=True;flag.color=(1,.04,.02,1)
   mat=bpy.data.materials.get('Widget Attention Red') or bpy.data.materials.new('Widget Attention Red');mat.diffuse_color=(1,.04,.02,1);curve.materials.append(mat)
 def execute(command):
+ if command.get('action','').startswith('assembly_'):return assembly_module().execute(command)
+ if assembly_active():
+  assembly=assembly_module()
+  action=command['action']
+  if action=='check':return assembly.check()
+  if action=='inspect':return 'Read ECG assembly state.'
+  if action=='focus':return assembly.focus('part-'+{'MCU':'U1','Sensor':'U2','RF':'U3','Regulator':'U4','Driver':'U5','Battery':'J1'}.get(command.get('ref'),command.get('ref','')))
  guard();action=command['action'];r=runtime()
  if action=='check':r.recalculate_constraints();highlight();return 'Completed implemented geometry/policy checks. DRC/ERC, thermal physics and patient safety are not validated.'
  if action=='focus':
@@ -68,7 +88,8 @@ def tick():
  except Exception as e:atomic(IPC/'state.json',dict(heartbeat=time.time(),error=str(e)))
  return .75
 def start():
- guard();old=bpy.app.driver_namespace.get('missionpcb_widget_timer')
+ if not assembly_active():guard()
+ old=bpy.app.driver_namespace.get('missionpcb_widget_timer')
  if old and bpy.app.timers.is_registered(old):bpy.app.timers.unregister(old)
  bpy.app.driver_namespace['missionpcb_widget_timer']=tick;bpy.app.timers.register(tick,first_interval=.1);tick()
  print('MISSIONPCB_BLENDER_WIDGET_READY')

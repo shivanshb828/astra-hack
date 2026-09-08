@@ -19,7 +19,7 @@ class ExpandedProfile(unittest.TestCase):
    parts,_=load_parts(ROOT/'missionpcb_review/native-six-parts.json');return validate(layout,parts,w).to_dict()
  def test_expanded_baseline_and_improvement(self):
   baseline=self.state('Naive');improved=self.state('MissionPCB')
-  self.assertEqual(len(improved['parts']),18)
+  self.assertEqual(len(improved['parts']),len(board_profile.component_map()))
   self.assertGreaterEqual(self.evaluate(baseline)['summary']['FAIL'],7)
   report=self.evaluate(improved)
   self.assertEqual(report['summary']['FAIL'],0,[c['message'] for c in report['checks'] if c['status']=='FAIL'])
@@ -31,5 +31,5 @@ class ExpandedProfile(unittest.TestCase):
  def test_support_commands_and_full_move_validation(self):
   self.assertEqual(widget_command.parse('Move C1 2 mm right'),('relative','C1',2.,'right'))
   state=self.state('MissionPCB');state.update(board=str(bridge.TARGET),revision='test')
-  self.assertEqual(len(bridge.validate({'board':str(bridge.TARGET),'base_revision':'test','moves':state['parts']},state)),18)
+  self.assertEqual(len(bridge.validate({'board':str(bridge.TARGET),'base_revision':'test','moves':state['parts']},state)),len(state['parts']))
 if __name__=='__main__':unittest.main()

@@ -256,6 +256,32 @@
       "noise_source": false,
       "sensitivity": "low",
       "heat_zone_radius_mm": null
+    },
+    {
+      "id": "support_c7",
+      "name": "TBD",
+      "category": "passive",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.8
+      },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitivity": "low"
+    },
+    {
+      "id": "support_r4",
+      "name": "TBD",
+      "category": "passive",
+      "dimensions_mm": {
+        "length": 1.6,
+        "width": 0.8,
+        "height": 0.5
+      },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitivity": "low"
     }
   ],
   "notes": [

@@ -7,6 +7,15 @@ final class ChatModel: ObservableObject {
  @Published var messages=[ChatMessage(text:"Choose the application above.\nKiCad: inspect, move a component, or apply the cached layout.\nBlender: inspect the scene, check constraints, or focus a component.",user:false)]
  @Published var input=""
  @Published var target="KiCad" { didSet { status="\(target) · local commands" } }
+ private var stageTimer:Timer?
+ private var assemblyRevision:String?
+ init(){stageTimer=Timer.scheduledTimer(withTimeInterval:2,repeats:true){[weak self] _ in self?.syncStage()}}
+ func syncStage(){
+  URLSession.shared.dataTask(with:URL(string:"http://127.0.0.1:8768/assembly/state")!){[weak self] data,_,_ in
+   guard let data=data,let value=try? JSONSerialization.jsonObject(with:data) as? [String:Any],value["connected"] as? Bool == true,let assembly=value["assembly"] as? [String:Any],let revision=assembly["source_hash"] as? String else{return}
+   DispatchQueue.main.async{guard let self=self,self.assemblyRevision != revision else{return};self.assemblyRevision=revision;self.target="Blender";self.status="Blender · ECG chest assembly"}
+  }.resume()
+ }
  @Published var busy=false
  @Published var status="Live KiCad · local commands"
  func send(_ supplied:String?=nil){
@@ -29,10 +38,16 @@ final class ChatModel: ObservableObject {
  func finish(_ text:String,ok:Bool){messages.append(ChatMessage(text:text,user:false));busy=false;status=ok ? "\(target) · local commands" : "Connection needs attention"}
 }
 struct ReviewDashboard: NSViewRepresentable {
+ @ObservedObject var model:ChatModel
+ var address:String { "http://127.0.0.1:8768/" + (model.target == "Blender" ? "assembly" : "design") }
  func makeNSView(context:Context)->WKWebView {
-  let view=WKWebView();view.load(URLRequest(url:URL(string:"http://127.0.0.1:8768/")!));return view
+  let view=WKWebView();view.load(URLRequest(url:URL(string:address)!));return view
  }
- func updateNSView(_ view:WKWebView,context:Context){}
+ func updateNSView(_ view:WKWebView,context:Context){
+  let path=view.url?.path ?? ""
+  let sameStage=model.target == "Blender" ? path == "/assembly" : (path == "/design" || path.hasPrefix("/board-preview"))
+  if !sameStage {view.load(URLRequest(url:URL(string:address)!))}
+ }
 }
 struct ChatView: View {
  @ObservedObject var model:ChatModel
@@ -44,10 +59,11 @@ struct ChatView: View {
   if dashboard {
    HStack {
     Button("← Chat"){dashboard=false;NotificationCenter.default.post(name:Notification.Name("MissionPCBExpand"),object:nil)}
+    Picker("Application",selection:$model.target){Text("KiCad").tag("KiCad");Text("Blender").tag("Blender")}.pickerStyle(.segmented).labelsHidden().accessibilityLabel("Application").frame(width:180)
     Spacer()
     Button("Collapse"){dashboard=false;compact=true;NotificationCenter.default.post(name:Notification.Name("MissionPCBCollapse"),object:nil)}
    }.buttonStyle(.plain).padding(14)
-   ReviewDashboard()
+   ReviewDashboard(model:model)
   } else if compact {
    Button {
     compact=false;dashboard=true
@@ -72,12 +88,12 @@ struct ChatView: View {
    } label: {Image(systemName:"chevron.down").foregroundStyle(.secondary)}.buttonStyle(.plain).help("Collapse to status card")
    Button{dashboard=true;NotificationCenter.default.post(name:Notification.Name("MissionPCBDashboard"),object:nil)}label:{Image(systemName:"arrow.up.right.square").foregroundStyle(.secondary)}.buttonStyle(.plain).help("Expand to full review dashboard")
   }.padding(.horizontal,20).padding(.top,17).padding(.bottom,13)
-  Picker("Application",selection:$model.target){Text("KiCad").tag("KiCad");Text("Blender").tag("Blender")}.pickerStyle(.segmented).disabled(model.busy).padding(.horizontal,20).padding(.bottom,10)
+  Picker("Application",selection:$model.target){Text("KiCad").tag("KiCad");Text("Blender").tag("Blender")}.pickerStyle(.segmented).labelsHidden().accessibilityLabel("Application").disabled(model.busy).padding(.horizontal,20).padding(.bottom,10)
   Divider().opacity(0.2)
   ScrollViewReader{proxy in ScrollView{
    VStack(alignment:.leading,spacing:17){ForEach(model.messages){message in
     HStack{if message.user{Spacer(minLength:40)}
-     Text(message.text).font(.system(size:12)).lineSpacing(5).textSelection(.enabled).padding(message.user ? 12 : 3).background(message.user ? Color(red:0.92,green:1,blue:0.69) : Color.clear,in:RoundedRectangle(cornerRadius:15)).frame(maxWidth:360,alignment:.leading)
+     Text(message.text).font(.system(size:13)).lineSpacing(5).fixedSize(horizontal:false,vertical:true).textSelection(.enabled).padding(message.user ? 12 : 3).background(message.user ? Color(red:0.92,green:1,blue:0.69) : Color.clear,in:RoundedRectangle(cornerRadius:15)).frame(maxWidth:360,alignment:.leading)
      if !message.user{Spacer(minLength:10)}
     }.id(message.id)
    }
