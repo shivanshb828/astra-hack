@@ -19,9 +19,12 @@ explicit millimetre deltas.
 
 from __future__ import annotations
 
+import json
 import math
 import os
 import re
+import urllib.error
+import urllib.request
 import uuid
 from typing import Any
 
@@ -124,6 +127,184 @@ def _move_away(
     }
 
 
+def _component_payload(design: DesignState, parts_index: dict[str, Any]) -> list[dict[str, Any]]:
+    payload = []
+    for comp in design.components:
+        part = parts_index.get(comp.part_id)
+        payload.append(
+            {
+                "ref": comp.ref,
+                "part_id": comp.part_id,
+                "kicad_ref": comp.kicad_ref,
+                "position_mm": [comp.pos_mm[0], comp.pos_mm[1]],
+                "rotation_deg": comp.normalised_rotation(),
+                "category": getattr(part, "category", "unknown") if part else "unknown",
+                "name": getattr(part, "name", comp.part_id) if part else comp.part_id,
+                "size_mm": [
+                    getattr(part, "length_mm", None) if part else None,
+                    getattr(part, "width_mm", None) if part else None,
+                    getattr(part, "height_mm", None) if part else None,
+                ],
+                "flags": {
+                    "heat_source": bool(getattr(part, "heat_source", False)) if part else False,
+                    "noise_source": bool(getattr(part, "noise_source", False)) if part else False,
+                    "skin_contact": bool(getattr(part, "skin_contact", False)) if part else False,
+                    "sensitivity": getattr(part, "sensitivity", "none") if part else "none",
+                },
+            }
+        )
+    return payload
+
+
+def _extract_response_text(payload: dict[str, Any]) -> str:
+    if isinstance(payload.get("output_text"), str):
+        return payload["output_text"]
+    chunks: list[str] = []
+    for item in payload.get("output", []):
+        for content in item.get("content", []):
+            if content.get("type") in {"output_text", "text"} and isinstance(content.get("text"), str):
+                chunks.append(content["text"])
+    return "\n".join(chunks)
+
+
+def _json_from_text(text: str) -> dict[str, Any]:
+    text = text.strip()
+    if text.startswith("```"):
+        text = re.sub(r"^```(?:json)?\s*", "", text)
+        text = re.sub(r"\s*```$", "", text)
+    return json.loads(text)
+
+
+def _normalise_provider_change(
+    change: dict[str, Any],
+    design: DesignState,
+) -> dict[str, Any]:
+    ref = str(change.get("ref", "")).strip()
+    comp = design.component(ref) if ref else None
+    if comp is None:
+        raise ValueError(f"model proposed unknown component ref: {ref!r}")
+
+    field = change.get("field", "pos_mm")
+    if field == "pos_mm":
+        after = change.get("after")
+        if (
+            not isinstance(after, list)
+            or len(after) != 2
+            or not all(isinstance(v, (int, float)) for v in after)
+        ):
+            raise ValueError(f"model proposed invalid pos_mm for {ref}")
+        return {
+            "ref": ref,
+            "field": "pos_mm",
+            "before": [round(comp.pos_mm[0], 3), round(comp.pos_mm[1], 3)],
+            "after": [round(float(after[0]), 3), round(float(after[1]), 3)],
+        }
+    if field == "rotation_deg":
+        after = change.get("after")
+        if not isinstance(after, (int, float)):
+            raise ValueError(f"model proposed invalid rotation_deg for {ref}")
+        return {
+            "ref": ref,
+            "field": "rotation_deg",
+            "before": comp.normalised_rotation(),
+            "after": int(round(float(after) / 90.0)) * 90 % 360,
+        }
+    raise ValueError(f"model proposed unsupported field: {field!r}")
+
+
+def _provider_interpret(
+    message: str,
+    design: DesignState,
+    parts_index: dict[str, Any],
+) -> dict[str, Any]:
+    key = os.environ.get("ASTRA_API_KEY") or os.environ.get("MISSIONPCB_MODEL_API_KEY")
+    endpoint = os.environ.get("ASTRA_ENDPOINT") or os.environ.get("MISSIONPCB_MODEL_ENDPOINT")
+    if not key or not endpoint:
+        raise RuntimeError("model provider is not configured")
+
+    model = os.environ.get("ASTRA_MODEL") or os.environ.get("MISSIONPCB_MODEL") or "gpt-5-mini"
+    context = {
+        "design_id": design.design_id,
+        "revision": design.revision,
+        "board_units": "mm",
+        "components": _component_payload(design, parts_index),
+        "supported_actions": [
+            {"field": "pos_mm", "after": "[x_mm, y_mm]"},
+            {"field": "rotation_deg", "after": "0|90|180|270"},
+        ],
+    }
+    system = (
+        "You are Astra, an AI electrical engineer controlling KiCad through a safe "
+        "proposal interface. Return strict JSON only. Do not invent component refs. "
+        "If the user asks for a board manipulation, produce at most two validated "
+        "changes. If more information is needed, set needs_clarification true. "
+        "Schema: {\"reply\": string, \"needs_clarification\": boolean, "
+        "\"considerations\": string[], \"proposal\": null | {\"explanation\": string, "
+        "\"changes\": [{\"ref\": string, \"field\": \"pos_mm\"|\"rotation_deg\", "
+        "\"after\": number[]|number}]}}."
+    )
+    req_payload = {
+        "model": model,
+        "input": [
+            {"role": "system", "content": system},
+            {
+                "role": "user",
+                "content": json.dumps(
+                    {"user_message": message, "current_design": context},
+                    separators=(",", ":"),
+                ),
+            },
+        ],
+    }
+    request = urllib.request.Request(
+        endpoint,
+        data=json.dumps(req_payload).encode("utf-8"),
+        headers={
+            "Authorization": f"Bearer {key}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=25) as response:
+            raw = json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"model provider HTTP {exc.code}: {detail[:240]}") from exc
+    except urllib.error.URLError as exc:
+        raise RuntimeError(f"model provider unavailable: {exc}") from exc
+
+    parsed = _json_from_text(_extract_response_text(raw))
+    out: dict[str, Any] = {
+        "mode": "provider",
+        "provider_label": "Configured model provider",
+        "needs_clarification": bool(parsed.get("needs_clarification", False)),
+        "reply": str(parsed.get("reply") or "Astra returned a proposal."),
+        "considerations": parsed.get("considerations", []),
+        "raw_response_id": raw.get("id"),
+    }
+    proposal = parsed.get("proposal")
+    if proposal and isinstance(proposal, dict):
+        changes = [
+            _normalise_provider_change(change, design)
+            for change in proposal.get("changes", [])
+            if isinstance(change, dict)
+        ][:2]
+        if changes:
+            out["proposal"] = {
+                "proposal_id": uuid.uuid4().hex,
+                "design_id": design.design_id,
+                "base_revision": design.revision,
+                "status": "pending",
+                "user_request": message,
+                "explanation": str(proposal.get("explanation") or out["reply"]),
+                "changes": changes,
+                "component_refs": sorted({change["ref"] for change in changes}),
+                "native_tool": "kicad",
+            }
+    return out
+
+
 def interpret(
     message: str, design: DesignState, parts_index: dict[str, Any]
 ) -> dict[str, Any]:
@@ -137,6 +318,15 @@ def interpret(
     text = message.strip()
     lowered = text.lower()
     base = {"mode": status["mode"], "provider_label": status["label"]}
+
+    if status["mode"] == "provider":
+        try:
+            return _provider_interpret(text, design, parts_index)
+        except Exception as exc:
+            base = {
+                "mode": "provider_error",
+                "provider_label": f"Model provider failed; local fallback used: {exc}",
+            }
 
     # "move <a> <n> mm (farther|away) from <b>"
     match = re.search(

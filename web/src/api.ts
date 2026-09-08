@@ -103,4 +103,26 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ board: '' }),
     }),
+
+  kicadFootprints: () =>
+    req<{
+      board: string
+      footprints: { ref: string; position_mm: [number, number]; rotation_deg: number }[]
+    }>('/api/kicad/footprints'),
+
+  moveKicadFootprint: (ref: string, xMm: number, yMm: number, rotationDeg?: number) =>
+    req<{
+      changed: boolean
+      ref: string
+      before: { position_mm: [number, number]; rotation_deg: number }
+      after: { position_mm: [number, number]; rotation_deg: number }
+    }>('/api/kicad/footprints/move', {
+      method: 'POST',
+      body: JSON.stringify({
+        ref,
+        x_mm: xMm,
+        y_mm: yMm,
+        rotation_deg: rotationDeg,
+      }),
+    }),
 }
