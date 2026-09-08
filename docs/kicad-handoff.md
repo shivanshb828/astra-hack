@@ -1,3 +1,7 @@
+# Current direction (user updated)
+
+The user authorized a new, separate MissionPCB KiCad board and a cached ECG demo. Current instructions and run steps: `missionpcb_kicad/README.md`. The older direction below is historical and superseded. Hypnos remains untouched.
+
 # One working Blender scene; KiCad component import support
 
 Working Blender scene: `missionpcb_blender_demo/component_pass/missionpcb_three_cad_components.blend`.

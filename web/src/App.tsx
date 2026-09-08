@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Viewport from './Viewport'
+import { attentionRefs } from './attention'
 import { api } from './api'
 import {
   METHOD_LABEL,
@@ -29,19 +30,23 @@ export default function App() {
   const [parts, setParts] = useState<Record<string, PartInfo>>({})
   const [integrations, setIntegrations] = useState<Integrations | null>(null)
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null)
+  const [dragging, setDragging] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [catalog, setCatalog] = useState<any[]>([])
+  const [catalogId, setCatalogId] = useState('ads1292r')
   const [stale, setStale] = useState(false)
   const [analysing, setAnalysing] = useState(false)
   const [history, setHistory] = useState<HistoryEvent[]>([])
   const [selected, setSelected] = useState<string | null>(null)
   const [focusedCheck, setFocusedCheck] = useState<string | null>(null)
-  const [rightTab, setRightTab] = useState<'component' | 'issue'>('component')
+  const [rightTab, setRightTab] = useState<'component' | 'issue' | 'library'>('component')
   const [drawer, setDrawer] = useState<'chat' | 'history' | null>('chat')
   const [chatLog, setChatLog] = useState<
     { role: 'user' | 'app'; text: string; outcome?: ChatOutcome }[]
   >([])
   const [chatInput, setChatInput] = useState('')
   const [banner, setBanner] = useState<string | null>(null)
-  const [statusFilter, setStatusFilter] = useState<Status | 'all'>('all')
+  const [statusFilter, setStatusFilter] = useState<Status | 'all' | 'attention'>('attention')
   const [leftOpen, setLeftOpen] = useState(true)
   const [rightOpen, setRightOpen] = useState(true)
 
@@ -78,15 +83,17 @@ export default function App() {
 
   useEffect(() => {
     ;(async () => {
-      const [d, p, i] = await Promise.all([
+      const [d, p, i, catalogData] = await Promise.all([
         api.design(),
         api.parts(),
         api.integrations(),
+        fetch('/api/catalog').then(r => { if (!r.ok) throw new Error('Catalog unavailable'); return r.json() }),
       ])
       setDesign(d.design)
       newestRevision.current = d.design.revision
       setParts(p.parts)
       setIntegrations(i)
+      setCatalog(catalogData.records)
       await loadAnalysis()
       await refreshHistory()
     })().catch((e) => setBanner(`Failed to load: ${e.message}`))
@@ -96,6 +103,7 @@ export default function App() {
   const pollJob = useCallback(
     async (jobId: string) => {
       setAnalysing(true)
+      try {
       for (let i = 0; i < 60; i++) {
         const job = await api.job(jobId)
         if (job.status === 'done' && job.result) {
@@ -113,7 +121,9 @@ export default function App() {
         }
         await new Promise((r) => setTimeout(r, 250))
       }
-      setAnalysing(false)
+      setBanner('Analysis is still pending. Click Analyze to retry.')
+      } catch (e: any) { setBanner(`Analysis failed: ${e.message}`) }
+      finally { setAnalysing(false) }
     },
     [],
   )
@@ -124,7 +134,9 @@ export default function App() {
       source: string,
       summary: string,
     ) => {
-      if (!design) return
+      if (!design || saving) return
+      setSaving(true)
+      setStale(true)
       try {
         const res = await api.edit(design.revision, changes, source, summary)
         setDesign(res.design)
@@ -145,14 +157,16 @@ export default function App() {
         } else {
           setBanner(`Edit failed: ${JSON.stringify(e.detail ?? e.message)}`)
         }
-      }
+      } finally { setSaving(false) }
     },
-    [design, pollJob, refreshHistory, loadAnalysis],
+    [design, saving, pollJob, refreshHistory, loadAnalysis],
   )
 
   const runAnalysis = useCallback(async () => {
-    const job = await api.analyze()
-    await pollJob(job.job_id)
+    try {
+      const job = await api.analyze()
+      await pollJob(job.job_id)
+    } catch (e: any) { setBanner(`Could not start analysis: ${e.message}`) }
   }, [pollJob])
 
   const doUndo = async () => {
@@ -180,7 +194,7 @@ export default function App() {
   }
 
   const doRestore = async (revision: number) => {
-    if (!design) return
+  if (!design) return
     const r = await api.restore(revision, design.revision)
     setDesign(r.design)
     newestRevision.current = r.design.revision
@@ -224,13 +238,17 @@ export default function App() {
   const visibleChecks = useMemo(() => {
     const order: Status[] = ['fail', 'warning', 'unknown', 'not_applicable', 'pass']
     return checks
-      .filter((c) => statusFilter === 'all' || c.status === statusFilter)
+      .filter((c) => statusFilter === 'all' || (statusFilter === 'attention' ? ['fail', 'warning', 'unknown', 'not_applicable'].includes(c.status) : c.status === statusFilter))
       .sort((a, b) => order.indexOf(a.status) - order.indexOf(b.status))
   }, [checks, statusFilter])
 
   const selectedComp = design?.components.find((c) => c.ref === selected) ?? null
   const selectedPart = selectedComp ? parts[selectedComp.part_id] : null
   const selectedCheck = checks.find((c) => c.check_id === focusedCheck) ?? null
+
+    const unchecked = stale || dragging || saving || !analysis || analysis.design_revision !== design?.revision
+  const attention = attentionRefs(analysis, unchecked, null)
+  const catalogRecord = catalog.find(c => c.id === catalogId)
 
   if (!design) return <div className="boot">Loading MissionPCB…</div>
 
@@ -242,11 +260,10 @@ export default function App() {
           <span className="muted">{design.name || design.design_id}</span>
         </div>
         <div className="chip">rev {design.revision}</div>
-        <div className={`chip ${stale ? 'warn' : 'ok'}`}>
-          {stale ? '! analysis stale' : '✓ analysis current'}
+        <div role="status" aria-live="polite" className={`chip ${unchecked || analysing ? 'warn' : 'ok'}`}>
+          {dragging ? 'Moving · release to check' : saving || analysing ? '⟳ Checking placement…' : unchecked ? '? Unchecked · run analysis' : `Checked r${analysis?.design_revision}`}
         </div>
-        {analysing && <div className="chip">· running</div>}
-        <div className="counts">
+        <div className="counts" style={{ opacity: unchecked ? 0.4 : 1 }} title={unchecked ? "Previous results; current placement is unchecked" : "Current check results"}>
           {(['fail', 'warning', 'unknown', 'not_applicable', 'pass'] as Status[])
             .filter((s) => counts[s])
             .map((s) => (
@@ -256,7 +273,7 @@ export default function App() {
             ))}
         </div>
         <div className="spacer" />
-        <button onClick={runAnalysis} disabled={analysing}>Analyze</button>
+        <button onClick={runAnalysis} disabled={analysing || saving || dragging}>Analyze</button>
         <button onClick={doUndo}>Undo</button>
         <button onClick={doRedo}>Redo</button>
         <a className="btn" href="/api/design/export">Export</a>
@@ -280,9 +297,7 @@ export default function App() {
                 <ul className="list">
                   {design.components.map((c) => {
                     const p = parts[c.part_id]
-                    const bad = checks.some(
-                      (k) => k.status === 'fail' && k.component_refs.includes(c.ref),
-                    )
+                    const bad = attention.has(c.ref)
                     return (
                       <li
                         key={c.ref}
@@ -303,16 +318,17 @@ export default function App() {
               </section>
 
               <section>
-                <h3>Issues</h3>
+                <h3>Needs attention</h3>
+                {unchecked && <p className="hint">Results below are from the previous check. Overlays are hidden until this placement is checked.</p>}
                 <div className="filters">
-                  {(['all', 'fail', 'warning', 'unknown', 'not_applicable', 'pass'] as const).map(
+                  {(['attention', 'all', 'fail', 'warning', 'unknown', 'not_applicable', 'pass'] as const).map(
                     (s) => (
                       <button
                         key={s}
                         className={statusFilter === s ? 'on' : ''}
-                        onClick={() => setStatusFilter(s as Status | 'all')}
+                        onClick={() => setStatusFilter(s)}
                       >
-                        {s === 'all' ? 'All' : STATUS_LABEL[s as Status]}
+                        {s === 'attention' ? 'Needs attention' : s === 'all' ? 'All' : STATUS_LABEL[s as Status]}
                       </button>
                     ),
                   )}
@@ -395,18 +411,19 @@ export default function App() {
             </label>
           </div>
 
+          <div className="floatnote" style={{ top: 48, bottom: 'auto' }}>Drag a part to move · drop to recheck · orange = needs attention</div>
           <Viewport
             design={design}
             parts={parts}
             analysis={analysis}
-            analysisStale={stale}
+            analysisStale={unchecked}
             selected={selected}
             focusedCheck={focusedCheck}
             onSelect={(r) => {
               setSelected(r)
               if (r) setRightTab('component')
             }}
-            onDragStart={() => setStale(true)}
+            onDragState={setDragging}
             onDragEnd={(ref, pos) =>
               commitEdit(
                 [{ ref, field: 'pos_mm', after: pos }],
@@ -449,7 +466,22 @@ export default function App() {
                 >
                   Issue
                 </button>
+                <button className={rightTab === 'library' ? 'on' : ''} onClick={() => setRightTab('library')}>Library ({catalog.length})</button>
               </div>
+
+              {rightTab === 'library' && <div className="pane">
+                <h3>Catalog facts</h3>
+                <p className="hint">Aayush’s checked-in records, including conditions and citations. These are reference parts; the current board uses demo footprints.</p>
+                <select aria-label="Catalog part" value={catalogId} onChange={e => setCatalogId(e.target.value)} style={{ width: '100%' }}>
+                  {catalog.map(c => <option key={c.id} value={c.id}>{c.mpn} · {c.role}</option>)}
+                </select>
+                {catalogRecord && <>
+                  <p>{catalogRecord.manufacturer} · {catalogRecord.review_status}</p>
+                  <a href={catalogRecord.datasheet_url} target="_blank" rel="noreferrer">Source datasheet</a>
+                  <pre style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', fontSize: 12 }}>{catalogRecord.summary}</pre>
+                  <details><summary>Complete source record</summary><pre style={{ whiteSpace: 'pre-wrap', overflowWrap: 'anywhere', fontSize: 11 }}>{JSON.stringify(catalogRecord.facts, null, 2)}</pre></details>
+                </>}
+              </div>}
 
               {rightTab === 'component' && (
                 <div className="pane">
@@ -467,7 +499,7 @@ export default function App() {
                             ? `${selectedPart.length_mm} × ${selectedPart.width_mm} × ${selectedPart.height_mm} mm`
                             : 'unknown'}
                           <div className="hint">
-                            From the parts catalogue. Moving a part never changes this.
+                            Demo geometry dimensions. Manufacturer facts are in Library; exact part assignment is still required.
                           </div>
                         </dd>
                         <dt>Flags</dt>
@@ -571,7 +603,7 @@ export default function App() {
                 }}>
                   Re-export from Blender
                 </button>
-                <img className="render" src="/api/blender/render.png" alt="Latest Blender render of the current design" />
+
                 <div className="hint">Blender render of the exported revision.</div>
               </div>
             </>

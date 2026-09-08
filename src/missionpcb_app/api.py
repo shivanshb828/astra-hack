@@ -22,6 +22,7 @@ from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, Field
 
 from constraint_engine import load_parts
+from mission_advisor.catalog import load_catalog, render_part
 
 from . import chat as chat_mod
 from . import integrations
@@ -162,6 +163,27 @@ def parts() -> dict[str, Any]:
             }
             for pid, p in parts_index.items()
         },
+    }
+
+
+@app.get("/api/catalog")
+def catalog() -> dict[str, Any]:
+    """Expose the team's checked-in facts without discarding their conditions.
+
+    These are library records, not an assertion that the demo's generic
+    footprints have been replaced by these exact manufacturer packages.
+    """
+    records = load_catalog(os.path.join(REPO_ROOT, "parts", "catalog"))
+    return {
+        "source": "parts/catalog",
+        "placement_basis": "Demo placements still use parts/ecg-patch-parts.json; catalog records are not automatically assigned.",
+        "records": [
+            {"id": r.id, "mpn": r.mpn, "manufacturer": r.manufacturer,
+             "role": r.role, "review_status": r.review_status,
+             "datasheet_url": r.datasheet_url, "summary": render_part(r),
+             "facts": r.raw}
+            for r in records
+        ],
     }
 
 

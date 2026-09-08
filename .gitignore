@@ -57,3 +57,12 @@ missionpcb_review/exchange/
 *.lck
 
 missionpcb_blender_demo/kicad_bridge/runtime/
+
+# Local build outputs and editor recovery files
+web/dist/
+web/tsconfig.tsbuildinfo
+missionpcb_kicad/.history/
+missionpcb_kicad/exports/*.bak
+missionpcb_blender_demo/kicad_bridge/before_live_test.json
+missionpcb_blender_demo/kicad_bridge/connection_verification.json
+missionpcb_blender_demo/kicad_bridge/live_verification.json

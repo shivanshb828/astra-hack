@@ -16,16 +16,7 @@ const questions = [
   },
 ];
 
-const parts = [
-  { id: "ELEC_A", label: "E1", type: "electrode", x: 10, y: 15, w: 6, h: 6 },
-  { id: "ELEC_B", label: "E2", type: "electrode", x: 26, y: 15, w: 6, h: 6 },
-  { id: "AFE", label: "AFE", type: "sensor", x: 34, y: 15, w: 5, h: 5 },
-  { id: "REG", label: "REG", type: "power", x: 44, y: 15, w: 3, h: 3 },
-  { id: "MCU", label: "MCU", type: "digital", x: 43, y: 24, w: 6, h: 6 },
-  { id: "LIPO", label: "CELL", type: "battery", x: 62, y: 15, w: 30, h: 16 },
-  { id: "ANT", label: "ANT", type: "rf", x: 85, y: 24, w: 3.2, h: 1.6 },
-  { id: "CHARGE", label: "PAD", type: "connector", x: 86, y: 8, w: 8, h: 4 },
-];
+const parts = [{"id": "MCU", "label": "MSP430FR2433", "type": "sensor", "x": 36.0, "y": 9.0, "w": 4.0, "h": 4.0}, {"id": "Sensor", "label": "ADS1292R", "type": "sensor", "x": 41.0, "y": 19.0, "w": 4.0, "h": 4.0}, {"id": "RF", "label": "MDBT42Q-512KV2", "type": "sensor", "x": 16.0, "y": 28.0, "w": 16.0, "h": 10.0}, {"id": "Regulator", "label": "TPS62740", "type": "sensor", "x": 31.0, "y": 29.0, "w": 2.0, "h": 1.975}, {"id": "Driver", "label": "MCP73831", "type": "sensor", "x": 54.0, "y": 15.0, "w": 2.8, "h": 2.9}, {"id": "Battery", "label": "BM02B-SRSS-TB", "type": "sensor", "x": 8.0, "y": 8.0, "w": 4.0, "h": 3.6}];
 
 const constraintStyles = {
   thermal: { label: "Thermal", color: "#d33b2f", fill: "rgba(211,59,47,0.16)" },
@@ -35,188 +26,7 @@ const constraintStyles = {
   safety: { label: "Safety", color: "#16824a", fill: "rgba(22,130,74,0.14)" },
 };
 
-const revisions = [
-  {
-    title: "Naive placement",
-    stage: "Review",
-    summary: { pass: 21, fail: 6 },
-    note: "I placed the board by schematic convenience. Now I am checking the mission constraints.",
-    placements: {
-      ELEC_A: [10, 15],
-      ELEC_B: [26, 15],
-      AFE: [34, 15],
-      REG: [44, 15],
-      MCU: [43, 24],
-      LIPO: [62, 15],
-      ANT: [85, 24],
-      CHARGE: [86, 8],
-    },
-    findings: [
-      {
-        id: "thermal-afe",
-        category: "thermal",
-        status: "fail",
-        title: "Heat reaches ECG front end",
-        target: ["REG", "AFE"],
-        message: "Regulator thermal zone overlaps the 24-bit analog front end.",
-        action: "Move sensing away from sustained heat.",
-      },
-      {
-        id: "rf-keepout",
-        category: "radiated",
-        status: "fail",
-        title: "Antenna keep-out obstructed",
-        target: ["ANT"],
-        message: "Charge trace crosses the 2.4 GHz antenna clearance volume.",
-        action: "Rotate antenna toward free space and reroute charge.",
-      },
-      {
-        id: "access",
-        category: "mechanical",
-        status: "fail",
-        title: "Charge pads miss enclosure window",
-        target: ["CHARGE"],
-        message: "The sealed shell leaves only one reachable charge opening.",
-        action: "Move pads to the rear access edge.",
-      },
-      {
-        id: "cell-headroom",
-        category: "mechanical",
-        status: "fail",
-        title: "Cell exceeds enclosure headroom",
-        target: ["LIPO"],
-        message: "Advisor found varta_cp1254 is 5.6 mm max, but the enclosure allows 4.0 mm.",
-        action: "Flag BOM fiction and source a real pilot-safe cell.",
-      },
-      {
-        id: "charger-gap",
-        category: "safety",
-        status: "fail",
-        title: "Charging path is not pilot-ready",
-        target: ["LIPO", "CHARGE"],
-        message: "No charger or battery protection module is present in the demo BOM.",
-        action: "Add charger/protection alternatives before export.",
-      },
-      {
-        id: "rail-architecture",
-        category: "conducted",
-        status: "fail",
-        title: "3.3 V rail loses margin",
-        target: ["REG", "LIPO"],
-        message: "tps62740 cannot hold 3.3 V once the cell falls below about 4.0 V.",
-        action: "Compare tps63020 or another buck-boost option.",
-      },
-    ],
-  },
-  {
-    title: "Revision 1",
-    stage: "Revising",
-    summary: { pass: 24, fail: 3 },
-    note: "I separated heat from sensing and aligned charging. The RF keep-out still needs attention.",
-    placements: {
-      ELEC_A: [72, 15],
-      ELEC_B: [35, 24],
-      AFE: [47, 5],
-      REG: [26, 5],
-      MCU: [19, 10],
-      LIPO: [53, 15],
-      ANT: [82, 24],
-      CHARGE: [12, 15],
-    },
-    findings: [
-      {
-        id: "thermal-afe",
-        category: "thermal",
-        status: "pass",
-        title: "Heat separated from sensing",
-        target: ["REG", "AFE"],
-        message: "The front end is outside the regulator heat zone.",
-        action: "Keep analog island isolated.",
-      },
-      {
-        id: "rf-keepout",
-        category: "radiated",
-        status: "fail",
-        title: "Antenna keep-out still tight",
-        target: ["ANT"],
-        message: "The keep-out faces crowded board space near the cell.",
-        action: "Put the antenna on an exposed edge.",
-      },
-      {
-        id: "cell-headroom",
-        category: "mechanical",
-        status: "fail",
-        title: "Battery height still blocks build",
-        target: ["LIPO"],
-        message: "Moving the cell does not fix the 1.6 mm enclosure interference.",
-        action: "Swap part or thicken enclosure before pilot.",
-      },
-      {
-        id: "charger-gap",
-        category: "safety",
-        status: "fail",
-        title: "Charging protection unresolved",
-        target: ["LIPO", "CHARGE"],
-        message: "Advisor recommends bq24040 over mcp73831 for thermal pad and TS pin.",
-        action: "Ask human to approve charger role change.",
-      },
-    ],
-  },
-  {
-    title: "MissionPCB layout",
-    stage: "Ready",
-    summary: { pass: 26, fail: 0 },
-    note: "The layout now clears the mission-critical constraints and preserves service access.",
-    placements: {
-      ELEC_A: [71, 15],
-      ELEC_B: [34, 24.5],
-      AFE: [46, 4],
-      REG: [26, 5],
-      MCU: [19.5, 10],
-      LIPO: [52.5, 15],
-      ANT: [46.1, 24.6],
-      CHARGE: [12, 15],
-    },
-    findings: [
-      {
-        id: "thermal-afe",
-        category: "thermal",
-        status: "pass",
-        title: "Heat clear",
-        target: ["REG", "AFE"],
-        message: "ECG sensing is outside the heat zone.",
-        action: "Ready for thermal bench validation.",
-      },
-      {
-        id: "rf-keepout",
-        category: "radiated",
-        status: "pass",
-        title: "RF keep-out clear",
-        target: ["ANT"],
-        message: "The antenna faces free space and the charge path avoids it.",
-        action: "Ready for link-margin validation.",
-      },
-      {
-        id: "access",
-        category: "mechanical",
-        status: "pass",
-        title: "Charge access aligned",
-        target: ["CHARGE"],
-        message: "Pogo pads register with the sealed charge window.",
-        action: "Export model package.",
-      },
-      {
-        id: "bom-advisor",
-        category: "safety",
-        status: "pass",
-        title: "Pilot blockers elevated",
-        target: ["LIPO", "REG"],
-        message: "Advisor records CP1254 certification, charger, protection, and buck-boost choices as open decisions.",
-        action: "Export BOM review with citations.",
-      },
-    ],
-  },
-];
+const revisions = [{"title": "Initial placement", "stage": "Review", "summary": {"fail": 5, "skip": 2, "pass": 21}, "note": "Cached replay: Initial placement. No live model call.", "placements": {"MCU": [36.0, 9.0], "Sensor": [41.0, 19.0], "RF": [16.0, 28.0], "Regulator": [31.0, 29.0], "Driver": [54.0, 15.0], "Battery": [8.0, 8.0]}, "findings": [{"id": "mission.afe_MCU", "category": "mechanical", "status": "fail", "title": "afe MCU", "target": ["Sensor", "MCU"], "message": "Sensor and MCU are only 11.18 mm apart, 18 mm required.", "action": "Authored demo clearance; not derived from datasheet physics."}, {"id": "mission.afe_Regulator", "category": "mechanical", "status": "fail", "title": "afe Regulator", "target": ["Sensor", "Regulator"], "message": "Sensor and Regulator are only 14.14 mm apart, 20 mm required.", "action": "Authored demo clearance; not derived from datasheet physics."}, {"id": "zone.heat_overlap::Driver|Sensor", "category": "thermal", "status": "fail", "title": "Sensor is outside the Driver heat zone", "target": ["Driver", "Sensor"], "message": "Sensor reaches 10.82 mm inside the 22 mm thermal zone around Driver.", "action": "Simplified thermal model: a fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field."}, {"id": "zone.heat_overlap::Regulator|RF", "category": "thermal", "status": "fail", "title": "RF is outside the Regulator heat zone", "target": ["Regulator", "RF"], "message": "RF reaches 11.00 mm inside the 18 mm thermal zone around Regulator.", "action": "Simplified thermal model: a fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field."}, {"id": "zone.heat_overlap::Regulator|Sensor", "category": "thermal", "status": "fail", "title": "Sensor is outside the Regulator heat zone", "target": ["Regulator", "Sensor"], "message": "Sensor reaches 6.69 mm inside the 18 mm thermal zone around Regulator.", "action": "Simplified thermal model: a fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field."}, {"id": "access.connector", "category": "mechanical", "status": "unknown", "title": "Connector accessibility", "target": ["Battery"], "message": "The enclosure declares no openings, so accessibility could not be evaluated.", "action": "Requires at least one entry in enclosure.openings."}, {"id": "coverage.unmodeled", "category": "mechanical", "status": "unknown", "title": "Patient / battery / routing coverage", "target": [], "message": "Coverage gap: under-board battery, patient contacts, copper paths and top-entry mating are not checked by this bridge.", "action": "Coverage remains incomplete."}]}, {"title": "Proposed improvement", "stage": "Proposal", "summary": {"fail": 5, "skip": 2, "pass": 21}, "note": "Cached replay: Proposed improvement. No live model call.", "placements": {"MCU": [36.0, 9.0], "Sensor": [41.0, 19.0], "RF": [16.0, 28.0], "Regulator": [31.0, 29.0], "Driver": [54.0, 15.0], "Battery": [8.0, 8.0]}, "findings": [{"id": "mission.afe_MCU", "category": "mechanical", "status": "fail", "title": "afe MCU", "target": ["Sensor", "MCU"], "message": "Sensor and MCU are only 11.18 mm apart, 18 mm required.", "action": "Authored demo clearance; not derived from datasheet physics."}, {"id": "mission.afe_Regulator", "category": "mechanical", "status": "fail", "title": "afe Regulator", "target": ["Sensor", "Regulator"], "message": "Sensor and Regulator are only 14.14 mm apart, 20 mm required.", "action": "Authored demo clearance; not derived from datasheet physics."}, {"id": "zone.heat_overlap::Driver|Sensor", "category": "thermal", "status": "fail", "title": "Sensor is outside the Driver heat zone", "target": ["Driver", "Sensor"], "message": "Sensor reaches 10.82 mm inside the 22 mm thermal zone around Driver.", "action": "Simplified thermal model: a fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field."}, {"id": "zone.heat_overlap::Regulator|RF", "category": "thermal", "status": "fail", "title": "RF is outside the Regulator heat zone", "target": ["Regulator", "RF"], "message": "RF reaches 11.00 mm inside the 18 mm thermal zone around Regulator.", "action": "Simplified thermal model: a fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field."}, {"id": "zone.heat_overlap::Regulator|Sensor", "category": "thermal", "status": "fail", "title": "Sensor is outside the Regulator heat zone", "target": ["Regulator", "Sensor"], "message": "Sensor reaches 6.69 mm inside the 18 mm thermal zone around Regulator.", "action": "Simplified thermal model: a fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field."}, {"id": "access.connector", "category": "mechanical", "status": "unknown", "title": "Connector accessibility", "target": ["Battery"], "message": "The enclosure declares no openings, so accessibility could not be evaluated.", "action": "Requires at least one entry in enclosure.openings."}, {"id": "coverage.unmodeled", "category": "mechanical", "status": "unknown", "title": "Patient / battery / routing coverage", "target": [], "message": "Coverage gap: under-board battery, patient contacts, copper paths and top-entry mating are not checked by this bridge.", "action": "Coverage remains incomplete."}]}, {"title": "Improved placement", "stage": "Compare", "summary": {"fail": 0, "skip": 2, "pass": 26}, "note": "Cached replay: Improved placement. No live model call.", "placements": {"MCU": [48.0, 8.0], "Sensor": [34.0, 23.0], "RF": [9.0, 29.0], "Regulator": [65.0, 28.0], "Driver": [63.0, 9.0], "Battery": [66.0, 19.0]}, "findings": [{"id": "access.connector", "category": "mechanical", "status": "unknown", "title": "Connector accessibility", "target": ["Battery"], "message": "The enclosure declares no openings, so accessibility could not be evaluated.", "action": "Requires at least one entry in enclosure.openings."}, {"id": "coverage.unmodeled", "category": "mechanical", "status": "unknown", "title": "Patient / battery / routing coverage", "target": [], "message": "Coverage gap: under-board battery, patient contacts, copper paths and top-entry mating are not checked by this bridge.", "action": "Coverage remains incomplete."}]}];
 
 const considerations = [
   ["Skin contact", "Worn continuously, so heat near electrodes becomes a patient-safety constraint."],
@@ -350,7 +160,7 @@ function renderFindings(api) {
     node.className = `finding ${finding.status}`;
     node.type = "button";
     const style = constraintStyles[finding.category] || constraintStyles.safety;
-    node.innerHTML = `<div class="finding-heading"><span class="category-dot" style="background:${style.color}"></span><strong>${finding.title}</strong></div><div class="finding-meta">${style.label} constraint</div><div class="muted">${finding.message}</div><div class="muted">${finding.action}</div>`;
+    node.innerHTML = `<div class="finding-heading"><span class="category-dot" style="background:${style.color}"></span><strong>${(finding.status === "fail" ? (finding.id === "mission.afe_MCU" ? "ECG front end is too close to MCU" : finding.id === "mission.afe_Regulator" ? "Switching regulator is too close" : "Heat clearance needs attention") : "Coverage still incomplete")}</strong></div><div class="finding-meta">${style.label} constraint</div><div class="muted">${finding.message}</div><div class="muted">${finding.action}</div>`;
     node.addEventListener("click", () => {
       state.selectedFinding = finding.id;
       state.selectedPart = finding.target[0];
@@ -525,6 +335,7 @@ function partColor(type) {
 }
 
 function drawScene(scene, api) {
+  window.dispatchEvent(new CustomEvent("missionpcb-view", {detail:{revision:state.revision, selected:state.selectedPart, findings:api.findings}}));
   ctx.clearRect(0, 0, els.canvas.width, els.canvas.height);
   hitRegions = [];
 
@@ -1005,11 +816,13 @@ function render() {
   els.revisionSlider.max = String(revisions.length - 1);
   els.revisionSlider.value = String(state.revision);
   els.revisionLabel.textContent = `${revisions[state.revision].title}`;
-  els.verdictLabel.textContent = api.summary.fail === 0 ? "PASS" : `${api.summary.fail} blockers`;
+  els.verdictLabel.textContent = api.summary.fail === 0 ? "0 flags · 2 unchecked" : `${api.summary.fail} blockers`;
   els.verdictLabel.style.color = api.summary.fail === 0 ? "var(--pass)" : "var(--fail)";
   els.selectedLabel.textContent = state.selectedPart ? `Selected ${state.selectedPart}` : "No selection";
-  els.timelineStatus.textContent = `${api.summary.pass} considerations / ${api.summary.fail} blockers`;
+  els.timelineStatus.textContent = `${api.summary.pass} passed · ${api.summary.fail} flagged · 2 unchecked`;
   els.stagePill.textContent = api.stage;
+  els.nextRevision.textContent = state.revision === 0 ? "Review improvement →" : state.revision === 1 ? "Apply cached proposal →" : "Improvement applied ✓";
+  els.nextRevision.disabled = state.revision === 2;
   renderConsiderations(api);
   renderFindings(api);
   renderComments();
@@ -1027,8 +840,8 @@ function runMission() {
   addMessage("ai", "Using recommended answers: continuous patient contact, rechargeable LiPo, patient safety first.");
   setRevision(0);
   if (els.autoMode.checked) {
-    setTimeout(() => setRevision(1), 700);
-    setTimeout(() => setRevision(2), 1400);
+    setTimeout(() => setRevision(1), 3500);
+    setTimeout(() => setRevision(2), 7000);
   }
 }
 

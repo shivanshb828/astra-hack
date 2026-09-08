@@ -26,6 +26,8 @@ gizmos never clutter the web viewport -- the application draws its own labels
 and dashboards as web UI.
 """
 
+import hashlib
+from pathlib import Path
 import argparse
 import json
 import math
@@ -83,7 +85,10 @@ def material(name, rgba, alpha=1.0):
     bsdf.inputs["Base Color"].default_value = rgba
     if alpha < 1.0:
         bsdf.inputs["Alpha"].default_value = alpha
-        mat.blend_method = "BLEND"
+        if hasattr(mat, "surface_render_method"):
+            mat.surface_render_method = "DITHERED"
+        elif hasattr(mat, "blend_method"):
+            mat.blend_method = "BLEND"
     return mat
 
 
@@ -102,6 +107,69 @@ def add_box(name, collection, center_mm, size_mm, rgba, alpha=1.0):
         coll.objects.unlink(obj)
     bpy.data.collections[collection].objects.link(obj)
     return obj
+
+
+# Cached package meshes are visual substitutes for the current generic demo
+# BOM. Never change engine dimensions or claim these are exact assigned MPNs.
+PACKAGE_MODELS = {
+    "afe-ecg-24bit": "QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm.normalized.glb",
+    "mcu-ble-soc": "Texas_RGZ0048A_VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm.normalized.glb",
+    "reg-buck-3v3": "Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm.normalized.glb",
+    "ant-chip-2g4": "Johanson_2450AT18x100.normalized.glb",
+}
+MANIFEST = []
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def package_object(ref, part_id, center_mm, size_mm):
+    filename = PACKAGE_MODELS.get(part_id)
+    source = ROOT / "missionpcb_blender_demo/parts/converted_models" / (filename or "")
+    if not filename or not source.is_file():
+        return None, {"geometry": "fallback_box", "source_file": None,
+                      "note": "No assigned package mesh; uses engine nominal extents."}
+    before = set(bpy.data.objects)
+    try:
+        bpy.ops.import_scene.gltf(filepath=str(source))
+        imported = set(bpy.data.objects) - before
+        meshes = [o for o in imported if o.type == "MESH"]
+        if not meshes:
+            raise ValueError("package contains no meshes")
+        bpy.context.view_layer.update()
+        # Bake each source object's world transform before joining. Imported
+        # normalized assets use millimetres; normalization below is unit-safe.
+        for obj in meshes:
+            obj.data = obj.data.copy()
+            obj.data.transform(obj.matrix_world.copy())
+            obj.parent = None
+            obj.matrix_world.identity()
+        bpy.ops.object.select_all(action="DESELECT")
+        for obj in meshes:
+            obj.select_set(True)
+        bpy.context.view_layer.objects.active = meshes[0]
+        bpy.ops.object.join()
+        obj = bpy.context.active_object
+        coords = [v.co.copy() for v in obj.data.vertices]
+        lo = Vector(tuple(min(v[i] for v in coords) for i in range(3)))
+        hi = Vector(tuple(max(v[i] for v in coords) for i in range(3)))
+        center, extent = (lo + hi) / 2, hi - lo
+        for v in obj.data.vertices:
+            v.co = Vector(tuple((v.co[i] - center[i]) / max(extent[i], 1e-8) * size_mm[i] * MM for i in range(3)))
+        obj.location = Vector(center_mm) * MM
+        obj.name = ref
+        for coll in list(obj.users_collection):
+            coll.objects.unlink(obj)
+        bpy.data.collections[PRODUCT_COLLECTION].objects.link(obj)
+        for other in list(set(bpy.data.objects) - before):
+            if other != obj:
+                bpy.data.objects.remove(other, do_unlink=True)
+        return obj, {"geometry": "package_visual_proxy", "source_file": str(source.relative_to(ROOT)),
+                     "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
+                     "note": "Package CAD resized to generic demo extents; not an exact MPN or pin-compatible assignment."}
+    except Exception as exc:
+        for obj in list(set(bpy.data.objects) - before):
+            bpy.data.objects.remove(obj, do_unlink=True)
+        return None, {"geometry": "fallback_box", "source_file": str(source.relative_to(ROOT)),
+                      "note": f"Package import failed; nominal box used: {exc}"}
 
 
 def build_product(results):
@@ -134,8 +202,17 @@ def build_product(results):
         x, y, z = pos["enclosure_xyz_mm"]
         sx, sy, sz = pos["size_mm"]
         colour = CATEGORY_COLOR.get(pos.get("category"), DEFAULT_COLOR)
-        obj = add_box(ref, PRODUCT_COLLECTION, (x, y, z + sz / 2.0),
-                      (sx, sy, sz), colour)
+        obj, provenance = package_object(ref, pos.get("part_id", ""), (x, y, z + sz / 2), (sx, sy, sz))
+        if obj is None:
+            obj = add_box(ref, PRODUCT_COLLECTION, (x, y, z + sz / 2.0), (sx, sy, sz), colour)
+            # Bake dimensions into mesh coordinates for the browser contract.
+            bpy.context.view_layer.objects.active = obj
+            bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
+        obj["geometry_source"] = provenance.get("source_file") or "nominal_box"
+        obj["approximate"] = True
+        obj["length_mm"], obj["width_mm"], obj["height_mm"] = sx, sy, sz
+        MANIFEST.append({"ref": ref, "part_id": pos.get("part_id", ""), "approximate": True,
+                         "length_mm": sx, "width_mm": sy, "height_mm": sz, **provenance})
 
         # Custom properties travel into the GLB as object extras, so the web
         # client can read engineering flags without a second lookup.
@@ -308,6 +385,9 @@ def main():
         print(f"[blend] {args.blend}")
     if args.glb:
         print(f"[glb] {export_glb(os.path.abspath(args.glb))}")
+        manifest_path = Path(args.glb).with_suffix(".manifest.json")
+        manifest_path.write_text(json.dumps({"source": "blender/build_scene.py", "units": "metres", "axes": "glTF Y-up", "objects": MANIFEST}, indent=2) + "\n")
+        print(f"[manifest] {manifest_path}")
     if args.render:
         print(f"[render] {render_still(os.path.abspath(args.render), args.samples)}")
 

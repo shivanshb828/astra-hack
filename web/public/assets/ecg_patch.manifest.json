@@ -1,0 +1,99 @@
+{
+  "source": "blender/build_scene.py",
+  "units": "metres",
+  "axes": "glTF Y-up",
+  "objects": [
+    {
+      "ref": "CHARGE",
+      "part_id": "con-charge-pogo",
+      "approximate": true,
+      "length_mm": 8.0,
+      "width_mm": 4.0,
+      "height_mm": 1.0,
+      "geometry": "fallback_box",
+      "source_file": null,
+      "note": "No assigned package mesh; uses engine nominal extents."
+    },
+    {
+      "ref": "ELEC_A",
+      "part_id": "elec-snap-agagcl",
+      "approximate": true,
+      "length_mm": 6.0,
+      "width_mm": 6.0,
+      "height_mm": 0.8,
+      "geometry": "fallback_box",
+      "source_file": null,
+      "note": "No assigned package mesh; uses engine nominal extents."
+    },
+    {
+      "ref": "AFE",
+      "part_id": "afe-ecg-24bit",
+      "approximate": true,
+      "length_mm": 5.0,
+      "width_mm": 5.0,
+      "height_mm": 1.0,
+      "geometry": "package_visual_proxy",
+      "source_file": "missionpcb_blender_demo/parts/converted_models/QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm.normalized.glb",
+      "source_sha256": "78aa3702257ec16b3200524c425722ca21f6a651528f8019b224436fc699e236",
+      "note": "Package CAD resized to generic demo extents; not an exact MPN or pin-compatible assignment."
+    },
+    {
+      "ref": "ANT",
+      "part_id": "ant-chip-2g4",
+      "approximate": true,
+      "length_mm": 3.2,
+      "width_mm": 1.6,
+      "height_mm": 1.0,
+      "geometry": "package_visual_proxy",
+      "source_file": "missionpcb_blender_demo/parts/converted_models/Johanson_2450AT18x100.normalized.glb",
+      "source_sha256": "013048be073b377deee19fcb78635300e32cd1357cff606890e2784e592fc8d9",
+      "note": "Package CAD resized to generic demo extents; not an exact MPN or pin-compatible assignment."
+    },
+    {
+      "ref": "LIPO",
+      "part_id": "bat-lipo-150mah",
+      "approximate": true,
+      "length_mm": 30.0,
+      "width_mm": 16.0,
+      "height_mm": 3.2,
+      "geometry": "fallback_box",
+      "source_file": null,
+      "note": "No assigned package mesh; uses engine nominal extents."
+    },
+    {
+      "ref": "MCU",
+      "part_id": "mcu-ble-soc",
+      "approximate": true,
+      "length_mm": 6.0,
+      "width_mm": 6.0,
+      "height_mm": 0.9,
+      "geometry": "package_visual_proxy",
+      "source_file": "missionpcb_blender_demo/parts/converted_models/Texas_RGZ0048A_VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm.normalized.glb",
+      "source_sha256": "41d709977aaeb4c96ee7a75b5e621f4ca3af559688357424653e2853b1be8ce5",
+      "note": "Package CAD resized to generic demo extents; not an exact MPN or pin-compatible assignment."
+    },
+    {
+      "ref": "REG",
+      "part_id": "reg-buck-3v3",
+      "approximate": true,
+      "length_mm": 3.0,
+      "width_mm": 3.0,
+      "height_mm": 1.5,
+      "geometry": "package_visual_proxy",
+      "source_file": "missionpcb_blender_demo/parts/converted_models/Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm.normalized.glb",
+      "source_sha256": "c633ca64d0bd0580a30dfe0b2903ca0da29508f2a6a1c981b8ddb8aa6b8871a2",
+      "note": "Package CAD resized to generic demo extents; not an exact MPN or pin-compatible assignment."
+    },
+    {
+      "ref": "ELEC_B",
+      "part_id": "elec-snap-agagcl",
+      "approximate": true,
+      "length_mm": 6.0,
+      "width_mm": 6.0,
+      "height_mm": 0.8,
+      "geometry": "fallback_box",
+      "source_file": null,
+      "note": "No assigned package mesh; uses engine nominal extents."
+    }
+  ]
+}

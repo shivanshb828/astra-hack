@@ -11,17 +11,12 @@
       <header class="topbar">
         <div class="brand">
           <span class="mark"></span>
-          <span>MissionPCB</span>
+          <span>MissionPCB<span class="brand-sub"> / Design studio</span></span>
         </div>
-        <nav class="topnav" aria-label="Workspace views">
-          <button class="nav-button active" type="button">Design</button>
-          <button class="nav-button" type="button">Constraints</button>
-          <button class="nav-button" type="button">3D model</button>
-          <button class="nav-button" type="button">Report</button>
-        </nav>
+        <div class="demo-status"><span></span> ECG chest patch <small>Cached demo</small></div>
         <div class="top-actions">
           <label class="auto-toggle">
-            <input id="autoMode" type="checkbox" checked>
+            <input id="autoMode" type="checkbox">
             <span>Auto</span>
           </label>
           <button id="exportButton" class="primary-button" type="button">Export</button>
@@ -38,21 +33,21 @@
 
           <section class="panel-section">
             <div class="section-row">
-              <div class="section-label">Fast interview</div>
+              <div class="section-label">Design brief</div>
               <button id="recommendedButton" class="ghost-button" type="button">Use recommended</button>
             </div>
             <div id="interviewList" class="interview-list"></div>
           </section>
 
           <section class="panel-section grow">
-            <div class="section-label">AI electrical engineer</div>
+            <div class="section-label">Activity · cached replay</div>
             <div id="chatLog" class="chat-log"></div>
           </section>
         </aside>
 
         <section class="canvas-stage">
           <div class="stage-toolbar" aria-label="Editor tools">
-            <div class="viewer-title">3D Viewer</div>
+            <div class="viewer-title">ECG–01 <span> / Placement study</span></div>
             <button class="tool-button active" type="button" data-tool="select" title="Select">SEL</button>
             <button class="tool-button" type="button" data-tool="move" title="Move">MOV</button>
             <button class="tool-button" type="button" data-tool="highlight" title="Highlight">HLT</button>
@@ -72,7 +67,7 @@
           </div>
 
           <div class="viewport kicad-viewport">
-            <canvas id="modelCanvas" width="1180" height="760"></canvas>
+            <div id="cadViewport"></div><canvas id="modelCanvas" width="1180" height="760"></canvas>
             <div class="constraint-strip" aria-label="Constraint overlay modes">
               <button class="constraint-chip active" type="button" data-layer="all">All</button>
               <button class="constraint-chip" type="button" data-layer="thermal">Thermal</button>
@@ -110,14 +105,14 @@
         <aside class="inspector-panel">
           <section class="panel-section">
             <div class="section-row">
-              <div class="section-label">Considerations</div>
+              <div class="section-label">Mission context</div>
               <span id="stagePill" class="pill">Intake</span>
             </div>
             <div id="considerations" class="considerations"></div>
           </section>
 
           <section class="panel-section">
-            <div class="section-label">Constraint findings</div>
+            <div class="section-label">Design review</div>
             <div id="findings" class="findings"></div>
           </section>
 
@@ -135,10 +130,10 @@
     <div id="exportMenu" class="export-menu hidden" role="menu">
       <button type="button" data-export="state">Design JSON</button>
       <button type="button" data-export="report">Validation report</button>
-      <button type="button" data-export="model">3D model package</button>
-      <button type="button" data-export="snapshot">Viewport snapshot</button>
+
+
     </div>
 
-    <script src="./app.js"></script>
+    <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script><script src="./app.js"></script><script type="module" src="./cad-view.js"></script>
   </body>
 </html>

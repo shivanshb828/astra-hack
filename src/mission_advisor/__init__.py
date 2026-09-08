@@ -9,10 +9,17 @@ calls and does judgment. Keeping them apart is what makes the arithmetic
 reproducible.
 """
 
-from .advisor import MODEL, RefusalError, advise, build_mission_prompt, read_mission
 from .catalog import PartRecord, load_catalog, render_catalog, render_part
 from .report import render
 from .schema import AdvisorOutput, Consideration, Evidence
+
+
+def __getattr__(name):
+    # Local catalog access must work offline without the optional model SDK.
+    if name in {"MODEL", "RefusalError", "advise", "build_mission_prompt", "read_mission"}:
+        from . import advisor
+        return getattr(advisor, name)
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 __all__ = [
     "MODEL",

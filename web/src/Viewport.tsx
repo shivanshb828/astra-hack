@@ -1,7 +1,9 @@
 import { Canvas, ThreeEvent, useFrame, useThree } from '@react-three/fiber'
-import { Grid, Line, OrbitControls, useGLTF } from '@react-three/drei'
+import { Grid, Line, Html, OrbitControls } from '@react-three/drei'
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { attentionRefs, dragPosition } from './attention'
 import type { AnalysisResult, DesignState, PartInfo, VizInstruction } from './types'
 
 // Engine data is millimetres, Z-up. The GLB was exported with glTF's Y-up
@@ -32,7 +34,7 @@ export interface ViewportProps {
   selected: string | null
   focusedCheck: string | null
   onSelect: (ref: string | null) => void
-  onDragStart: () => void
+  onDragState: (active: boolean) => void
   onDragEnd: (ref: string, pos: [number, number]) => void
   show: { board: boolean; enclosure: boolean; contact: boolean; overlays: boolean }
   enclosureOpacity: number
@@ -72,30 +74,33 @@ function ComponentMesh({
   design,
   parts,
   refName,
-  geometry,
+  model,
   selected,
   highlighted,
   explode,
   snapMm,
   onSelect,
-  onDragStart,
+  onDragState,
   onDragEnd,
 }: {
   design: DesignState
   parts: Record<string, PartInfo>
   refName: string
-  geometry: THREE.BufferGeometry | null
+  model: THREE.Object3D | null
   selected: boolean
   highlighted: boolean
   explode: number
   snapMm: number
   onSelect: (r: string) => void
-  onDragStart: () => void
+  onDragState: (active: boolean) => void
   onDragEnd: (r: string, pos: [number, number]) => void
 }) {
   const placed = componentCenter(design, refName, parts)
   const mesh = useRef<THREE.Mesh>(null)
-  const { camera, gl } = useThree()
+  const { gl, controls } = useThree() as any
+  const activeDrag = useRef(false)
+  const latestPos = useRef<[number, number] | null>(null)
+  const grabOffset = useRef<[number, number]>([0, 0])
   const [dragging, setDragging] = useState(false)
   // Live position during a drag, so the visual updates immediately while the
   // committed design state waits for pointer-up.
@@ -104,6 +109,40 @@ function ComponentMesh({
   useEffect(() => {
     if (!dragging) setLive(null)
   }, [design.revision, dragging])
+
+  const displayModel = useMemo(() => {
+    if (!model) return null
+    const clone = model.clone(true)
+    clone.updateMatrixWorld(true)
+    const box = new THREE.Box3().setFromObject(clone)
+    const center = box.getCenter(new THREE.Vector3())
+    const size = box.getSize(new THREE.Vector3())
+    const wrapper = new THREE.Group()
+    clone.position.sub(center)
+    wrapper.add(clone)
+    wrapper.scale.set((placed?.size[0] ?? 1) * MM / Math.max(size.x, 1e-9), (placed?.size[2] ?? 1) * MM / Math.max(size.y, 1e-9), (placed?.size[1] ?? 1) * MM / Math.max(size.z, 1e-9))
+    // GLB remains cached; clone materials so selection never recolors another part.
+    clone.traverse(o => {
+      const m = o as THREE.Mesh
+      if (!m.isMesh) return
+      const tint = (mat: THREE.Material) => {
+        const copy = mat.clone() as THREE.MeshStandardMaterial
+        if (copy.emissive) {
+          copy.emissive.set(selected ? '#1d4f99' : highlighted ? '#8a4100' : '#000000')
+          copy.emissiveIntensity = selected || highlighted ? 0.35 : 0
+        }
+        return copy
+      }
+      m.material = Array.isArray(m.material) ? m.material.map(tint) : tint(m.material)
+    })
+    return wrapper
+  }, [model, selected, highlighted, placed?.size.join(',')])
+  useEffect(() => () => {
+    displayModel?.traverse(o => {
+      const m = o as THREE.Mesh
+      if (m.isMesh) (Array.isArray(m.material) ? m.material : [m.material]).forEach(mat => mat.dispose())
+    })
+  }, [displayModel])
 
   if (!placed) return null
   const comp = design.components.find((c) => c.ref === refName)!
@@ -118,66 +157,71 @@ function ComponentMesh({
   const pos = toScene([cx, cy, cz])
 
   const onPointerDown = (e: ThreeEvent<PointerEvent>) => {
+    if (e.button !== 0) return
     e.stopPropagation()
     onSelect(refName)
+    activeDrag.current = true
+    latestPos.current = null
+    const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -pos[1])
+    const hit = e.ray.intersectPlane(plane, new THREE.Vector3())
+    grabOffset.current = hit ? [hit.x / MM - design.board.origin_mm[0] - comp.pos_mm[0], -hit.z / MM - design.board.origin_mm[1] - comp.pos_mm[1]] : [0, 0]
+    if (controls) controls.enabled = false
     setDragging(true)
-    onDragStart()
+    onDragState(true)
     ;(e.target as Element)?.setPointerCapture?.(e.pointerId)
   }
 
   const onPointerMove = (e: ThreeEvent<PointerEvent>) => {
-    if (!dragging) return
+    if (!activeDrag.current) return
     e.stopPropagation()
     // Intersect the pointer ray with the board plane (scene Y = board top).
-    const planeY = toScene([0, 0, placed.center[2]])[1]
+    const planeY = pos[1]
     const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -planeY)
     const hit = new THREE.Vector3()
     if (!e.ray.intersectPlane(plane, hit)) return
     // Back out of scene space into board-local millimetres.
     let bx = hit.x / MM - design.board.origin_mm[0]
     let by = -hit.z / MM - design.board.origin_mm[1]
-    if (snapMm > 0) {
-      bx = Math.round(bx / snapMm) * snapMm
-      by = Math.round(by / snapMm) * snapMm
-    }
-    setLive([Number(bx.toFixed(3)), Number(by.toFixed(3))])
+    const next = dragPosition([bx, by], grabOffset.current, snapMm)
+    latestPos.current = next
+    setLive(next)
   }
 
-  const onPointerUp = (e: ThreeEvent<PointerEvent>) => {
-    if (!dragging) return
+  const finishDrag = (e: ThreeEvent<PointerEvent>, cancelled = false) => {
+    if (!activeDrag.current) return
     e.stopPropagation()
+    activeDrag.current = false
     setDragging(false)
+    if (controls) controls.enabled = true
     gl.domElement.style.cursor = 'auto'
-    // Exactly one history event per drag, committed on release.
-    if (live) onDragEnd(refName, live)
+    ;(e.target as Element)?.releasePointerCapture?.(e.pointerId)
+    onDragState(false)
+    const next = latestPos.current
+    if (!cancelled && next && next.some((v, i) => v !== comp.pos_mm[i])) onDragEnd(refName, next)
+    latestPos.current = null
   }
 
   return (
-    <mesh
-      ref={mesh}
+    <group
       position={pos}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
-      onPointerUp={onPointerUp}
+      onPointerUp={e => finishDrag(e)}
+      onPointerCancel={e => finishDrag(e, true)}
       onPointerOver={() => (gl.domElement.style.cursor = 'grab')}
       onPointerOut={() => !dragging && (gl.domElement.style.cursor = 'auto')}
-      geometry={geometry ?? undefined}
-      scale={
-        geometry
-          ? [1, 1, 1]
-          : [placed.size[0] * MM, placed.size[2] * MM, placed.size[1] * MM]
-      }
       renderOrder={2}
     >
-      {!geometry && <boxGeometry args={[1, 1, 1]} />}
-      <meshStandardMaterial
-        color={selected ? '#ffffff' : highlighted ? '#ff9d2e' : colour}
-        emissive={selected ? '#3d7dff' : highlighted ? '#a3520f' : '#000000'}
-        emissiveIntensity={selected ? 0.55 : highlighted ? 0.45 : 0}
-        metalness={0.1}
-        roughness={0.65}
-      />
-    </mesh>
+      {displayModel && <primitive object={displayModel} />}
+      {!displayModel && <mesh>
+        <boxGeometry args={[placed.size[0] * MM, placed.size[2] * MM, placed.size[1] * MM]} />
+        <meshStandardMaterial color={selected ? '#b9d1ff' : highlighted ? '#ff9d2e' : colour} />
+      </mesh>}
+      {(selected || highlighted) && <Html position={[0, placed.size[2] * MM / 2 + 0.002, 0]} center style={{ pointerEvents: 'none', whiteSpace: 'nowrap', color: '#fff', background: '#252d39', padding: '3px 6px', borderRadius: 4, fontSize: 11 }}>
+        {refName}{highlighted ? ' · Needs attention' : ''}
+      </Html>}
+
+    </group>
   )
 }
 
@@ -277,32 +321,30 @@ function CameraRig({
 
 function Scene(props: ViewportProps) {
   const { design, parts, analysis, show, enclosureOpacity } = props
-  const gltf = useGLTF('/assets/ecg_patch.glb', true) as any
+  const [models, setModels] = useState<Record<string, THREE.Object3D>>({})
+  useEffect(() => {
+    let active = true
+    new GLTFLoader().load('/assets/ecg_patch.glb', gltf => {
+      if (!active) return
+      const next: Record<string, THREE.Object3D> = {}
+      for (const c of design.components) {
+        const model = gltf.scene.getObjectByName(c.ref)
+        if (model) next[c.ref] = model
+      }
+      setModels(next)
+    }, undefined, () => { if (active) setModels({}) })
+    return () => { active = false }
+  }, [design.design_id])
 
-  // Map GLB objects to stable component ids by name. This is the asset
-  // contract: components arrive individually addressable, not merged.
-  const geoms = useMemo(() => {
-    const out: Record<string, THREE.BufferGeometry> = {}
-    gltf?.scene?.traverse?.((o: THREE.Object3D) => {
-      const m = o as THREE.Mesh
-      if (m.isMesh && m.geometry) out[o.name] = m.geometry
-    })
-    return out
-  }, [gltf])
-
-  const highlighted = useMemo(() => {
-    if (!props.focusedCheck || !analysis) return new Set<string>()
-    const c = analysis.checks.find((x) => x.check_id === props.focusedCheck)
-    return new Set(c?.component_refs ?? [])
-  }, [props.focusedCheck, analysis])
+  const highlighted = useMemo(() => attentionRefs(analysis, props.analysisStale, props.focusedCheck), [props.focusedCheck, analysis, props.analysisStale])
 
   const overlays = useMemo(() => {
-    if (!show.overlays || !analysis) return []
+    if (!show.overlays || !analysis || props.analysisStale) return []
     const focused = props.focusedCheck
       ? analysis.checks.filter((c) => c.check_id === props.focusedCheck)
-      : analysis.checks.filter((c) => c.status === 'fail')
+      : analysis.checks.filter((c) => c.status === 'fail' || c.status === 'warning')
     return [...focused.flatMap((c) => c.viz), ...analysis.zone_viz]
-  }, [analysis, show.overlays, props.focusedCheck])
+  }, [analysis, show.overlays, props.focusedCheck, props.analysisStale])
 
   const e = design.enclosure
   const b = design.board
@@ -336,13 +378,13 @@ function Scene(props: ViewportProps) {
           design={design}
           parts={parts}
           refName={c.ref}
-          geometry={geoms[c.ref] ?? null}
+          model={models[c.ref] ?? null}
           selected={props.selected === c.ref}
           highlighted={highlighted.has(c.ref)}
           explode={props.explode}
           snapMm={props.snapMm}
           onSelect={props.onSelect}
-          onDragStart={props.onDragStart}
+          onDragState={props.onDragState}
           onDragEnd={props.onDragEnd}
         />
       ))}
@@ -408,5 +450,3 @@ export default function Viewport(props: ViewportProps) {
     </Canvas>
   )
 }
-
-useGLTF.preload('/assets/ecg_patch.glb')
