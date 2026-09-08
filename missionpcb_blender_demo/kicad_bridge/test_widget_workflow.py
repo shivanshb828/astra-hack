@@ -13,6 +13,7 @@ class WorkflowTests(unittest.TestCase):
   self.tmp=tempfile.TemporaryDirectory()
   self.storage=patch.object(review_journal,'STORAGE_ROOT',Path(self.tmp.name));self.storage.start()
   self.addCleanup(self.tmp.cleanup);self.addCleanup(self.storage.stop)
+  self.flags=patch.object(widget_command,'refresh_native_flags_after_move',return_value='Native flags refreshed.');self.flags_mock=self.flags.start();self.addCleanup(self.flags.stop)
  def test_resolved_and_reopened_finding_retains_comment(self):
   finding={'id':'heat-U2-U5','status':'FAIL','kicad_refs':['U2','U5'],'message':'Separation below authored policy'}
   widget_command.record_review([finding],{'FAIL':1},'a')
@@ -36,6 +37,7 @@ class WorkflowTests(unittest.TestCase):
    event=review_journal.get_state(str(bridge.TARGET))['events'][-1]
    self.assertEqual(event['kind'],'design_change');self.assertEqual(event['payload']['before'],before)
    self.assertEqual(event['payload']['after'],after)
+   self.flags_mock.assert_called_once()
  def test_journal_failure_after_move_reports_actual_native_outcome(self):
   before={'board':str(bridge.TARGET),'revision':'a','parts':[{'ref':'U1','x_mm':136,'y_mm':129,'rotation_deg':0}]}
   with patch.object(bridge,'connect'),patch.object(bridge,'snapshot',return_value=before),patch.object(bridge,'apply',return_value={'before':before,'after':before}) as apply,patch.object(review_journal,'append_event',side_effect=OSError('disk full')):

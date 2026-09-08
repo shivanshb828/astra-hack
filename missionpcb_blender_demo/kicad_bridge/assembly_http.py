@@ -4,7 +4,7 @@ from pathlib import Path
 from urllib.parse import unquote
 import blender_handoff as pipeline
 ROOT=Path(__file__).resolve().parent
-ACTIONS={'assembly_region','assembly_place','assembly_edit','assembly_focus','assembly_check','assembly_body','assembly_sample','assembly_save','assembly_fit_chest'}
+ACTIONS={'assembly_flag_motion','assembly_region','assembly_place','assembly_edit','assembly_focus','assembly_check','assembly_body','assembly_sample','assembly_save','assembly_fit_chest'}
 def reply(handler,status,value):
  body=json.dumps(value).encode();handler.send_response(status);handler.send_header('Content-Type','application/json');handler.send_header('Cache-Control','no-store');handler.end_headers();handler.wfile.write(body)
 def post(handler,token):

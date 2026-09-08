@@ -1,11 +1,20 @@
 """MissionPCB widget adapter. Execute inside the existing Blender scene."""
-import bpy,json,time,math,re
+import bpy,json,time,math,re,os,uuid
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent
 IPC=ROOT/'ipc';IPC.mkdir(exist_ok=True)
 import sys,importlib
 if str(ROOT) not in sys.path:sys.path.insert(0,str(ROOT))
 _assembly=None
+OWNER=None
+SESSION=None
+SCENE=None
+def connection():
+ global SESSION,SCENE
+ identity=(bpy.data.filepath,bpy.context.scene.as_pointer())
+ if SCENE!=identity:
+  SCENE=identity;SESSION=uuid.uuid4().hex
+ return dict(instance=OWNER,session=SESSION,pid=os.getpid())
 def assembly_module():
  global _assembly
  if _assembly is None:
@@ -24,9 +33,9 @@ def snapshot():
  if assembly_active():
   assembly=assembly_module()
   if assembly.signature()!=bpy.context.scene.get('assembly_signature'):assembly.check()
-  return dict(heartbeat=time.time(),file=bpy.data.filepath,assembly_api=1,assembly=assembly.snapshot())
+  return dict(heartbeat=time.time(),file=bpy.data.filepath,assembly_api=1,assembly=assembly.snapshot(),**connection())
  guard();r=runtime();payload=json.loads(bpy.context.scene.get('engine_results_json','{}'))
- return dict(heartbeat=time.time(),file=bpy.data.filepath,assembly_api=1,signature=r.signature(),stale=r.signature()!=bpy.context.scene.get('validated_signature'),parts=[dict(ref=k,position=list(o.location)) for k,o in parts().items()],result=payload.get('results',{}).get('MissionPCB'))
+ return dict(heartbeat=time.time(),file=bpy.data.filepath,assembly_api=1,signature=r.signature(),stale=r.signature()!=bpy.context.scene.get('validated_signature'),parts=[dict(ref=k,position=list(o.location)) for k,o in parts().items()],result=payload.get('results',{}).get('MissionPCB'),**connection())
 def highlight():
  result=json.loads(bpy.context.scene['engine_results_json'])['results']['MissionPCB']
  subjects={s for c in result['checks'] if c['status']=='FAIL' for s in c.get('subjects',[])}
@@ -68,6 +77,13 @@ def execute(command):
  if action=='inspect':return 'Read current scene. No objects changed.'
  raise ValueError('Unsupported Blender action')
 def tick():
+ # A newer adapter owns the shared queue. Retire old timers, including those
+ # surviving a file load or running in another Blender window.
+ if OWNER:
+  try:
+   if (IPC/'owner').read_text()!=OWNER:return None
+  except OSError:return None
+  connection()
  pending=IPC/'command.json'
  if pending.exists():
   cmd=None
@@ -76,6 +92,7 @@ def tick():
    if not isinstance(cmd,dict) or not re.fullmatch(r'[0-9a-f]{32}',str(cmd.get('id',''))):raise ValueError('Invalid command ID')
    created=cmd.get('created')
    if isinstance(created,bool) or not isinstance(created,(int,float)) or not math.isfinite(created) or not 0<=time.time()-created<=15:raise ValueError('Expired or invalid command')
+   if SESSION and cmd.get('session')!=SESSION:raise ValueError('Blender file or scene changed. Refresh the widget and retry.')
    message=execute(cmd)
    current=snapshot();atomic(IPC/'state.json',current)
    atomic(IPC/(cmd['id']+'.json'),dict(ok=True,message=message,state=current))
@@ -85,12 +102,15 @@ def tick():
     atomic(IPC/(cmd['id']+'.json'),dict(ok=False,message=str(e)))
    else:atomic(IPC/'last_error.json',dict(error=str(e),time=time.time()))
  try:atomic(IPC/'state.json',snapshot())
- except Exception as e:atomic(IPC/'state.json',dict(heartbeat=time.time(),error=str(e)))
+ except Exception as e:atomic(IPC/'state.json',dict(heartbeat=time.time(),file=bpy.data.filepath,error=str(e)))
  return .75
 def start():
+ global OWNER
  if not assembly_active():guard()
  old=bpy.app.driver_namespace.get('missionpcb_widget_timer')
  if old and bpy.app.timers.is_registered(old):bpy.app.timers.unregister(old)
- bpy.app.driver_namespace['missionpcb_widget_timer']=tick;bpy.app.timers.register(tick,first_interval=.1);tick()
+ OWNER=uuid.uuid4().hex
+ (IPC/'owner').write_text(OWNER)
+ bpy.app.driver_namespace['missionpcb_widget_timer']=tick;bpy.app.timers.register(tick,first_interval=.1,persistent=True);tick()
  print('MISSIONPCB_BLENDER_WIDGET_READY')
 if __name__=='__main__':start()

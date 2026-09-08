@@ -9,6 +9,9 @@ TOKEN=(Path(__file__).resolve().parent/'.widget-token').read_text()
 ROOT=Path(__file__).resolve().parent
 class Handler(BaseHTTPRequestHandler):
  def do_POST(self):
+  if self.path.startswith("/workflow/"):
+   import workflow_http
+   return workflow_http.post(self,TOKEN)
   if self.path.startswith('/assembly/'):
    import assembly_http
    return assembly_http.post(self,TOKEN)
@@ -38,16 +41,21 @@ class Handler(BaseHTTPRequestHandler):
    except Exception as e:
     self.send_response(400);self.end_headers();self.wfile.write(str(e).encode());return
   widget_command.log_event(command,'running','Reading the MissionPCB board')
+  code=200
   try:
    message=widget_command.run(command)
    widget_command.log_event(command,'complete',message)
   except Exception as e:
+   code=400
    message='Could not apply: '+str(e)
    widget_command.log_event(command,'error',message)
-  self.send_response(200);self.send_header('Content-Type','text/plain');self.end_headers();self.wfile.write(message.encode())
+  self.send_response(code);self.send_header('Content-Type','text/plain');self.end_headers();self.wfile.write(message.encode())
  def do_GET(self):
   if self.headers.get('Host') not in ('127.0.0.1:8768','localhost:8768'):
    self.send_error(403);return
+  if self.path=='/workflow' or self.path.startswith('/workflow/'):
+   import workflow_http
+   return workflow_http.get(self,TOKEN)
   if self.path.startswith('/board-preview'):
    self.send_response(303);self.send_header('Location','/design');self.end_headers();return
   if self.path=='/assembly/state':
@@ -83,13 +91,16 @@ class Handler(BaseHTTPRequestHandler):
    import mission_constraints
    state['mission_constraints']=mission_constraints.view(state)
    import layout_search
+   layout_search.ensure_background(state)
    state['layout_search']=layout_search.status()
    if state.get('review') and state['mission_constraints']['stale']:state['review_stale']=True
    body=json.dumps(state).encode();mime='application/json'
   elif self.path=='/context':
    import design_context
    body=json.dumps(design_context.get_context()).encode();mime='application/json'
+  elif self.path in ('/companion','/assembly-companion'):body=(ROOT/'companion.html').read_text().replace('__LOCAL_TOKEN__',json.dumps(TOKEN)).encode();mime='text/html'
   elif self.path=='/design':body=(ROOT/'design-dashboard.html').read_text().replace('__LOCAL_TOKEN__',json.dumps(TOKEN)).encode();mime='text/html'
+  elif self.path=='/workspace-theme.css':body=(ROOT/'workspace-theme.css').read_bytes();mime='text/css'
   elif self.path=='/ui-vendor/motion.js':body=(ROOT/'ui-vendor/motion.js').read_bytes();mime='text/javascript'
   elif self.path=='/classic':body=(ROOT/'dashboard.html').read_text().replace('__LOCAL_TOKEN__',json.dumps(TOKEN)).encode();mime='text/html'
   elif self.path=='/':body=(ROOT/'design-dashboard.html').read_text().replace('__LOCAL_TOKEN__',json.dumps(TOKEN)).encode();mime='text/html'

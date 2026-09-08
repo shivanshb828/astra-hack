@@ -1,0 +1,38 @@
+{
+  "enclosure": {
+    "interior_mm": [
+      100,
+      40,
+      7
+    ],
+    "exterior_mm": [
+      104,
+      44,
+      10
+    ],
+    "wall_mm": 2,
+    "base_mm": 1.5,
+    "lid_mm": 1.5,
+    "source": "Generated editable concept",
+    "watertight_base_and_lid": true,
+    "limitations": [
+      "No sealing/retention design",
+      "No battery or PCB mounting features",
+      "Electrodes and adhesive are conceptual geometry; materials unqualified"
+    ]
+  },
+  "chest": {
+    "source": "https://github.com/makehumancommunity/makehuman/blob/master/makehuman/data/3dobjs/base.obj",
+    "license": "CC0-1.0",
+    "height_normalization_mm": 1750,
+    "crop_z_mm": [
+      1080,
+      1510
+    ],
+    "crop_x_mm": [
+      -245,
+      245
+    ],
+    "scope": "Representative surface geometry, not physiological simulation"
+  }
+}

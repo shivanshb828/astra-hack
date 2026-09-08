@@ -1,0 +1,4008 @@
+{
+  "design_id": "missionpcb-native-six",
+  "revision": 1788910605474454000,
+  "submission_sha256": "de60dbc7226f061c99fa92e1c1efaf0fc330ffd356d36cab30fd529a2c9c84f9",
+  "brief": "ECG chest patch. Review current ECG component placement against authored demo spacing policies.",
+  "result": {
+    "engine_version": "0.1.0",
+    "generated_at": null,
+    "layout": "Live MissionPCB KiCad placement",
+    "summary": {
+      "PASS": 82,
+      "FAIL": 1,
+      "WARN": 0,
+      "SKIP": 1
+    },
+    "passed": false,
+    "warnings": [],
+    "component_positions": [
+      {
+        "ref": "C1",
+        "part_id": "support_c1",
+        "part_name": "TBD",
+        "category": "passive",
+        "board_xy_mm": [
+          40.3,
+          12.3
+        ],
+        "enclosure_xyz_mm": [
+          49.3,
+          18.3,
+          3.6
+        ],
+        "size_mm": [
+          1.6,
+          0.8,
+          0.8
+        ],
+        "rotation_deg": 0,
+        "heat_source": false,
+        "noise_source": false,
+        "sensitivity": "low",
+        "skin_contact": false
+      },
+      {
+        "ref": "C2",
+        "part_id": "support_c2",
+        "part_name": "TBD",
+        "category": "passive",
+        "board_xy_mm": [
+          27.8,
+          18.3
+        ],
+        "enclosure_xyz_mm": [
+          36.8,
+          24.3,
+          3.6
+        ],
+        "size_mm": [
+          1.6,
+          0.8,
+          0.8
+        ],
+        "rotation_deg": 0,
+        "heat_source": false,
+        "noise_source": false,
+        "sensitivity": "low",
+        "skin_contact": false
+      },
+      {
+        "ref": "C3",
+        "part_id": "support_c3",
+        "part_name": "TBD",
+        "category": "passive",
+        "board_xy_mm": [
+          19.8,
+          19.8
+        ],
+        "enclosure_xyz_mm": [
+          28.8,
+          25.8,
+          3.6
+        ],
+        "size_mm": [
+          1.6,
+          0.8,
+          0.8
+        ],
+        "rotation_deg": 0,
+        "heat_source": false,
+        "noise_source": false,
+        "sensitivity": "low",
+        "skin_contact": false
+      },
+      {
+        "ref": "C4",
+        "part_id": "support_c4",
+        "part_name": "10uF",
+        "category": "passive",
+        "board_xy_mm": [
+          35.8,
+          23.3
+        ],
+        "enclosure_xyz_mm": [
+          44.8,
+          29.3,
+          3.6
+        ],
+        "size_mm": [
+          1.6,
+          0.8,
+          0.8
+        ],
+        "rotation_deg": 0,
+        "heat_source": false,
+        "noise_source": false,
+        "sensitivity": "low",
+        "skin_contact": false
+      },
+      {
+        "ref": "C5",
+        "part_id": "support_c5",
+        "part_name": "10uF",
+        "category": "passive",
+        "board_xy_mm": [
+          37.8,
+          22.3
+        ],
+        "enclosure_xyz_mm": [
+          46.8,
+          28.3,
+          3.6
+        ],
+        "size_mm": [
+          0.8,
+          1.6,
+          0.8
+        ],
+        "rotation_deg": 90,
+        "heat_source": false,
+        "noise_source": false,
+        "sensitivity": "low",
+        "skin_contact": false
+      },
+      {
+        "ref": "C6",
+        "part_id": "support_c6",
+        "part_name": "TBD",
+        "category": "passive",
+        "board_xy_mm": [
+          43.3,
+          19.3
+        ],
+        "enclosure_xyz_mm": [
+          52.3,
+          25.3,
+          3.6
+        ],
+        "size_mm": [
+          1.6,
+          0.8,
+          0.8
+        ],
+        "rotation_deg": 0,
+        "heat_source": false,
+        "noise_source": false,
+        "sensitivity": "low",
+        "skin_contact": false
+      },
+      {
+        "ref": "C7",
+        "part_id": "support_c7",
+        "part_name": "TBD",
+        "category": "passive",
+        "board_xy_mm": [
+          30.3,
+          15.8
+        ],
+        "enclosure_xyz_mm": [
+          39.3,
+          21.8,
+          3.6
+        ],
+        "size_mm": [
+          1.6,
+          0.8,
+          0.8
+        ],
+        "rotation_deg": 0,
+        "heat_source": false,
+        "noise_source": false,
+        "sensitivity": "low",
+        "skin_contact": false
+      },
+      {
+        "ref": "Battery",
+        "part_id": "bm02b_srss",
+        "part_name": "BM02B-SRSS-TB",
+        "category": "connector",
+        "board_xy_mm": [
+          38.0,
+          19.0
+        ],
+        "enclosure_xyz_mm": [
+          47.0,
+          25.0,
+          3.6
+        ],
+        "size_mm": [
+          3.6,
+          4.0,
+          4.32
+        ],
+        "rotation_deg": 90,
+        "heat_source": false,
+        "noise_source": false,
+        "sensitivity": "low",
+        "skin_contact": false
+      },
+      {
+        "ref": "J2",
+        "part_id": "support_j2",
+        "part_name": "JST SH 3 pin",
+        "category": "connector",
+        "board_xy_mm": [
+          33.5,
+          19.5
+        ],
+        "enclosure_xyz_mm": [
+          42.5,
+          25.5,
+          3.6
+        ],
+        "size_mm": [
+          4.25,
+          5.0,
+          3.0
+        ],
+        "rotation_deg": 90,
+        "heat_source": false,
+        "noise_source": false,
+        "sensitivity": "low",
+        "skin_contact": false
+      },
+      {
+        "ref": "J3",
+        "part_id": "support_j3",
+        "part_name": "JST SH 4 pin",
+        "category": "connector",
+        "board_xy_mm": [
+          36.0,
+          12.0
+        ],
+        "enclosure_xyz_mm": [
+          45.0,
+          18.0,
+          3.6
+        ],
+        "size_mm": [
+          6.0,
+          4.25,
+          3.0
+        ],
+        "rotation_deg": 0,
+        "heat_source": false,
+        "noise_source": false,
+        "sensitivity": "low",
+        "skin_contact": false
+      },
+      {
+        "ref": "L1",
+        "part_id": "support_l1",
+        "part_name": "2.2uH",
+        "category": "passive",
+        "board_xy_mm": [
+          36.15,
+          29.65
+        ],
+        "enclosure_xyz_mm": [
+          45.15,
+          35.65,
+          3.6
+        ],
+        "size_mm": [
+          3.3,
+          3.3,
+          1.4
+        ],
+        "rotation_deg": 0,
+        "heat_source": false,
+        "noise_source": true,
+        "sensitivity": "low",
+        "skin_contact": false
+      },
+      {
+        "ref": "R1",
+        "part_id": "support_r1",
+        "part_name": "TBD",
+        "category": "passive",
+        "board_xy_mm": [
+          30.3,
+          18.8
+        ],
+        "enclosure_xyz_mm": [
+          39.3,
+          24.8,
+          3.6
+        ],
+        "size_mm": [
+          0.8,
+          1.6,
+          0.5
+        ],
+        "rotation_deg": 90,
+        "heat_source": false,
+        "noise_source": false,
+        "sensitivity": "low",
+        "skin_contact": false
+      },
+      {
+        "ref": "R2",
+        "part_id": "support_r2",
+        "part_name": "TBD",
+        "category": "passive",
+        "board_xy_mm": [
+          28.3,
+          19.8
+        ],
+        "enclosure_xyz_mm": [
+          37.3,
+          25.8,
+          3.6
+        ],
+        "size_mm": [
+          1.6,
+          0.8,
+          0.5
+        ],
+        "rotation_deg": 0,
+        "heat_source": false,
+        "noise_source": false,
+        "sensitivity": "low",
+        "skin_contact": false
+      },
+      {
+        "ref": "R3",
+        "part_id": "support_r3",
+        "part_name": "TBD",
+        "category": "passive",
+        "board_xy_mm": [
+          43.3,
+          17.8
+        ],
+        "enclosure_xyz_mm": [
+          52.3,
+          23.8,
+          3.6
+        ],
+        "size_mm": [
+          1.6,
+          0.8,
+          0.5
+        ],
+        "rotation_deg": 0,
+        "heat_source": false,
+        "noise_source": false,
+        "sensitivity": "low",
+        "skin_contact": false
+      },
+      {
+        "ref": "R4",
+        "part_id": "support_r4",
+        "part_name": "TBD",
+        "category": "passive",
+        "board_xy_mm": [
+          36.3,
+          8.8
+        ],
+        "enclosure_xyz_mm": [
+          45.3,
+          14.8,
+          3.6
+        ],
+        "size_mm": [
+          1.6,
+          0.8,
+          0.5
+        ],
+        "rotation_deg": 0,
+        "heat_source": false,
+        "noise_source": false,
+        "sensitivity": "low",
+        "skin_contact": false
+      },
+      {
+        "ref": "MCU",
+        "part_id": "msp430fr2433",
+        "part_name": "MSP430FR2433",
+        "category": "processor",
+        "board_xy_mm": [
+          42.0,
+          7.0
+        ],
+        "enclosure_xyz_mm": [
+          51.0,
+          13.0,
+          3.6
+        ],
+        "size_mm": [
+          4.0,
+          4.0,
+          0.8
+        ],
+        "rotation_deg": 0,
+        "heat_source": false,
+        "noise_source": true,
+        "sensitivity": "low",
+        "skin_contact": false
+      },
+      {
+        "ref": "Sensor",
+        "part_id": "ads1292r",
+        "part_name": "ADS1292R",
+        "category": "sensor",
+        "board_xy_mm": [
+          25.0,
+          13.0
+        ],
+        "enclosure_xyz_mm": [
+          34.0,
+          19.0,
+          3.6
+        ],
+        "size_mm": [
+          4.0,
+          4.0,
+          0.92
+        ],
+        "rotation_deg": 0,
+        "heat_source": false,
+        "noise_source": false,
+        "sensitivity": "high",
+        "skin_contact": false
+      },
+      {
+        "ref": "RF",
+        "part_id": "mdbt42q",
+        "part_name": "MDBT42Q-512KV2",
+        "category": "wireless",
+        "board_xy_mm": [
+          9.0,
+          25.0
+        ],
+        "enclosure_xyz_mm": [
+          18.0,
+          31.0,
+          3.6
+        ],
+        "size_mm": [
+          10.0,
+          16.0,
+          2.2
+        ],
+        "rotation_deg": 90,
+        "heat_source": false,
+        "noise_source": true,
+        "sensitivity": "high",
+        "skin_contact": false
+      },
+      {
+        "ref": "Regulator",
+        "part_id": "tps62740",
+        "part_name": "TPS62740",
+        "category": "power_regulator",
+        "board_xy_mm": [
+          39.5,
+          28.0
+        ],
+        "enclosure_xyz_mm": [
+          48.5,
+          34.0,
+          3.6
+        ],
+        "size_mm": [
+          2.0,
+          1.975,
+          0.8
+        ],
+        "rotation_deg": 0,
+        "heat_source": true,
+        "noise_source": true,
+        "sensitivity": "low",
+        "skin_contact": false
+      },
+      {
+        "ref": "Driver",
+        "part_id": "mcp73831",
+        "part_name": "MCP73831",
+        "category": "driver",
+        "board_xy_mm": [
+          48.95,
+          18.95
+        ],
+        "enclosure_xyz_mm": [
+          57.95,
+          24.95,
+          3.6
+        ],
+        "size_mm": [
+          2.8,
+          2.9,
+          1.4
+        ],
+        "rotation_deg": 0,
+        "heat_source": true,
+        "noise_source": false,
+        "sensitivity": "low",
+        "skin_contact": false
+      }
+    ],
+    "checks": [
+      {
+        "id": "mission.afe_MCU",
+        "title": "afe_MCU",
+        "status": "FAIL",
+        "severity": "major",
+        "subjects": [
+          "Sensor",
+          "MCU"
+        ],
+        "metric": "center_distance",
+        "message": "Sensor and MCU are only 18.03 mm apart, 30 mm required.",
+        "rationale": "Authored demo policy, not solved physics.",
+        "measured_mm": 18.028,
+        "required_mm": 30.0,
+        "margin_mm": -11.972,
+        "center_distance_mm": 18.028,
+        "edge_gap_mm": 13.153,
+        "suggestion": "Adjust Sensor/MCU spacing by 11.97 mm.",
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.9,
+            0.15,
+            0.15
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            34.0,
+            19.0,
+            6.6
+          ],
+          "to": [
+            51.0,
+            13.0,
+            6.6
+          ],
+          "label": "18.0 mm \u2717 (needs 30.0)",
+          "label_at": [
+            42.5,
+            16.0,
+            12.6
+          ],
+          "marker": "x",
+          "marker_at": [
+            42.5,
+            16.0,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "U2",
+          "U1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "access.connector",
+        "title": "Connector accessibility",
+        "status": "SKIP",
+        "severity": "info",
+        "subjects": [
+          "Battery",
+          "J2",
+          "J3"
+        ],
+        "metric": "",
+        "message": "The enclosure declares no openings, so accessibility could not be evaluated.",
+        "rationale": "Requires at least one entry in enclosure.openings.",
+        "kicad_refs": [
+          "J1",
+          "J2",
+          "J3"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::Battery",
+        "title": "Battery fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "Battery"
+        ],
+        "metric": "bbox_overflow",
+        "message": "Battery is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "J1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::C1",
+        "title": "C1 fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C1"
+        ],
+        "metric": "bbox_overflow",
+        "message": "C1 is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "C1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::C2",
+        "title": "C2 fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C2"
+        ],
+        "metric": "bbox_overflow",
+        "message": "C2 is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "C2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::C3",
+        "title": "C3 fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C3"
+        ],
+        "metric": "bbox_overflow",
+        "message": "C3 is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "C3"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::C4",
+        "title": "C4 fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C4"
+        ],
+        "metric": "bbox_overflow",
+        "message": "C4 is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "C4"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::C5",
+        "title": "C5 fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C5"
+        ],
+        "metric": "bbox_overflow",
+        "message": "C5 is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "C5"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::C6",
+        "title": "C6 fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C6"
+        ],
+        "metric": "bbox_overflow",
+        "message": "C6 is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "C6"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::C7",
+        "title": "C7 fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C7"
+        ],
+        "metric": "bbox_overflow",
+        "message": "C7 is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "C7"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::Driver",
+        "title": "Driver fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "Driver"
+        ],
+        "metric": "bbox_overflow",
+        "message": "Driver is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "U5"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::J2",
+        "title": "J2 fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "J2"
+        ],
+        "metric": "bbox_overflow",
+        "message": "J2 is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "J2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::J3",
+        "title": "J3 fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "J3"
+        ],
+        "metric": "bbox_overflow",
+        "message": "J3 is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "J3"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::L1",
+        "title": "L1 fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "L1"
+        ],
+        "metric": "bbox_overflow",
+        "message": "L1 is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "L1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::MCU",
+        "title": "MCU fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "MCU"
+        ],
+        "metric": "bbox_overflow",
+        "message": "MCU is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "U1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::R1",
+        "title": "R1 fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "R1"
+        ],
+        "metric": "bbox_overflow",
+        "message": "R1 is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "R1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::R2",
+        "title": "R2 fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "R2"
+        ],
+        "metric": "bbox_overflow",
+        "message": "R2 is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "R2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::R3",
+        "title": "R3 fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "R3"
+        ],
+        "metric": "bbox_overflow",
+        "message": "R3 is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "R3"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::R4",
+        "title": "R4 fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "R4"
+        ],
+        "metric": "bbox_overflow",
+        "message": "R4 is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "R4"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::RF",
+        "title": "RF fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "RF"
+        ],
+        "metric": "bbox_overflow",
+        "message": "RF is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "U3"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::Regulator",
+        "title": "Regulator fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "Regulator"
+        ],
+        "metric": "bbox_overflow",
+        "message": "Regulator is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "U4"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.board::Sensor",
+        "title": "Sensor fits on the PCB",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "Sensor"
+        ],
+        "metric": "bbox_overflow",
+        "message": "Sensor is inside the board outline with 1 mm edge margin.",
+        "rationale": "Components must stay inside the board outline with margin for fabrication tolerance.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "U2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::Battery",
+        "title": "Battery clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "Battery"
+        ],
+        "metric": "bbox_overflow",
+        "message": "Battery respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "J1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::C1",
+        "title": "C1 clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C1"
+        ],
+        "metric": "bbox_overflow",
+        "message": "C1 respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "C1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::C2",
+        "title": "C2 clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C2"
+        ],
+        "metric": "bbox_overflow",
+        "message": "C2 respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "C2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::C3",
+        "title": "C3 clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C3"
+        ],
+        "metric": "bbox_overflow",
+        "message": "C3 respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "C3"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::C4",
+        "title": "C4 clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C4"
+        ],
+        "metric": "bbox_overflow",
+        "message": "C4 respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "C4"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::C5",
+        "title": "C5 clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C5"
+        ],
+        "metric": "bbox_overflow",
+        "message": "C5 respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "C5"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::C6",
+        "title": "C6 clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C6"
+        ],
+        "metric": "bbox_overflow",
+        "message": "C6 respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "C6"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::C7",
+        "title": "C7 clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C7"
+        ],
+        "metric": "bbox_overflow",
+        "message": "C7 respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "C7"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::Driver",
+        "title": "Driver clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "Driver"
+        ],
+        "metric": "bbox_overflow",
+        "message": "Driver respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "U5"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::J2",
+        "title": "J2 clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "J2"
+        ],
+        "metric": "bbox_overflow",
+        "message": "J2 respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "J2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::J3",
+        "title": "J3 clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "J3"
+        ],
+        "metric": "bbox_overflow",
+        "message": "J3 respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "J3"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::L1",
+        "title": "L1 clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "L1"
+        ],
+        "metric": "bbox_overflow",
+        "message": "L1 respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "L1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::MCU",
+        "title": "MCU clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "MCU"
+        ],
+        "metric": "bbox_overflow",
+        "message": "MCU respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "U1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::R1",
+        "title": "R1 clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "R1"
+        ],
+        "metric": "bbox_overflow",
+        "message": "R1 respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "R1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::R2",
+        "title": "R2 clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "R2"
+        ],
+        "metric": "bbox_overflow",
+        "message": "R2 respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "R2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::R3",
+        "title": "R3 clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "R3"
+        ],
+        "metric": "bbox_overflow",
+        "message": "R3 respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "R3"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::R4",
+        "title": "R4 clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "R4"
+        ],
+        "metric": "bbox_overflow",
+        "message": "R4 respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "R4"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::RF",
+        "title": "RF clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "RF"
+        ],
+        "metric": "bbox_overflow",
+        "message": "RF respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "U3"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::Regulator",
+        "title": "Regulator clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "Regulator"
+        ],
+        "metric": "bbox_overflow",
+        "message": "Regulator respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "U4"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.enclosure_xy::Sensor",
+        "title": "Sensor clears the enclosure wall",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "Sensor"
+        ],
+        "metric": "bbox_overflow",
+        "message": "Sensor respects the 0 mm wall keep-out.",
+        "rationale": "Components in the wall keep-out prevent the shell from closing and break any perimeter seal.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "U2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::Battery",
+        "title": "Battery fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "Battery"
+        ],
+        "metric": "height",
+        "message": "Battery stands 4.32 mm tall against a 6.4 mm ceiling (2.08 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 4.32,
+        "required_mm": 6.4,
+        "margin_mm": 2.08,
+        "kicad_refs": [
+          "J1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::C1",
+        "title": "C1 fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C1"
+        ],
+        "metric": "height",
+        "message": "C1 stands 0.8 mm tall against a 6.4 mm ceiling (5.60 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 0.8,
+        "required_mm": 6.4,
+        "margin_mm": 5.6,
+        "kicad_refs": [
+          "C1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::C2",
+        "title": "C2 fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C2"
+        ],
+        "metric": "height",
+        "message": "C2 stands 0.8 mm tall against a 6.4 mm ceiling (5.60 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 0.8,
+        "required_mm": 6.4,
+        "margin_mm": 5.6,
+        "kicad_refs": [
+          "C2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::C3",
+        "title": "C3 fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C3"
+        ],
+        "metric": "height",
+        "message": "C3 stands 0.8 mm tall against a 6.4 mm ceiling (5.60 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 0.8,
+        "required_mm": 6.4,
+        "margin_mm": 5.6,
+        "kicad_refs": [
+          "C3"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::C4",
+        "title": "C4 fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C4"
+        ],
+        "metric": "height",
+        "message": "C4 stands 0.8 mm tall against a 6.4 mm ceiling (5.60 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 0.8,
+        "required_mm": 6.4,
+        "margin_mm": 5.6,
+        "kicad_refs": [
+          "C4"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::C5",
+        "title": "C5 fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C5"
+        ],
+        "metric": "height",
+        "message": "C5 stands 0.8 mm tall against a 6.4 mm ceiling (5.60 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 0.8,
+        "required_mm": 6.4,
+        "margin_mm": 5.6,
+        "kicad_refs": [
+          "C5"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::C6",
+        "title": "C6 fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C6"
+        ],
+        "metric": "height",
+        "message": "C6 stands 0.8 mm tall against a 6.4 mm ceiling (5.60 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 0.8,
+        "required_mm": 6.4,
+        "margin_mm": 5.6,
+        "kicad_refs": [
+          "C6"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::C7",
+        "title": "C7 fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "C7"
+        ],
+        "metric": "height",
+        "message": "C7 stands 0.8 mm tall against a 6.4 mm ceiling (5.60 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 0.8,
+        "required_mm": 6.4,
+        "margin_mm": 5.6,
+        "kicad_refs": [
+          "C7"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::Driver",
+        "title": "Driver fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "Driver"
+        ],
+        "metric": "height",
+        "message": "Driver stands 1.4 mm tall against a 6.4 mm ceiling (5.00 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 1.4,
+        "required_mm": 6.4,
+        "margin_mm": 5.0,
+        "kicad_refs": [
+          "U5"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::J2",
+        "title": "J2 fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "J2"
+        ],
+        "metric": "height",
+        "message": "J2 stands 3 mm tall against a 6.4 mm ceiling (3.40 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 3.0,
+        "required_mm": 6.4,
+        "margin_mm": 3.4,
+        "kicad_refs": [
+          "J2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::J3",
+        "title": "J3 fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "J3"
+        ],
+        "metric": "height",
+        "message": "J3 stands 3 mm tall against a 6.4 mm ceiling (3.40 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 3.0,
+        "required_mm": 6.4,
+        "margin_mm": 3.4,
+        "kicad_refs": [
+          "J3"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::L1",
+        "title": "L1 fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "L1"
+        ],
+        "metric": "height",
+        "message": "L1 stands 1.4 mm tall against a 6.4 mm ceiling (5.00 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 1.4,
+        "required_mm": 6.4,
+        "margin_mm": 5.0,
+        "kicad_refs": [
+          "L1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::MCU",
+        "title": "MCU fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "MCU"
+        ],
+        "metric": "height",
+        "message": "MCU stands 0.8 mm tall against a 6.4 mm ceiling (5.60 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 0.8,
+        "required_mm": 6.4,
+        "margin_mm": 5.6,
+        "kicad_refs": [
+          "U1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::R1",
+        "title": "R1 fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "R1"
+        ],
+        "metric": "height",
+        "message": "R1 stands 0.5 mm tall against a 6.4 mm ceiling (5.90 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 0.5,
+        "required_mm": 6.4,
+        "margin_mm": 5.9,
+        "kicad_refs": [
+          "R1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::R2",
+        "title": "R2 fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "R2"
+        ],
+        "metric": "height",
+        "message": "R2 stands 0.5 mm tall against a 6.4 mm ceiling (5.90 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 0.5,
+        "required_mm": 6.4,
+        "margin_mm": 5.9,
+        "kicad_refs": [
+          "R2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::R3",
+        "title": "R3 fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "R3"
+        ],
+        "metric": "height",
+        "message": "R3 stands 0.5 mm tall against a 6.4 mm ceiling (5.90 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 0.5,
+        "required_mm": 6.4,
+        "margin_mm": 5.9,
+        "kicad_refs": [
+          "R3"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::R4",
+        "title": "R4 fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "R4"
+        ],
+        "metric": "height",
+        "message": "R4 stands 0.5 mm tall against a 6.4 mm ceiling (5.90 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 0.5,
+        "required_mm": 6.4,
+        "margin_mm": 5.9,
+        "kicad_refs": [
+          "R4"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::RF",
+        "title": "RF fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "RF"
+        ],
+        "metric": "height",
+        "message": "RF stands 2.2 mm tall against a 6.4 mm ceiling (4.20 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 2.2,
+        "required_mm": 6.4,
+        "margin_mm": 4.2,
+        "kicad_refs": [
+          "U3"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::Regulator",
+        "title": "Regulator fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "Regulator"
+        ],
+        "metric": "height",
+        "message": "Regulator stands 0.8 mm tall against a 6.4 mm ceiling (5.60 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 0.8,
+        "required_mm": 6.4,
+        "margin_mm": 5.6,
+        "kicad_refs": [
+          "U4"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "fit.height::Sensor",
+        "title": "Sensor fits under the lid",
+        "status": "PASS",
+        "severity": "blocker",
+        "subjects": [
+          "Sensor"
+        ],
+        "metric": "height",
+        "message": "Sensor stands 0.92 mm tall against a 6.4 mm ceiling (5.48 mm spare).",
+        "rationale": "Interior height 10 mm minus the 2 mm standoff and 1.6 mm board leaves 6.4 mm above the surface. Component height must fit the space between the board surface and the enclosure roof.",
+        "measured_mm": 0.92,
+        "required_mm": 6.4,
+        "margin_mm": 5.48,
+        "kicad_refs": [
+          "U2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "mission.afe_RF",
+        "title": "afe_RF",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "Sensor",
+          "RF"
+        ],
+        "metric": "center_distance",
+        "message": "Sensor and RF are 20.00 mm apart, 20 mm required.",
+        "rationale": "Authored demo policy, not solved physics.",
+        "measured_mm": 20.0,
+        "required_mm": 20.0,
+        "margin_mm": 0.0,
+        "center_distance_mm": 20.0,
+        "edge_gap_mm": 9.22,
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.15,
+            0.8,
+            0.3
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            34.0,
+            19.0,
+            6.6
+          ],
+          "to": [
+            18.0,
+            31.0,
+            6.6
+          ],
+          "label": "20.0 mm \u2713 (needs 20.0)",
+          "label_at": [
+            26.0,
+            25.0,
+            12.6
+          ],
+          "marker": "check",
+          "marker_at": [
+            26.0,
+            25.0,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "U2",
+          "U3"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "mission.afe_Regulator",
+        "title": "afe_Regulator",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "Sensor",
+          "Regulator"
+        ],
+        "metric": "center_distance",
+        "message": "Sensor and Regulator are 20.86 mm apart, 20 mm required.",
+        "rationale": "Authored demo policy, not solved physics.",
+        "measured_mm": 20.863,
+        "required_mm": 20.0,
+        "margin_mm": 0.863,
+        "center_distance_mm": 20.863,
+        "edge_gap_mm": 16.63,
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.15,
+            0.8,
+            0.3
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            34.0,
+            19.0,
+            6.6
+          ],
+          "to": [
+            48.5,
+            34.0,
+            6.6
+          ],
+          "label": "20.9 mm \u2713 (needs 20.0)",
+          "label_at": [
+            41.25,
+            26.5,
+            12.6
+          ],
+          "marker": "check",
+          "marker_at": [
+            41.25,
+            26.5,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "U2",
+          "U4"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "mission.afe_inductor",
+        "title": "afe_inductor",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "Sensor",
+          "L1"
+        ],
+        "metric": "center_distance",
+        "message": "Sensor and L1 are 20.04 mm apart, 20 mm required.",
+        "rationale": "Authored analog-to-switching-inductor separation policy.",
+        "measured_mm": 20.039,
+        "required_mm": 20.0,
+        "margin_mm": 0.039,
+        "center_distance_mm": 20.039,
+        "edge_gap_mm": 15.008,
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.15,
+            0.8,
+            0.3
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            34.0,
+            19.0,
+            6.6
+          ],
+          "to": [
+            45.15,
+            35.65,
+            6.6
+          ],
+          "label": "20.0 mm \u2713 (needs 20.0)",
+          "label_at": [
+            39.575,
+            27.325,
+            12.6
+          ],
+          "marker": "check",
+          "marker_at": [
+            39.575,
+            27.325,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "U2",
+          "L1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "mission.support_C1",
+        "title": "support_C1",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "C1",
+          "MCU"
+        ],
+        "metric": "center_distance",
+        "message": "C1 and MCU are 5.57 mm apart, 6 mm maximum.",
+        "rationale": "Authored placement proximity policy; not a routed parasitic calculation.",
+        "measured_mm": 5.566,
+        "required_mm": 6.0,
+        "margin_mm": 0.434,
+        "center_distance_mm": 5.566,
+        "edge_gap_mm": 2.9,
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.15,
+            0.8,
+            0.3
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            49.3,
+            18.3,
+            6.6
+          ],
+          "to": [
+            51.0,
+            13.0,
+            6.6
+          ],
+          "label": "5.6 mm \u2713 (needs 6.0)",
+          "label_at": [
+            50.15,
+            15.65,
+            12.6
+          ],
+          "marker": "check",
+          "marker_at": [
+            50.15,
+            15.65,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "C1",
+          "U1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "mission.support_C2",
+        "title": "support_C2",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "C2",
+          "Sensor"
+        ],
+        "metric": "center_distance",
+        "message": "C2 and Sensor are 5.99 mm apart, 6 mm maximum.",
+        "rationale": "Authored placement proximity policy; not a routed parasitic calculation.",
+        "measured_mm": 5.994,
+        "required_mm": 6.0,
+        "margin_mm": 0.006,
+        "center_distance_mm": 5.994,
+        "edge_gap_mm": 2.9,
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.15,
+            0.8,
+            0.3
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            36.8,
+            24.3,
+            6.6
+          ],
+          "to": [
+            34.0,
+            19.0,
+            6.6
+          ],
+          "label": "6.0 mm \u2713 (needs 6.0)",
+          "label_at": [
+            35.4,
+            21.65,
+            12.6
+          ],
+          "marker": "check",
+          "marker_at": [
+            35.4,
+            21.65,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "C2",
+          "U2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "mission.support_C3",
+        "title": "support_C3",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "C3",
+          "RF"
+        ],
+        "metric": "center_distance",
+        "message": "C3 and RF are 11.99 mm apart, 12 mm maximum.",
+        "rationale": "Authored placement proximity policy; not a routed parasitic calculation.",
+        "measured_mm": 11.987,
+        "required_mm": 12.0,
+        "margin_mm": 0.013,
+        "center_distance_mm": 11.987,
+        "edge_gap_mm": 5.0,
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.15,
+            0.8,
+            0.3
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            28.8,
+            25.8,
+            6.6
+          ],
+          "to": [
+            18.0,
+            31.0,
+            6.6
+          ],
+          "label": "12.0 mm \u2713 (needs 12.0)",
+          "label_at": [
+            23.4,
+            28.4,
+            12.6
+          ],
+          "marker": "check",
+          "marker_at": [
+            23.4,
+            28.4,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "C3",
+          "U3"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "mission.support_C4",
+        "title": "support_C4",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "C4",
+          "Regulator"
+        ],
+        "metric": "center_distance",
+        "message": "C4 and Regulator are 5.98 mm apart, 30 mm maximum.",
+        "rationale": "Authored placement proximity policy; not a routed parasitic calculation.",
+        "measured_mm": 5.982,
+        "required_mm": 30.0,
+        "margin_mm": 24.018,
+        "center_distance_mm": 5.982,
+        "edge_gap_mm": 3.819,
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.15,
+            0.8,
+            0.3
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            44.8,
+            29.3,
+            6.6
+          ],
+          "to": [
+            48.5,
+            34.0,
+            6.6
+          ],
+          "label": "6.0 mm \u2713 (needs 30.0)",
+          "label_at": [
+            46.65,
+            31.65,
+            12.6
+          ],
+          "marker": "check",
+          "marker_at": [
+            46.65,
+            31.65,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "C4",
+          "U4"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "mission.support_C5",
+        "title": "support_C5",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "C5",
+          "Regulator"
+        ],
+        "metric": "center_distance",
+        "message": "C5 and Regulator are 5.95 mm apart, 6 mm maximum.",
+        "rationale": "Authored placement proximity policy; not a routed parasitic calculation.",
+        "measured_mm": 5.948,
+        "required_mm": 6.0,
+        "margin_mm": 0.052,
+        "center_distance_mm": 5.948,
+        "edge_gap_mm": 3.924,
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.15,
+            0.8,
+            0.3
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            46.8,
+            28.3,
+            6.6
+          ],
+          "to": [
+            48.5,
+            34.0,
+            6.6
+          ],
+          "label": "5.9 mm \u2713 (needs 6.0)",
+          "label_at": [
+            47.65,
+            31.15,
+            12.6
+          ],
+          "marker": "check",
+          "marker_at": [
+            47.65,
+            31.15,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "C5",
+          "U4"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "mission.support_C6",
+        "title": "support_C6",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "C6",
+          "Driver"
+        ],
+        "metric": "center_distance",
+        "message": "C6 and Driver are 5.66 mm apart, 6 mm maximum.",
+        "rationale": "Authored placement proximity policy; not a routed parasitic calculation.",
+        "measured_mm": 5.661,
+        "required_mm": 6.0,
+        "margin_mm": 0.339,
+        "center_distance_mm": 5.661,
+        "edge_gap_mm": 3.45,
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.15,
+            0.8,
+            0.3
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            52.3,
+            25.3,
+            6.6
+          ],
+          "to": [
+            57.95,
+            24.95,
+            6.6
+          ],
+          "label": "5.7 mm \u2713 (needs 6.0)",
+          "label_at": [
+            55.125,
+            25.125,
+            12.6
+          ],
+          "marker": "check",
+          "marker_at": [
+            55.125,
+            25.125,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "C6",
+          "U5"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "mission.support_C7",
+        "title": "support_C7",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "C7",
+          "Sensor"
+        ],
+        "metric": "center_distance",
+        "message": "C7 and Sensor are 5.99 mm apart, 6 mm maximum.",
+        "rationale": "Authored placement proximity policy; not a routed parasitic calculation.",
+        "measured_mm": 5.994,
+        "required_mm": 6.0,
+        "margin_mm": 0.006,
+        "center_distance_mm": 5.994,
+        "edge_gap_mm": 2.532,
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.15,
+            0.8,
+            0.3
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            39.3,
+            21.8,
+            6.6
+          ],
+          "to": [
+            34.0,
+            19.0,
+            6.6
+          ],
+          "label": "6.0 mm \u2713 (needs 6.0)",
+          "label_at": [
+            36.65,
+            20.4,
+            12.6
+          ],
+          "marker": "check",
+          "marker_at": [
+            36.65,
+            20.4,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "C7",
+          "U2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "mission.support_J2",
+        "title": "support_J2",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "J2",
+          "Sensor"
+        ],
+        "metric": "center_distance",
+        "message": "J2 and Sensor are 10.70 mm apart, 12 mm maximum.",
+        "rationale": "Authored placement proximity policy; not a routed parasitic calculation.",
+        "measured_mm": 10.7,
+        "required_mm": 12.0,
+        "margin_mm": 1.3,
+        "center_distance_mm": 10.7,
+        "edge_gap_mm": 4.81,
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.15,
+            0.8,
+            0.3
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            42.5,
+            25.5,
+            6.6
+          ],
+          "to": [
+            34.0,
+            19.0,
+            6.6
+          ],
+          "label": "10.7 mm \u2713 (needs 12.0)",
+          "label_at": [
+            38.25,
+            22.25,
+            12.6
+          ],
+          "marker": "check",
+          "marker_at": [
+            38.25,
+            22.25,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "J2",
+          "U2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "mission.support_J3",
+        "title": "support_J3",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "J3",
+          "MCU"
+        ],
+        "metric": "center_distance",
+        "message": "J3 and MCU are 7.81 mm apart, 8 mm maximum.",
+        "rationale": "Authored placement proximity policy; not a routed parasitic calculation.",
+        "measured_mm": 7.81,
+        "required_mm": 8.0,
+        "margin_mm": 0.19,
+        "center_distance_mm": 7.81,
+        "edge_gap_mm": 1.329,
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.15,
+            0.8,
+            0.3
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            45.0,
+            18.0,
+            6.6
+          ],
+          "to": [
+            51.0,
+            13.0,
+            6.6
+          ],
+          "label": "7.8 mm \u2713 (needs 8.0)",
+          "label_at": [
+            48.0,
+            15.5,
+            12.6
+          ],
+          "marker": "check",
+          "marker_at": [
+            48.0,
+            15.5,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "J3",
+          "U1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "mission.support_L1",
+        "title": "support_L1",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "L1",
+          "Regulator"
+        ],
+        "metric": "center_distance",
+        "message": "L1 and Regulator are 3.73 mm apart, 6 mm maximum.",
+        "rationale": "Authored placement proximity policy; not a routed parasitic calculation.",
+        "measured_mm": 3.734,
+        "required_mm": 6.0,
+        "margin_mm": 2.266,
+        "center_distance_mm": 3.734,
+        "edge_gap_mm": 0.7,
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.15,
+            0.8,
+            0.3
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            45.15,
+            35.65,
+            6.6
+          ],
+          "to": [
+            48.5,
+            34.0,
+            6.6
+          ],
+          "label": "3.7 mm \u2713 (needs 6.0)",
+          "label_at": [
+            46.825,
+            34.825,
+            12.6
+          ],
+          "marker": "check",
+          "marker_at": [
+            46.825,
+            34.825,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "L1",
+          "U4"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "mission.support_R1",
+        "title": "support_R1",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "R1",
+          "Sensor"
+        ],
+        "metric": "center_distance",
+        "message": "R1 and Sensor are 7.86 mm apart, 8 mm maximum.",
+        "rationale": "Authored placement proximity policy; not a routed parasitic calculation.",
+        "measured_mm": 7.857,
+        "required_mm": 8.0,
+        "margin_mm": 0.143,
+        "center_distance_mm": 7.857,
+        "edge_gap_mm": 4.173,
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.15,
+            0.8,
+            0.3
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            39.3,
+            24.8,
+            6.6
+          ],
+          "to": [
+            34.0,
+            19.0,
+            6.6
+          ],
+          "label": "7.9 mm \u2713 (needs 8.0)",
+          "label_at": [
+            36.65,
+            21.9,
+            12.6
+          ],
+          "marker": "check",
+          "marker_at": [
+            36.65,
+            21.9,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "R1",
+          "U2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "mission.support_R2",
+        "title": "support_R2",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "R2",
+          "Sensor"
+        ],
+        "metric": "center_distance",
+        "message": "R2 and Sensor are 7.56 mm apart, 8 mm maximum.",
+        "rationale": "Authored placement proximity policy; not a routed parasitic calculation.",
+        "measured_mm": 7.558,
+        "required_mm": 8.0,
+        "margin_mm": 0.442,
+        "center_distance_mm": 7.558,
+        "edge_gap_mm": 4.428,
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.15,
+            0.8,
+            0.3
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            37.3,
+            25.8,
+            6.6
+          ],
+          "to": [
+            34.0,
+            19.0,
+            6.6
+          ],
+          "label": "7.6 mm \u2713 (needs 8.0)",
+          "label_at": [
+            35.65,
+            22.4,
+            12.6
+          ],
+          "marker": "check",
+          "marker_at": [
+            35.65,
+            22.4,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "R2",
+          "U2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "mission.support_R3",
+        "title": "support_R3",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "R3",
+          "Driver"
+        ],
+        "metric": "center_distance",
+        "message": "R3 and Driver are 5.77 mm apart, 6 mm maximum.",
+        "rationale": "Authored placement proximity policy; not a routed parasitic calculation.",
+        "measured_mm": 5.766,
+        "required_mm": 6.0,
+        "margin_mm": 0.234,
+        "center_distance_mm": 5.766,
+        "edge_gap_mm": 3.45,
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.15,
+            0.8,
+            0.3
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            52.3,
+            23.8,
+            6.6
+          ],
+          "to": [
+            57.95,
+            24.95,
+            6.6
+          ],
+          "label": "5.8 mm \u2713 (needs 6.0)",
+          "label_at": [
+            55.125,
+            24.375,
+            12.6
+          ],
+          "marker": "check",
+          "marker_at": [
+            55.125,
+            24.375,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "R3",
+          "U5"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "mission.support_R4",
+        "title": "support_R4",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "R4",
+          "MCU"
+        ],
+        "metric": "center_distance",
+        "message": "R4 and MCU are 5.98 mm apart, 6 mm maximum.",
+        "rationale": "Authored placement proximity policy; not a routed parasitic calculation.",
+        "measured_mm": 5.977,
+        "required_mm": 6.0,
+        "margin_mm": 0.023,
+        "center_distance_mm": 5.977,
+        "edge_gap_mm": 2.9,
+        "overlay": {
+          "type": "measure_line",
+          "color": [
+            0.15,
+            0.8,
+            0.3
+          ],
+          "collection": "03_Constraint_Overlays",
+          "from": [
+            45.3,
+            14.8,
+            6.6
+          ],
+          "to": [
+            51.0,
+            13.0,
+            6.6
+          ],
+          "label": "6.0 mm \u2713 (needs 6.0)",
+          "label_at": [
+            48.15,
+            13.9,
+            12.6
+          ],
+          "marker": "check",
+          "marker_at": [
+            48.15,
+            13.9,
+            6.6
+          ]
+        },
+        "kicad_refs": [
+          "R4",
+          "U1"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "zone.heat_overlap::Driver|RF",
+        "title": "RF is outside the Driver heat zone",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "Driver",
+          "RF"
+        ],
+        "metric": "zone_penetration",
+        "message": "RF sits outside the 22 mm thermal zone around Driver.",
+        "rationale": "Simplified thermal model: a fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "U5",
+          "U3"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "zone.heat_overlap::Driver|Sensor",
+        "title": "Sensor is outside the Driver heat zone",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "Driver",
+          "Sensor"
+        ],
+        "metric": "zone_penetration",
+        "message": "Sensor sits outside the 22 mm thermal zone around Driver.",
+        "rationale": "Simplified thermal model: a fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "U5",
+          "U2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "zone.heat_overlap::Regulator|RF",
+        "title": "RF is outside the Regulator heat zone",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "Regulator",
+          "RF"
+        ],
+        "metric": "zone_penetration",
+        "message": "RF sits outside the 18 mm thermal zone around Regulator.",
+        "rationale": "Simplified thermal model: a fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "U4",
+          "U3"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "zone.heat_overlap::Regulator|Sensor",
+        "title": "Sensor is outside the Regulator heat zone",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "Regulator",
+          "Sensor"
+        ],
+        "metric": "zone_penetration",
+        "message": "Sensor sits outside the 18 mm thermal zone around Regulator.",
+        "rationale": "Simplified thermal model: a fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "kicad_refs": [
+          "U4",
+          "U2"
+        ],
+        "unmapped_refs": []
+      },
+      {
+        "id": "zone.rf_keepout::RF",
+        "title": "RF antenna keep-out is clear",
+        "status": "PASS",
+        "severity": "major",
+        "subjects": [
+          "RF"
+        ],
+        "metric": "intruder_count",
+        "message": "The 22 mm keep-out ahead of RF is clear.",
+        "rationale": "An antenna needs a clear volume with no copper or bulk material in front of it; anything inside detunes it.",
+        "measured_mm": 0.0,
+        "required_mm": 0.0,
+        "margin_mm": -0.0,
+        "overlay": {
+          "type": "zone_rect",
+          "color": [
+            0.6,
+            0.3,
+            0.85
+          ],
+          "collection": "03_Constraint_Overlays",
+          "center": [
+            18.0,
+            12.0,
+            4.0
+          ],
+          "size_mm": [
+            10.0,
+            22.0
+          ],
+          "label": "RF keep-out \u2713",
+          "label_at": [
+            18.0,
+            12.0,
+            12.6
+          ]
+        },
+        "kicad_refs": [
+          "U3"
+        ],
+        "unmapped_refs": []
+      }
+    ],
+    "zone_overlays": [
+      {
+        "type": "zone_rect",
+        "color": [
+          0.6,
+          0.3,
+          0.85
+        ],
+        "collection": "03_Constraint_Overlays",
+        "center": [
+          18.0,
+          12.0,
+          4.0
+        ],
+        "size_mm": [
+          10.0,
+          22.0
+        ],
+        "label": "RF antenna keep-out",
+        "label_at": [
+          18.0,
+          12.0,
+          12.6
+        ]
+      },
+      {
+        "type": "zone_circle",
+        "color": [
+          0.95,
+          0.45,
+          0.1
+        ],
+        "collection": "03_Constraint_Overlays",
+        "center": [
+          48.5,
+          34.0,
+          4.0
+        ],
+        "radius_mm": 18.0,
+        "label": "Regulator thermal 18 mm",
+        "label_at": [
+          48.5,
+          52.0,
+          12.6
+        ]
+      },
+      {
+        "type": "zone_circle",
+        "color": [
+          0.95,
+          0.65,
+          0.1
+        ],
+        "collection": "03_Constraint_Overlays",
+        "center": [
+          57.95,
+          24.95,
+          4.0
+        ],
+        "radius_mm": 22.0,
+        "label": "Driver thermal 22 mm",
+        "label_at": [
+          57.95,
+          46.95,
+          12.6
+        ]
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "mission.afe_MCU",
+      "title": "afe_MCU",
+      "status": "FAIL",
+      "severity": "major",
+      "subjects": [
+        "Sensor",
+        "MCU"
+      ],
+      "metric": "center_distance",
+      "message": "Sensor and MCU are only 18.03 mm apart, 30 mm required.",
+      "rationale": "Authored demo policy, not solved physics.",
+      "measured_mm": 18.028,
+      "required_mm": 30.0,
+      "margin_mm": -11.972,
+      "center_distance_mm": 18.028,
+      "edge_gap_mm": 13.153,
+      "suggestion": "Adjust Sensor/MCU spacing by 11.97 mm.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.9,
+          0.15,
+          0.15
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          34.0,
+          19.0,
+          6.6
+        ],
+        "to": [
+          51.0,
+          13.0,
+          6.6
+        ],
+        "label": "18.0 mm \u2717 (needs 30.0)",
+        "label_at": [
+          42.5,
+          16.0,
+          12.6
+        ],
+        "marker": "x",
+        "marker_at": [
+          42.5,
+          16.0,
+          6.6
+        ]
+      },
+      "kicad_refs": [
+        "U2",
+        "U1"
+      ],
+      "unmapped_refs": []
+    },
+    {
+      "id": "access.connector",
+      "title": "Connector accessibility",
+      "status": "SKIP",
+      "severity": "info",
+      "subjects": [
+        "Battery",
+        "J2",
+        "J3"
+      ],
+      "metric": "",
+      "message": "The enclosure declares no openings, so accessibility could not be evaluated.",
+      "rationale": "Requires at least one entry in enclosure.openings.",
+      "kicad_refs": [
+        "J1",
+        "J2",
+        "J3"
+      ],
+      "unmapped_refs": []
+    }
+  ],
+  "cad_mutated": false,
+  "limitations": [
+    "Brief text is retained as context; only structured layout rules are evaluated.",
+    "Uses checked-in ECG demo part properties, not arbitrary manufacturer parts.",
+    "Thermal and EMI clearances are declared geometric proxies, not temperature or electromagnetic solutions.",
+    "Not a complete electrical, routing, medical-safety or manufacturing validation.",
+    "No schematic/netlist completeness, patient/battery coverage, or exact package verification. Native DRC below is on saved disk board, not unsaved edits."
+  ],
+  "ui_annotations": [
+    {
+      "check_id": "mission.afe_MCU",
+      "revision": 1788910605474454000,
+      "component_refs": [
+        "U2",
+        "U1"
+      ],
+      "status": "FAIL",
+      "color": "red",
+      "message": "Sensor and MCU are only 18.03 mm apart, 30 mm required.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.9,
+          0.15,
+          0.15
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          34.0,
+          19.0,
+          6.6
+        ],
+        "to": [
+          51.0,
+          13.0,
+          6.6
+        ],
+        "label": "18.0 mm \u2717 (needs 30.0)",
+        "label_at": [
+          42.5,
+          16.0,
+          12.6
+        ],
+        "marker": "x",
+        "marker_at": [
+          42.5,
+          16.0,
+          6.6
+        ]
+      }
+    },
+    {
+      "check_id": "access.connector",
+      "revision": 1788910605474454000,
+      "component_refs": [
+        "J1",
+        "J2",
+        "J3"
+      ],
+      "status": "SKIP",
+      "color": "amber",
+      "message": "The enclosure declares no openings, so accessibility could not be evaluated.",
+      "overlay": null
+    }
+  ],
+  "native_board_revision": "07efe494b831081cf9bf884f4f18120dbef17309eee02f699eeef83e6d629b01",
+  "source": "live KiCad footprint positions; fixed demo outline/enclosure and cached package dimensions",
+  "saved_board_drc": {
+    "$schema": "https://schemas.kicad.org/drc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-09-08T16:36:48",
+    "ignored_checks": [
+      {
+        "description": "Footprint has no courtyard defined",
+        "key": "missing_courtyard"
+      },
+      {
+        "description": "Track endpoint not centered on via",
+        "key": "track_not_centered_on_via"
+      },
+      {
+        "description": "Tuning profile track geometries",
+        "key": "tuning_profile_track_geometries"
+      },
+      {
+        "description": "Footprint doesn't match symbol's footprint filters",
+        "key": "footprint_filters_mismatch"
+      },
+      {
+        "description": "Footprint component type doesn't match footprint pads",
+        "key": "footprint_type_mismatch"
+      }
+    ],
+    "included_severities": [
+      "error",
+      "warning"
+    ],
+    "kicad_version": "10.0.6",
+    "schematic_parity": [],
+    "source": "MissionPCB.kicad_pcb",
+    "unconnected_items": [],
+    "violations": [
+      {
+        "description": "Items not allowed (keepout area of U3)",
+        "items": [
+          {
+            "description": "Pad 40 [<no net>] of U3 on F.Cu",
+            "pos": {
+              "x": 111.9,
+              "y": 109.750001
+            },
+            "uuid": "38eaf330-6104-4d5e-bf23-28d88e934508"
+          }
+        ],
+        "severity": "error",
+        "type": "items_not_allowed"
+      },
+      {
+        "description": "Items not allowed (keepout area of U3)",
+        "items": [
+          {
+            "description": "Pad 41 [<no net>] of U3 on F.Cu",
+            "pos": {
+              "x": 111.9,
+              "y": 111.150001
+            },
+            "uuid": "1a87b4cf-203c-438d-a202-169962443e8c"
+          }
+        ],
+        "severity": "error",
+        "type": "items_not_allowed"
+      },
+      {
+        "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0089 mm)",
+        "items": [
+          {
+            "description": "Pad 2 [<no net>] of R1 on F.Cu",
+            "pos": {
+              "x": 130.3,
+              "y": 120.025
+            },
+            "uuid": "79ecd963-5bdb-49f9-a6a5-3ffa62c63ad9"
+          },
+          {
+            "description": "Pad MP [<no net>] of J2 on F.Cu",
+            "pos": {
+              "x": 131.625,
+              "y": 120.799999
+            },
+            "uuid": "a4e2e75f-58df-494d-9ae1-c61dbff5c4d9"
+          }
+        ],
+        "severity": "error",
+        "type": "clearance"
+      },
+      {
+        "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1250 mm)",
+        "items": [
+          {
+            "description": "Pad 1 [<no net>] of U4 on F.Cu",
+            "pos": {
+              "x": 138.4875,
+              "y": 109.2
+            },
+            "uuid": "ecd10646-d2e1-4d5c-9079-317eef04929d"
+          },
+          {
+            "description": "Pad 2 [<no net>] of L1 on F.Cu",
+            "pos": {
+              "x": 137.7,
+              "y": 108.35
+            },
+            "uuid": "fc93f275-4ed3-4bc7-ae60-42a42fa2afc5"
+          }
+        ],
+        "severity": "error",
+        "type": "clearance"
+      },
+      {
+        "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0470 mm)",
+        "items": [
+          {
+            "description": "Pad 2 [<no net>] of C5 on F.Cu",
+            "pos": {
+              "x": 137.8,
+              "y": 116.475
+            },
+            "uuid": "4675a9f4-06dd-4339-8b86-e5e63ef5191d"
+          },
+          {
+            "description": "Pad MP [<no net>] of J1 on F.Cu",
+            "pos": {
+              "x": 139.2,
+              "y": 117.200001
+            },
+            "uuid": "abc5502c-8ae7-4f3c-aac5-546e6d1f9e2c"
+          }
+        ],
+        "severity": "error",
+        "type": "clearance"
+      },
+      {
+        "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1250 mm)",
+        "items": [
+          {
+            "description": "Pad 2 [<no net>] of U4 on F.Cu",
+            "pos": {
+              "x": 138.4875,
+              "y": 109.6
+            },
+            "uuid": "87a881b4-e36b-4fff-b85f-938a60e92a0a"
+          },
+          {
+            "description": "Pad 2 [<no net>] of L1 on F.Cu",
+            "pos": {
+              "x": 137.7,
+              "y": 108.35
+            },
+            "uuid": "fc93f275-4ed3-4bc7-ae60-42a42fa2afc5"
+          }
+        ],
+        "severity": "error",
+        "type": "clearance"
+      },
+      {
+        "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
+        "items": [
+          {
+            "description": "Pad 1 [<no net>] of J1 on F.Cu",
+            "pos": {
+              "x": 136.675,
+              "y": 118.5
+            },
+            "uuid": "5cac0e25-ea46-43ad-8baa-7fb836f0620f"
+          },
+          {
+            "description": "Pad 2 [<no net>] of J2 on F.Cu",
+            "pos": {
+              "x": 135.5,
+              "y": 118.5
+            },
+            "uuid": "92531f87-5ff0-4e00-8bbe-288462e67639"
+          }
+        ],
+        "severity": "error",
+        "type": "clearance"
+      },
+      {
+        "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
+        "items": [
+          {
+            "description": "Pad 2 [<no net>] of J1 on F.Cu",
+            "pos": {
+              "x": 136.675,
+              "y": 119.499999
+            },
+            "uuid": "daf28058-8524-4d11-9a84-2aa5e6f3a4c9"
+          },
+          {
+            "description": "Pad 3 [<no net>] of J2 on F.Cu",
+            "pos": {
+              "x": 135.499999,
+              "y": 119.5
+            },
+            "uuid": "9fffbd40-d28a-4b25-936d-ccee7a1bd753"
+          }
+        ],
+        "severity": "error",
+        "type": "clearance"
+      },
+      {
+        "description": "Courtyards overlap",
+        "items": [
+          {
+            "description": "Footprint J2",
+            "pos": {
+              "x": 133.5,
+              "y": 118.5
+            },
+            "uuid": "3d8bc6f0-5032-44ce-a0a4-949159558132"
+          },
+          {
+            "description": "Footprint C7",
+            "pos": {
+              "x": 130.3,
+              "y": 122.2
+            },
+            "uuid": "3ff45f9b-163b-4028-8b63-806ed0e0eb3a"
+          }
+        ],
+        "severity": "error",
+        "type": "courtyards_overlap"
+      },
+      {
+        "description": "Courtyards overlap",
+        "items": [
+          {
+            "description": "Footprint J2",
+            "pos": {
+              "x": 133.5,
+              "y": 118.5
+            },
+            "uuid": "3d8bc6f0-5032-44ce-a0a4-949159558132"
+          },
+          {
+            "description": "Footprint J1",
+            "pos": {
+              "x": 138.0,
+              "y": 119.0
+            },
+            "uuid": "6c1e79ed-a1c0-4c1b-8516-47a50bc2dfc6"
+          }
+        ],
+        "severity": "error",
+        "type": "courtyards_overlap"
+      },
+      {
+        "description": "Courtyards overlap",
+        "items": [
+          {
+            "description": "Footprint J2",
+            "pos": {
+              "x": 133.5,
+              "y": 118.5
+            },
+            "uuid": "3d8bc6f0-5032-44ce-a0a4-949159558132"
+          },
+          {
+            "description": "Footprint R1",
+            "pos": {
+              "x": 130.3,
+              "y": 119.2
+            },
+            "uuid": "d2f4bbfd-79e8-4d55-8092-012f7c1273ac"
+          }
+        ],
+        "severity": "error",
+        "type": "courtyards_overlap"
+      },
+      {
+        "description": "Courtyards overlap",
+        "items": [
+          {
+            "description": "Footprint C4",
+            "pos": {
+              "x": 135.8,
+              "y": 114.7
+            },
+            "uuid": "4a2198ce-3d7c-42f0-a0c3-8e5839353f9a"
+          },
+          {
+            "description": "Footprint C5",
+            "pos": {
+              "x": 137.8,
+              "y": 115.7
+            },
+            "uuid": "9bc1d343-e95a-4686-8475-d41c925ad07f"
+          }
+        ],
+        "severity": "error",
+        "type": "courtyards_overlap"
+      },
+      {
+        "description": "Courtyards overlap",
+        "items": [
+          {
+            "description": "Footprint C1",
+            "pos": {
+              "x": 140.3,
+              "y": 125.7
+            },
+            "uuid": "64b3de13-3f27-43da-a9b3-d3457177313c"
+          },
+          {
+            "description": "Footprint J3",
+            "pos": {
+              "x": 136.0,
+              "y": 126.0
+            },
+            "uuid": "98d499e3-2508-4773-aa2b-fc93ca4b2204"
+          }
+        ],
+        "severity": "error",
+        "type": "courtyards_overlap"
+      },
+      {
+        "description": "Courtyards overlap",
+        "items": [
+          {
+            "description": "Footprint J1",
+            "pos": {
+              "x": 138.0,
+              "y": 119.0
+            },
+            "uuid": "6c1e79ed-a1c0-4c1b-8516-47a50bc2dfc6"
+          },
+          {
+            "description": "Footprint C5",
+            "pos": {
+              "x": 137.8,
+              "y": 115.7
+            },
+            "uuid": "9bc1d343-e95a-4686-8475-d41c925ad07f"
+          }
+        ],
+        "severity": "error",
+        "type": "courtyards_overlap"
+      },
+      {
+        "description": "Courtyards overlap",
+        "items": [
+          {
+            "description": "Footprint L1",
+            "pos": {
+              "x": 136.15,
+              "y": 108.35
+            },
+            "uuid": "7b8df0fb-6a8c-445f-ba5c-3215606a6d06"
+          },
+          {
+            "description": "Footprint U4",
+            "pos": {
+              "x": 139.5,
+              "y": 110.0
+            },
+            "uuid": "8a95718b-305a-4e80-bbf0-d41747ea269a"
+          }
+        ],
+        "severity": "error",
+        "type": "courtyards_overlap"
+      },
+      {
+        "description": "Courtyards overlap",
+        "items": [
+          {
+            "description": "Footprint U1",
+            "pos": {
+              "x": 142.0,
+              "y": 131.0
+            },
+            "uuid": "91230724-4386-4c8f-9c2a-edfcd3286998"
+          },
+          {
+            "description": "Footprint J3",
+            "pos": {
+              "x": 136.0,
+              "y": 126.0
+            },
+            "uuid": "98d499e3-2508-4773-aa2b-fc93ca4b2204"
+          }
+        ],
+        "severity": "error",
+        "type": "courtyards_overlap"
+      },
+      {
+        "description": "Courtyards overlap",
+        "items": [
+          {
+            "description": "Footprint J3",
+            "pos": {
+              "x": 136.0,
+              "y": 126.0
+            },
+            "uuid": "98d499e3-2508-4773-aa2b-fc93ca4b2204"
+          },
+          {
+            "description": "Footprint R4",
+            "pos": {
+              "x": 136.3,
+              "y": 129.199999
+            },
+            "uuid": "cfbd5c1a-7580-4ead-b5b0-f3ad412ce2e6"
+          }
+        ],
+        "severity": "error",
+        "type": "courtyards_overlap"
+      },
+      {
+        "description": "Courtyards overlap",
+        "items": [
+          {
+            "description": "Footprint R2",
+            "pos": {
+              "x": 128.3,
+              "y": 118.2
+            },
+            "uuid": "a8c2c121-d2c2-4a22-9726-97c7c6bbcbf5"
+          },
+          {
+            "description": "Footprint R1",
+            "pos": {
+              "x": 130.3,
+              "y": 119.2
+            },
+            "uuid": "d2f4bbfd-79e8-4d55-8092-012f7c1273ac"
+          }
+        ],
+        "severity": "error",
+        "type": "courtyards_overlap"
+      },
+      {
+        "description": "Front solder mask aperture bridges items with different nets",
+        "items": [
+          {
+            "description": "Pad 2 [<no net>] of J2 on F.Cu",
+            "pos": {
+              "x": 135.5,
+              "y": 118.5
+            },
+            "uuid": "92531f87-5ff0-4e00-8bbe-288462e67639"
+          },
+          {
+            "description": "Pad 1 [<no net>] of J1 on F.Cu",
+            "pos": {
+              "x": 136.675,
+              "y": 118.5
+            },
+            "uuid": "5cac0e25-ea46-43ad-8baa-7fb836f0620f"
+          }
+        ],
+        "severity": "error",
+        "type": "solder_mask_bridge"
+      },
+      {
+        "description": "Front solder mask aperture bridges items with different nets",
+        "items": [
+          {
+            "description": "Pad 2 [<no net>] of J1 on F.Cu",
+            "pos": {
+              "x": 136.675,
+              "y": 119.499999
+            },
+            "uuid": "daf28058-8524-4d11-9a84-2aa5e6f3a4c9"
+          },
+          {
+            "description": "Pad 3 [<no net>] of J2 on F.Cu",
+            "pos": {
+              "x": 135.499999,
+              "y": 119.5
+            },
+            "uuid": "9fffbd40-d28a-4b25-936d-ccee7a1bd753"
+          }
+        ],
+        "severity": "error",
+        "type": "solder_mask_bridge"
+      },
+      {
+        "description": "Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.6500 mm)",
+        "items": [
+          {
+            "description": "Reference field of C6",
+            "pos": {
+              "x": 143.3,
+              "y": 117.27
+            },
+            "uuid": "f2e65948-ac93-434f-abc8-00091847ee00"
+          }
+        ],
+        "severity": "warning",
+        "type": "text_height"
+      },
+      {
+        "description": "Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.6500 mm)",
+        "items": [
+          {
+            "description": "Reference field of J2",
+            "pos": {
+              "x": 137.48,
+              "y": 118.5
+            },
+            "uuid": "6bdbefcd-13ed-4943-8765-200487aa0d7e"
+          }
+        ],
+        "severity": "warning",
+        "type": "text_height"
+      },
+      {
+        "description": "Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.6500 mm)",
+        "items": [
+          {
+            "description": "Reference field of C2",
+            "pos": {
+              "x": 127.8,
+              "y": 118.27
+            },
+            "uuid": "5c878252-3a62-414f-9fb0-357a3fcc66ba"
+          }
+        ],
+        "severity": "warning",
+        "type": "text_height"
+      },
+      {
+        "description": "Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.6500 mm)",
+        "items": [
+          {
+            "description": "Reference field of C7",
+            "pos": {
+              "x": 130.3,
+              "y": 120.77
+            },
+            "uuid": "915fdeee-8625-4d14-b391-61223a623e0c"
+          }
+        ],
+        "severity": "warning",
+        "type": "text_height"
+      },
+      {
+        "description": "Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.6500 mm)",
+        "items": [
+          {
+            "description": "Reference field of C3",
+            "pos": {
+              "x": 119.8,
+              "y": 116.77
+            },
+            "uuid": "405e1f7b-68f4-442b-b322-4d2be70bd875"
+          }
+        ],
+        "severity": "warning",
+        "type": "text_height"
+      },
+      {
+        "description": "Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.6500 mm)",
+        "items": [
+          {
+            "description": "Reference field of C4",
+            "pos": {
+              "x": 135.8,
+              "y": 113.27
+            },
+            "uuid": "c74b092d-0e89-42e8-912b-f7e4e5e00a37"
+          }
+        ],
+        "severity": "warning",
+        "type": "text_height"
+      },
+      {
+        "description": "Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.6500 mm)",
+        "items": [
+          {
+            "description": "Reference field of C1",
+            "pos": {
+              "x": 140.3,
+              "y": 124.27
+            },
+            "uuid": "ca20adaf-c791-4586-9625-0a12d4bacd33"
+          }
+        ],
+        "severity": "warning",
+        "type": "text_height"
+      },
+      {
+        "description": "Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.6500 mm)",
+        "items": [
+          {
+            "description": "Reference field of L1",
+            "pos": {
+              "x": 136.15,
+              "y": 105.35
+            },
+            "uuid": "983f9c06-7e05-4503-8728-dead3741ec12"
+          }
+        ],
+        "severity": "warning",
+        "type": "text_height"
+      },
+      {
+        "description": "Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.6500 mm)",
+        "items": [
+          {
+            "description": "Reference field of R3",
+            "pos": {
+              "x": 143.3,
+              "y": 118.77
+            },
+            "uuid": "d7b4c9d8-1433-492d-83c3-1d1c9800355b"
+          }
+        ],
+        "severity": "warning",
+        "type": "text_height"
+      },
+      {
+        "description": "Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.6500 mm)",
+        "items": [
+          {
+            "description": "Reference field of J3",
+            "pos": {
+              "x": 136.0,
+              "y": 122.02
+            },
+            "uuid": "440882aa-a511-43d8-9579-8095f0159796"
+          }
+        ],
+        "severity": "warning",
+        "type": "text_height"
+      },
+      {
+        "description": "Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.6500 mm)",
+        "items": [
+          {
+            "description": "Reference field of C5",
+            "pos": {
+              "x": 139.23,
+              "y": 115.7
+            },
+            "uuid": "1effc01a-dfd7-4f05-8e92-8397d74bd866"
+          }
+        ],
+        "severity": "warning",
+        "type": "text_height"
+      },
+      {
+        "description": "Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.6500 mm)",
+        "items": [
+          {
+            "description": "Reference field of R2",
+            "pos": {
+              "x": 128.3,
+              "y": 116.77
+            },
+            "uuid": "2b5a6738-07fa-440c-892e-fef3bdbba1f2"
+          }
+        ],
+        "severity": "warning",
+        "type": "text_height"
+      },
+      {
+        "description": "Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.6500 mm)",
+        "items": [
+          {
+            "description": "Reference field of R4",
+            "pos": {
+              "x": 136.3,
+              "y": 127.769999
+            },
+            "uuid": "9f409259-d4d2-4e70-9120-c03a6a7a45bd"
+          }
+        ],
+        "severity": "warning",
+        "type": "text_height"
+      },
+      {
+        "description": "Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.6500 mm)",
+        "items": [
+          {
+            "description": "Reference field of R1",
+            "pos": {
+              "x": 131.73,
+              "y": 119.2
+            },
+            "uuid": "52874486-be4c-46f8-b5df-d98543e22fa5"
+          }
+        ],
+        "severity": "warning",
+        "type": "text_height"
+      },
+      {
+        "description": "Silkscreen clearance",
+        "items": [
+          {
+            "description": "Segment of J3 on F.Silkscreen",
+            "pos": {
+              "x": 134.06,
+              "y": 128.685
+            },
+            "uuid": "7ef48eb4-7f93-4ba8-a1da-60eb8242c326"
+          },
+          {
+            "description": "Segment of R4 on F.Silkscreen",
+            "pos": {
+              "x": 136.062742,
+              "y": 128.677499
+            },
+            "uuid": "a4e6ff3f-9aba-40c0-96ce-6ba935071ce8"
+          }
+        ],
+        "severity": "warning",
+        "type": "silk_overlap"
+      },
+      {
+        "description": "Silkscreen clearance",
+        "items": [
+          {
+            "description": "Segment of R1 on F.Silkscreen",
+            "pos": {
+              "x": 130.8225,
+              "y": 118.962743
+            },
+            "uuid": "32f82876-e181-46e4-93ae-2bfa8e135c1a"
+          },
+          {
+            "description": "Segment of J2 on F.Silkscreen",
+            "pos": {
+              "x": 130.815001,
+              "y": 117.06
+            },
+            "uuid": "fa46a1b4-10ff-4b6b-9bce-9f1fba73ddab"
+          }
+        ],
+        "severity": "warning",
+        "type": "silk_overlap"
+      },
+      {
+        "description": "Silkscreen clipped by solder mask",
+        "items": [
+          {
+            "description": "Segment of J3 on F.Silkscreen",
+            "pos": {
+              "x": 139.11,
+              "y": 126.715
+            },
+            "uuid": "49125d92-72c2-4e78-a94a-2e022dc8a148"
+          },
+          {
+            "description": "Pad 1 [<no net>] of C1 on F.Cu",
+            "pos": {
+              "x": 139.525,
+              "y": 125.7
+            },
+            "uuid": "5173df96-1a72-4ed0-a9fb-c0f43abab8b2"
+          }
+        ],
+        "severity": "warning",
+        "type": "silk_over_copper"
+      },
+      {
+        "description": "Silkscreen clipped by solder mask",
+        "items": [
+          {
+            "description": "Segment of J3 on F.Silkscreen",
+            "pos": {
+              "x": 134.06,
+              "y": 128.685
+            },
+            "uuid": "7ef48eb4-7f93-4ba8-a1da-60eb8242c326"
+          },
+          {
+            "description": "Pad 1 [<no net>] of R4 on F.Cu",
+            "pos": {
+              "x": 135.475,
+              "y": 129.199999
+            },
+            "uuid": "90c61407-cb8c-47d9-a113-63e53df1786e"
+          }
+        ],
+        "severity": "warning",
+        "type": "silk_over_copper"
+      },
+      {
+        "description": "Silkscreen clipped by solder mask",
+        "items": [
+          {
+            "description": "Segment of J3 on F.Silkscreen",
+            "pos": {
+              "x": 134.06,
+              "y": 128.685
+            },
+            "uuid": "7ef48eb4-7f93-4ba8-a1da-60eb8242c326"
+          },
+          {
+            "description": "Pad 2 [<no net>] of R4 on F.Cu",
+            "pos": {
+              "x": 137.125,
+              "y": 129.199999
+            },
+            "uuid": "d7693487-e219-46f2-9e56-033b0b1ef073"
+          }
+        ],
+        "severity": "warning",
+        "type": "silk_over_copper"
+      },
+      {
+        "description": "Silkscreen clipped by solder mask",
+        "items": [
+          {
+            "description": "Reference field of C7",
+            "pos": {
+              "x": 130.3,
+              "y": 120.77
+            },
+            "uuid": "915fdeee-8625-4d14-b391-61223a623e0c"
+          },
+          {
+            "description": "Pad 2 [<no net>] of R1 on F.Cu",
+            "pos": {
+              "x": 130.3,
+              "y": 120.025
+            },
+            "uuid": "79ecd963-5bdb-49f9-a6a5-3ffa62c63ad9"
+          }
+        ],
+        "severity": "warning",
+        "type": "silk_over_copper"
+      },
+      {
+        "description": "Silkscreen clipped by solder mask",
+        "items": [
+          {
+            "description": "Reference field of C7",
+            "pos": {
+              "x": 130.3,
+              "y": 120.77
+            },
+            "uuid": "915fdeee-8625-4d14-b391-61223a623e0c"
+          },
+          {
+            "description": "Pad MP [<no net>] of J2 on F.Cu",
+            "pos": {
+              "x": 131.625,
+              "y": 120.799999
+            },
+            "uuid": "a4e2e75f-58df-494d-9ae1-c61dbff5c4d9"
+          }
+        ],
+        "severity": "warning",
+        "type": "silk_over_copper"
+      },
+      {
+        "description": "Silkscreen clipped by solder mask",
+        "items": [
+          {
+            "description": "Reference field of C2",
+            "pos": {
+              "x": 127.8,
+              "y": 118.27
+            },
+            "uuid": "5c878252-3a62-414f-9fb0-357a3fcc66ba"
+          },
+          {
+            "description": "Pad 1 [<no net>] of R2 on F.Cu",
+            "pos": {
+              "x": 127.475,
+              "y": 118.2
+            },
+            "uuid": "7c5682aa-48f9-4130-b05b-a77ceef4a068"
+          }
+        ],
+        "severity": "warning",
+        "type": "silk_over_copper"
+      },
+      {
+        "description": "Silkscreen clipped by solder mask",
+        "items": [
+          {
+            "description": "Segment of J2 on F.Silkscreen",
+            "pos": {
+              "x": 130.815001,
+              "y": 117.06
+            },
+            "uuid": "fa46a1b4-10ff-4b6b-9bce-9f1fba73ddab"
+          },
+          {
+            "description": "Pad 2 [<no net>] of R1 on F.Cu",
+            "pos": {
+              "x": 130.3,
+              "y": 120.025
+            },
+            "uuid": "79ecd963-5bdb-49f9-a6a5-3ffa62c63ad9"
+          }
+        ],
+        "severity": "warning",
+        "type": "silk_over_copper"
+      },
+      {
+        "description": "Silkscreen clipped by solder mask",
+        "items": [
+          {
+            "description": "Segment of J2 on F.Silkscreen",
+            "pos": {
+              "x": 130.815001,
+              "y": 117.06
+            },
+            "uuid": "fa46a1b4-10ff-4b6b-9bce-9f1fba73ddab"
+          },
+          {
+            "description": "Pad 1 [<no net>] of R1 on F.Cu",
+            "pos": {
+              "x": 130.3,
+              "y": 118.375
+            },
+            "uuid": "f108b900-d3c3-47d6-a2d1-675c7027c8cd"
+          }
+        ],
+        "severity": "warning",
+        "type": "silk_over_copper"
+      },
+      {
+        "description": "Silkscreen clipped by solder mask",
+        "items": [
+          {
+            "description": "Reference field of R3",
+            "pos": {
+              "x": 143.3,
+              "y": 118.77
+            },
+            "uuid": "d7b4c9d8-1433-492d-83c3-1d1c9800355b"
+          },
+          {
+            "description": "Pad 1 [<no net>] of C6 on F.Cu",
+            "pos": {
+              "x": 142.525,
+              "y": 118.7
+            },
+            "uuid": "3a630965-b262-4a35-9acf-a2fbf6caf316"
+          }
+        ],
+        "severity": "warning",
+        "type": "silk_over_copper"
+      },
+      {
+        "description": "Silkscreen clipped by solder mask",
+        "items": [
+          {
+            "description": "Reference field of R3",
+            "pos": {
+              "x": 143.3,
+              "y": 118.77
+            },
+            "uuid": "d7b4c9d8-1433-492d-83c3-1d1c9800355b"
+          },
+          {
+            "description": "Pad 2 [<no net>] of C6 on F.Cu",
+            "pos": {
+              "x": 144.075,
+              "y": 118.7
+            },
+            "uuid": "241c68c2-9de0-4afd-b512-aa3594a1aab3"
+          }
+        ],
+        "severity": "warning",
+        "type": "silk_over_copper"
+      },
+      {
+        "description": "Silkscreen clipped by solder mask",
+        "items": [
+          {
+            "description": "Reference field of J2",
+            "pos": {
+              "x": 137.48,
+              "y": 118.5
+            },
+            "uuid": "6bdbefcd-13ed-4943-8765-200487aa0d7e"
+          },
+          {
+            "description": "Pad 1 [<no net>] of J1 on F.Cu",
+            "pos": {
+              "x": 136.675,
+              "y": 118.5
+            },
+            "uuid": "5cac0e25-ea46-43ad-8baa-7fb836f0620f"
+          }
+        ],
+        "severity": "warning",
+        "type": "silk_over_copper"
+      },
+      {
+        "description": "Silkscreen clipped by solder mask",
+        "items": [
+          {
+            "description": "Segment of J1 on F.Silkscreen",
+            "pos": {
+              "x": 138.04,
+              "y": 116.89
+            },
+            "uuid": "d356b9b9-9f56-4490-bc5e-5312d72533e8"
+          },
+          {
+            "description": "Pad 2 [<no net>] of C5 on F.Cu",
+            "pos": {
+              "x": 137.8,
+              "y": 116.475
+            },
+            "uuid": "4675a9f4-06dd-4339-8b86-e5e63ef5191d"
+          }
+        ],
+        "severity": "warning",
+        "type": "silk_over_copper"
+      }
+    ]
+  }
+}

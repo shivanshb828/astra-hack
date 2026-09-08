@@ -12,7 +12,7 @@ def vector(value,positive=False):
  return Vector(value)
 def empty(name,identifier,parent=None):
  o=bpy.data.objects.new(name,None);bpy.context.scene.collection.objects.link(o);o['assembly_id']=identifier;o.parent=parent;return o
-def meshes(root):return [o for o in [root,*root.children_recursive] if o.type=='MESH' and not o.get('is_flag') and not o.get('region')]
+def meshes(root):return [o for o in [root,*root.children_recursive] if o.type=='MESH' and not o.get('is_flag') and not o.get('region') and not o.get('is_presentation')]
 def corners(root,frame=None):
  transform=frame.inverted() if frame is not None else Matrix.Identity(4)
  return [transform@o.matrix_world@Vector(c) for o in meshes(root) for c in o.bound_box]
@@ -73,6 +73,9 @@ def handoff(manifest):
  before=set(scene.objects);old_properties=dict(scene.items())
  try:
   board,imported=import_asset(data['glb'],'Confirmed KiCad PCB','m','product','board')
+  if scene.get('presentation_style')=='native_pcb':
+   import pcb_presentation
+   pcb_presentation.rebase_import(board)
   board['asset_role']='electronics'
   if previous:
    board.matrix_basis=previous.matrix_basis.copy()
@@ -100,6 +103,9 @@ def handoff(manifest):
  # Commit the replacement only after a complete import. Preserve body, CAD and regions.
  if previous:
   for o in [*previous.children_recursive,previous]:bpy.data.objects.remove(o,do_unlink=True)
+ if scene.get('presentation_style')=='native_pcb':
+  import pcb_presentation
+  pcb_presentation.board_finish(board,__import__(__name__))
  record('Updated KiCad PCB; preserved enclosure and body placement' if previous else 'Confirmed KiCad board imported with reference IDs')
  bpy.context.view_layer.update();focus('board');check()
  return 'KiCad board updated in the ECG assembly.' if previous else 'Confirmed board imported. Widget is ready for ECG chest assembly.'
@@ -155,6 +161,8 @@ def focus(identifier):
    for reg in area.regions:
     if reg.type=='WINDOW':
      with bpy.context.temp_override(area=area,region=reg):bpy.ops.view3d.view_selected(use_all_regions=False)
+ import red_flags
+ red_flags.focus(identifier)
  return 'Focused '+obj.name
 
 def demo_enclosure():
@@ -216,35 +224,11 @@ def world_bvh(root):
  return BVHTree.FromPolygons(vertices,faces)
 
 def flags(findings):
- # Aggregate per object: one high-contrast volume, strongest severity wins.
- for obj in list(bpy.context.scene.objects):
-  if obj.get('is_flag'):
-   data=obj.data;bpy.data.objects.remove(obj,do_unlink=True)
-   if data and data.users==0:
-    if isinstance(data,bpy.types.Mesh):bpy.data.meshes.remove(data)
-    elif isinstance(data,bpy.types.Curve):bpy.data.curves.remove(data)
- grouped={}
- for finding in findings:
-  if finding['status']=='PASS':continue
-  key=finding['object'];previous=grouped.get(key)
-  if previous is None or finding['status']=='FAIL':grouped[key]=finding
- for identifier,finding in grouped.items():
-  target=objects().get(identifier)
-  if target is None or not meshes(target):continue
-  failed=finding['status']=='FAIL';color=(1,.025,.008,1) if failed else (1,.65,.01,1)
-  lo,hi=bounds(target);size=hi-lo+Vector((2,2,2))
-  flag=box(('ERROR' if failed else 'WATCH')+' · '+target.name,(lo+hi)/2,size,color=color)
-  flag.show_in_front=True;flag['is_flag']=True;flag['flag_target']=identifier;flag['severity']='FAIL' if failed else 'WARN'
-  mat=material('MissionPCB error volume' if failed else 'MissionPCB watch volume',(*color[:3],.24));mat.use_nodes=True
-  nodes=mat.node_tree.nodes;nodes.clear();out=nodes.new('ShaderNodeOutputMaterial');mix=nodes.new('ShaderNodeMixShader');mix.inputs[0].default_value=.24
-  transparent=nodes.new('ShaderNodeBsdfTransparent');emission=nodes.new('ShaderNodeEmission');emission.inputs[0].default_value=color;emission.inputs[1].default_value=1
-  links=mat.node_tree.links;links.new(transparent.outputs[0],mix.inputs[1]);links.new(emission.outputs[0],mix.inputs[2]);links.new(mix.outputs[0],out.inputs[0])
-  if hasattr(mat,'surface_render_method'):mat.surface_render_method='DITHERED'
-  elif hasattr(mat,'blend_method'):mat.blend_method='BLEND'
-  flag.data.materials.clear();flag.data.materials.append(mat)
-  outline=box('Outline · '+target.name,(lo+hi)/2,size,color=color);outline.display_type='WIRE';outline.show_in_front=True;outline['is_flag']=True;outline.color=color
-  curve=bpy.data.curves.new('Flag label','FONT');curve.body=(target.get('kicad_ref') or target.name)+' · '+('ERROR' if failed else 'WATCH');curve.size=2
-  label=bpy.data.objects.new('Flag label',curve);bpy.context.scene.collection.objects.link(label);label.location=(lo.x,lo.y,hi.z+2);label.show_in_front=True;label['is_flag']=True;curve.materials.append(material('Flag red' if failed else 'Flag yellow',color))
+ if bpy.context.scene.get('presentation_style')=='native_pcb':
+  import pcb_presentation
+  return pcb_presentation.draw(findings,__import__(__name__))
+ import red_flags
+ red_flags.draw(findings,__import__(__name__))
 
 def live_component_findings():
  import sys,tempfile
@@ -254,11 +238,20 @@ def live_component_findings():
  from layout_adapter import payload_for
  from constraint_engine import load_layout,load_parts,validate
  board=objects()['board'];parts=[]
+ # Unmodeled components still have authoritative saved KiCad placements.
+ # Keep them in constraint evaluation; never fabricate render geometry.
+ manifest=bpy.context.scene.get('handoff_manifest')
+ baseline={}
+ if manifest and Path(manifest).exists():
+  data=json.loads(Path(manifest).read_text())
+  baseline={p['ref']:p for p in data.get('parts',[])}
+ modeled=set()
  for obj in objects().values():
   if not obj.get('kicad_ref'):continue
-  original=json.loads(obj['native_baseline']);start=Vector(obj['import_location']);local=board.matrix_world.inverted()@obj.matrix_world
+  original=json.loads(obj['native_baseline']);modeled.add(original['ref']);start=Vector(obj['import_location']);local=board.matrix_world.inverted()@obj.matrix_world
   pos=local.translation
   parts.append({**original,'x_mm':original['x_mm']+pos.x-start.x,'y_mm':original['y_mm']-(pos.y-start.y),'rotation_deg':(original['rotation_deg']-math.degrees(local.to_euler().z-obj.get('import_rotation_z',0)))%360})
+ parts.extend(p for ref,p in baseline.items() if ref not in modeled)
  payload=payload_for({'parts':parts})
  with tempfile.TemporaryDirectory() as directory:
   path=Path(directory)/'layout.json';path.write_text(json.dumps(payload['layout']));layout,warnings=load_layout(path)
@@ -292,7 +285,7 @@ def check():
  try:scene['native_findings']=json.dumps(live_component_findings());scene['component_check_error']=''
  except Exception as exc:scene['component_check_error']=str(exc)
  scene['assembly_checks']=json.dumps(findings);scene['assembly_signature']=signature()
- native=[{'object':'part-'+ref,'title':ref+' · '+f.get('title',f.get('id','KiCad finding')),'status':f['status']} for f in json.loads(scene.get('native_findings','[]')) if f.get('status')!='PASS' for ref in f.get('kicad_refs',[])]
+ native=[{**f,'object':'part-'+ref,'title':ref+' · '+f.get('title',f.get('id','KiCad finding')),'status':f['status']} for f in json.loads(scene.get('native_findings','[]')) if f.get('status')!='PASS' for ref in f.get('kicad_refs',[])]
  flags(findings+native)
  return 'Assembly checked: '+str(sum(f['status']=='FAIL' for f in findings))+' failures, '+str(sum(f['status']=='UNKNOWN' for f in findings))+' pending placements.'
 
@@ -328,6 +321,6 @@ def execute(command):
  if action=='assembly_fit_chest':return fit_chest()
  if action=='assembly_sample':return demo_enclosure()
  if action=='assembly_save':
-  path=Path(scene_manifest()).parent/'assembly.blend';bpy.ops.wm.save_as_mainfile(filepath=str(path));return 'Saved '+str(path)
+  path=Path(bpy.data.filepath) if bpy.data.filepath else Path(scene_manifest()).parent/'assembly.blend';bpy.ops.wm.save_as_mainfile(filepath=str(path));return 'Saved '+str(path)
  raise ValueError('Unsupported assembly action')
 def scene_manifest():return bpy.context.scene['handoff_manifest']

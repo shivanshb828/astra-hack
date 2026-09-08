@@ -1,0 +1,49 @@
+{
+  "board": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_kicad/MissionPCB.kicad_pcb",
+  "coordinates": "KiCad absolute XY millimeters; Y increases downwards",
+  "parts": [
+    {
+      "ref": "J1",
+      "value": "BM02B-SRSS-TB",
+      "x_mm": 108.0,
+      "y_mm": 130.0,
+      "rotation_deg": 0.0
+    },
+    {
+      "ref": "U1",
+      "value": "MSP430FR2433",
+      "x_mm": 136.0,
+      "y_mm": 129.0,
+      "rotation_deg": 0.0
+    },
+    {
+      "ref": "U2",
+      "value": "ADS1292R [APPROX]",
+      "x_mm": 141.0,
+      "y_mm": 119.0,
+      "rotation_deg": 0.0
+    },
+    {
+      "ref": "U3",
+      "value": "MDBT42Q-512KV2",
+      "x_mm": 116.0,
+      "y_mm": 110.0,
+      "rotation_deg": 90.0
+    },
+    {
+      "ref": "U4",
+      "value": "TPS62740 [APPROX]",
+      "x_mm": 131.0,
+      "y_mm": 109.0,
+      "rotation_deg": 0.0
+    },
+    {
+      "ref": "U5",
+      "value": "MCP73831",
+      "x_mm": 154.0,
+      "y_mm": 123.0,
+      "rotation_deg": 0.0
+    }
+  ],
+  "revision": "1d40b00532f575fb0d675cbd8e4a3e1a9a24eba319162e1559412cd6761c5de9"
+}

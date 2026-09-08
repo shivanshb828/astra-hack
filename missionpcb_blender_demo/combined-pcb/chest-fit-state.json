@@ -1,0 +1,1048 @@
+{
+  "stage": "Blender",
+  "model_coverage": {
+    "modeled_refs": [
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C7",
+      "J1",
+      "J2",
+      "J3",
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "U1",
+      "U2",
+      "U3",
+      "U4",
+      "U5"
+    ],
+    "missing_model_refs": [
+      "L1"
+    ],
+    "mesh_count": 24,
+    "export_options": [
+      "--include-tracks",
+      "--include-pads",
+      "--include-zones",
+      "--include-silkscreen",
+      "--include-soldermask"
+    ],
+    "source": "Native KiCad GLB; no generated component substitutes"
+  },
+  "mission": "Rechargeable single-lead ECG chest patch \u00b7 7-day continuous wear \u00b7 BLE \u00b7 sealed enclosure \u00b7 pogo charging",
+  "objects": [
+    {
+      "id": "enclosure",
+      "name": "Original translucent ECG enclosure.001",
+      "role": "product",
+      "position_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": null,
+      "dimensions_mm": [
+        100.0,
+        13.025001525878906,
+        60.0
+      ]
+    },
+    {
+      "id": "part-C6",
+      "name": "C6.001",
+      "role": "component",
+      "position_mm": [
+        153.99998474121094,
+        -127.0,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "C6",
+      "dimensions_mm": [
+        1.5999984741210938,
+        0.7999992370605469,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-U3",
+      "name": "U3.001",
+      "role": "component",
+      "position_mm": [
+        115.99999237060547,
+        -109.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "U3",
+      "dimensions_mm": [
+        16.0,
+        2.200000762939453,
+        10.0
+      ]
+    },
+    {
+      "id": "part-J2",
+      "name": "J2.001",
+      "role": "component",
+      "position_mm": [
+        130.99998474121094,
+        -118.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "J2",
+      "dimensions_mm": [
+        5.0,
+        2.9599990844726562,
+        4.949951171875
+      ]
+    },
+    {
+      "id": "part-C2",
+      "name": "C2.001",
+      "role": "component",
+      "position_mm": [
+        136.99998474121094,
+        -118.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "C2",
+      "dimensions_mm": [
+        1.5999999046325684,
+        0.7999992370605469,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-C7",
+      "name": "C7.001",
+      "role": "component",
+      "position_mm": [
+        141.0,
+        -122.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "C7",
+      "dimensions_mm": [
+        1.6000003814697266,
+        0.7999992370605469,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-C3",
+      "name": "C3.001",
+      "role": "component",
+      "position_mm": [
+        125.99999237060547,
+        -109.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "C3",
+      "dimensions_mm": [
+        1.6000003814697266,
+        0.7999992370605469,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-C4",
+      "name": "C4.001",
+      "role": "component",
+      "position_mm": [
+        135.0,
+        -108.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "C4",
+      "dimensions_mm": [
+        1.5999999046325684,
+        0.7999992370605469,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-C1",
+      "name": "C1.001",
+      "role": "component",
+      "position_mm": [
+        131.99998474121094,
+        -128.99998474121094,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "C1",
+      "dimensions_mm": [
+        1.6000001430511475,
+        0.7999992370605469,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-J1",
+      "name": "J1.001",
+      "role": "component",
+      "position_mm": [
+        108.0,
+        -129.99998474121094,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "J1",
+      "dimensions_mm": [
+        4.0,
+        4.319999694824219,
+        3.60009765625
+      ]
+    },
+    {
+      "id": "part-U5",
+      "name": "U5.001",
+      "role": "component",
+      "position_mm": [
+        153.99998474121094,
+        -122.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "U5",
+      "dimensions_mm": [
+        2.799999237060547,
+        1.5499992370605469,
+        2.89990234375
+      ]
+    },
+    {
+      "id": "part-U4",
+      "name": "U4.001",
+      "role": "component",
+      "position_mm": [
+        130.99998474121094,
+        -108.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "U4",
+      "dimensions_mm": [
+        2.0,
+        0.7999992370605469,
+        1.97509765625
+      ]
+    },
+    {
+      "id": "part-U2",
+      "name": "U2.001",
+      "role": "component",
+      "position_mm": [
+        141.0,
+        -118.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "U2",
+      "dimensions_mm": [
+        4.0,
+        0.9199981689453125,
+        4.0
+      ]
+    },
+    {
+      "id": "part-U1",
+      "name": "U1.001",
+      "role": "component",
+      "position_mm": [
+        136.0,
+        -128.99998474121094,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "U1",
+      "dimensions_mm": [
+        4.0,
+        0.7999992370605469,
+        4.0
+      ]
+    },
+    {
+      "id": "part-R3",
+      "name": "R3.001",
+      "role": "component",
+      "position_mm": [
+        158.0,
+        -122.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "R3",
+      "dimensions_mm": [
+        1.5999984741210938,
+        0.4500007629394531,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-J3",
+      "name": "J3.001",
+      "role": "component",
+      "position_mm": [
+        141.49998474121094,
+        -128.99998474121094,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "J3",
+      "dimensions_mm": [
+        6.0,
+        2.9599990844726562,
+        4.949951171875
+      ]
+    },
+    {
+      "id": "part-C5",
+      "name": "C5.001",
+      "role": "component",
+      "position_mm": [
+        130.99998474121094,
+        -112.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "C5",
+      "dimensions_mm": [
+        1.6000003814697266,
+        0.7999992370605469,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-R2",
+      "name": "R2.001",
+      "role": "component",
+      "position_mm": [
+        136.99998474121094,
+        -114.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "R2",
+      "dimensions_mm": [
+        1.5999999046325684,
+        0.4500007629394531,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-R4",
+      "name": "R4.001",
+      "role": "component",
+      "position_mm": [
+        136.0,
+        -133.0,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "R4",
+      "dimensions_mm": [
+        1.5999999046325684,
+        0.4500007629394531,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-R1",
+      "name": "R1.001",
+      "role": "component",
+      "position_mm": [
+        136.99998474121094,
+        -122.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "R1",
+      "dimensions_mm": [
+        1.5999999046325684,
+        0.4500007629394531,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "board",
+      "name": "Confirmed KiCad PCB.001",
+      "role": "electronics",
+      "position_mm": [
+        0.0,
+        0.0,
+        2.0
+      ],
+      "rotation_deg": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "region": "region-board-bay",
+      "ref": null,
+      "dimensions_mm": [
+        72.00000762939453,
+        5.965003967285156,
+        38.0
+      ]
+    },
+    {
+      "id": "part-L1",
+      "name": "L1 \u00b7 missing package model.001",
+      "role": "component",
+      "position_mm": [
+        -9.0,
+        10.0,
+        1.6449999809265137
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "L1"
+    },
+    {
+      "id": "region-board-bay",
+      "name": "board-bay.001",
+      "role": "region",
+      "position_mm": [
+        0.0,
+        0.0,
+        5.0
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": null
+    },
+    {
+      "id": "body",
+      "name": "Human body \u00b7 MakeHuman CC0",
+      "role": "body",
+      "position_mm": [
+        0.0,
+        115.51708984375,
+        857.9978637695312
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": null,
+      "dimensions_mm": [
+        1042.6529541015625,
+        444.36773681640625,
+        1750.0001220703125
+      ]
+    },
+    {
+      "id": "region-chest",
+      "name": "chest",
+      "role": "region",
+      "position_mm": [
+        0.0,
+        -55.58721923828125,
+        1300.0
+      ],
+      "rotation_deg": [
+        90.00000250447816,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": null
+    },
+    {
+      "id": "device",
+      "name": "ECG device assembly.001",
+      "role": "assembly",
+      "position_mm": [
+        0.0,
+        -51.299720764160156,
+        1300.0
+      ],
+      "rotation_deg": [
+        89.999995674289,
+        -0.0,
+        0.0
+      ],
+      "region": "region-chest",
+      "ref": null,
+      "dimensions_mm": [
+        100.0,
+        13.025001525878906,
+        60.0
+      ]
+    }
+  ],
+  "native_findings": [
+    {
+      "id": "fit.overlap::C3|L1",
+      "title": "C3 and L1 do not collide",
+      "status": "FAIL",
+      "severity": "blocker",
+      "subjects": [
+        "C3",
+        "L1"
+      ],
+      "metric": "overlap_area_mm2",
+      "message": "C3 and L1 overlap by 1.16 mm\u00b2 of board area.",
+      "rationale": "Two parts cannot occupy the same footprint.",
+      "measured_mm": 1.16,
+      "required_mm": 0.0,
+      "margin_mm": -1.16,
+      "suggestion": "Separate C3 and L1.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.9,
+          0.15,
+          0.15
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          35.0,
+          34.0,
+          6.6
+        ],
+        "to": [
+          36.0,
+          35.0,
+          6.6
+        ],
+        "label": "collision",
+        "label_at": [
+          35.5,
+          34.5,
+          12.6
+        ],
+        "marker": "x",
+        "marker_at": [
+          35.5,
+          34.5,
+          6.6
+        ]
+      },
+      "kicad_refs": [
+        "C3",
+        "L1"
+      ],
+      "source": "Recomputed from current Blender component transforms; authored demo spacing policies"
+    },
+    {
+      "id": "mission.afe_MCU",
+      "title": "afe_MCU",
+      "status": "FAIL",
+      "severity": "major",
+      "subjects": [
+        "Sensor",
+        "MCU"
+      ],
+      "metric": "center_distance",
+      "message": "Sensor and MCU are only 11.18 mm apart, 30 mm required.",
+      "rationale": "Authored demo policy, not solved physics.",
+      "measured_mm": 11.18,
+      "required_mm": 30.0,
+      "margin_mm": -18.82,
+      "center_distance_mm": 11.18,
+      "edge_gap_mm": 6.083,
+      "suggestion": "Adjust Sensor/MCU spacing by 18.82 mm.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.9,
+          0.15,
+          0.15
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          50.0,
+          25.0,
+          6.6
+        ],
+        "to": [
+          45.0,
+          15.0,
+          6.6
+        ],
+        "label": "11.2 mm \u2717 (needs 30.0)",
+        "label_at": [
+          47.5,
+          20.0,
+          12.6
+        ],
+        "marker": "x",
+        "marker_at": [
+          47.5,
+          20.0,
+          6.6
+        ]
+      },
+      "kicad_refs": [
+        "U2",
+        "U1"
+      ],
+      "source": "Recomputed from current Blender component transforms; authored demo spacing policies"
+    },
+    {
+      "id": "mission.afe_Regulator",
+      "title": "afe_Regulator",
+      "status": "FAIL",
+      "severity": "major",
+      "subjects": [
+        "Sensor",
+        "Regulator"
+      ],
+      "metric": "center_distance",
+      "message": "Sensor and Regulator are only 14.14 mm apart, 20 mm required.",
+      "rationale": "Authored demo policy, not solved physics.",
+      "measured_mm": 14.142,
+      "required_mm": 20.0,
+      "margin_mm": -5.858,
+      "center_distance_mm": 14.142,
+      "edge_gap_mm": 9.908,
+      "suggestion": "Adjust Sensor/Regulator spacing by 5.86 mm.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.9,
+          0.15,
+          0.15
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          50.0,
+          25.0,
+          6.6
+        ],
+        "to": [
+          40.0,
+          35.0,
+          6.6
+        ],
+        "label": "14.1 mm \u2717 (needs 20.0)",
+        "label_at": [
+          45.0,
+          30.0,
+          12.6
+        ],
+        "marker": "x",
+        "marker_at": [
+          45.0,
+          30.0,
+          6.6
+        ]
+      },
+      "kicad_refs": [
+        "U2",
+        "U4"
+      ],
+      "source": "Recomputed from current Blender component transforms; authored demo spacing policies"
+    },
+    {
+      "id": "mission.afe_inductor",
+      "title": "afe_inductor",
+      "status": "FAIL",
+      "severity": "major",
+      "subjects": [
+        "Sensor",
+        "L1"
+      ],
+      "metric": "center_distance",
+      "message": "Sensor and L1 are only 17.20 mm apart, 20 mm required.",
+      "rationale": "Authored analog-to-switching-inductor separation policy.",
+      "measured_mm": 17.205,
+      "required_mm": 20.0,
+      "margin_mm": -2.795,
+      "center_distance_mm": 17.205,
+      "edge_gap_mm": 12.143,
+      "suggestion": "Adjust Sensor/L1 spacing by 2.80 mm.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.9,
+          0.15,
+          0.15
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          50.0,
+          25.0,
+          6.6
+        ],
+        "to": [
+          36.0,
+          35.0,
+          6.6
+        ],
+        "label": "17.2 mm \u2717 (needs 20.0)",
+        "label_at": [
+          43.0,
+          30.0,
+          12.6
+        ],
+        "marker": "x",
+        "marker_at": [
+          43.0,
+          30.0,
+          6.6
+        ]
+      },
+      "kicad_refs": [
+        "U2",
+        "L1"
+      ],
+      "source": "Recomputed from current Blender component transforms; authored demo spacing policies"
+    },
+    {
+      "id": "zone.heat_overlap::Driver|Sensor",
+      "title": "Sensor is outside the Driver heat zone",
+      "status": "FAIL",
+      "severity": "major",
+      "subjects": [
+        "Driver",
+        "Sensor"
+      ],
+      "metric": "zone_penetration",
+      "message": "Sensor reaches 10.82 mm inside the 22 mm thermal zone around Driver.",
+      "rationale": "Simplified thermal model: a fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field.",
+      "measured_mm": 10.82,
+      "required_mm": 0.0,
+      "margin_mm": -10.82,
+      "suggestion": "Move Sensor 10.82 mm further from Driver, or cut Driver dissipation.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.9,
+          0.15,
+          0.15
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          63.0,
+          21.0,
+          6.6
+        ],
+        "to": [
+          50.0,
+          25.0,
+          6.6
+        ],
+        "label": "heat zone \u2717",
+        "label_at": [
+          56.5,
+          23.0,
+          12.6
+        ],
+        "marker": "x",
+        "marker_at": [
+          56.5,
+          23.0,
+          6.6
+        ]
+      },
+      "kicad_refs": [
+        "U5",
+        "U2"
+      ],
+      "source": "Recomputed from current Blender component transforms; authored demo spacing policies"
+    },
+    {
+      "id": "zone.heat_overlap::Regulator|RF",
+      "title": "RF is outside the Regulator heat zone",
+      "status": "FAIL",
+      "severity": "major",
+      "subjects": [
+        "Regulator",
+        "RF"
+      ],
+      "metric": "zone_penetration",
+      "message": "RF reaches 11.00 mm inside the 18 mm thermal zone around Regulator.",
+      "rationale": "Simplified thermal model: a fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field.",
+      "measured_mm": 11.0,
+      "required_mm": 0.0,
+      "margin_mm": -11.0,
+      "suggestion": "Move RF 11.00 mm further from Regulator, or cut Regulator dissipation.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.9,
+          0.15,
+          0.15
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          40.0,
+          35.0,
+          6.6
+        ],
+        "to": [
+          25.0,
+          34.0,
+          6.6
+        ],
+        "label": "heat zone \u2717",
+        "label_at": [
+          32.5,
+          34.5,
+          12.6
+        ],
+        "marker": "x",
+        "marker_at": [
+          32.5,
+          34.5,
+          6.6
+        ]
+      },
+      "kicad_refs": [
+        "U4",
+        "U3"
+      ],
+      "source": "Recomputed from current Blender component transforms; authored demo spacing policies"
+    },
+    {
+      "id": "zone.heat_overlap::Regulator|Sensor",
+      "title": "Sensor is outside the Regulator heat zone",
+      "status": "FAIL",
+      "severity": "major",
+      "subjects": [
+        "Regulator",
+        "Sensor"
+      ],
+      "metric": "zone_penetration",
+      "message": "Sensor reaches 6.69 mm inside the 18 mm thermal zone around Regulator.",
+      "rationale": "Simplified thermal model: a fixed radius standing in for the elevated-temperature region around a dissipating part. Not a solved thermal field.",
+      "measured_mm": 6.686,
+      "required_mm": 0.0,
+      "margin_mm": -6.686,
+      "suggestion": "Move Sensor 6.69 mm further from Regulator, or cut Regulator dissipation.",
+      "overlay": {
+        "type": "measure_line",
+        "color": [
+          0.9,
+          0.15,
+          0.15
+        ],
+        "collection": "03_Constraint_Overlays",
+        "from": [
+          40.0,
+          35.0,
+          6.6
+        ],
+        "to": [
+          50.0,
+          25.0,
+          6.6
+        ],
+        "label": "heat zone \u2717",
+        "label_at": [
+          45.0,
+          30.0,
+          12.6
+        ],
+        "marker": "x",
+        "marker_at": [
+          45.0,
+          30.0,
+          6.6
+        ]
+      },
+      "kicad_refs": [
+        "U4",
+        "U2"
+      ],
+      "source": "Recomputed from current Blender component transforms; authored demo spacing policies"
+    },
+    {
+      "id": "access.connector",
+      "title": "Connector accessibility",
+      "status": "SKIP",
+      "severity": "info",
+      "subjects": [
+        "J2",
+        "Battery",
+        "J3"
+      ],
+      "metric": "",
+      "message": "The enclosure declares no openings, so accessibility could not be evaluated.",
+      "rationale": "Requires at least one entry in enclosure.openings.",
+      "kicad_refs": [
+        "J2",
+        "J1",
+        "J3"
+      ],
+      "source": "Recomputed from current Blender component transforms; authored demo spacing policies"
+    }
+  ],
+  "findings": [
+    {
+      "id": "fit-board",
+      "object": "board",
+      "title": "Confirmed KiCad PCB.001 \u00b7 fits board-bay.001",
+      "status": "PASS",
+      "method": "mesh bounding-box corners in oriented region",
+      "reason": "Electronics pocket in the existing ECG enclosure",
+      "margin_note": "Declared mounting volume, not automatic interior reconstruction."
+    },
+    {
+      "id": "fit-device",
+      "object": "device",
+      "title": "ECG device assembly.001 \u00b7 fits chest",
+      "status": "PASS",
+      "method": "mesh bounding-box corners in oriented region",
+      "reason": "Anterior chest placement area for ECG patch",
+      "margin_note": "Declared mounting volume, not automatic interior reconstruction."
+    },
+    {
+      "id": "body-intersection",
+      "object": "device",
+      "title": "No body surface intersection",
+      "status": "PASS",
+      "method": "triangle surface intersection",
+      "reason": "ECG enclosure must remain outside the chest surface. Does not validate comfort, pressure, physiology or full containment."
+    }
+  ],
+  "timeline": [
+    {
+      "reason": "Confirmed KiCad board imported with reference IDs",
+      "kind": "edit"
+    },
+    {
+      "reason": "Added body reference and chest mounting area",
+      "kind": "edit"
+    },
+    {
+      "reason": "Placed ECG device assembly.001 in chest",
+      "kind": "edit"
+    },
+    {
+      "reason": "Placed ECG patch outside sampled chest surface; verified no triangle intersections",
+      "kind": "edit"
+    }
+  ],
+  "stale": false,
+  "source_revision": "b2127b8fae2ebba357662be4a207d431cdcc3ad12f9f23bf4bcd89d3dddf8bef",
+  "source_hash": "b2127b8fae2ebba357662be4a207d431cdcc3ad12f9f23bf4bcd89d3dddf8bef",
+  "component_check_error": "",
+  "body_scope": "Reference anatomy, chest placement and geometric fit only."
+}

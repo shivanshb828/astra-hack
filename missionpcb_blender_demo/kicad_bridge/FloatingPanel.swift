@@ -13,7 +13,7 @@ final class ChatModel: ObservableObject {
  func syncStage(){
   URLSession.shared.dataTask(with:URL(string:"http://127.0.0.1:8768/assembly/state")!){[weak self] data,_,_ in
    guard let data=data,let value=try? JSONSerialization.jsonObject(with:data) as? [String:Any],value["connected"] as? Bool == true,let assembly=value["assembly"] as? [String:Any],let revision=assembly["source_hash"] as? String else{return}
-   DispatchQueue.main.async{guard let self=self,self.assemblyRevision != revision else{return};self.assemblyRevision=revision;self.target="Blender";self.status="Blender · ECG chest assembly"}
+   DispatchQueue.main.async{guard let self=self,self.assemblyRevision != revision else{return};self.assemblyRevision=revision}
   }.resume()
  }
  @Published var busy=false
@@ -39,20 +39,22 @@ final class ChatModel: ObservableObject {
 }
 struct ReviewDashboard: NSViewRepresentable {
  @ObservedObject var model:ChatModel
- var address:String { "http://127.0.0.1:8768/" + (model.target == "Blender" ? "assembly" : "design") }
+ var companion:Bool
+ var address:String { "http://127.0.0.1:8768/" + (companion ? (model.target == "Blender" ? "assembly-companion" : "companion") : (model.target == "Blender" ? "assembly" : "design")) }
  func makeNSView(context:Context)->WKWebView {
   let view=WKWebView();view.load(URLRequest(url:URL(string:address)!));return view
  }
  func updateNSView(_ view:WKWebView,context:Context){
   let path=view.url?.path ?? ""
-  let sameStage=model.target == "Blender" ? path == "/assembly" : (path == "/design" || path.hasPrefix("/board-preview"))
+  let sameStage=path == URL(string:address)!.path
   if !sameStage {view.load(URLRequest(url:URL(string:address)!))}
  }
 }
 struct ChatView: View {
  @ObservedObject var model:ChatModel
- @State private var compact=true
- @State private var dashboard=false
+ @State private var compact=false
+ @State private var dashboard=true
+ @State private var companion=true
  @Environment(\.accessibilityReduceMotion) var reduceMotion
  var body: some View {
  VStack(spacing:0){
@@ -61,13 +63,14 @@ struct ChatView: View {
     Button("← Chat"){dashboard=false;NotificationCenter.default.post(name:Notification.Name("MissionPCBExpand"),object:nil)}
     Picker("Application",selection:$model.target){Text("KiCad").tag("KiCad");Text("Blender").tag("Blender")}.pickerStyle(.segmented).labelsHidden().accessibilityLabel("Application").frame(width:180)
     Spacer()
+    Button(companion ? "Workspace" : "Findings"){companion.toggle();NotificationCenter.default.post(name:Notification.Name(companion ? "MissionPCBCompanion" : "MissionPCBDashboard"),object:nil)}
     Button("Collapse"){dashboard=false;compact=true;NotificationCenter.default.post(name:Notification.Name("MissionPCBCollapse"),object:nil)}
-   }.buttonStyle(.plain).padding(14)
-   ReviewDashboard(model:model)
+   }.buttonStyle(.plain).font(.system(size:12)).padding(10)
+   ReviewDashboard(model:model,companion:companion)
   } else if compact {
    Button {
-    compact=false;dashboard=true
-    NotificationCenter.default.post(name:Notification.Name("MissionPCBDashboard"),object:nil)
+    compact=false;dashboard=true;companion=true
+    NotificationCenter.default.post(name:Notification.Name("MissionPCBCompanion"),object:nil)
    } label: {
     HStack(spacing:12){
      Circle().fill(model.busy ? Color(red:0.78,green:0.9,blue:0.42) : Color(red:0.35,green:0.42,blue:0.34)).frame(width:8,height:8)
@@ -113,10 +116,13 @@ struct ChatView: View {
 }
 final class FloatingPanel:NSPanel{override var canBecomeKey:Bool{true};override var canBecomeMain:Bool{false}}
 final class Controller:NSObject,NSApplicationDelegate {
- var panel:FloatingPanel!;let model=ChatModel()
+ var panel:FloatingPanel!;let model=ChatModel();var statusItem:NSStatusItem!
+ @objc func showPanel(){panel.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true)}
  func applicationDidFinishLaunching(_ notification:Notification){let screen=NSScreen.main!.visibleFrame
-  panel=FloatingPanel(contentRect:NSRect(x:screen.midX-235,y:screen.minY+16,width:470,height:86),styleMask:[.borderless,.nonactivatingPanel,.resizable],backing:.buffered,defer:false)
+  panel=FloatingPanel(contentRect:NSRect(x:screen.maxX-486,y:screen.minY+16,width:470,height:min(740,screen.height-32)),styleMask:[.borderless,.nonactivatingPanel,.resizable],backing:.buffered,defer:false)
   panel.title="MissionPCB Assistant";panel.titleVisibility = .hidden;panel.titlebarAppearsTransparent=true;panel.level = .floating;panel.collectionBehavior=[.canJoinAllSpaces,.fullScreenAuxiliary];panel.hidesOnDeactivate=false;panel.isMovableByWindowBackground=true;panel.isReleasedWhenClosed=false;panel.minSize=NSSize(width:390,height:86);panel.isOpaque=false;panel.backgroundColor = .clear;panel.hasShadow=true
+  statusItem=NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength);statusItem.button?.title="MissionPCB";statusItem.button?.target=self;statusItem.button?.action=#selector(showPanel)
+  NotificationCenter.default.addObserver(forName:Notification.Name("MissionPCBCompanion"),object:nil,queue:.main){[weak self] _ in self?.resizePanel(height:740)}
   NotificationCenter.default.addObserver(forName:Notification.Name("MissionPCBDashboard"),object:nil,queue:.main){[weak self] _ in self?.resizePanel(height:760,width:1100)}
   NotificationCenter.default.addObserver(forName:Notification.Name("MissionPCBExpand"),object:nil,queue:.main){[weak self] _ in self?.resizePanel(height:420)}
   NotificationCenter.default.addObserver(forName:Notification.Name("MissionPCBCollapse"),object:nil,queue:.main){[weak self] _ in self?.resizePanel(height:86)}
