@@ -1,0 +1,73 @@
+[
+  {
+    "id": "mcu-generic-qfn",
+    "name": "Generic MCU / Flight Controller",
+    "category": "processor",
+    "dimensions_mm": { "length": 12, "width": 12, "height": 2 },
+    "heat_source": false,
+    "noise_source": false,
+    "sensitive": "medium",
+    "placement_notes": "Prefer near board center for short signal paths."
+  },
+  {
+    "id": "sensor-generic-imu",
+    "name": "Generic Sensitive Sensor",
+    "category": "sensor",
+    "dimensions_mm": { "length": 6, "width": 6, "height": 1.5 },
+    "heat_source": false,
+    "noise_source": false,
+    "sensitive": "high",
+    "required_clearance_mm": {
+      "from_hot_components": 15,
+      "from_noisy_components": 18
+    },
+    "placement_notes": "Prefer near geometric center while avoiding heat and high-current noise."
+  },
+  {
+    "id": "rf-generic-module",
+    "name": "Generic RF / Wireless Module",
+    "category": "wireless",
+    "dimensions_mm": { "length": 16, "width": 10, "height": 2 },
+    "heat_source": false,
+    "noise_source": false,
+    "sensitive": "high",
+    "required_clearance_mm": {
+      "from_noisy_components": 20
+    },
+    "keepout_zone_mm": { "length": 22, "width": 12 },
+    "placement_notes": "Needs antenna keep-out and separation from switching regulators or drivers."
+  },
+  {
+    "id": "regulator-generic-dcdc",
+    "name": "Generic DC-DC Regulator",
+    "category": "power_regulator",
+    "dimensions_mm": { "length": 8, "width": 8, "height": 3 },
+    "heat_source": true,
+    "noise_source": true,
+    "sensitive": "low",
+    "heat_zone_radius_mm": 18,
+    "placement_notes": "Place near board edge and away from RF/sensitive sensors when possible."
+  },
+  {
+    "id": "driver-generic-load",
+    "name": "Generic Driver / Load Component",
+    "category": "driver",
+    "dimensions_mm": { "length": 14, "width": 10, "height": 3 },
+    "heat_source": true,
+    "noise_source": true,
+    "sensitive": "low",
+    "heat_zone_radius_mm": 22,
+    "placement_notes": "Keep high-current path short and away from RF/sensor areas."
+  },
+  {
+    "id": "connector-generic-battery",
+    "name": "Generic Battery Connector",
+    "category": "connector",
+    "dimensions_mm": { "length": 10, "width": 6, "height": 5 },
+    "heat_source": false,
+    "noise_source": false,
+    "sensitive": "low",
+    "placement_notes": "Must remain accessible from enclosure opening after assembly."
+  }
+]
+
