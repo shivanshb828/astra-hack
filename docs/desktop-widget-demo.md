@@ -1,7 +1,8 @@
 # Desktop Widget Demo
 
 This is the KiCad-first demo surface. The browser UI is not the product; the
-desktop widget floats over KiCad and talks to the local backend.
+desktop widget floats over KiCad and talks to the local backend. Dhruva's
+Blender workbench is available as an auxiliary view through the same widget.
 
 ## Run
 
@@ -19,6 +20,12 @@ Open KiCad:
 open -a KiCad kicad/ecg-patch/ecg-patch.kicad_pro
 ```
 
+Open Dhruva's Blender workbench from the widget:
+
+```text
+open Blender
+```
+
 Launch the floating desktop widget:
 
 ```bash
@@ -28,7 +35,7 @@ python3 scripts/astra_desktop_widget.py
 ## Demo Prompts
 
 ```text
-Build a rechargeable 7-day ECG patch for continuous patient monitoring.
+Build a wearable medical device PCB.
 ```
 
 ```text
@@ -61,3 +68,14 @@ explain CELL
 These write visible silkscreen annotations directly into the KiCad board file.
 If KiCad prompts that the file changed on disk, choose reload. `reload KiCad`
 also sends a manual reload/foreground signal.
+
+## Active Loop
+
+```text
+desktop widget -> backend/Astra -> KiCad board edit/annotation -> KiCad reload
+```
+
+The widget can open KiCad, ask for a reload, apply proposals, and write visible
+KiCad annotations. It can also open Dhruva's Blender workbench. It does not
+read the KiCad mouse cursor or selected object yet; that requires a KiCad-side
+plugin.

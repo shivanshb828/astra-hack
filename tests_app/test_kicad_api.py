@@ -18,3 +18,14 @@ def test_kicad_footprints_endpoint_lists_demo_board():
     assert out.status_code == 200
     refs = {item["ref"] for item in out.json()["footprints"]}
     assert {"AFE", "BUCK", "CELL", "BLE"}.issubset(refs)
+
+
+def test_chat_explain_ref_uses_local_context(monkeypatch):
+    monkeypatch.setenv("MISSIONPCB_MODEL_API_KEY", "test-key")
+    monkeypatch.setenv("MISSIONPCB_MODEL_ENDPOINT", "https://example.invalid")
+    client = TestClient(app)
+    out = client.post("/api/chat", json={"message": "explain AFE"})
+    assert out.status_code == 200
+    body = out.json()
+    assert body["selected_ref"] == "AFE"
+    assert "sensitivity: high" in body["reply"].lower()

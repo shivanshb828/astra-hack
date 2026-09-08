@@ -1,0 +1,46 @@
+{
+  "baseline": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_blender_demo/missionpcb_lean_constraint_demo.blend",
+  "artifact": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_blender_demo/workbench/missionpcb_ecg_workbench.blend",
+  "geometry_signature_unchanged": true,
+  "snapshots_unchanged": true,
+  "results_unchanged": true,
+  "prop_motion_ignored": true,
+  "recalculation_stable": true,
+  "environment_objects": 120,
+  "mesh_vertices": 1688,
+  "added_lights": 0,
+  "render_engine": "BLENDER_EEVEE",
+  "render_resolution": [
+    1920,
+    1080
+  ],
+  "render_seconds": 41.139343583010486,
+  "total_seconds": 45.996214832994156,
+  "baseline_statuses": {
+    "Naive": [
+      "PASS",
+      "FAIL",
+      "FAIL",
+      "FAIL",
+      "FAIL",
+      "FAIL",
+      "FAIL",
+      "FAIL"
+    ],
+    "MissionPCB": [
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS",
+      "PASS"
+    ]
+  },
+  "original_blender_integration": "PASS",
+  "workbench_blender_integration": "PASS",
+  "embedded_runtime_failure_restore": "PASS",
+  "visual_review": "1080p render inspected: both eight-row dashboards readable; no device clipping; peripheral props intentionally frame the mat.",
+  "launcher_shell_syntax": "PASS"
+}

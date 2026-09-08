@@ -22,6 +22,7 @@ import urllib.request
 
 BASE_URL = "http://127.0.0.1:8000"
 KICAD_PROJECT = "kicad/ecg-patch/ecg-patch.kicad_pro"
+BLENDER_WORKBENCH = "missionpcb_blender_demo/workbench/missionpcb_ecg_workbench.blend"
 
 
 def request(path: str, payload: dict | None = None) -> dict:
@@ -44,10 +45,10 @@ class AstraWidget(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
         self.title("Astra KiCad")
-        self.geometry("330x390+1080+120")
-        self.minsize(300, 320)
+        self.geometry("430x245+970+120")
+        self.minsize(360, 210)
         self.attributes("-topmost", True)
-        self.configure(bg="#fafaf7")
+        self.configure(bg="#171717")
         self.pending_proposal: str | None = None
         self.auto_apply = tk.BooleanVar(value=False)
         self.status = tk.StringVar(value="Connecting...")
@@ -58,70 +59,95 @@ class AstraWidget(tk.Tk):
     def _build(self) -> None:
         style = ttk.Style(self)
         style.theme_use("clam")
-        style.configure("TButton", padding=(6, 4), relief="flat")
-        style.configure("Primary.TButton", background="#111111", foreground="#ffffff")
-        style.configure("TCheckbutton", background="#fafaf7")
+        style.configure("TButton", padding=(7, 5), relief="flat")
+        style.configure("Primary.TButton", background="#f4f4f0", foreground="#111111")
+        style.configure("Ghost.TButton", background="#242424", foreground="#f4f4f0")
+        style.configure("TCheckbutton", background="#171717", foreground="#d8d8d2")
 
-        header = tk.Frame(self, bg="#ffffff", highlightbackground="#111111", highlightthickness=1)
-        header.pack(fill="x")
-        mark = tk.Label(header, text="A", fg="#ffffff", bg="#111111", width=2, height=1)
-        mark.pack(side="left", padx=(8, 7), pady=7)
-        title = tk.Frame(header, bg="#ffffff")
-        title.pack(side="left", fill="x", expand=True)
-        tk.Label(title, text="Astra KiCad", anchor="w", bg="#ffffff", fg="#111111",
-                 font=("Helvetica", 12, "bold")).pack(fill="x")
-        tk.Label(title, textvariable=self.status, anchor="w", bg="#ffffff", fg="#555555",
-                 font=("Helvetica", 9)).pack(fill="x")
-        ttk.Button(header, text="Reload", command=self.reload_kicad).pack(
-            side="right", padx=(0, 8)
-        )
-        ttk.Button(header, text="Open", command=self.open_kicad).pack(
-            side="right", padx=(0, 5)
-        )
+        shell = tk.Frame(self, bg="#171717", padx=14, pady=14)
+        shell.pack(fill="both", expand=True)
 
-        self.log = tk.Text(
-            self,
-            wrap="word",
-            bg="#fbfbf8",
-            fg="#111111",
-            relief="flat",
-            padx=8,
-            pady=8,
-            height=12,
-            font=("Helvetica", 11),
-        )
-        self.log.pack(fill="both", expand=True)
-        self.log.insert("end", "Astra: Ask what to build, inspect, move, or mark.\n")
-        self.log.configure(state="disabled")
-
-        composer = tk.Frame(self, bg="#ffffff", highlightbackground="#111111", highlightthickness=1)
-        composer.pack(fill="x")
+        prompt = tk.Frame(shell, bg="#202020")
+        prompt.pack(fill="x", pady=(0, 12))
+        mark = tk.Label(prompt, text="*", fg="#ff7a3d", bg="#202020", width=2,
+                        font=("Helvetica", 20, "bold"))
+        mark.pack(side="left", padx=(12, 6), pady=8)
         entry = tk.Entry(
-            composer,
+            prompt,
             textvariable=self.input,
             relief="flat",
-            bg="#ffffff",
-            fg="#111111",
-            font=("Helvetica", 11),
+            bg="#202020",
+            fg="#f4f4f0",
+            insertbackground="#f4f4f0",
+            font=("Helvetica", 14, "bold"),
         )
-        entry.pack(side="left", fill="x", expand=True, padx=8, pady=9)
-        entry.insert(0, "What are we building?")
+        entry.pack(side="left", fill="x", expand=True, padx=(0, 12), pady=10)
+        entry.insert(0, "How can I help with this board?")
         entry.bind("<FocusIn>", self._clear_placeholder)
         entry.bind("<Return>", lambda _event: self.send())
-        ttk.Button(composer, text="Send", style="Primary.TButton", command=self.send).pack(
-            side="right", padx=(0, 8), pady=7
+
+        self.log = tk.Text(
+            shell,
+            wrap="word",
+            bg="#171717",
+            fg="#f4f4f0",
+            relief="flat",
+            padx=0,
+            pady=0,
+            height=4,
+            font=("Helvetica", 11),
         )
-        ttk.Button(composer, text="Apply", command=self.apply).pack(
-            side="right", padx=(0, 5), pady=7
+        self.log.pack(fill="both", expand=True, pady=(0, 10))
+        self.log.configure(state="disabled")
+
+        actions = tk.Frame(shell, bg="#171717")
+        actions.pack(fill="x")
+        for label, command in (
+            ("Ki", self.open_kicad),
+            ("Bl", self.open_blender),
+            ("R", self.reload_kicad),
+            ("OK", self.apply),
+        ):
+            tk.Button(
+                actions,
+                text=label,
+                command=command,
+                width=5,
+                height=2,
+                relief="flat",
+                bg="#242424",
+                fg="#f4f4f0",
+                activebackground="#303030",
+                activeforeground="#ffffff",
+                font=("Helvetica", 12, "bold"),
+            ).pack(side="left", padx=(0, 16))
+
+        footer = tk.Frame(shell, bg="#171717")
+        footer.pack(fill="x", pady=(8, 0))
+        tk.Label(
+            footer,
+            textvariable=self.status,
+            anchor="w",
+            bg="#171717",
+            fg="#969696",
+            font=("Helvetica", 9),
+        ).pack(side="left", fill="x", expand=True)
+        ttk.Checkbutton(
+            footer,
+            text="Auto-apply",
+            variable=self.auto_apply,
+        )
+        ttk.Button(footer, text="Send", style="Primary.TButton", command=self.send).pack(
+            side="right", padx=(8, 0)
         )
 
     def _clear_placeholder(self, _event: object) -> None:
-        if self.input.get() == "What are we building?":
+        if self.input.get() == "How can I help with this board?":
             self.input.set("")
 
     def append(self, who: str, text: str) -> None:
         self.log.configure(state="normal")
-        self.log.insert("end", f"\n{who}: {text.strip()}\n")
+        self.log.insert("end", f"{who}: {text.strip()}\n")
         self.log.see("end")
         self.log.configure(state="disabled")
 
@@ -144,6 +170,13 @@ class AstraWidget(tk.Tk):
         def task() -> None:
             subprocess.run(["open", "-a", "KiCad", KICAD_PROJECT], check=False)
             self.append("Astra", "Opened the demo KiCad project.")
+
+        self.run_bg(task)
+
+    def open_blender(self) -> None:
+        def task() -> None:
+            subprocess.run(["open", "-a", "Blender", BLENDER_WORKBENCH], check=False)
+            self.append("Astra", "Opened Dhruva's Blender workbench.")
 
         self.run_bg(task)
 
@@ -175,7 +208,7 @@ class AstraWidget(tk.Tk):
 
     def send(self) -> None:
         message = self.input.get().strip()
-        if not message or message == "What are we building?":
+        if not message or message == "How can I help with this board?":
             return
         self.input.set("")
         self.append("You", message)
@@ -195,6 +228,9 @@ class AstraWidget(tk.Tk):
             return
         if lowered in {"open", "open kicad"}:
             self.open_kicad()
+            return
+        if lowered in {"open blender", "blender"}:
+            self.open_blender()
             return
 
         def task() -> None:

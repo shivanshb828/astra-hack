@@ -319,15 +319,6 @@ def interpret(
     lowered = text.lower()
     base = {"mode": status["mode"], "provider_label": status["label"]}
 
-    if status["mode"] == "provider":
-        try:
-            return _provider_interpret(text, design, parts_index)
-        except Exception as exc:
-            base = {
-                "mode": "provider_error",
-                "provider_label": f"Model provider failed; local fallback used: {exc}",
-            }
-
     explain_match = re.search(r"\b(?:explain|what(?:'s| is)|why)\s+(?:the\s+)?([a-z0-9_ -]+)\??$", lowered)
     if explain_match:
         phrase = explain_match.group(1).strip()
@@ -361,6 +352,15 @@ def interpret(
                 **base,
                 "needs_clarification": True,
                 "reply": f"That could mean {', '.join(refs)}. Which ref should I explain?",
+            }
+
+    if status["mode"] == "provider":
+        try:
+            return _provider_interpret(text, design, parts_index)
+        except Exception as exc:
+            base = {
+                "mode": "provider_error",
+                "provider_label": f"Model provider failed; local fallback used: {exc}",
             }
 
     exact_ref = next((c.ref for c in design.components if c.ref.lower() == lowered), None)
