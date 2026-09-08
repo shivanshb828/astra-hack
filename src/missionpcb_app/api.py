@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import json
 import os
+import uuid
 from typing import Any
 
 from fastapi import BackgroundTasks, Body, FastAPI, HTTPException
@@ -335,17 +336,154 @@ def chat(req: ChatRequest) -> dict[str, Any]:
     return outcome
 
 
+class ProposalRequest(BaseModel):
+    """A change package submitted by an external agent.
+
+    Machine-to-machine counterpart to ``/api/chat``: the caller has already
+    decided what to move, so there is no text to parse and no ambiguity to
+    resolve. Same stored proposal shape either way, so ``apply``/``reject``
+    do not care which route produced it.
+    """
+
+    base_revision: int
+    changes: list[dict[str, Any]] = Field(default_factory=list)
+    source: str = "agent"
+    actor: str = "assistant"
+    explanation: str = ""
+    user_request: str = ""
+
+
+def _predict(state: DesignState, changes: list[dict[str, Any]]) -> dict[str, Any]:
+    """Analyse a hypothetical board without committing it.
+
+    ``analyse`` is pure -- it takes a state and returns verdicts, touching no
+    storage -- so evaluating a proposal is just analysing a copy. This is the
+    difference between an agent that can iterate and one that has to commit a
+    change to find out whether it helped.
+
+    The per-check delta matters more than the counts: a move that fixes two
+    clearances and breaks one somewhere else nets out to -1 and looks like
+    progress, which is exactly the case an agent must be able to see.
+    """
+    baseline = store.analysis_for_revision(DESIGN_ID, state.revision)
+    hypothetical, applied, refs = _apply_changes(state, changes)
+    predicted = analyse(hypothetical)
+
+    def failing(result: Any) -> set[str]:
+        if result is None:
+            return set()
+        return {c.check_id for c in result.checks if c.status == "fail"}
+
+    before, after = failing(baseline), failing(predicted)
+    fixed, introduced = sorted(before - after), sorted(after - before)
+
+    if not baseline:
+        verdict = "unknown"          # nothing to compare against yet
+    elif fixed and introduced:
+        verdict = "mixed"
+    elif introduced:
+        verdict = "regresses"
+    elif fixed:
+        verdict = "improves"
+    else:
+        verdict = "neutral"
+
+    return {
+        "applied_changes": applied,
+        "component_refs": refs,
+        "prediction": {
+            "verdict": verdict,
+            "baseline_summary": baseline.summary if baseline else None,
+            "predicted_summary": predicted.summary,
+            "net_fail_delta": len(after) - len(before),
+            "fixed": fixed,
+            "introduced": introduced,
+            "still_failing": sorted(before & after),
+            "warnings": list(predicted.warnings),
+        },
+    }
+
+
+@app.post("/api/proposals")
+def submit_proposal(req: ProposalRequest) -> dict[str, Any]:
+    """Evaluate a change package and store it pending. Changes nothing.
+
+    Returns the predicted effect so the caller can decide before committing.
+    Apply with ``POST /api/proposals/{id}/apply``, discard with ``/reject``;
+    a proposal that is never applied leaves no trace in design history.
+    """
+    if not req.changes:
+        raise HTTPException(400, "changes must not be empty")
+
+    state = _design()
+    if req.base_revision != state.revision:
+        raise HTTPException(
+            409,
+            {
+                "error": "revision_conflict",
+                "expected": req.base_revision,
+                "actual": state.revision,
+                "message": (
+                    f"proposal was built against revision {req.base_revision}, "
+                    f"design is at {state.revision}; re-read /api/design and resubmit"
+                ),
+            },
+        )
+
+    outcome = _predict(state, req.changes)   # raises 400 on an unknown ref
+
+    proposal = {
+        "proposal_id": uuid.uuid4().hex,
+        "design_id": DESIGN_ID,
+        "base_revision": state.revision,
+        "status": "pending",
+        "source": req.source,
+        "actor": req.actor,
+        "user_request": req.user_request,
+        "explanation": req.explanation or f"Agent proposal for {', '.join(outcome['component_refs'])}",
+        "changes": outcome["applied_changes"],
+        "component_refs": outcome["component_refs"],
+        "prediction": outcome["prediction"],
+    }
+    store.save_proposal(proposal)
+    return proposal
+
+
 @app.post("/api/proposals/{proposal_id}/apply")
 def apply_proposal(proposal_id: str, background: BackgroundTasks) -> dict[str, Any]:
+    """Commit a pending proposal, but only onto the revision it was built for.
+
+    A proposal's ``changes`` carry the ``before`` values read at authoring
+    time. Replaying them onto a later revision would overwrite whatever
+    happened in between with values computed against a board that no longer
+    exists, so a moved design is a conflict to resolve rather than an edit to
+    force through.
+    """
     proposal = store.get_proposal(proposal_id)
     if proposal is None:
         raise HTTPException(404, "proposal not found")
     if proposal.get("status") != "pending":
         raise HTTPException(409, f"proposal already {proposal.get('status')}")
 
+    base = proposal.get("base_revision")
+    current = store.current_revision(DESIGN_ID)
+    if isinstance(base, int) and base != current:
+        raise HTTPException(
+            409,
+            {
+                "error": "proposal_stale",
+                "expected": base,
+                "actual": current,
+                "message": (
+                    f"proposal was built against revision {base}, design is now at "
+                    f"{current}; resubmit it against the current board"
+                ),
+            },
+        )
+
     result = edit_design(
         EditRequest(
-            base_revision=store.current_revision(DESIGN_ID),
+            base_revision=current,
             changes=proposal["changes"],
             source="chat",
             actor="assistant",
