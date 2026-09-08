@@ -335,6 +335,11 @@ class KiCadMoveRequest(BaseModel):
     rotation_deg: float | None = None
 
 
+class KiCadAnnotateRequest(BaseModel):
+    ref: str
+    note: str = "Review this placement"
+
+
 class WidgetMessageRequest(BaseModel):
     message: str
     auto_mode: bool = False
@@ -630,6 +635,7 @@ def widget_monitor() -> dict[str, Any]:
             "widget_monitor": "/api/widget/monitor",
             "kicad_footprints": "/api/kicad/footprints",
             "kicad_move": "/api/kicad/footprints/move",
+            "kicad_annotate": "/api/kicad/annotate",
             "kicad_reload": "/api/kicad/reload",
         },
     }
@@ -764,6 +770,20 @@ def kicad_move_footprint(req: KiCadMoveRequest) -> dict[str, Any]:
     try:
         result = move_ref(DEFAULT_BOARD, req.ref, req.x_mm, req.y_mm, req.rotation_deg)
         result["reload"] = _signal_kicad_reload("direct_footprint_move", result)
+        return result
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
+
+
+@app.post("/api/kicad/annotate")
+def kicad_annotate(req: KiCadAnnotateRequest) -> dict[str, Any]:
+    from scripts.kicad_widget_control import DEFAULT_BOARD, annotate_ref
+
+    if not os.path.exists(DEFAULT_BOARD):
+        raise HTTPException(404, "no demo KiCad board found")
+    try:
+        result = annotate_ref(DEFAULT_BOARD, req.ref, req.note)
+        result["reload"] = _signal_kicad_reload("annotate_footprint", result)
         return result
     except ValueError as exc:
         raise HTTPException(400, str(exc))

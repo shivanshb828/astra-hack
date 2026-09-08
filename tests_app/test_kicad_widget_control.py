@@ -7,7 +7,7 @@ import sys
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO_ROOT)
 
-from scripts.kicad_widget_control import list_refs, move_ref  # noqa: E402
+from scripts.kicad_widget_control import annotate_ref, list_refs, move_ref  # noqa: E402
 
 
 BOARD = os.path.join(REPO_ROOT, "kicad", "ecg-patch", "ecg-patch.kicad_pcb")
@@ -28,3 +28,13 @@ def test_moves_generated_kicad_footprint(tmp_path):
     assert out["after"]["position_mm"] == [52.0, 7.5]
     refs = {item["ref"]: item for item in list_refs(board)["footprints"]}
     assert refs["BUCK"]["position_mm"] == [52.0, 7.5]
+
+
+def test_annotates_generated_kicad_footprint(tmp_path):
+    board = tmp_path / "copy.kicad_pcb"
+    shutil.copyfile(BOARD, board)
+    out = annotate_ref(board, "AFE", "sensitive analog front end")
+    assert out["changed"] is True
+    assert out["ref"] == "AFE"
+    text = board.read_text(encoding="utf-8")
+    assert "ASTRA: AFE - sensitive analog front end" in text

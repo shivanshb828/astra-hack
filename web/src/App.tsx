@@ -8,12 +8,7 @@ type Msg = {
 }
 
 export default function App() {
-  const [messages, setMessages] = useState<Msg[]>([
-    {
-      role: 'astra',
-      text: 'What are we building?',
-    },
-  ])
+  const [messages, setMessages] = useState<Msg[]>([])
   const [input, setInput] = useState('')
   const [autoMode, setAutoMode] = useState(false)
   const [busy, setBusy] = useState(false)
@@ -25,7 +20,7 @@ export default function App() {
       .widgetMonitor()
       .then((res) => {
         const kicad = res.integrations.kicad.status === 'connected' ? 'KiCad ready' : 'KiCad offline'
-        const model = res.integrations.model.configured ? 'Astra ready' : 'local fallback'
+        const model = res.integrations.model.configured ? 'model ready' : 'local fallback'
         setStatus(`${kicad} · ${model}`)
       })
       .catch(() => setStatus('Backend offline'))
@@ -94,26 +89,59 @@ export default function App() {
     }
   }
 
+  const annotate = async (ref: string, note: string) => {
+    setBusy(true)
+    try {
+      const res = await api.annotateKicad(ref, note)
+      setMessages((items) => [
+        ...items,
+        { role: 'astra', text: `Marked ${res.ref} in KiCad: ${res.note}` },
+      ])
+      setStatus(`KiCad marked · ${res.ref}`)
+    } catch (e: any) {
+      setMessages((items) => [...items, { role: 'astra', text: `Mark failed: ${e.message}` }])
+    } finally {
+      setBusy(false)
+    }
+  }
+
   return (
-    <main className="pet-shell">
-      <section className="pet-widget" aria-label="Astra widget">
+    <main className="artifact-shell">
+      <section className="astra-widget" aria-label="Astra KiCad widget">
         <header>
-          <div className="orb">A</div>
+          <div className="mark">A</div>
           <div>
-            <strong>Astra</strong>
+            <strong>Astra KiCad</strong>
             <span>{status}</span>
           </div>
-          <label className="auto">
+          <label className="auto" title="When enabled, safe proposals are applied immediately instead of waiting for Apply.">
             <input
               type="checkbox"
               checked={autoMode}
               onChange={(event) => setAutoMode(event.target.checked)}
             />
-            Auto
+            Auto-apply
           </label>
         </header>
 
+        <div className="promptbar">
+          <button onClick={() => annotate('AFE', 'sensitive analog front end')} disabled={busy}>
+            Mark AFE
+          </button>
+          <button onClick={() => annotate('BUCK', 'switching regulator noise source')} disabled={busy}>
+            Mark BUCK
+          </button>
+          <button onClick={() => annotate('CELL', 'verify battery height and safety')} disabled={busy}>
+            Mark CELL
+          </button>
+        </div>
+
         <div className="thread">
+          {messages.length === 0 && (
+            <div className="empty">
+              <span>Ask Astra to inspect or change the open KiCad board.</span>
+            </div>
+          )}
           {messages.map((message, index) => (
             <div key={index} className={`bubble ${message.role}`}>
               <p>{message.text}</p>
@@ -136,7 +164,7 @@ export default function App() {
           <textarea
             value={input}
             rows={2}
-            placeholder="Build a rechargeable 7-day ECG patch..."
+            placeholder="Build a rechargeable 7-day ECG patch for continuous patient monitoring."
             onChange={(event) => setInput(event.target.value)}
             onKeyDown={(event) => {
               if (event.key === 'Enter' && !event.shiftKey) {

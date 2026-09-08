@@ -134,6 +134,17 @@ export const api = {
       }),
     }),
 
+  annotateKicad: (ref: string, note: string) =>
+    req<{
+      changed: boolean
+      ref: string
+      note: string
+      position_mm: [number, number]
+    }>('/api/kicad/annotate', {
+      method: 'POST',
+      body: JSON.stringify({ ref, note }),
+    }),
+
   widgetSend: (message: string, autoMode: boolean) =>
     req<{
       outcome: ChatOutcome
