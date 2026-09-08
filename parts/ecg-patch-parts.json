@@ -1,0 +1,114 @@
+{
+  "library": "Single-lead ECG chest patch",
+  "notes": [
+    "Mission BOM for the MissionPCB demo. Kept separate from seed-parts.json,",
+    "which is the generic library; this file is the parts list for one product.",
+    "Clearance fields are intentionally written in two different styles here",
+    "(property-keyed and category-keyed) because the loader normalizes both.",
+    "Dimensions are representative package sizes, not verified against a",
+    "specific manufacturer drawing. Confirm against datasheets before layout."
+  ],
+  "parts": [
+    {
+      "id": "afe-ecg-24bit",
+      "name": "ECG Analog Front End (24-bit, single lead)",
+      "category": "analog_frontend",
+      "dimensions_mm": { "length": 5, "width": 5, "height": 1.0 },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitive": "high",
+      "required_clearance_mm": {
+        "from_hot_components": 10,
+        "from_noisy_components": 15
+      },
+      "placement_notes": "Keep electrode traces to this part short, symmetric, and guarded. This is the most noise-critical part on the board: the input signal is roughly 1 mV.",
+      "source_url": "https://www.ti.com/product/ADS1292R"
+    },
+    {
+      "id": "mcu-ble-soc",
+      "name": "BLE System-on-Chip (Cortex-M4F)",
+      "category": "mcu",
+      "dimensions_mm": { "length": 6, "width": 6, "height": 0.9 },
+      "heat_source": false,
+      "noise_source": true,
+      "sensitive": "low",
+      "min_distance_mm": {
+        "afe": 15
+      },
+      "placement_notes": "Digital switching and the radio PA both live here. Keep it on the digital side of the board, away from the analog front end.",
+      "source_url": "https://www.nordicsemi.com/products/nrf52832"
+    },
+    {
+      "id": "ant-chip-2g4",
+      "name": "2.4 GHz Chip Antenna",
+      "category": "rf",
+      "dimensions_mm": { "length": 3.2, "width": 1.6, "height": 1.0 },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitive": "high",
+      "keepout_zone_mm": {
+        "extends": 8,
+        "width": 8,
+        "direction": "+y"
+      },
+      "min_distance_mm": {
+        "driver": 20,
+        "power": 20,
+        "mcu": 20
+      },
+      "placement_notes": "Mount at a board edge with the keep-out facing open space. No copper pour, no ground plane, and no bulk material inside the keep-out.",
+      "source_url": "https://www.johansontechnology.com/antennas"
+    },
+    {
+      "id": "reg-buck-3v3",
+      "name": "Buck Regulator 3.3 V (with inductor)",
+      "category": "power_regulator",
+      "dimensions_mm": { "length": 3, "width": 3, "height": 1.5 },
+      "heat_source": true,
+      "noise_source": true,
+      "sensitive": "low",
+      "heat_zone_radius_mm": 10,
+      "avoid_near": ["sensor", "battery"],
+      "placement_notes": "The 10 mm thermal radius covers heat spreading through the copper pour, not just the package body. Switching node is the dominant EMI source on this board.",
+      "source_url": "https://www.ti.com/product/TPS62740"
+    },
+    {
+      "id": "bat-lipo-150mah",
+      "name": "LiPo Pouch Cell 150 mAh",
+      "category": "battery",
+      "dimensions_mm": { "length": 30, "width": 16, "height": 3.2 },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitive": "low",
+      "thermal_runaway_risk": true,
+      "placement_notes": "Dominates the height budget and the board area. Keep it away from sustained heat; a sealed shell gives the cell nowhere to dump energy.",
+      "source_url": "https://www.powerstream.com/thin-lithium-ion.htm"
+    },
+    {
+      "id": "con-charge-pogo",
+      "name": "Pogo Charge Pads (4-pin)",
+      "category": "connector",
+      "dimensions_mm": { "length": 8, "width": 4, "height": 1.0 },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitive": "low",
+      "placement_notes": "Must register with the gasketed charge window. The patch is sealed, so this is the only external interface after assembly.",
+      "source_url": "https://www.mill-max.com/products/spring-loaded"
+    },
+    {
+      "id": "elec-snap-agagcl",
+      "name": "Ag/AgCl Electrode Snap Pad",
+      "category": "electrode",
+      "dimensions_mm": { "length": 6, "width": 6, "height": 0.8 },
+      "heat_source": false,
+      "noise_source": false,
+      "sensitive": "high",
+      "skin_contact": true,
+      "required_clearance_mm": {
+        "from_noisy_components": 12
+      },
+      "placement_notes": "Pressed against the patient for the wear duration. Two are required to form the lead vector, and they must sit at opposite ends of the long axis.",
+      "source_url": "https://www.3m.com/3M/en_US/p/d/b5005158048/"
+    }
+  ]
+}
