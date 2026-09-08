@@ -72,6 +72,8 @@ class Handler(BaseHTTPRequestHandler):
      state['review']=payload;state['review_stale']=state.get('revision')!=payload.get('native_board_revision')
    import mission_constraints
    state['mission_constraints']=mission_constraints.view(state)
+   import layout_search
+   state['layout_search']=layout_search.status()
    if state.get('review') and state['mission_constraints']['stale']:state['review_stale']=True
    body=json.dumps(state).encode();mime='application/json'
   elif self.path=='/context':

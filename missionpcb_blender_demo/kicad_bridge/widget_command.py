@@ -26,6 +26,13 @@ def parse(text):
  return ('unknown',)
 
 def run(text):
+ if text.strip().lower() in ('find best of 10','search layouts','generate 10 layouts'):
+  import layout_search
+  return layout_search.start()
+ if text.strip().lower()=='apply best layout':
+  import layout_search
+  return layout_search.apply_winner()
+
  if text.strip().lower() in ('show review markers','hide review markers'):
   from kipy.board_types import BoardLayer
   board=bridge.connect();layers=set(board.get_visible_layers());layer=BoardLayer.BL_Cmts_User

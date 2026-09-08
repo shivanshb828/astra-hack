@@ -77,3 +77,11 @@ Save limit persists an engineering threshold locally and invalidates the prior r
 Verified on the six-component live board: 24 bridge unit tests, 6 package/review tests, dashboard-cycle-e2e (comments, pins, native moves, annotations, restoration), and constraint-limits-e2e (save limit, stale status, engine measurement, recheck, restored limit). The 18-component support profile is supported by source/tests; its board candidate is not installed in the active editor.
 
 The floating app uses a borderless panel and remains running if its window is closed; opening the app restores the panel. Rebuild through launch.py after Swift changes.
+
+## Automatically choose the best of ten
+
+Use **Find best of 10** (or type that command) to start a background search from the live board and active engineering limits. Ten seeded hill-climbing candidates are re-evaluated by the real constraint engine. Ranking minimizes blocker failures, total failures, summed violation deficits, unknown/warning checks, then total component movement. The best candidate is selected automatically; this is the best of the evaluated batch, not a global optimum.
+
+**Apply selected layout** uses the guarded native move path. Changes to board positions, limits or pins invalidate the result. Pinned footprints stay fixed. Candidate 1 retains the current layout if optimization would rank worse. Search itself does not modify CAD. After applying, Review & annotate updates native flags.
+
+Verified against the cached six-component initial snapshot: ten real searches completed in about 12.5 seconds, candidate 10 selected, 26 checks passing and connector access still skipped. The live editor was unresponsive during this verification, so the new apply path was covered by unit guards, not a live application test.
