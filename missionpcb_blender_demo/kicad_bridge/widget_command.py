@@ -1,5 +1,6 @@
 """Offline commands for the native floating panel; no model call."""
-import json,re,sys,datetime
+import json,re,sys,datetime,zipfile
+import review_journal
 from pathlib import Path
 import bridge
 
@@ -25,16 +26,37 @@ def parse(text):
  return ('unknown',)
 
 def run(text):
+ if re.fullmatch(r"select (?:U[1-5]|J1)(?:,(?:U[1-5]|J1))*",text.strip(),re.I):
+  refs=text.strip().upper().split(' ',1)[1].split(',')
+  board=bridge.connect();fps={f.reference_field.text.value:f for f in board.get_footprints()}
+  if any(r not in fps for r in refs):raise ValueError('Unknown component')
+  board.clear_selection();board.add_to_selection([fps[r] for r in refs])
+  selected={getattr(f,'reference_field',None).text.value for f in board.get_selection() if getattr(f,'reference_field',None)}
+  if not set(refs)<=selected:raise ValueError('Selection was not confirmed')
+  return 'Selected '+', '.join(refs)+' in MissionPCB. No geometry changed.'
  if text.lower().startswith("blender:"):
   import blender_command
   return blender_command.run(text.split(":",1)[1].strip())
  if text.strip().lower() in ("full check","review board","check the board"):
   import native_review
-  return native_review.run()
+  response=native_review.run()
+  report=json.loads((bridge.TARGET.parent/'verification/live-review.json').read_text())
+  record_review(report['findings'],report['result']['summary'],report['native_board_revision'],annotated=False)
+  return response
+ if text.strip().lower() in ("review cycle","flag board","flag and comment","review and annotate board"):
+  sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'missionpcb_review'))
+  import roundtrip
+  revision='widget-'+str(__import__('time').time_ns())
+  archive=roundtrip.review(roundtrip.submit(revision))
+  outcome=roundtrip.apply(archive)
+  with zipfile.ZipFile(archive) as package:
+   report=json.loads(package.read('findings.json'))
+  record_review(report['findings'],report['summary'],bridge.snapshot(bridge.connect())['revision'],annotated=True,revision=revision)
+  return 'ENGINE REVIEW → NATIVE KICAD FLAGS\n'+str(outcome['summary'])+'\n'+str(outcome['annotations_applied'])+' review labels/comments applied on Cmts.User.\nBoard saved. One Undo reverses annotations. Component positions preserved.\nRevision: '+revision+'\nCoverage incomplete; geometry policies only.'
  intent=parse(text)
  if intent[0] in ('help','unknown'):
   prefix="Hi! I can inspect and move components in your open MissionPCB board." if intent[0]=='help' else "I couldn't map that to a supported action, so I haven't changed the board."
-  return prefix+'\n\nTry: “Inspect the board”, “Improve the layout”, “Move the regulator 2 mm right”, or “Reset the layout”.\n\nLocal command understanding is active. Live Astra chat is not connected.'
+  return prefix+'\n\nTry: “Full check”, “Flag and comment”, “Improve the layout”, “Move the regulator 2 mm right”, or “Reset the layout”. Comments and pins are available in the expanded dashboard.\n\nLocal command understanding is active. Live Astra chat is not connected.'
  state=bridge.snapshot(bridge.connect())
  command=intent[0]
  if command in ('inspect','status',''):
@@ -54,8 +76,23 @@ def run(text):
    y=old['y_mm']+({'up':-distance,'down':distance}.get(direction,0))
   else:x,y=intent[2:]
   moves=[{'ref':ref,'x_mm':x,'y_mm':y,'rotation_deg':old['rotation_deg']}]
+ pins=review_journal.get_state(state['board'])['pins']
+ old_positions={p['ref']:p for p in state['parts']}
+ blocked=[m['ref'] for m in moves if pins.get(m['ref']) and any(m[k]!=old_positions[m['ref']][k] for k in ('x_mm','y_mm','rotation_deg'))]
+ if blocked:raise ValueError('Pinned components would move: '+', '.join(blocked)+'. Unpin them in the dashboard before applying.')
  result=bridge.apply({'board':state['board'],'base_revision':state['revision'],'moves':moves})
+ review_journal.append_event(state['board'],'design_change',{'command':text,'before':result['before'],'after':result['after'],'moves':moves,'source':'cached placement' if command in ('improve','reset') else 'user command','review_required':True})
  return 'Applied and verified %d component moves in KiCad.\nOne Undo reverses the change. Not saved to disk.\nThis checks placement commands, not circuit correctness.'%len(moves)
+
+def record_review(findings,summary,native_revision,annotated=False,revision=None):
+ """Persist review snapshots and stable finding transitions for the dashboard."""
+ previous=[e['payload'] for e in review_journal.get_state(str(bridge.TARGET))['events'] if e['kind']=='engine_review']
+ old={c['id'] for c in previous[-1]['findings'] if c['status']=='FAIL'} if previous else set()
+ current={c['id'] for c in findings if c['status']=='FAIL'}
+ ever={c['id'] for p in previous for c in p['findings'] if c['status']=='FAIL'}
+ payload={'findings':findings,'summary':summary,'native_board_revision':native_revision,'annotated':annotated,'revision':revision,'source':'local compute engine; cached part data and authored policies','new_failures':sorted(current-old-ever),'reopened':sorted((current-old)&ever),'resolved':sorted(old-current)}
+ return review_journal.append_event(str(bridge.TARGET),'engine_review',payload)
+
 def log_event(command, status, message):
  path=Path(__file__).with_name('activity.jsonl')
  with path.open('a') as file:

@@ -14,7 +14,7 @@ class RoundTrip(unittest.TestCase):
  def returned(self,change=lambda b:b,extra=None):
   with zipfile.ZipFile(self.archive) as z:d={n:z.read(n) for n in z.namelist()}
   d['project/MissionPCB.kicad_pcb']=change(self.board).encode()
-  d['findings.json']=json.dumps({'revision':'r1','findings':[]}).encode()
+  d['findings.json']=json.dumps({'revision':'r1','source_board_sha256':p.sha(self.board.encode()),'findings':[]}).encode()
   if extra:d.update(extra)
   out=Path(self.tmp.name)/'return.zip'
   with zipfile.ZipFile(out,'w') as z:
@@ -25,6 +25,9 @@ class RoundTrip(unittest.TestCase):
   self.assertTrue(out.exists());self.assertEqual((p.PROJECT/'MissionPCB.kicad_pcb').read_text(),self.board)
  def test_reject_design_edit(self):
   with self.assertRaises(ValueError):p.receive(self.returned(lambda b:b.replace('1 2','8 9')))
+ def test_preserve_user_comments(self):
+  original='(kicad_pcb (gr_text "My note" (at 4 5) (layer "Cmts.User")))'
+  self.assertNotEqual(p.without_review(original),p.without_review(original.replace('My note','Changed')))
  def test_reject_stale(self):
   (p.PROJECT/'MissionPCB.kicad_pcb').write_text(self.board+'\n')
   with self.assertRaises(ValueError):p.receive(self.returned())

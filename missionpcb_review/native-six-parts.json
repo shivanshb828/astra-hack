@@ -40,7 +40,12 @@
       "heat_source": false,
       "noise_source": true,
       "sensitivity": "high",
-      "heat_zone_radius_mm": null
+      "heat_zone_radius_mm": null,
+      "keepout": {
+        "extends": 22,
+        "width": 10,
+        "direction": "-x"
+      }
     },
     {
       "id": "tps62740",

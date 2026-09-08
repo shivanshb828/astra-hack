@@ -1,3 +1,5 @@
+For the actual KiCad project-package round trip, use [ROUNDTRIP.md](ROUNDTRIP.md). It supports native review annotations and full live-board hash checking. The HTTP endpoint below is the separate JSON adapter.
+
 # MissionPCB review handoff
 
 Local service: `http://127.0.0.1:8769`. Start with `python3 missionpcb_review/service.py`.

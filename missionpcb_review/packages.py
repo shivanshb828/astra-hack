@@ -48,7 +48,7 @@ def without_review(text):
     depth+=(ts[j]=='(')-(ts[j]==')');j+=1
     if depth==0:break
    block=ts[i:j]
-   if block[1]=='gr_text' and len(block)>2 and block[2].startswith('"MissionPCB review: ') and any(block[k:k+4]==['(','layer','"Cmts.User"',')'] for k in range(len(block)-3)):
+   if block[1]=='gr_text' and len(block)>2 and block[2].startswith(('"MissionPCB review: ','"[MPCB] ')) and any(block[k:k+4]==['(','layer','"Cmts.User"',')'] for k in range(len(block)-3)):
     i=j;continue
   out.append(ts[i]);i+=1
  return out
@@ -76,9 +76,12 @@ def receive(archive):
    if not local.exists() or sha(local.read_bytes())!=digest:raise ValueError('Local project changed since submission: '+name)
  if without_review(data[board].decode())!=without_review((base/board).read_text()):raise ValueError('Returned board changes more than Cmts.User review drawings')
  findings=json.loads(data['findings.json'])
+ if findings.get('source_board_sha256')!=m['files'][board]:raise ValueError('Findings parent hash does not match submitted board')
  if findings.get('revision')!=rev or not isinstance(findings.get('findings'),list):raise ValueError('findings.json requires matching revision and findings array')
  dest=EXCHANGE/(rev+'-reviewed')
- if dest.exists():raise ValueError('Review already staged')
+ if dest.exists():
+  if all((dest/name).is_file() and (dest/name).read_bytes()==content for name,content in data.items()):return dest/board
+  raise ValueError('Different review already staged for this revision')
  dest.mkdir()
  for name,content in data.items():
   path=dest/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(content)

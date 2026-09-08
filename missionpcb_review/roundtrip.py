@@ -8,7 +8,8 @@ from layout_adapter import payload_for
 from constraint_engine import load_layout,load_parts,validate
 from kipy.board_types import BoardText,BoardLayer
 from kipy.geometry import Vector2
-PREFIX='MissionPCB review: '
+PREFIX='[MPCB] '
+LEGACY_PREFIX='MissionPCB review: '
 
 def submit(revision):
  board=bridge.connect();before=bridge.snapshot(board)
@@ -37,17 +38,21 @@ def review(outbound):
   result=validate(layout,parts,w+pw).to_dict()
  findings=[c for c in result['checks'] if c['status']!='PASS']
  annotations=[]
+ grouped={}
  positions={p['ref']:p for p in meta['native_snapshot']['parts']}
  for n,c in enumerate(findings):
   refs=[payload['kicad_refs'][r] for r in c.get('subjects',[]) if r in payload['kicad_refs']]
   c['kicad_refs']=refs
   # Compact numbered marker at each affected component; complete comments beside board.
   for ref in refs:
-   pos=positions[ref];annotations.append({'text':PREFIX+f"[{n+1}] {c['status']} {ref}",'x':pos['x_mm'],'y':pos['y_mm']-3-n*.6})
-  annotations.append({'text':PREFIX+f"[{n+1}] {c['status']} {','.join(refs) or 'Coverage'}: "+c.get('message','')[:220],'x':140,'y':145+n*3})
+   grouped.setdefault(ref,[]).append((n+1,c['status']))
+  # Full explanations live in the interactive dashboard, not on the PCB canvas.
+ for ref,issues in grouped.items():
+  pos=positions[ref];status='FAIL' if any(s=='FAIL' for _,s in issues) else 'REVIEW'
+  annotations.append({'text':PREFIX+f"{ref} {status} ["+','.join(str(n) for n,_ in issues)+']','x':pos['x_mm'],'y':pos['y_mm']-3})
  reviewed={'revision':revision,'source_board_sha256':meta['source_board_sha256'],'findings':findings,'summary':result['summary'],'annotations':annotations,'limitations':meta['assumptions']+['Distance proxies do not establish temperatures or medical compliance.']}
  data['findings.json']=json.dumps(reviewed,indent=2).encode()
- source=data[manifest['board']].decode();idx=source.rfind(')')
+ source=' '.join(packages.without_review(data[manifest['board']].decode()));idx=source.rfind(')')
  drawings='\n'.join('(gr_text '+json.dumps(a['text'])+f' (at {a["x"]} {a["y"]}) (layer "Cmts.User") (uuid "{uuid.uuid4()}") (effects (font (size 0.7 0.7) (thickness 0.1))))' for a in annotations)
  data[manifest['board']]=(source[:idx]+drawings+'\n'+source[idx:]).encode()
  output=Path(outbound).with_name(Path(outbound).stem+'-return.zip')
@@ -73,7 +78,7 @@ def apply(archive):
   item=BoardText();item.value=a['text'];item.position=Vector2.from_xy_mm(a['x'],a['y']);item.layer=BoardLayer.BL_Cmts_User
   item.attributes.size=Vector2.from_xy_mm(.7,.7);item.attributes.stroke_width=100000
   changes.append(item)
- old=[t for t in board.get_text() if isinstance(t,BoardText) and t.value.startswith(PREFIX)]
+ old=[t for t in board.get_text() if isinstance(t,BoardText) and t.value.startswith((PREFIX,LEGACY_PREFIX))]
  tx=board.begin_commit()
  try:
   if old:board.remove_items(old)
@@ -82,7 +87,7 @@ def apply(archive):
  except Exception:board.drop_commit(tx);raise
  board.push_commit(tx,'MissionPCB: import reviewed findings')
  if bridge.snapshot(board)['revision']!=before['revision']:raise RuntimeError('Unexpected placement change; inspect Undo')
- found=[t for t in board.get_text() if isinstance(t,BoardText) and t.value.startswith(PREFIX)]
+ found=[t for t in board.get_text() if isinstance(t,BoardText) and t.value.startswith((PREFIX,LEGACY_PREFIX))]
  if len(found)!=len(changes):raise RuntimeError('Annotation readback failed')
  board.save()
  return {'reviewed_board':str(staged),'annotations_applied':len(found),'summary':result['summary'],'undo':'One KiCad Undo removes this import; save afterward to persist undo.'}
