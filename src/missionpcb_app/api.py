@@ -14,6 +14,8 @@ from __future__ import annotations
 
 import json
 import os
+import subprocess
+import time
 import uuid
 from typing import Any
 
@@ -326,6 +328,100 @@ class ChatRequest(BaseModel):
     message: str
 
 
+class KiCadMoveRequest(BaseModel):
+    ref: str
+    x_mm: float
+    y_mm: float
+    rotation_deg: float | None = None
+
+
+class WidgetMessageRequest(BaseModel):
+    message: str
+    auto_mode: bool = False
+
+
+def _signal_kicad_reload(reason: str, mutation: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Tell the local demo shell that KiCad's board file changed.
+
+    KiCad does not expose a simple local HTTP control API. The reliable demo
+    path is to mutate the board file, write a reload marker, and optionally ask
+    macOS to foreground the project. KiCad will prompt/reload when it sees the
+    file changed on disk.
+    """
+    project = os.path.join(REPO_ROOT, "kicad", "ecg-patch", "ecg-patch.kicad_pro")
+    board = os.path.join(REPO_ROOT, "kicad", "ecg-patch", "ecg-patch.kicad_pcb")
+    marker = os.path.join(REPO_ROOT, "out", "widget", "kicad-reload.json")
+    os.makedirs(os.path.dirname(marker), exist_ok=True)
+    payload = {
+        "timestamp": time.time(),
+        "reason": reason,
+        "project": project,
+        "board": board,
+        "mutation": mutation,
+    }
+    with open(marker, "w", encoding="utf-8") as fh:
+        json.dump(payload, fh, indent=2)
+
+    auto_open = os.environ.get("MISSIONPCB_KICAD_AUTO_RELOAD") == "1"
+    opened = False
+    open_error = ""
+    if auto_open and os.path.exists(project):
+        try:
+            subprocess.run(["open", "-a", "KiCad", project], check=True, timeout=5)
+            opened = True
+        except Exception as exc:
+            open_error = str(exc)
+
+    return {
+        "strategy": "file_changed",
+        "marker": marker,
+        "opened_kicad": opened,
+        "open_error": open_error,
+        "user_action": (
+            "If KiCad prompts that the board changed on disk, choose Reload. "
+            "Set MISSIONPCB_KICAD_AUTO_RELOAD=1 before starting the backend to foreground KiCad automatically."
+        ),
+    }
+
+
+def _sync_kicad_from_changes(changes: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Mirror app placement changes into the native KiCad demo board."""
+    from scripts.kicad_widget_control import DEFAULT_BOARD, list_refs, move_ref
+
+    synced = []
+    if not os.path.exists(DEFAULT_BOARD):
+        return synced
+    by_ref: dict[str, dict[str, Any]] = {}
+    for change in changes:
+        ref = change.get("ref")
+        if not ref:
+            continue
+        by_ref.setdefault(ref, {})[change.get("field", "")] = change.get("after")
+    for ref, fields in by_ref.items():
+        pos = fields.get("pos_mm")
+        rot = fields.get("rotation_deg")
+        if pos is None and rot is None:
+            continue
+        if pos is None:
+            current = next(
+                (
+                    item
+                    for item in list_refs(DEFAULT_BOARD)["footprints"]
+                    if item["ref"] == ref
+                ),
+                None,
+            )
+            if current is None:
+                continue
+            pos = current["position_mm"]
+        try:
+            synced.append(move_ref(DEFAULT_BOARD, ref, float(pos[0]), float(pos[1]), rot))
+        except ValueError:
+            # Some app refs may not exist in a partial KiCad demo board yet.
+            continue
+    return synced
+
+
 @app.post("/api/chat")
 def chat(req: ChatRequest) -> dict[str, Any]:
     state = _design()
@@ -492,8 +588,51 @@ def apply_proposal(proposal_id: str, background: BackgroundTasks) -> dict[str, A
         ),
         background,
     )
+    kicad_sync = _sync_kicad_from_changes(proposal.get("changes", []))
+    result["native_tool"] = {
+        "kicad": {
+            "synced": bool(kicad_sync),
+            "changes": kicad_sync,
+            "reload": _signal_kicad_reload("proposal_applied", {"proposal_id": proposal_id}),
+        }
+    }
     store.set_proposal_status(proposal_id, "applied")
     return result
+
+
+@app.post("/api/widget/send")
+def widget_send(req: WidgetMessageRequest, background: BackgroundTasks) -> dict[str, Any]:
+    """One-call widget loop: ask Astra/local fallback, optionally apply."""
+    outcome = chat(ChatRequest(message=req.message))
+    response: dict[str, Any] = {"outcome": outcome, "auto_applied": False}
+    proposal = outcome.get("proposal")
+    if req.auto_mode and proposal:
+        response["apply_result"] = apply_proposal(proposal["proposal_id"], background)
+        response["auto_applied"] = True
+    return response
+
+
+@app.get("/api/widget/monitor")
+def widget_monitor() -> dict[str, Any]:
+    marker = os.path.join(REPO_ROOT, "out", "widget", "kicad-reload.json")
+    latest_reload = None
+    if os.path.exists(marker):
+        with open(marker, encoding="utf-8") as fh:
+            latest_reload = json.load(fh)
+    return {
+        "ok": True,
+        "design_revision": store.current_revision(DESIGN_ID),
+        "integrations": integrations_status(),
+        "latest_analysis": latest_analysis(),
+        "latest_kicad_reload": latest_reload,
+        "routes": {
+            "widget_send": "/api/widget/send",
+            "widget_monitor": "/api/widget/monitor",
+            "kicad_footprints": "/api/kicad/footprints",
+            "kicad_move": "/api/kicad/footprints/move",
+            "kicad_reload": "/api/kicad/reload",
+        },
+    }
 
 
 @app.post("/api/proposals/{proposal_id}/reject")
@@ -605,3 +744,31 @@ def kicad_drc(board: str = Body(embed=True, default="")) -> dict[str, Any]:
         return {"ok": False, "status": "not_connected",
                 "detail": "no .kicad_pcb file found", "checks": []}
     return integrations.run_kicad_drc(target)
+
+
+@app.get("/api/kicad/footprints")
+def kicad_footprints() -> dict[str, Any]:
+    from scripts.kicad_widget_control import DEFAULT_BOARD, list_refs
+
+    if not os.path.exists(DEFAULT_BOARD):
+        raise HTTPException(404, "no demo KiCad board found")
+    return list_refs(DEFAULT_BOARD)
+
+
+@app.post("/api/kicad/footprints/move")
+def kicad_move_footprint(req: KiCadMoveRequest) -> dict[str, Any]:
+    from scripts.kicad_widget_control import DEFAULT_BOARD, move_ref
+
+    if not os.path.exists(DEFAULT_BOARD):
+        raise HTTPException(404, "no demo KiCad board found")
+    try:
+        result = move_ref(DEFAULT_BOARD, req.ref, req.x_mm, req.y_mm, req.rotation_deg)
+        result["reload"] = _signal_kicad_reload("direct_footprint_move", result)
+        return result
+    except ValueError as exc:
+        raise HTTPException(400, str(exc))
+
+
+@app.post("/api/kicad/reload")
+def kicad_reload() -> dict[str, Any]:
+    return _signal_kicad_reload("manual_reload_request")
