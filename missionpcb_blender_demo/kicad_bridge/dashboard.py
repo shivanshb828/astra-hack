@@ -70,7 +70,10 @@ class Handler(BaseHTTPRequestHandler):
   elif self.path=='/context':
    import design_context
    body=json.dumps(design_context.get_context()).encode();mime='application/json'
-  elif self.path=='/':body=(ROOT/'dashboard.html').read_text().replace('__LOCAL_TOKEN__',json.dumps(TOKEN)).encode();mime='text/html'
+  elif self.path=='/design':body=(ROOT/'design-dashboard.html').read_text().replace('__LOCAL_TOKEN__',json.dumps(TOKEN)).encode();mime='text/html'
+  elif self.path=='/ui-vendor/motion.js':body=(ROOT/'ui-vendor/motion.js').read_bytes();mime='text/javascript'
+  elif self.path=='/classic':body=(ROOT/'dashboard.html').read_text().replace('__LOCAL_TOKEN__',json.dumps(TOKEN)).encode();mime='text/html'
+  elif self.path=='/':body=(ROOT/'design-dashboard.html').read_text().replace('__LOCAL_TOKEN__',json.dumps(TOKEN)).encode();mime='text/html'
   else:self.send_error(404);return
   self.send_response(200);self.send_header('Content-Type',mime);self.send_header('Cache-Control','no-store');self.end_headers();self.wfile.write(body)
  def log_message(self,*args):pass
