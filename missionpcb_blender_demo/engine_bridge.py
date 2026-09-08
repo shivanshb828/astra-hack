@@ -47,7 +47,7 @@ def inputs(runtime,name):
         angle=math.degrees(math.atan2(matrix[1][0],matrix[0][0]))%360
         rot=round(angle/90)*90%360
         if abs((angle-rot+180)%360-180)>.01:raise ValueError(ref+': use 90 degree rotation increments')
-        b=runtime.bounds(obj,root);dims=size(b)
+        b=runtime.bounds(obj,root);dims=[round(v,3) for v in size(b)]
         if any(not math.isfinite(v) for v in sum([b['min'],b['max']],[])) or min(dims)<=0:raise ValueError(ref+': invalid mesh bounds')
         if abs(b['min'][2]-pcb['max'][2])>.05:raise ValueError(ref+': package must sit on PCB top')
         native=dims[:]
@@ -60,7 +60,7 @@ def inputs(runtime,name):
             raw=record,datasheet_url=record.get('provenance',{}).get('datasheet_url'))
         if ref=='RF':parts[pid].keepout=e.Keepout(float(obj.get('antenna_length_mm',22)),native[1],'-x')
         center=[(b['min'][i]+b['max'][i])/2 for i in range(3)]
-        placements.append(e.Placement(ref,pid,center[0]-pcb['min'][0],center[1]-pcb['min'][1],rot))
+        placements.append(e.Placement(ref,pid,round(center[0]-pcb['min'][0],3),round(center[1]-pcb['min'][1],3),rot))
         bindings.append({'ref':ref,'part_id':pid,'object':obj.name,'mesh_bounds_mm':dims,'catalog_mechanical':record.get('mechanical',{}),'geometry_basis':obj.get('geometry_basis','Unverified model'),'cad_hash':obj.get('cad_source_sha256','')})
     rules=json.loads(scene['config_json']).get('ecg_rules',{})
     mission=[e.MissionRule('afe_'+ref,'min_separation',['Sensor',ref],float(rules.get(key,default)),'center',rationale='Authored demo clearance; not derived from datasheet physics.') for ref,key,default in [('MCU','afe_digital_mm',18),('RF','afe_rf_mm',20),('Regulator','afe_power_mm',20)]]
@@ -143,6 +143,7 @@ def optimize(runtime):
     # Search only core packages; do not imply this routes copper or solves excluded parts.
     solved,cost=e.solve(layout,parts,seeds=(0,))
     if not math.isfinite(cost):raise ValueError('No finite placement candidate')
+    for p in solved.placements:p.x_mm=round(p.x_mm,3);p.y_mm=round(p.y_mm,3)
     old={};root=bpy.data.objects['Root_MissionPCB']
     try:
         for p in solved.placements:
@@ -153,7 +154,7 @@ def optimize(runtime):
         actual,actual_parts,_,_,_=inputs(runtime,'MissionPCB')
         expected=e.validate(solved,parts).to_dict();observed=e.validate(actual,actual_parts).to_dict()
         a={c['id']:c for c in expected['checks']};b={c['id']:c for c in observed['checks']}
-        if set(a)!=set(b):raise ValueError('Solver / mesh check set mismatch')
+        if set(a)!=set(b):raise ValueError('Solver / mesh check set mismatch: '+str(set(a)^set(b)))
         for key in a:
             if a[key]['status']!=b[key]['status']:raise ValueError('Solver / mesh status mismatch: '+key)
             for metric in ['measured_mm','required_mm','margin_mm']:

@@ -307,6 +307,17 @@ class MISSIONPCB_PT_panel(bpy.types.Panel):
             ui.label(text=obj.name); ui.label(text=' x '.join(f'{v:.1f}' for v in obj.dimensions)+' mm')
             if obj.get('part_name'):ui.label(text=obj['part_name'])
             if obj.get('catalog_part_id'):ui.label(text='Catalog: '+obj['catalog_part_id'])
+            if obj.get('catalog_record_json'):
+                record=json.loads(obj['catalog_record_json'])
+                box=ui.box();box.label(text='Cited catalog / extracted facts')
+                box.label(text=record.get('mpn',''))
+                mech=record.get('mechanical',{})
+                for key in ['length_mm','width_mm','height_mm']:
+                    datum=mech.get(key)
+                    if isinstance(datum,dict):
+                        box.label(text=key+': '+str(datum.get('value'))+' '+datum.get('unit',''))
+                        source=datum.get('source',{});box.label(text=str(source.get('doc',''))[:28]+' p.'+str(source.get('page','?')))
+                box.label(text='Full conditions: catalog_record_json')
         results=json.loads(scene.get('results_json','{}'))
         for name,result in results.items():
             panel=ui.box(); panel.label(text=name)

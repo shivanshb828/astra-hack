@@ -10,70 +10,38 @@
   "categories": {
     "Naive": [
       {
-        "category": "Patch mechanical fit",
+        "category": "fit.",
         "status": "PASS"
       },
       {
-        "category": "Patient-contact heat proxy",
+        "category": "mission.",
         "status": "FAIL"
       },
       {
-        "category": "ECG analog noise separation",
+        "category": "zone.",
         "status": "FAIL"
       },
       {
-        "category": "Patient-connected spacing",
-        "status": "FAIL"
-      },
-      {
-        "category": "RF antenna keep-out",
-        "status": "FAIL"
-      },
-      {
-        "category": "Regulator / battery heat zone",
-        "status": "FAIL"
-      },
-      {
-        "category": "Power trace width proxy",
-        "status": "FAIL"
-      },
-      {
-        "category": "Connector / assembly access",
-        "status": "FAIL"
+        "category": "Patient / battery / routing",
+        "status": "SKIP"
       }
     ],
     "MissionPCB": [
       {
-        "category": "Patch mechanical fit",
+        "category": "fit.",
         "status": "PASS"
       },
       {
-        "category": "Patient-contact heat proxy",
+        "category": "mission.",
         "status": "PASS"
       },
       {
-        "category": "ECG analog noise separation",
+        "category": "zone.",
         "status": "PASS"
       },
       {
-        "category": "Patient-connected spacing",
-        "status": "PASS"
-      },
-      {
-        "category": "RF antenna keep-out",
-        "status": "PASS"
-      },
-      {
-        "category": "Regulator / battery heat zone",
-        "status": "PASS"
-      },
-      {
-        "category": "Power trace width proxy",
-        "status": "PASS"
-      },
-      {
-        "category": "Connector / assembly access",
-        "status": "FAIL"
+        "category": "Patient / battery / routing",
+        "status": "SKIP"
       }
     ]
   }

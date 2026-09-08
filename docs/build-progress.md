@@ -4,7 +4,7 @@
 
 Canonical file: `missionpcb_blender_demo/component_pass/missionpcb_three_cad_components.blend`. All six major roles now have imported CAD in both layouts. The user accepted approximate AFE and buck packages; charger is drawing-adapted, MCU uses the matching RGE0024H package, BLE uses the Raytac family outline, and JST uses nominal family CAD. The live Blender window shows the close-up with the MissionPCB controls. The unsaved previous scene was preserved in a local backup before loading this file.
 
-Fresh verification: 14 unit tests, 12 saved/reopened CAD instances, native bounds and mounting, recalculation, UI failure/reset, and inspection/workbench visibility. Naive 1/8 and MissionPCB 7/8; connector access remains an honest FAIL. See component_pass/README.md for current facts; the following sections are historical.
+Fresh verification: 14 unit tests, 12 saved/reopened CAD instances, native bounds and mounting, recalculation, UI failure/reset, and inspection/workbench visibility. The pinned upstream engine is now installed in the same scene: Naive 21 PASS / 5 FAIL / 2 SKIP; MissionPCB 26 PASS / 0 FAIL / 2 SKIP. Coverage remains incomplete and is visibly labeled. The previous checker's 1/8 and 7/8 results are historical. See component_pass/README.md for current facts; the following sections are historical.
 
 Current workspace: /Users/dhruvavutukury/Documents/ChatGPT/astra.
 Original generic baseline retained: /Users/dhruvavutukury/Documents/ChatGPT/astra 2.

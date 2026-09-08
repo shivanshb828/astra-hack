@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "engine_revision": "1acd264792f1",
+  "results": {
+    "Naive": {
+      "PASS": 21,
+      "FAIL": 5,
+      "WARN": 0,
+      "SKIP": 2
+    },
+    "MissionPCB": {
+      "PASS": 26,
+      "FAIL": 0,
+      "WARN": 0,
+      "SKIP": 2
+    }
+  },
+  "checks": [
+    "actual mesh bounds in millimetres",
+    "repeat results and stable object count",
+    "AFE movement changes engine results",
+    "unknown IDs rejected",
+    "unsupported rotation rejected",
+    "orthogonal rotations accepted",
+    "solver-to-mesh validation round trip at 0.001 mm precision",
+    "saved scene reopened with embedded engine and catalog",
+    "12 CAD instances preserved",
+    "seed restore and camera visibility preserved",
+    "live Blender controls and cited data visually verified"
+  ],
+  "scope": "Six core packages; two skipped checks per layout. No physical field simulation or web UI connection."
+}

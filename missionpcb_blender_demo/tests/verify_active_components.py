@@ -17,12 +17,17 @@ for entry in evidence['imports']:
     assert obj.get('cad_source_sha256')==entry['sha256']
     assert abs(runtime.bounds(obj,bpy.data.objects['Root_'+entry['layout']])['min'][2]-3.6)<.005
     assert not obj.hide_get()
+assert scene.get('use_upstream_engine'), 'Saved scene is not integrated'
 before=json.loads(scene['results_json'])
+native_before=json.loads(scene['engine_results_json'])['results']
+poses={o.name:list(o.location) for o in scene.objects if o.get('role')=='component'}
 assert runtime.recalculate_constraints()==before
 bpy.ops.missionpcb.example_failure()
-assert json.loads(scene['results_json'])['MissionPCB']['categories'][2]['status']=='FAIL'
+assert json.loads(scene['engine_results_json'])['results']['MissionPCB']['summary']['FAIL']>native_before['MissionPCB']['summary']['FAIL']
 bpy.ops.missionpcb.restore()
 assert json.loads(scene['results_json'])==before
+assert json.loads(scene['engine_results_json'])['results']==native_before
+assert all(list(bpy.data.objects[name].location)==loc for name,loc in poses.items())
 assert all(o.hide_render for o in scene.objects if any(c.name=='03_Constraint_Overlays' for c in o.users_collection))
 scene.camera=bpy.data.objects['Camera_Workbench']; runtime.apply_presentation_visibility()
 assert any(not o.hide_render for o in scene.objects if any(c.name=='03_Constraint_Overlays' for c in o.users_collection))
