@@ -1,0 +1,1195 @@
+{
+  "schema_version": 1,
+  "created_date": "2026-09-08",
+  "purpose": "Reviewable offline29-family candidate inventory, not selected BOM and not validated exact manufacturer models.",
+  "source_bom": "bom_source.json",
+  "installed_library_root": "/Applications/KiCad/KiCad.app/Contents/SharedSupport",
+  "library_generator_version": "10.0 (footprint metadata)",
+  "license": {
+    "name": "CC-BY-SA4.0 with KiCad electronic-design exception",
+    "url": "https://www.kicad.org/libraries/license/",
+    "upstream_license": "https://gitlab.com/kicad/libraries/kicad-packages3D/-/raw/master/LICENSE.md",
+    "attribution": "KiCad library contributors; original per-file STEP attribution retained unmodified.",
+    "redistribution_note": "A redistributed collection retains CC-BY-SA4.0 attribution/license; electronic-design exception is not a blanket library-collection exception."
+  },
+  "counts": {
+    "family_specific_candidate_cached": 2,
+    "package_candidate_cached": 20,
+    "unresolved_no_cached_model": 6,
+    "total_families": 29,
+    "unique_cached_step_files": 23,
+    "cached_step_bytes": 3297418,
+    "manufacturer_family_model_cached": 1
+  },
+  "parts": [
+    {
+      "part_family": "ADS1292R",
+      "manufacturer": "TI",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "TI offers RSM VQFN32 4x4 body and PBS TQFP32 5x5 body (7x7 overall). Generic QFN candidate matches pin count/body/pitch class only; EP and height need drawing verification. Do not use installed7x7-body TQFP32 as PBS.",
+      "manufacturer_reference": "https://www.ti.com/product/ADS1292R",
+      "candidates": [
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": "Package_DFN_QFN:QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_DFN_QFN.pretty/QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm.kicad_mod",
+          "source_description": null,
+          "body_dimensions_mm_from_name": {
+            "x": 4.0,
+            "y": 4.0,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_DFN_QFN.3dshapes/QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_DFN_QFN.3dshapes/QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm.step",
+              "sha256": "036d57f4ca89806899156f4a3f615afd11af3273825e96ddd647df4605d590d1"
+            }
+          ],
+          "confidence": "medium",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "AFE4404",
+      "manufacturer": "TI",
+      "status": "unresolved_no_cached_model",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "TI lists YZP DSBGA15; no compatible installed STEP located. Need exact downloaded model. Body2.6x1.6 per TI, not QFN.",
+      "manufacturer_reference": "https://www.ti.com/product/AFE4404",
+      "candidates": []
+    },
+    {
+      "part_family": "OPA333",
+      "manufacturer": "TI",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "Local family symbol maps candidate package variants; full orderable suffix unresolved.",
+      "manufacturer_reference": "https://www.ti.com/product/OPA333",
+      "candidates": [
+        {
+          "source_symbol": "Amplifier_Operational:OPA333xxDBV",
+          "source_symbol_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Amplifier_Operational.kicad_sym",
+          "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_TO_SOT_SMD.pretty/SOT-23-5.kicad_mod",
+          "source_description": "Single 1.8V, microPower, CMOS Operational Amplifiers, Zero-Drift Series, SOT-23-5",
+          "body_dimensions_mm_from_name": null,
+          "dimensions_note": "Not extracted; compare package drawing and measure imported model.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step",
+              "sha256": "720a6eab0024069bbee68e7cb4c3ff1149468a34611225cdc852662c5d0ec2b7"
+            }
+          ],
+          "confidence": "high_for_local_symbol_mapping_only",
+          "selected_for_board": false
+        },
+        {
+          "source_symbol": "Amplifier_Operational:OPA333xxD",
+          "source_symbol_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Amplifier_Operational.kicad_sym",
+          "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_SO.pretty/SOIC-8_3.9x4.9mm_P1.27mm.kicad_mod",
+          "source_description": "Single 1.8V, microPower, CMOS Operational Amplifiers, Zero-Drift Series, SOIC-8",
+          "body_dimensions_mm_from_name": {
+            "x": 3.9,
+            "y": 4.9,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/SOIC-8_3.9x4.9mm_P1.27mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SO.3dshapes/SOIC-8_3.9x4.9mm_P1.27mm.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_SO.3dshapes/SOIC-8_3.9x4.9mm_P1.27mm.step",
+              "sha256": "07f46cff378d30e6c27dfd5a03092c795323f86d91c71fc7e743f4f418dc553a"
+            }
+          ],
+          "confidence": "high_for_local_symbol_mapping_only",
+          "selected_for_board": false
+        },
+        {
+          "source_symbol": "Amplifier_Operational:OPA333xxDCK",
+          "source_symbol_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Amplifier_Operational.kicad_sym",
+          "footprint": "Package_TO_SOT_SMD:SOT-353_SC-70-5",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_TO_SOT_SMD.pretty/SOT-353_SC-70-5.kicad_mod",
+          "source_description": "Single 1.8V, microPower, CMOS Operational Amplifiers, Zero-Drift Series, SC-70-5",
+          "body_dimensions_mm_from_name": null,
+          "dimensions_note": "Not extracted; compare package drawing and measure imported model.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-353_SC-70-5.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_TO_SOT_SMD.3dshapes/SOT-353_SC-70-5.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-353_SC-70-5.step",
+              "sha256": "2860de5b7b085919ff6e952148353f928798588d9f544dc69430545aff2ba908"
+            }
+          ],
+          "confidence": "high_for_local_symbol_mapping_only",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "TMP117",
+      "manufacturer": "TI",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "Local family symbol maps candidate package variants; full orderable suffix unresolved.",
+      "manufacturer_reference": "https://www.ti.com/product/TMP117",
+      "candidates": [
+        {
+          "source_symbol": "Sensor_Temperature:TMP117xxDRV",
+          "source_symbol_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Sensor_Temperature.kicad_sym",
+          "footprint": "Package_SON:WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_SON.pretty/WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm.kicad_mod",
+          "source_description": "Digital Temperature Sensor with I2C/SMBus Interface, 16 bits, \u00b10.3\u00b0C, one-shot conversion, alert, nist traceable, EEPROM, WSON",
+          "body_dimensions_mm_from_name": {
+            "x": 2.0,
+            "y": 2.0,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SON.3dshapes/WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SON.3dshapes/WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_SON.3dshapes/WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm.step",
+              "sha256": "a159a524ab16d3406353a16f8c20b59f5679eea26e2d41174628288b5b9da702"
+            }
+          ],
+          "confidence": "high_for_local_symbol_mapping_only",
+          "selected_for_board": false
+        },
+        {
+          "source_symbol": "Sensor_Temperature:TMP117xxYBG",
+          "source_symbol_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Sensor_Temperature.kicad_sym",
+          "footprint": "Package_BGA:Texas_DSBGA-6_0.95x1.488mm_Layout2x3_P0.4mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_BGA.pretty/Texas_DSBGA-6_0.95x1.488mm_Layout2x3_P0.4mm.kicad_mod",
+          "source_description": "Digital Temperature Sensor with I2C/SMBus Interface, 16 bits, \u00b10.3\u00b0C, one-shot conversion, alert, nist traceable, EEPROM, DSBGA",
+          "body_dimensions_mm_from_name": {
+            "x": 0.95,
+            "y": 1.488,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_BGA.3dshapes/Texas_DSBGA-6_0.95x1.488mm_Layout2x3_P0.4mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_BGA.3dshapes/Texas_DSBGA-6_0.95x1.488mm_Layout2x3_P0.4mm.step",
+              "exists": false,
+              "cached_path": null,
+              "sha256": null
+            }
+          ],
+          "confidence": "high_for_local_symbol_mapping_only",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "BMA400",
+      "manufacturer": "Bosch",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "Bosch specifies LGA12 2x2x0.95mm. Local generic LGA candidate requires terminal and height comparison; no Bosch-specific model.",
+      "manufacturer_reference": "https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bma400-ds000.pdf",
+      "candidates": [
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": "Package_LGA:LGA-12_2x2mm_P0.5mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_LGA.pretty/LGA-12_2x2mm_P0.5mm.kicad_mod",
+          "source_description": null,
+          "body_dimensions_mm_from_name": {
+            "x": 2.0,
+            "y": 2.0,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_LGA.3dshapes/LGA-12_2x2mm_P0.5mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_LGA.3dshapes/LGA-12_2x2mm_P0.5mm.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_LGA.3dshapes/LGA-12_2x2mm_P0.5mm.step",
+              "sha256": "5e6c16287491528f89c09590e0d5dace14debf478226f74b45504eb906119145"
+            }
+          ],
+          "confidence": "medium",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "TMUX1104",
+      "manufacturer": "TI",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "TI offers DGS VSSOP10 and DQA USON10. Candidate packages only; choose suffix before integration.",
+      "manufacturer_reference": "https://www.ti.com/product/TMUX1104",
+      "candidates": [
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": "Package_SO:TSSOP-10_3x3mm_P0.5mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_SO.pretty/TSSOP-10_3x3mm_P0.5mm.kicad_mod",
+          "source_description": null,
+          "body_dimensions_mm_from_name": {
+            "x": 3.0,
+            "y": 3.0,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/TSSOP-10_3x3mm_P0.5mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SO.3dshapes/TSSOP-10_3x3mm_P0.5mm.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_SO.3dshapes/TSSOP-10_3x3mm_P0.5mm.step",
+              "sha256": "39602ed75f3c6c524a0e4bab680480a2804b32aa5aa5eb0d979f088f4fb9c652"
+            }
+          ],
+          "confidence": "medium",
+          "selected_for_board": false
+        },
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": "Package_SON:USON-10_2.5x1.0mm_P0.5mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_SON.pretty/USON-10_2.5x1.0mm_P0.5mm.kicad_mod",
+          "source_description": null,
+          "body_dimensions_mm_from_name": {
+            "x": 2.5,
+            "y": 1.0,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SON.3dshapes/USON-10_2.5x1.0mm_P0.5mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SON.3dshapes/USON-10_2.5x1.0mm_P0.5mm.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_SON.3dshapes/USON-10_2.5x1.0mm_P0.5mm.step",
+              "sha256": "d9d0628ead2ac2bab888344afbd0ef8b0f5a4ba37641ccc66dcbe300e3a74ac0"
+            }
+          ],
+          "confidence": "medium",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "MSP430FR2433",
+      "manufacturer": "TI",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "TI lists RGE VQFN24 4x4 and YQW DSBGA24. Two local RGE drawings have different EP sizes; neither chosen pending RGE drawing revision check.",
+      "manufacturer_reference": "https://www.ti.com/product/MSP430FR2433",
+      "candidates": [
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": "Package_DFN_QFN:Texas_RGE0024C_VQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_DFN_QFN.pretty/Texas_RGE0024C_VQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm.kicad_mod",
+          "source_description": null,
+          "body_dimensions_mm_from_name": {
+            "x": 4.0,
+            "y": 4.0,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/Texas_RGE0024C_VQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_DFN_QFN.3dshapes/Texas_RGE0024C_VQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_DFN_QFN.3dshapes/Texas_RGE0024C_VQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm.step",
+              "sha256": "22ab85ba4b0f0e5d408abadd3519cae724e08c09f9cdfbd31a4c6a8703ff0152"
+            }
+          ],
+          "confidence": "medium",
+          "selected_for_board": false
+        },
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": "Package_DFN_QFN:Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_DFN_QFN.pretty/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.kicad_mod",
+          "source_description": null,
+          "body_dimensions_mm_from_name": {
+            "x": 4.0,
+            "y": 4.0,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_DFN_QFN.3dshapes/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_DFN_QFN.3dshapes/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.step",
+              "sha256": "7f57f4040117e2ef4f78a76d74424d6f4d23513883c32457503aaaa3beb70471"
+            }
+          ],
+          "confidence": "medium",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "CC2652R",
+      "manufacturer": "TI",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "TI lists RGZ VQFN48 7x7. Local Texas RGZ drawing candidate; full MPN/suffix and drawing revision remain unresolved.",
+      "manufacturer_reference": "https://www.ti.com/product/CC2652R",
+      "candidates": [
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": "Package_DFN_QFN:Texas_RGZ0048A_VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_DFN_QFN.pretty/Texas_RGZ0048A_VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm.kicad_mod",
+          "source_description": null,
+          "body_dimensions_mm_from_name": {
+            "x": 7.0,
+            "y": 7.0,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/Texas_RGZ0048A_VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_DFN_QFN.3dshapes/Texas_RGZ0048A_VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_DFN_QFN.3dshapes/Texas_RGZ0048A_VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm.step",
+              "sha256": "e9db0afa44d256cc5824b646bd84781f9960a1e23484fcee1060e6055c441674"
+            }
+          ],
+          "confidence": "medium",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "MDBT42Q",
+      "manufacturer": "Raytac",
+      "status": "manufacturer_family_model_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "Official Raytac manufacturer family STEP from Footprint & Design Guide archive. Exact radio/flash suffix unresolved. Simplified module assembly; detail to be inspected after conversion. Local KiCad reference remains missing and is not used.",
+      "manufacturer_reference": "https://www.raytac.com/download/index.php?index_id=27",
+      "candidates": [
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": null,
+          "footprint_path": null,
+          "source_description": "Official Raytac MDBT42Q family model",
+          "body_dimensions_mm_from_name": null,
+          "dimensions_note": "Measure imported geometry; provider STEP uses Y as thickness axis, so rotate +90 degrees around X for Z-up placement.",
+          "models": [
+            {
+              "model_reference": "manufacturer_models/Raytac/mdbt42q.stp",
+              "source_path": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_blender_demo/parts/manufacturer_models/Raytac/mdbt42q.stp",
+              "exists": true,
+              "cached_path": "manufacturer_models/Raytac/mdbt42q.stp",
+              "sha256": "2b7e20fce563175e3ec471a5695b2aec474c14706a9ce1e88b2e6ce0a64354d5",
+              "source_kind": "manufacturer_family_model",
+              "source_url": "https://www.raytac.com/document/",
+              "provenance_file": "manufacturer_models/Raytac/provenance.json",
+              "normalization_rotation_x_degrees": 90,
+              "license_note": "Manufacturer download; redistribution license not assessed. Not covered by KiCad library license."
+            }
+          ],
+          "confidence": "manufacturer_family_source_exact_suffix_unresolved",
+          "selected_for_board": false
+        },
+        {
+          "source_symbol": "RF_Module:MDBT42Q-512K",
+          "source_symbol_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/RF_Module.kicad_sym",
+          "footprint": "RF_Module:Raytac_MDBT42Q",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/RF_Module.pretty/Raytac_MDBT42Q.kicad_mod",
+          "source_description": "Multiprotocol BLE/ANT/2.4 GHz/802.15.4 Cortex-M4F SoC, nRF52832 module, ceramic antenna",
+          "body_dimensions_mm_from_name": null,
+          "dimensions_note": "Not extracted; compare package drawing and measure imported model.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/RF_Module.3dshapes/Raytac_MDBT42Q.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/RF_Module.3dshapes/Raytac_MDBT42Q.step",
+              "exists": false,
+              "cached_path": null,
+              "sha256": null
+            }
+          ],
+          "confidence": "high_for_local_symbol_mapping_only",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "2450AT18A100",
+      "manufacturer": "Johanson",
+      "status": "family_specific_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "Family STEP exists. Footprint filename and datasheet URL match2450AT18x100/A100 but description incorrectly says2450AT43F0100. Need outline check before treating as exact.",
+      "manufacturer_reference": "https://www.johansontechnology.com/datasheets/2450AT18A100/2450AT18A100.pdf",
+      "candidates": [
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": "RF_Antenna:Johanson_2450AT18x100",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/RF_Antenna.pretty/Johanson_2450AT18x100.kicad_mod",
+          "source_description": null,
+          "body_dimensions_mm_from_name": null,
+          "dimensions_note": "Not extracted; compare package drawing and measure imported model.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/RF_Antenna.3dshapes/Johanson_2450AT18x100.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/RF_Antenna.3dshapes/Johanson_2450AT18x100.step",
+              "exists": true,
+              "cached_path": "candidate_models/RF_Antenna.3dshapes/Johanson_2450AT18x100.step",
+              "sha256": "7d3afc869543ea1b697aee6824adc8f8b73ba56896d97c82088a686380379d63"
+            }
+          ],
+          "confidence": "medium",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "TPS62740",
+      "manufacturer": "TI",
+      "status": "unresolved_no_cached_model",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "TI specifies DSS WSON12 2x3mm. Local footprint found but referenced STEP missing; no fabricated replacement.",
+      "manufacturer_reference": "https://www.ti.com/product/TPS62740",
+      "candidates": [
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": "Package_SON:WSON-12-1EP_3x2mm_P0.5mm_EP1x2.65",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_SON.pretty/WSON-12-1EP_3x2mm_P0.5mm_EP1x2.65.kicad_mod",
+          "source_description": null,
+          "body_dimensions_mm_from_name": {
+            "x": 3.0,
+            "y": 2.0,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SON.3dshapes/WSON-12-1EP_3x2mm_P0.5mm_EP1x2.65.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SON.3dshapes/WSON-12-1EP_3x2mm_P0.5mm_EP1x2.65.step",
+              "exists": false,
+              "cached_path": null,
+              "sha256": null
+            }
+          ],
+          "confidence": "medium",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "TPS63020",
+      "manufacturer": "TI",
+      "status": "unresolved_no_cached_model",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "TI specifies DSJ VSON14 3x4mm. No matching local STEP found; installed4x4 WSON14 and3x4.45 VSON14 are not substitutes.",
+      "manufacturer_reference": "https://www.ti.com/product/TPS63020",
+      "candidates": []
+    },
+    {
+      "part_family": "TPS61099",
+      "manufacturer": "TI",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "Prefer adjustable TPS61099DRV candidate for base family; TPS610991-7 symbols are different fixed-voltage variants. Same WSON package but do not imply electrical equivalence.",
+      "manufacturer_reference": "https://www.ti.com/product/TPS61099",
+      "candidates": [
+        {
+          "source_symbol": "Regulator_Switching:TPS61099DRV",
+          "source_symbol_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Regulator_Switching.kicad_sym",
+          "footprint": "Package_SON:WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_SON.pretty/WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm.kicad_mod",
+          "source_description": "Boost Converter, 0.7-5.5V Input Voltage, 1A Switch Current, Adjustable 1.8-5.5V Output Voltage, WSON-6",
+          "body_dimensions_mm_from_name": {
+            "x": 2.0,
+            "y": 2.0,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SON.3dshapes/WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SON.3dshapes/WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_SON.3dshapes/WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm.step",
+              "sha256": "a159a524ab16d3406353a16f8c20b59f5679eea26e2d41174628288b5b9da702"
+            }
+          ],
+          "confidence": "high_for_local_symbol_mapping_only",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "MCP73831",
+      "manufacturer": "Microchip",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "OT SOT23-5 and MC DFN8 packages both available. Charge voltage variant and package suffix unresolved; MCP73831 is a linear charger.",
+      "manufacturer_reference": "https://ww1.microchip.com/downloads/en/DeviceDoc/MCP73831-Family-Data-Sheet-DS20001984H.pdf",
+      "candidates": [
+        {
+          "source_symbol": "Battery_Management:MCP73831-2-OT",
+          "source_symbol_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Battery_Management.kicad_sym",
+          "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_TO_SOT_SMD.pretty/SOT-23-5.kicad_mod",
+          "source_description": "Single cell, Li-Ion/Li-Po charge management controller, 4.20V, Tri-State Status Output, in SOT23-5 package",
+          "body_dimensions_mm_from_name": null,
+          "dimensions_note": "Not extracted; compare package drawing and measure imported model.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step",
+              "sha256": "720a6eab0024069bbee68e7cb4c3ff1149468a34611225cdc852662c5d0ec2b7"
+            }
+          ],
+          "confidence": "high_for_local_symbol_mapping_only",
+          "selected_for_board": false
+        },
+        {
+          "source_symbol": "Battery_Management:MCP73831-2-MC",
+          "source_symbol_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Battery_Management.kicad_sym",
+          "footprint": "Package_DFN_QFN:DFN-8-1EP_3x2mm_P0.5mm_EP1.7x1.4mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_DFN_QFN.pretty/DFN-8-1EP_3x2mm_P0.5mm_EP1.7x1.4mm.kicad_mod",
+          "source_description": "Single cell, Li-Ion/Li-Po charge management controller, 4.20V, Tri-State Status Output, in DFN-8 package",
+          "body_dimensions_mm_from_name": {
+            "x": 3.0,
+            "y": 2.0,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/DFN-8-1EP_3x2mm_P0.5mm_EP1.7x1.4mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_DFN_QFN.3dshapes/DFN-8-1EP_3x2mm_P0.5mm_EP1.7x1.4mm.step",
+              "exists": false,
+              "cached_path": null,
+              "sha256": null
+            }
+          ],
+          "confidence": "high_for_local_symbol_mapping_only",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "BQ24040",
+      "manufacturer": "TI",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "TI lists DSQ WSON10 2x2. Texas DSQ0010A package candidate; full suffix unresolved.",
+      "manufacturer_reference": "https://www.ti.com/product/BQ24040",
+      "candidates": [
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": "Package_DFN_QFN:Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_DFN_QFN.pretty/Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm.kicad_mod",
+          "source_description": null,
+          "body_dimensions_mm_from_name": {
+            "x": 2.0,
+            "y": 2.0,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_DFN_QFN.3dshapes/Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_DFN_QFN.3dshapes/Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm.step",
+              "sha256": "f2001b3f9a6ae3d0c8b7e19aea57daac7f0bb7d40364983cd7bb958958273a6d"
+            }
+          ],
+          "confidence": "medium",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "TPS7A02",
+      "manufacturer": "TI",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "TI lists DBV SOT23-5, DQN X2SON4 and YCH DSBGA4. Output voltage and package suffix unresolved.",
+      "manufacturer_reference": "https://www.ti.com/product/TPS7A02",
+      "candidates": [
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_TO_SOT_SMD.pretty/SOT-23-5.kicad_mod",
+          "source_description": null,
+          "body_dimensions_mm_from_name": null,
+          "dimensions_note": "Not extracted; compare package drawing and measure imported model.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step",
+              "sha256": "720a6eab0024069bbee68e7cb4c3ff1149468a34611225cdc852662c5d0ec2b7"
+            }
+          ],
+          "confidence": "medium",
+          "selected_for_board": false
+        },
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": "Package_SON:Texas_X2SON-4_1x1mm_P0.65mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_SON.pretty/Texas_X2SON-4_1x1mm_P0.65mm.kicad_mod",
+          "source_description": null,
+          "body_dimensions_mm_from_name": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SON.3dshapes/Texas_X2SON-4_1x1mm_P0.65mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SON.3dshapes/Texas_X2SON-4_1x1mm_P0.65mm.step",
+              "exists": false,
+              "cached_path": null,
+              "sha256": null
+            }
+          ],
+          "confidence": "medium",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "MCP1700",
+      "manufacturer": "Microchip",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "TT SOT23, MB SOT89 and TO TO92 package candidates available. Output voltage and suffix unresolved; not selected from arbitrary first symbol.",
+      "manufacturer_reference": "https://ww1.microchip.com/downloads/en/DeviceDoc/MCP1700-Low-Quiescent-Current-LDO-20001826E.pdf",
+      "candidates": [
+        {
+          "source_symbol": "Regulator_Linear:MCP1700x-330xxTT",
+          "source_symbol_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Regulator_Linear.kicad_sym",
+          "footprint": "Package_TO_SOT_SMD:SOT-23",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_TO_SOT_SMD.pretty/SOT-23.kicad_mod",
+          "source_description": "250mA Low Quiscent Current LDO, 3.3V output, SOT-23",
+          "body_dimensions_mm_from_name": null,
+          "dimensions_note": "Not extracted; compare package drawing and measure imported model.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_TO_SOT_SMD.3dshapes/SOT-23.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-23.step",
+              "sha256": "dd5d1711204e1d8d26cd11490923bd84340820baa69538c385a4300ec2539bc0"
+            }
+          ],
+          "confidence": "high_for_local_symbol_mapping_only",
+          "selected_for_board": false
+        },
+        {
+          "source_symbol": "Regulator_Linear:MCP1700x-120xxMB",
+          "source_symbol_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Regulator_Linear.kicad_sym",
+          "footprint": "Package_TO_SOT_SMD:SOT-89-3",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_TO_SOT_SMD.pretty/SOT-89-3.kicad_mod",
+          "source_description": "250mA Low Quiscent Current LDO, 1.2V output, SOT-89",
+          "body_dimensions_mm_from_name": null,
+          "dimensions_note": "Not extracted; compare package drawing and measure imported model.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-89-3.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_TO_SOT_SMD.3dshapes/SOT-89-3.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-89-3.step",
+              "sha256": "844c0bb504d0c383535d9845c6376fe7a4053241a2ede8d8ef694df3fcfc37c8"
+            }
+          ],
+          "confidence": "high_for_local_symbol_mapping_only",
+          "selected_for_board": false
+        },
+        {
+          "source_symbol": "Regulator_Linear:MCP1700x-120xxTO",
+          "source_symbol_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Regulator_Linear.kicad_sym",
+          "footprint": "Package_TO_SOT_THT:TO-92_Inline",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_TO_SOT_THT.pretty/TO-92_Inline.kicad_mod",
+          "source_description": "250mA Low Quiscent Current LDO, 1.2V output, TO-92",
+          "body_dimensions_mm_from_name": null,
+          "dimensions_note": "Not extracted; compare package drawing and measure imported model.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_THT.3dshapes/TO-92_Inline.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_TO_SOT_THT.3dshapes/TO-92_Inline.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_TO_SOT_THT.3dshapes/TO-92_Inline.step",
+              "sha256": "f0b61c32ecbf0067157adc5a3d4966ceadf5d6dafe93c51af35f76c41c71a54a"
+            }
+          ],
+          "confidence": "high_for_local_symbol_mapping_only",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "TPS22916",
+      "manufacturer": "TI",
+      "status": "unresolved_no_cached_model",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "TI lists YFP DSBGA4. No compatible local STEP located; do not replace with generic SOT.",
+      "manufacturer_reference": "https://www.ti.com/product/TPS22916",
+      "candidates": []
+    },
+    {
+      "part_family": "TPS3839",
+      "manufacturer": "TI",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "DBZ SOT23 and DQN X2SON4 symbol candidates; threshold variant unresolved.",
+      "manufacturer_reference": "https://www.ti.com/product/TPS3839",
+      "candidates": [
+        {
+          "source_symbol": "Power_Supervisor:TPS3839DBZ",
+          "source_symbol_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Power_Supervisor.kicad_sym",
+          "footprint": "Package_TO_SOT_SMD:SOT-23",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_TO_SOT_SMD.pretty/SOT-23.kicad_mod",
+          "source_description": "150-nA, Ultralow Power, Supply Voltage Monitor, SOT-23",
+          "body_dimensions_mm_from_name": null,
+          "dimensions_note": "Not extracted; compare package drawing and measure imported model.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_TO_SOT_SMD.3dshapes/SOT-23.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-23.step",
+              "sha256": "dd5d1711204e1d8d26cd11490923bd84340820baa69538c385a4300ec2539bc0"
+            }
+          ],
+          "confidence": "high_for_local_symbol_mapping_only",
+          "selected_for_board": false
+        },
+        {
+          "source_symbol": "Power_Supervisor:TPS3839DQN",
+          "source_symbol_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Power_Supervisor.kicad_sym",
+          "footprint": "Package_SON:Texas_X2SON-4_1x1mm_P0.65mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_SON.pretty/Texas_X2SON-4_1x1mm_P0.65mm.kicad_mod",
+          "source_description": "150-nA, Ultralow Power, Supply Voltage Monitor, X2SON-4",
+          "body_dimensions_mm_from_name": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SON.3dshapes/Texas_X2SON-4_1x1mm_P0.65mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SON.3dshapes/Texas_X2SON-4_1x1mm_P0.65mm.step",
+              "exists": false,
+              "cached_path": null,
+              "sha256": null
+            }
+          ],
+          "confidence": "high_for_local_symbol_mapping_only",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "BQ27441-G1",
+      "manufacturer": "TI",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "Local family symbol maps Texas_S-PDSO-N12. Need exact G1A/G1B and DRZ suffix selection.",
+      "manufacturer_reference": "https://www.ti.com/product/BQ27441-G1",
+      "candidates": [
+        {
+          "source_symbol": "Battery_Management:BQ27441-G1",
+          "source_symbol_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Battery_Management.kicad_sym",
+          "footprint": "Package_SON:Texas_S-PDSO-N12",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_SON.pretty/Texas_S-PDSO-N12.kicad_mod",
+          "source_description": "System Side Li Ion/Polymer Fuel Gauge, PDSON-12",
+          "body_dimensions_mm_from_name": null,
+          "dimensions_note": "Not extracted; compare package drawing and measure imported model.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SON.3dshapes/Texas_S-PDSO-N12.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SON.3dshapes/Texas_S-PDSO-N12.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_SON.3dshapes/Texas_S-PDSO-N12.step",
+              "sha256": "0f2ebd625419df73cf30a423e911544c75466aaa0167546130e6debd8d875605"
+            }
+          ],
+          "confidence": "high_for_local_symbol_mapping_only",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "DRV2605L",
+      "manufacturer": "TI",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "Local DRV2605LDGS maps TSSOP10/VSSOP DGS3x3body. Other package options not researched; no selection inferred.",
+      "manufacturer_reference": "https://www.ti.com/product/DRV2605L",
+      "candidates": [
+        {
+          "source_symbol": "Driver:DRV2605LDGS",
+          "source_symbol_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Driver.kicad_sym",
+          "footprint": "Package_SO:TSSOP-10_3x3mm_P0.5mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_SO.pretty/TSSOP-10_3x3mm_P0.5mm.kicad_mod",
+          "source_description": "Haptic driver for LRAs and ERMs with effect library, 2-5.2V, TSSOP-10 (Texas DGS0010A / VSSOP)",
+          "body_dimensions_mm_from_name": {
+            "x": 3.0,
+            "y": 3.0,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/TSSOP-10_3x3mm_P0.5mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SO.3dshapes/TSSOP-10_3x3mm_P0.5mm.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_SO.3dshapes/TSSOP-10_3x3mm_P0.5mm.step",
+              "sha256": "39602ed75f3c6c524a0e4bab680480a2804b32aa5aa5eb0d979f088f4fb9c652"
+            }
+          ],
+          "confidence": "high_for_local_symbol_mapping_only",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "ISO7741",
+      "manufacturer": "TI",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "TI lists DW SOIC16 wide and DBQ SSOP16; safety properties differ. Wide-body DW package candidate only, no isolation/creepage inference.",
+      "manufacturer_reference": "https://www.ti.com/product/ISO7741",
+      "candidates": [
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": "Package_SO:SOIC-16W_7.5x10.3mm_P1.27mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_SO.pretty/SOIC-16W_7.5x10.3mm_P1.27mm.kicad_mod",
+          "source_description": null,
+          "body_dimensions_mm_from_name": {
+            "x": 7.5,
+            "y": 10.3,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/SOIC-16W_7.5x10.3mm_P1.27mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SO.3dshapes/SOIC-16W_7.5x10.3mm_P1.27mm.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_SO.3dshapes/SOIC-16W_7.5x10.3mm_P1.27mm.step",
+              "sha256": "159663ceb2b4996b1b89d3111e4a355fc27de3e24d3570f50e5ed9086e0d73af"
+            }
+          ],
+          "confidence": "medium",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "ISO1541",
+      "manufacturer": "TI",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "Local symbol maps SOIC8. Full orderable suffix unresolved. Model is generic package and cannot validate isolation.",
+      "manufacturer_reference": "https://www.ti.com/product/ISO1541",
+      "candidates": [
+        {
+          "source_symbol": "Isolator:ISO1541",
+          "source_symbol_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols/Isolator.kicad_sym",
+          "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_SO.pretty/SOIC-8_3.9x4.9mm_P1.27mm.kicad_mod",
+          "source_description": "I2C Isolator, 2.5 kVrms, Unidirectional Clock, Bidirectional data, SOIC-8",
+          "body_dimensions_mm_from_name": {
+            "x": 3.9,
+            "y": 4.9,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/SOIC-8_3.9x4.9mm_P1.27mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SO.3dshapes/SOIC-8_3.9x4.9mm_P1.27mm.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_SO.3dshapes/SOIC-8_3.9x4.9mm_P1.27mm.step",
+              "sha256": "07f46cff378d30e6c27dfd5a03092c795323f86d91c71fc7e743f4f418dc553a"
+            }
+          ],
+          "confidence": "high_for_local_symbol_mapping_only",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "TPD4E1B06",
+      "manufacturer": "TI",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "TI offers DCK SC70-6 and DRL SOT5X3. SC70-6 generic candidate only; choose suffix.",
+      "manufacturer_reference": "https://www.ti.com/product/TPD4E1B06",
+      "candidates": [
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": "Package_TO_SOT_SMD:SOT-363_SC-70-6",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_TO_SOT_SMD.pretty/SOT-363_SC-70-6.kicad_mod",
+          "source_description": null,
+          "body_dimensions_mm_from_name": null,
+          "dimensions_note": "Not extracted; compare package drawing and measure imported model.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-363_SC-70-6.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_TO_SOT_SMD.3dshapes/SOT-363_SC-70-6.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-363_SC-70-6.step",
+              "sha256": "045cc95e18ee7a13d1623c3ce6604fc833049bdb4f952f68c26e3c5767d122e4"
+            }
+          ],
+          "confidence": "medium",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "MX25R6435F",
+      "manufacturer": "Macronix",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "Macronix datasheet lists ZN WSON8 6x5, ZA USON8 4x4, M2 SOP8 and WLCSP variants. WSON candidate matches body/pin class; exposed pad and height unverified.",
+      "manufacturer_reference": "https://www.macronix.com/Lists/Datasheet/Attachments/8868/MX25R6435F,%20Wide%20Range,%2064Mb,%20v1.6.pdf",
+      "candidates": [
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": "Package_SON:WSON-8-1EP_6x5mm_P1.27mm_EP3.4x4.3mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Package_SON.pretty/WSON-8-1EP_6x5mm_P1.27mm_EP3.4x4.3mm.kicad_mod",
+          "source_description": null,
+          "body_dimensions_mm_from_name": {
+            "x": 6.0,
+            "y": 5.0,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SON.3dshapes/WSON-8-1EP_6x5mm_P1.27mm_EP3.4x4.3mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SON.3dshapes/WSON-8-1EP_6x5mm_P1.27mm_EP3.4x4.3mm.step",
+              "exists": true,
+              "cached_path": "candidate_models/Package_SON.3dshapes/WSON-8-1EP_6x5mm_P1.27mm_EP3.4x4.3mm.step",
+              "sha256": "9e3cdbeba31188d6f31ec43bee1d94aff5a79d880edd12d016eef9c7c70f4d13"
+            }
+          ],
+          "confidence": "medium",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "ABS07",
+      "manufacturer": "Abracon",
+      "status": "package_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "Abracon datasheet shows3.2x1.5mm crystal; default height0.9mm max or height-option1=0.65mm. Generic3215 two-pad model is candidate, not exact Abracon CAD; load/height suffix unresolved.",
+      "manufacturer_reference": "https://abracon.com/Resonators/ABS07.pdf",
+      "candidates": [
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": "Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Crystal.pretty/Crystal_SMD_3215-2Pin_3.2x1.5mm.kicad_mod",
+          "source_description": null,
+          "body_dimensions_mm_from_name": {
+            "x": 3.2,
+            "y": 1.5,
+            "z": null
+          },
+          "dimensions_note": "Name-derived body dimensions only; not measured mesh/terminal envelope. Height unknown.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Crystal.3dshapes/Crystal_SMD_3215-2Pin_3.2x1.5mm.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Crystal.3dshapes/Crystal_SMD_3215-2Pin_3.2x1.5mm.step",
+              "exists": true,
+              "cached_path": "candidate_models/Crystal.3dshapes/Crystal_SMD_3215-2Pin_3.2x1.5mm.step",
+              "sha256": "70191ff5204d0ce50e154f75b1186923e3123cfdb58d647b5cce319de5485701"
+            }
+          ],
+          "confidence": "medium",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "VARTA CP1254",
+      "manufacturer": "VARTA",
+      "status": "unresolved_no_cached_model",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "No local CP1254 model. Cell generation/suffix, contacts/tabs and datasheet must be selected; no coin-cell stand-in.",
+      "manufacturer_reference": "https://www.elektronik.ropla.eu/pdf/stock/vmb/cp1254a4.pdf",
+      "candidates": []
+    },
+    {
+      "part_family": "BM02B-SRSS",
+      "manufacturer": "JST",
+      "status": "family_specific_candidate_cached",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "Exact family named JST_SH_BM02B-SRSS-TB vertical2-pin1mm-pitch STEP. Full suffix/finish unresolved; no claim that it matches a generic LiPo plug.",
+      "manufacturer_reference": "https://www.jst-mfg.com/product/pdf/eng/eSH.pdf",
+      "candidates": [
+        {
+          "source_symbol": null,
+          "source_symbol_path": null,
+          "footprint": "Connector_JST:JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical",
+          "footprint_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical.kicad_mod",
+          "source_description": null,
+          "body_dimensions_mm_from_name": null,
+          "dimensions_note": "Not extracted; compare package drawing and measure imported model.",
+          "models": [
+            {
+              "model_reference": "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical.step",
+              "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Connector_JST.3dshapes/JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical.step",
+              "exists": true,
+              "cached_path": "candidate_models/Connector_JST.3dshapes/JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical.step",
+              "sha256": "df87a44803f392435a972f8b8837b8c2700842cc58412c1a4338fcdcf449fc3d"
+            }
+          ],
+          "confidence": "medium",
+          "selected_for_board": false
+        }
+      ]
+    },
+    {
+      "part_family": "JST ZH",
+      "manufacturer": "JST",
+      "status": "unresolved_no_cached_model",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "on_board": false,
+      "mapping_note": "Series only, no pin count, orientation or mounting style. Local footprints exist for2\u201313pins but no installed ZH STEP located. Need complete MPN; not automatically a flex/FPC connector.",
+      "manufacturer_reference": "https://www.jst-mfg.com/product/pdf/eng/eZH.pdf",
+      "candidates": [],
+      "available_footprint_examples": [
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_S4B-ZR-SM4A-TF_1x04-1MP_P1.50mm_Horizontal.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B8B-ZR-SM4-TF_1x08-1MP_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B6B-ZR_1x06_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_S13B-ZR-SM4A-TF_1x13-1MP_P1.50mm_Horizontal.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B6B-ZR-SM4-TF_1x06-1MP_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_S2B-ZR-SM4A-TF_1x02-1MP_P1.50mm_Horizontal.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B11B-ZR-SM4-TF_1x11-1MP_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_S7B-ZR-SM4A-TF_1x07-1MP_P1.50mm_Horizontal.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B11B-ZR_1x11_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B2B-ZR-SM4-TF_1x02-1MP_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B5B-ZR-SM4-TF_1x05-1MP_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B8B-ZR_1x08_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_S10B-ZR-SM4A-TF_1x10-1MP_P1.50mm_Horizontal.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_S8B-ZR-SM4A-TF_1x08-1MP_P1.50mm_Horizontal.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B2B-ZR_1x02_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B12B-ZR-SM4-TF_1x12-1MP_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B4B-ZR_1x04_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B3B-ZR_1x03_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_S3B-ZR-SM4A-TF_1x03-1MP_P1.50mm_Horizontal.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B10B-ZR-SM4-TF_1x10-1MP_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B5B-ZR_1x05_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_S5B-ZR-SM4A-TF_1x05-1MP_P1.50mm_Horizontal.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B9B-ZR_1x09_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B10B-ZR_1x10_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B9B-ZR-SM4-TF_1x09-1MP_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_S12B-ZR-SM4A-TF_1x12-1MP_P1.50mm_Horizontal.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B7B-ZR-SM4-TF_1x07-1MP_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B12B-ZR_1x12_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B13B-ZR-SM4-TF_1x13-1MP_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B3B-ZR-SM4-TF_1x03-1MP_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_S6B-ZR-SM4A-TF_1x06-1MP_P1.50mm_Horizontal.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B4B-ZR-SM4-TF_1x04-1MP_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_S9B-ZR-SM4A-TF_1x09-1MP_P1.50mm_Horizontal.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_B7B-ZR_1x07_P1.50mm_Vertical.kicad_mod",
+        "/Applications/KiCad/KiCad.app/Contents/SharedSupport/footprints/Connector_JST.pretty/JST_ZH_S11B-ZR-SM4A-TF_1x11-1MP_P1.50mm_Horizontal.kicad_mod"
+      ]
+    }
+  ]
+}

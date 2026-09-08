@@ -1,0 +1,8 @@
+(kicad_pcb (version 20240108) (generator "pcbnew")
+(general (thickness 1.6)) (paper "A4")
+(layers (0 "F.Cu" signal) (31 "B.Cu" signal) (37 "F.SilkS" user "f.silkscreen") (44 "Edge.Cuts" user))
+(setup (pad_to_mask_clearance 0))
+(footprint "Candidate" (layer "F.Cu") (at 10 10) (attr smd)
+ (property "Reference" "U1" (at 0 -5) (layer "F.SilkS"))
+ (model "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_blender_demo/parts/candidate_models/Package_DFN_QFN.3dshapes/Texas_RGE0024C_VQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm.step" (offset (xyz 0 0 0)) (scale (xyz 1 1 1)) (rotate (xyz 0 0 0))))
+(gr_rect (start 0 0) (end 30 30) (stroke (width 0.05) (type default)) (fill none) (layer "Edge.Cuts")))

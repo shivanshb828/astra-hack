@@ -1,0 +1,141 @@
+{
+  "status": "DRAWING_ADAPTED_GENERIC_PACKAGE_NOT_MANUFACTURER_MODEL",
+  "source": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_blender_demo/parts/converted_models/SOT-23-5.normalized.glb",
+  "source_sha256": "a2f8cfc6493f92e28bae5462d34ffc9e7c5b3a92a823faa99fbca56f32d66e49",
+  "artifact": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_blender_demo/parts/verified_core/audit/MCP73831_OT_drawing_adapted.normalized.glb",
+  "artifact_sha256": "c6912e6d6f83ff768c79518feb2b55f02a0773491047dfea27d753233f687f3b",
+  "drawing_url": "https://ww1.microchip.com/downloads/en/DeviceDoc/MCP73831-Family-Data-Sheet-DS20001984H.pdf",
+  "drawing_reference": "Page23, C04-091-OT Rev F Sheet2: body A2 max1.30mm, overall A max1.45mm, standoff A1 max.15mm",
+  "correction": "Body Z thickness1.45 to1.30mm about bottomZ.10mm; markingZ1.55 to1.40mm; every pin coordinate and every XY coordinate unchanged.",
+  "units": "GLB metres; dimensions in this report mm",
+  "before": {
+    "body": {
+      "min": [
+        -0.8000001907348633,
+        -1.4499998092651367,
+        0.09999991208314896
+      ],
+      "max": [
+        0.7999992966651917,
+        1.4500007629394531,
+        1.5500003099441528
+      ],
+      "dimensions": [
+        1.599999487400055,
+        2.90000057220459,
+        1.4500003978610039
+      ]
+    },
+    "pins": {
+      "min": [
+        -1.399999737739563,
+        -1.1999998092651367,
+        0.0
+      ],
+      "max": [
+        1.399999737739563,
+        1.1999998092651367,
+        0.8999999165534973
+      ],
+      "dimensions": [
+        2.799999475479126,
+        2.3999996185302734,
+        0.8999999165534973
+      ]
+    },
+    "mark": {
+      "min": [
+        -0.5335322022438049,
+        1.0836488008499146,
+        1.5500003099441528
+      ],
+      "max": [
+        -0.4337654411792755,
+        1.1831828355789185,
+        1.5500003099441528
+      ],
+      "dimensions": [
+        0.09976676106452942,
+        0.0995340347290039,
+        0.0
+      ]
+    }
+  },
+  "after": {
+    "body": {
+      "min": [
+        -0.8000001907348633,
+        -1.4499998092651367,
+        0.09999991953372955
+      ],
+      "max": [
+        0.7999992966651917,
+        1.4500007629394531,
+        1.4000003337860107
+      ],
+      "dimensions": [
+        1.599999487400055,
+        2.90000057220459,
+        1.3000004142522812
+      ]
+    },
+    "pins": {
+      "min": [
+        -1.399999737739563,
+        -1.1999998092651367,
+        0.0
+      ],
+      "max": [
+        1.399999737739563,
+        1.1999998092651367,
+        0.8999999165534973
+      ],
+      "dimensions": [
+        2.799999475479126,
+        2.3999996185302734,
+        0.8999999165534973
+      ]
+    },
+    "mark": {
+      "min": [
+        -0.5335322022438049,
+        1.0836488008499146,
+        1.4000003337860107
+      ],
+      "max": [
+        -0.4337654411792755,
+        1.1831828355789185,
+        1.4000003337860107
+      ],
+      "dimensions": [
+        0.09976676106452942,
+        0.0995340347290039,
+        0.0
+      ]
+    }
+  },
+  "overall_bounds": {
+    "min": [
+      -1.399999737739563,
+      -1.4499998092651367,
+      0.0
+    ],
+    "max": [
+      1.399999737739563,
+      1.4500007629394531,
+      1.4000003337860107
+    ],
+    "dimensions": [
+      2.799999475479126,
+      2.90000057220459,
+      1.4000003337860107
+    ]
+  },
+  "checks": {
+    "pin_vertices_exactly_unchanged": true,
+    "all_xy_vertices_exactly_unchanged": true,
+    "body_bottom_unchanged": true,
+    "body_thickness_1_30": true,
+    "overall_height_at_most_1_45": true
+  }
+}

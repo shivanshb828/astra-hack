@@ -1,0 +1,66 @@
+{
+  "generated_at": "2026-09-08T12:49:55.268627-07:00",
+  "blender_version": "5.2.1 LTS",
+  "blender_build_hash": "9e2066aef7ef",
+  "python_version": "3.13.13",
+  "os": "macOS-15.6-arm64-arm-64bit-Mach-O",
+  "architecture": "arm64",
+  "render_engine": "BLENDER_EEVEE",
+  "render_resolution": [
+    1920,
+    1080
+  ],
+  "geometry_revision": "f551cfed18016be67a63942ebd108eb82ace0eb84e5c6d26afa7353cfb5d6aa3",
+  "timings_seconds": {
+    "build_and_validate": 0.09777504201338161,
+    "top_down": 3.334730499991565,
+    "isometric": 3.756099499994889
+  },
+  "verification": "14 Python unit tests passed. Blender integration passed: independent editable components, dimensions, eight ECG categories, dashboard/result agreement, actual movement -> FAIL -> restore PASS, stale detection, layout-root invariance, fixed antenna clearance under RF scaling, runtime registration and deterministic demo controls. Standalone copied .blend passed the same integration test using embedded code without adjacent source files. GUI inspection confirmed opening, orbit, top-down camera control and individual AFE selection/metadata; the complete button flow was verified by automated Blender operations. Both final 1920 x 1080 views rendered successfully and were visually inspected.",
+  "files": {
+    "scene_builder.py": {
+      "bytes": 25459,
+      "sha256": "7931e02f1a3d26f2f6b6de37ef74146861d96a00d8fef88e4ef1fbc40d0c70e5"
+    },
+    "build_missionpcb_demo.py": {
+      "bytes": 6776,
+      "sha256": "3492f7759ed758e19b8f71855d6e7c2a4b5555c2800c7e9c327494a49213a609"
+    },
+    "runtime.py": {
+      "bytes": 21349,
+      "sha256": "10c44c74ba2191f63088b13ad39da5222d517ec8271a06553866d44ee01aaebf"
+    },
+    "overlays.py": {
+      "bytes": 10306,
+      "sha256": "a636c8ab5dc067d289d6fd37eb449e5f3216e86c7d04a13a4871fee955cf7654"
+    },
+    "constraints.py": {
+      "bytes": 13856,
+      "sha256": "8a7978bc964fa1c321232828148881471a695630951ae4f236aec219d4619770"
+    },
+    "scene_config.json": {
+      "bytes": 6246,
+      "sha256": "c2e75d5d4f736edc2eeface0ae287cf0e4fddb36a626bce2c2c4b0eddd9fea1f"
+    },
+    "missionpcb_lean_constraint_demo.blend": {
+      "bytes": 337073,
+      "sha256": "8b07d52131859ac400b8e025a57f35a8fbaadc027d30d927a0696db21d62b539"
+    },
+    "validation_results.json": {
+      "bytes": 181147,
+      "sha256": "98d4e509238deb213d093f46f88f5ef78af4cffb5e765294149ea6ba9ef3144e"
+    },
+    "validation_report.md": {
+      "bytes": 40437,
+      "sha256": "c8e3dca23190957cd72c110d41135b01ec730a706d610efe0b59d4e16f189d30"
+    },
+    "renders/isometric.png": {
+      "bytes": 2371746,
+      "sha256": "322c89f04ab42bb1cf958dc955c5e34626f2b0c7fe75163336350f87b9fa2b36"
+    },
+    "renders/top_down.png": {
+      "bytes": 2337965,
+      "sha256": "d60c8a31eb1a26dd69843521f005cf9903b63b8aa3e8a6467c7c0833215725ea"
+    }
+  }
+}

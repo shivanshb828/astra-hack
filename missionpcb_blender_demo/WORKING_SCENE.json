@@ -1,0 +1,9 @@
+{
+  "working_blender_file": "component_pass/missionpcb_three_cad_components.blend",
+  "policy": "Update this file in place. Do not create/open another scene variant or launch additional Blender instances. Preserve unsaved GUI edits before reloading.",
+  "older_scene_files": "Historical backups only; not parallel working versions.",
+  "board_source_decision": "Keep the existing ECG chest-patch scene. Hypnos was only a view example. KiCad is a component CAD library/conversion source; no new KiCad board requested.",
+  "kicad_project_inspected": "/Users/dhruvavutukury/Documents/Hypnos/Hypnos.kicad_pcb",
+  "current_pass": "Six core roles imported in both layouts; approximate AFE and buck accepted by user.",
+  "default_view": "Camera_CAD_Closeup"
+}

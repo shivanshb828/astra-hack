@@ -1,0 +1,170 @@
+{
+  "status": "PASS",
+  "scene": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_blender_demo/component_pass/missionpcb_three_cad_components.blend",
+  "imports": [
+    {
+      "object": "MCU_Naive",
+      "component_id": "MCU",
+      "layout": "Naive",
+      "dimensions_mm": [
+        4.000000476837158,
+        4.000000476837158,
+        0.7999999523162842
+      ],
+      "geometry_basis": "KiCad RGE0024H package matches the selected MCU drawing; nominal package geometry.",
+      "asset": "parts/verified_core/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.normalized.glb",
+      "sha256": "adf09e8aaf34bb8e5849c151581cf92b66856d530b1b74d8ff41082507a4c6f6"
+    },
+    {
+      "object": "MCU_MissionPCB",
+      "component_id": "MCU",
+      "layout": "MissionPCB",
+      "dimensions_mm": [
+        4.000000476837158,
+        4.000000476837158,
+        0.7999999523162842
+      ],
+      "geometry_basis": "KiCad RGE0024H package matches the selected MCU drawing; nominal package geometry.",
+      "asset": "parts/verified_core/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.normalized.glb",
+      "sha256": "adf09e8aaf34bb8e5849c151581cf92b66856d530b1b74d8ff41082507a4c6f6"
+    },
+    {
+      "object": "ECG_AFE_Naive",
+      "component_id": "Sensor",
+      "layout": "Naive",
+      "dimensions_mm": [
+        4.000000476837158,
+        4.000000476837158,
+        0.9200000762939453
+      ],
+      "geometry_basis": "Approximate QFN32. Exposed pad is 2.65 mm rather than required 2.8 mm; visualization only.",
+      "asset": "parts/converted_models/QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm.normalized.glb",
+      "sha256": "78aa3702257ec16b3200524c425722ca21f6a651528f8019b224436fc699e236"
+    },
+    {
+      "object": "ECG_AFE_MissionPCB",
+      "component_id": "Sensor",
+      "layout": "MissionPCB",
+      "dimensions_mm": [
+        4.000000476837158,
+        4.000000476837158,
+        0.9200000762939453
+      ],
+      "geometry_basis": "Approximate QFN32. Exposed pad is 2.65 mm rather than required 2.8 mm; visualization only.",
+      "asset": "parts/converted_models/QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm.normalized.glb",
+      "sha256": "78aa3702257ec16b3200524c425722ca21f6a651528f8019b224436fc699e236"
+    },
+    {
+      "object": "BLE_Module_Naive",
+      "component_id": "RF",
+      "layout": "Naive",
+      "dimensions_mm": [
+        16.000001907348633,
+        10.000000953674316,
+        2.2000017166137695
+      ],
+      "geometry_basis": "Official simplified Raytac family CAD, presentation materials added. Exact radio/flash suffix unresolved.",
+      "asset": "parts/converted_models/mdbt42q.normalized.glb",
+      "sha256": "cc60adcd7d4cc7c11f22371c3a06b76f5dcf63e04f4fd8b99671be1bebe1b3cb"
+    },
+    {
+      "object": "BLE_Module_MissionPCB",
+      "component_id": "RF",
+      "layout": "MissionPCB",
+      "dimensions_mm": [
+        16.000001907348633,
+        10.000000953674316,
+        2.2000017166137695
+      ],
+      "geometry_basis": "Official simplified Raytac family CAD, presentation materials added. Exact radio/flash suffix unresolved.",
+      "asset": "parts/converted_models/mdbt42q.normalized.glb",
+      "sha256": "cc60adcd7d4cc7c11f22371c3a06b76f5dcf63e04f4fd8b99671be1bebe1b3cb"
+    },
+    {
+      "object": "Buck_PMIC_Naive",
+      "component_id": "Regulator",
+      "layout": "Naive",
+      "dimensions_mm": [
+        2.0,
+        1.975000262260437,
+        0.7999999523162842
+      ],
+      "geometry_basis": "WSON10 visual substitute: 2x2 mm / 10 pins rather than TPS62740 DSS 2x3 mm / 12 pins. Not pin-compatible; no fabrication claim.",
+      "asset": "parts/converted_models/Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm.normalized.glb",
+      "sha256": "c633ca64d0bd0580a30dfe0b2903ca0da29508f2a6a1c981b8ddb8aa6b8871a2"
+    },
+    {
+      "object": "Buck_PMIC_MissionPCB",
+      "component_id": "Regulator",
+      "layout": "MissionPCB",
+      "dimensions_mm": [
+        2.0,
+        1.975000262260437,
+        0.7999999523162842
+      ],
+      "geometry_basis": "WSON10 visual substitute: 2x2 mm / 10 pins rather than TPS62740 DSS 2x3 mm / 12 pins. Not pin-compatible; no fabrication claim.",
+      "asset": "parts/converted_models/Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm.normalized.glb",
+      "sha256": "c633ca64d0bd0580a30dfe0b2903ca0da29508f2a6a1c981b8ddb8aa6b8871a2"
+    },
+    {
+      "object": "LiPo_Charger_Naive",
+      "component_id": "Driver",
+      "layout": "Naive",
+      "dimensions_mm": [
+        2.799999237060547,
+        2.90000057220459,
+        1.4000002145767212
+      ],
+      "geometry_basis": "KiCad SOT23-5 with molded height corrected to Microchip drawing; not manufacturer CAD.",
+      "asset": "parts/verified_core/audit/MCP73831_OT_drawing_adapted.normalized.glb",
+      "sha256": "c6912e6d6f83ff768c79518feb2b55f02a0773491047dfea27d753233f687f3b"
+    },
+    {
+      "object": "LiPo_Charger_MissionPCB",
+      "component_id": "Driver",
+      "layout": "MissionPCB",
+      "dimensions_mm": [
+        2.799999237060547,
+        2.90000057220459,
+        1.4000002145767212
+      ],
+      "geometry_basis": "KiCad SOT23-5 with molded height corrected to Microchip drawing; not manufacturer CAD.",
+      "asset": "parts/verified_core/audit/MCP73831_OT_drawing_adapted.normalized.glb",
+      "sha256": "c6912e6d6f83ff768c79518feb2b55f02a0773491047dfea27d753233f687f3b"
+    },
+    {
+      "object": "Battery_Connector_Naive",
+      "component_id": "Battery",
+      "layout": "Naive",
+      "dimensions_mm": [
+        4.000000476837158,
+        3.59999942779541,
+        4.319999694824219
+      ],
+      "geometry_basis": "Nominal KiCad JST SH top-entry family CAD; model standoff differs from drawing by 0.02 mm.",
+      "asset": "parts/converted_models/JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical.normalized.glb",
+      "sha256": "477a5016fa5b327b620dbecd1935b3c1abe91cbd76c503a41ce5065c2bb9703d"
+    },
+    {
+      "object": "Battery_Connector_MissionPCB",
+      "component_id": "Battery",
+      "layout": "MissionPCB",
+      "dimensions_mm": [
+        4.000000476837158,
+        3.59999942779541,
+        4.319999694824219
+      ],
+      "geometry_basis": "Nominal KiCad JST SH top-entry family CAD; model standoff differs from drawing by 0.02 mm.",
+      "asset": "parts/converted_models/JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical.normalized.glb",
+      "sha256": "477a5016fa5b327b620dbecd1935b3c1abe91cbd76c503a41ce5065c2bb9703d"
+    }
+  ],
+  "tests": [
+    "native-size mesh bounds",
+    "PCB mounting",
+    "stable repeated recalculation",
+    "AFE failure interaction",
+    "seed restore"
+  ],
+  "scope": "Six core roles use imported package geometry. AFE and buck are explicitly approximate substitutes; charger is drawing-adapted. Raytac uses manufacturer family outline. Geometric demo only; no circuit, thermal, EMI or clinical validation. JST top-entry mating is not checked by the legacy rear-access rule."
+}

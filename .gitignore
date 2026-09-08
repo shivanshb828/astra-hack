@@ -13,3 +13,23 @@ parts/datasheets/
 
 # macOS
 .DS_Store
+
+# Blender working files and local-only diagnostics
+__pycache__/
+*.pyc
+.DS_Store
+*.blend1
+*.blend2
+missionpcb_blender_demo/logs/
+missionpcb_blender_demo/renders/previews/
+
+missionpcb_blender_demo/backups/
+missionpcb_blender_demo/cache/kicad_probe/
+missionpcb_blender_demo/cache/import_probe/
+*.log
+missionpcb_blender_demo/parts/**/*.pdf
+missionpcb_blender_demo/parts/verified_core/audit/*_response
+missionpcb_blender_demo/parts/verified_core/audit/*.html
+
+# The upstream source is now present at repository root.
+missionpcb_blender_demo/cache/upstream/

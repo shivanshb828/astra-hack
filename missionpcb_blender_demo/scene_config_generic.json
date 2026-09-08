@@ -1,0 +1,262 @@
+{
+  "schema_version": 1,
+  "enclosure_material": "plastic",
+  "enclosure_interior_mm": [
+    90,
+    50,
+    18
+  ],
+  "wall_thickness_mm": 2,
+  "pcb_dimensions_mm": [
+    72,
+    38,
+    1.6
+  ],
+  "pcb_bottom_mm": 2,
+  "layouts": {
+    "Naive": {
+      "offset": [
+        -70,
+        18,
+        0
+      ],
+      "positions": {
+        "MCU": [
+          0,
+          -10
+        ],
+        "Sensor": [
+          5,
+          0
+        ],
+        "RF": [
+          -20,
+          9
+        ],
+        "Regulator": [
+          -5,
+          10
+        ],
+        "Driver": [
+          18,
+          -4
+        ],
+        "Battery": [
+          -28,
+          -11
+        ]
+      },
+      "power_path": [
+        [
+          -28,
+          -11
+        ],
+        [
+          -31,
+          -11
+        ],
+        [
+          -31,
+          16
+        ],
+        [
+          -5,
+          16
+        ],
+        [
+          -5,
+          10
+        ],
+        [
+          18,
+          10
+        ],
+        [
+          18,
+          -4
+        ]
+      ]
+    },
+    "MissionPCB": {
+      "offset": [
+        70,
+        18,
+        0
+      ],
+      "positions": {
+        "MCU": [
+          -2,
+          -9
+        ],
+        "Sensor": [
+          -2,
+          4
+        ],
+        "RF": [
+          -27,
+          10
+        ],
+        "Regulator": [
+          29,
+          9
+        ],
+        "Driver": [
+          27,
+          -10
+        ],
+        "Battery": [
+          30,
+          0
+        ]
+      },
+      "power_path": [
+        [
+          30,
+          0
+        ],
+        [
+          29,
+          0
+        ],
+        [
+          29,
+          9
+        ],
+        [
+          33,
+          9
+        ],
+        [
+          33,
+          -10
+        ],
+        [
+          27,
+          -10
+        ]
+      ]
+    }
+  },
+  "components": [
+    {
+      "id": "MCU",
+      "label": "MCU",
+      "dimensions": [
+        12,
+        12,
+        2
+      ],
+      "color": [
+        0.025,
+        0.055,
+        0.085,
+        1
+      ],
+      "component_type": "processor",
+      "heat_source": false,
+      "noise_source": false,
+      "sensitive": "medium",
+      "heat_radius": 0
+    },
+    {
+      "id": "Sensor",
+      "label": "SENSOR",
+      "dimensions": [
+        6,
+        6,
+        1.5
+      ],
+      "color": [
+        0.01,
+        0.63,
+        0.72,
+        1
+      ],
+      "component_type": "sensor",
+      "heat_source": false,
+      "noise_source": false,
+      "sensitive": "high",
+      "heat_radius": 0
+    },
+    {
+      "id": "RF",
+      "label": "RF",
+      "dimensions": [
+        16,
+        10,
+        2
+      ],
+      "color": [
+        0.31,
+        0.12,
+        0.63,
+        1
+      ],
+      "component_type": "wireless",
+      "heat_source": false,
+      "noise_source": false,
+      "sensitive": "high",
+      "heat_radius": 0
+    },
+    {
+      "id": "Regulator",
+      "label": "REG",
+      "dimensions": [
+        8,
+        8,
+        3
+      ],
+      "color": [
+        0.96,
+        0.3,
+        0.035,
+        1
+      ],
+      "component_type": "power_regulator",
+      "heat_source": true,
+      "noise_source": true,
+      "sensitive": "low",
+      "heat_radius": 18
+    },
+    {
+      "id": "Driver",
+      "label": "DRIVER",
+      "dimensions": [
+        14,
+        10,
+        3
+      ],
+      "color": [
+        0.76,
+        0.055,
+        0.075,
+        1
+      ],
+      "component_type": "driver",
+      "heat_source": true,
+      "noise_source": true,
+      "sensitive": "low",
+      "heat_radius": 22
+    },
+    {
+      "id": "Battery",
+      "label": "BATT",
+      "dimensions": [
+        10,
+        6,
+        5
+      ],
+      "color": [
+        0.94,
+        0.61,
+        0.1,
+        1
+      ],
+      "component_type": "connector",
+      "heat_source": false,
+      "noise_source": false,
+      "sensitive": "low",
+      "heat_radius": 0
+    }
+  ]
+}

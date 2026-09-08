@@ -1,0 +1,31 @@
+{
+  "source_url": "https://www.raytac.com/document/",
+  "download_method": "Normal browser click on manufacturer Footprint & Design Guide (230616)",
+  "part_family": "MDBT42Q",
+  "model_scope": "Manufacturer family model; exact radio/flash suffix not selected",
+  "retrieved_date": "2026-09-08",
+  "archive_sha256": "49babf9c3d8694b0eb2cb6fd367087a5a3b8410dd3fb4ca686f5327999e8086d",
+  "files": [
+    {
+      "file": "missionpcb_blender_demo/parts/manufacturer_models/Raytac/mdbt42q.stp",
+      "sha256": "2b7e20fce563175e3ec471a5695b2aec474c14706a9ce1e88b2e6ce0a64354d5",
+      "bytes": 19407
+    },
+    {
+      "file": "missionpcb_blender_demo/parts/manufacturer_models/Raytac/mdbt42q_v1.1-221125.pdf",
+      "sha256": "dc3ad71895b720d92c9ac4cd4b1edfbce9b1f7ec88e7567c8d59e27d20c67d51",
+      "bytes": 36007
+    },
+    {
+      "file": "missionpcb_blender_demo/parts/manufacturer_models/Raytac/MDBT42Q recommendended solder pad layout-F_v4-230606.pdf",
+      "sha256": "15929878be7e247f31eb356a00fe07daadcc0ada130cbc537d27c083e8e09460",
+      "bytes": 160506
+    },
+    {
+      "file": "missionpcb_blender_demo/parts/manufacturer_models/Raytac/42Q recommendended RF layout-F_v2-230613.pdf",
+      "sha256": "719b15063a275f65102e3db6cab4702f8889a421d3d09aa2763eb8f1187c2174",
+      "bytes": 574366
+    }
+  ],
+  "license": "Manufacturer download; retain attribution. Redistribution license not assessed."
+}

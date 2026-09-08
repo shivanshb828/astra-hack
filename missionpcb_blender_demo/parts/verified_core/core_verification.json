@@ -1,0 +1,111 @@
+{
+  "date": "2026-09-08",
+  "scope": "Critical ECG core package verification only. Demo MPNs are choices from source families, not user-finalized purchasing BOM.",
+  "files": [
+    {
+      "file": "verified_core/tps62740_datasheet.pdf",
+      "url": "https://www.ti.com/lit/ds/symlink/tps62740.pdf",
+      "sha256": "aa57876f506a52e17c4b79cf608e13aa736eeefc94c3c154551a8d407f14ffea"
+    },
+    {
+      "file": "verified_core/msp430fr2433_datasheet.pdf",
+      "url": "https://www.ti.com/lit/ds/symlink/msp430fr2433.pdf",
+      "sha256": "70c1ef07c0fc79ff4625533a9aba76a610f5a757a2857e3d7afa50ab1a6cf1e7"
+    },
+    {
+      "file": "verified_core/ads1292r_datasheet.pdf",
+      "url": "https://www.ti.com/lit/ds/symlink/ads1292r.pdf",
+      "sha256": "f15a7d1fabcff9ad0ed66bc00a7da0822c813a5a61c32d186a22846f3cdeead2"
+    },
+    {
+      "file": "verified_core/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.step",
+      "source": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_blender_demo/parts/candidate_models/Package_DFN_QFN.3dshapes/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.step",
+      "sha256": "7f57f4040117e2ef4f78a76d74424d6f4d23513883c32457503aaaa3beb70471"
+    },
+    {
+      "file": "verified_core/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.normalized.glb",
+      "source": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_blender_demo/parts/converted_models/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.normalized.glb",
+      "sha256": "adf09e8aaf34bb8e5849c151581cf92b66856d530b1b74d8ff41082507a4c6f6"
+    }
+  ],
+  "parts": [
+    {
+      "part_family": "MSP430FR2433",
+      "demo_mpn": "MSP430FR2433IRGER",
+      "mpn_source": "https://www.ti.com/product/MSP430FR2433/part-details/MSP430FR2433IRGER",
+      "drawing": "RGE0024H",
+      "drawing_source": "https://www.ti.com/lit/ds/symlink/msp430fr2433.pdf",
+      "pdf_page_1_based": 89,
+      "body_xy_nominal_mm": [
+        4,
+        4
+      ],
+      "exposed_pad_xy_nominal_mm": [
+        2.7,
+        2.7
+      ],
+      "pin_count": 24,
+      "pin_pitch_mm": 0.5,
+      "package_height_max_mm": 1.0,
+      "model_measured_xyz_mm": [
+        4,
+        4,
+        0.8
+      ],
+      "step": "Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.step",
+      "normalized_glb": "Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.normalized.glb",
+      "status": "package_drawing_match_candidate_usable",
+      "limitations": "KiCad package CAD matches named RGE0024H body/pins/pitch/EP. Model nominal height0.8mm versus datasheet max1.0mm; not measured production unit. RGE0024C with2.1mm EP is rejected."
+    },
+    {
+      "part_family": "ADS1292R",
+      "demo_mpn": "ADS1292RIRSMR",
+      "mpn_source": "https://www.ti.com/product/ADS1292R/part-details/ADS1292RIRSMR",
+      "drawing": "RSM0032B",
+      "drawing_source": "https://www.ti.com/lit/ds/symlink/ads1292r.pdf",
+      "pdf_page_1_based": 80,
+      "body_xy_nominal_mm": [
+        4,
+        4
+      ],
+      "exposed_pad_xy_nominal_mm": [
+        2.8,
+        2.8
+      ],
+      "pin_count": 32,
+      "pin_pitch_mm": 0.4,
+      "package_height_max_mm": 1.0,
+      "status": "exact_step_not_downloaded",
+      "rejected_candidate": "QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm",
+      "rejection_reason": "Exposed pad2.65mm differs from datasheet2.8mm; no scaling/geometry substitution performed.",
+      "provider_link": "https://vendor.ultralibrarian.com/TI/embedded/?gpn=ADS1292R&package=RSM&pin=32",
+      "provider_observation": "TI-linked page identifies ADS1292RIRSMR and STEP export. Download not submitted; cookie/terms flow required and terms refer to registration/authorization."
+    },
+    {
+      "part_family": "TPS62740",
+      "demo_mpn": "TPS62740DSSR",
+      "mpn_source": "https://www.ti.com/product/TPS62740/part-details/TPS62740DSSR",
+      "drawing": "DSS0012A",
+      "drawing_source": "https://www.ti.com/lit/ds/symlink/tps62740.pdf",
+      "pdf_page_1_based": 30,
+      "body_xy_nominal_mm": [
+        2,
+        3
+      ],
+      "exposed_pad_xy_nominal_mm": [
+        0.9,
+        2.0
+      ],
+      "pin_count": 12,
+      "pin_pitch_mm": 0.5,
+      "package_height_max_mm": 0.8,
+      "status": "exact_step_not_downloaded",
+      "rejected_candidate": "WSON-12-1EP_3x2mm_P0.5mm_EP1x2.65",
+      "rejection_reason": "Local footprint refers to LM27762 and has EP1x2.65mm, not TPS62740 EP0.9x2mm. Its referenced STEP also absent. No substitute generated.",
+      "provider_link": "https://vendor.ultralibrarian.com/TI/embedded/?gpn=TPS62740&package=DSS&pin=12",
+      "provider_observation": "TI-linked page identifies TPS62740DSSR and STEP export. Download not submitted; cookie/terms flow required and terms refer to registration/authorization."
+    }
+  ],
+  "public_kicad_search": "Searched installed libraries and publicKiCad/kicad-packages3D GitHub tree; no correctDSS0012A orRSM0032B model found.",
+  "existing_library_not_modified": true
+}

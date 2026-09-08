@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "checks": [
+    "23 saved mesh assets with provenance",
+    "29 family metadata records",
+    "6 unresolved families without substitute meshes",
+    "millimetre bounds and origin normalization",
+    "23 normalized GLB hashes and fresh import round trips"
+  ],
+  "dimensions_note": "Measured CAD mesh envelopes, including leads. Not validated manufacturer dimensions.",
+  "unresolved": [
+    "AFE4404",
+    "TPS62740",
+    "TPS63020",
+    "TPS22916",
+    "VARTA CP1254",
+    "JST ZH"
+  ],
+  "library_sha256": "bd50da3f1c57c0121021369c5323f2812084b94a4bad4b9b1995345ba0c9fb7e"
+}

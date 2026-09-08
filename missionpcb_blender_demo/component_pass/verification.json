@@ -1,0 +1,187 @@
+{
+  "source_scene": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_blender_demo/workbench/missionpcb_ecg_workbench.blend",
+  "source_sha256": "6c2ddb1a4a0ca6049300f00bf1abb3ba65c825735351255bf0e1642ec24a319a",
+  "artifact": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_blender_demo/component_pass/missionpcb_three_cad_components.blend",
+  "imports": [
+    {
+      "component_id": "Sensor",
+      "layout": "Naive",
+      "object": "ECG_AFE_Naive",
+      "old_dimensions_mm": [
+        6.0,
+        6.0,
+        1.5
+      ],
+      "dimensions_mm": [
+        4.000000476837158,
+        4.000000476837158,
+        0.9200000762939453
+      ],
+      "package": "QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm",
+      "source_sha256": "036d57f4ca89806899156f4a3f615afd11af3273825e96ddd647df4605d590d1"
+    },
+    {
+      "component_id": "Sensor",
+      "layout": "MissionPCB",
+      "object": "ECG_AFE_MissionPCB",
+      "old_dimensions_mm": [
+        6.0,
+        6.0,
+        1.5
+      ],
+      "dimensions_mm": [
+        4.000000476837158,
+        4.000000476837158,
+        0.9200000762939453
+      ],
+      "package": "QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm",
+      "source_sha256": "036d57f4ca89806899156f4a3f615afd11af3273825e96ddd647df4605d590d1"
+    },
+    {
+      "component_id": "Driver",
+      "layout": "Naive",
+      "object": "LiPo_Charger_Naive",
+      "old_dimensions_mm": [
+        14.0,
+        10.0,
+        3.0
+      ],
+      "dimensions_mm": [
+        2.799999237060547,
+        2.90000057220459,
+        1.5500001907348633
+      ],
+      "package": "SOT-23-5",
+      "source_sha256": "720a6eab0024069bbee68e7cb4c3ff1149468a34611225cdc852662c5d0ec2b7"
+    },
+    {
+      "component_id": "Driver",
+      "layout": "MissionPCB",
+      "object": "LiPo_Charger_MissionPCB",
+      "old_dimensions_mm": [
+        14.0,
+        10.0,
+        3.0
+      ],
+      "dimensions_mm": [
+        2.799999237060547,
+        2.90000057220459,
+        1.5500001907348633
+      ],
+      "package": "SOT-23-5",
+      "source_sha256": "720a6eab0024069bbee68e7cb4c3ff1149468a34611225cdc852662c5d0ec2b7"
+    },
+    {
+      "component_id": "Battery",
+      "layout": "Naive",
+      "object": "Battery_Connector_Naive",
+      "old_dimensions_mm": [
+        10.0,
+        6.0,
+        5.0
+      ],
+      "dimensions_mm": [
+        4.000000476837158,
+        3.59999942779541,
+        4.319999694824219
+      ],
+      "package": "JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical",
+      "source_sha256": "df87a44803f392435a972f8b8837b8c2700842cc58412c1a4338fcdcf449fc3d"
+    },
+    {
+      "component_id": "Battery",
+      "layout": "MissionPCB",
+      "object": "Battery_Connector_MissionPCB",
+      "old_dimensions_mm": [
+        10.0,
+        6.0,
+        5.0
+      ],
+      "dimensions_mm": [
+        4.000000476837158,
+        3.59999942779541,
+        4.319999694824219
+      ],
+      "package": "JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical",
+      "source_sha256": "df87a44803f392435a972f8b8837b8c2700842cc58412c1a4338fcdcf449fc3d"
+    }
+  ],
+  "source_unchanged": true,
+  "tests": [
+    "native mesh bounds",
+    "PCB mounting",
+    "stable recalculation",
+    "AFE failure",
+    "exact seeded restore"
+  ],
+  "categories": {
+    "Naive": [
+      {
+        "category": "Patch mechanical fit",
+        "status": "PASS"
+      },
+      {
+        "category": "Patient-contact heat proxy",
+        "status": "FAIL"
+      },
+      {
+        "category": "ECG analog noise separation",
+        "status": "FAIL"
+      },
+      {
+        "category": "Patient-connected spacing",
+        "status": "FAIL"
+      },
+      {
+        "category": "RF antenna keep-out",
+        "status": "FAIL"
+      },
+      {
+        "category": "Regulator / battery heat zone",
+        "status": "FAIL"
+      },
+      {
+        "category": "Power trace width proxy",
+        "status": "FAIL"
+      },
+      {
+        "category": "Connector / assembly access",
+        "status": "FAIL"
+      }
+    ],
+    "MissionPCB": [
+      {
+        "category": "Patch mechanical fit",
+        "status": "PASS"
+      },
+      {
+        "category": "Patient-contact heat proxy",
+        "status": "PASS"
+      },
+      {
+        "category": "ECG analog noise separation",
+        "status": "PASS"
+      },
+      {
+        "category": "Patient-connected spacing",
+        "status": "PASS"
+      },
+      {
+        "category": "RF antenna keep-out",
+        "status": "PASS"
+      },
+      {
+        "category": "Regulator / battery heat zone",
+        "status": "PASS"
+      },
+      {
+        "category": "Power trace width proxy",
+        "status": "PASS"
+      },
+      {
+        "category": "Connector / assembly access",
+        "status": "FAIL"
+      }
+    ]
+  }
+}

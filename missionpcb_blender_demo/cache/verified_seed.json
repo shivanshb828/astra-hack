@@ -1,0 +1,5686 @@
+{
+  "profile": "ecg",
+  "generated_at": "2026-09-08T12:49:48.064411-07:00",
+  "geometry_revision": "f551cfed18016be67a63942ebd108eb82ace0eb84e5c6d26afa7353cfb5d6aa3",
+  "config": {
+    "schema_version": 2,
+    "enclosure_material": "plastic",
+    "enclosure_interior_mm": [
+      90,
+      50,
+      10
+    ],
+    "wall_thickness_mm": 2,
+    "pcb_dimensions_mm": [
+      72,
+      38,
+      1.6
+    ],
+    "pcb_bottom_mm": 2,
+    "layouts": {
+      "Naive": {
+        "offset": [
+          -70,
+          18,
+          0
+        ],
+        "positions": {
+          "MCU": [
+            0,
+            -10
+          ],
+          "Sensor": [
+            5,
+            0
+          ],
+          "RF": [
+            -20,
+            9
+          ],
+          "Regulator": [
+            -5,
+            10
+          ],
+          "Driver": [
+            18,
+            -4
+          ],
+          "Battery": [
+            -28,
+            -11
+          ]
+        },
+        "power_path": [
+          [
+            -28,
+            -11
+          ],
+          [
+            -31,
+            -11
+          ],
+          [
+            -31,
+            16
+          ],
+          [
+            -5,
+            16
+          ],
+          [
+            -5,
+            10
+          ],
+          [
+            18,
+            10
+          ],
+          [
+            18,
+            -4
+          ]
+        ],
+        "patient_positions": {
+          "Protection": [
+            -13,
+            1
+          ],
+          "ElectrodeA": [
+            -16,
+            -3
+          ],
+          "ElectrodeB": [
+            -13,
+            16
+          ]
+        },
+        "battery_pack_position": [
+          -12,
+          -5,
+          1
+        ],
+        "power_width_mm": 0.25
+      },
+      "MissionPCB": {
+        "offset": [
+          70,
+          18,
+          0
+        ],
+        "positions": {
+          "MCU": [
+            12,
+            -11
+          ],
+          "Sensor": [
+            -2,
+            4
+          ],
+          "RF": [
+            -27,
+            10
+          ],
+          "Regulator": [
+            29,
+            9
+          ],
+          "Driver": [
+            27,
+            -10
+          ],
+          "Battery": [
+            30,
+            0
+          ]
+        },
+        "power_path": [
+          [
+            30,
+            0
+          ],
+          [
+            29,
+            0
+          ],
+          [
+            29,
+            9
+          ],
+          [
+            33,
+            9
+          ],
+          [
+            33,
+            -10
+          ],
+          [
+            27,
+            -10
+          ]
+        ],
+        "patient_positions": {
+          "Protection": [
+            -9,
+            6
+          ],
+          "ElectrodeA": [
+            -9,
+            0
+          ],
+          "ElectrodeB": [
+            -9,
+            12
+          ]
+        },
+        "battery_pack_position": [
+          22,
+          -5,
+          1
+        ],
+        "power_width_mm": 0.6
+      }
+    },
+    "components": [
+      {
+        "id": "MCU",
+        "label": "MCU",
+        "dimensions": [
+          12,
+          12,
+          2
+        ],
+        "color": [
+          0.025,
+          0.055,
+          0.085,
+          1
+        ],
+        "component_type": "processor",
+        "heat_source": false,
+        "noise_source": false,
+        "sensitive": "medium",
+        "heat_radius": 0,
+        "part_name": "STM32L071CB",
+        "datasheet_url": "https://www.st.com/en/microcontrollers-microprocessors/stm32l071cb.html",
+        "geometry_basis": "Illustrative functional placement envelope; not package-accurate CAD"
+      },
+      {
+        "id": "Sensor",
+        "label": "ECG AFE",
+        "dimensions": [
+          6,
+          6,
+          1.5
+        ],
+        "color": [
+          0.01,
+          0.63,
+          0.72,
+          1
+        ],
+        "component_type": "ecg_analog_front_end",
+        "heat_source": false,
+        "noise_source": false,
+        "sensitive": "high",
+        "heat_radius": 0,
+        "part_name": "ADS1292R",
+        "datasheet_url": "https://www.ti.com/product/ADS1292R",
+        "geometry_basis": "Illustrative functional placement envelope; not package-accurate CAD",
+        "patient_connected": true
+      },
+      {
+        "id": "RF",
+        "label": "BLE",
+        "dimensions": [
+          16,
+          10,
+          2
+        ],
+        "color": [
+          0.31,
+          0.12,
+          0.63,
+          1
+        ],
+        "component_type": "wireless",
+        "heat_source": false,
+        "noise_source": false,
+        "sensitive": "high",
+        "heat_radius": 0,
+        "part_name": "nRF52-based BLE module (vendor unspecified)",
+        "datasheet_url": "https://www.nordicsemi.com/Products/nRF52832/Modules",
+        "geometry_basis": "Illustrative functional placement envelope; not package-accurate CAD"
+      },
+      {
+        "id": "Regulator",
+        "label": "BUCK",
+        "dimensions": [
+          8,
+          8,
+          3
+        ],
+        "color": [
+          0.96,
+          0.3,
+          0.035,
+          1
+        ],
+        "component_type": "power_regulator",
+        "heat_source": true,
+        "noise_source": true,
+        "sensitive": "low",
+        "heat_radius": 18,
+        "part_name": "TPS62740",
+        "datasheet_url": "https://www.ti.com/product/TPS62740",
+        "geometry_basis": "Illustrative functional placement envelope; not package-accurate CAD"
+      },
+      {
+        "id": "Driver",
+        "label": "CHARGER",
+        "dimensions": [
+          14,
+          10,
+          3
+        ],
+        "color": [
+          0.76,
+          0.055,
+          0.075,
+          1
+        ],
+        "component_type": "linear_lipo_charger",
+        "heat_source": true,
+        "noise_source": false,
+        "sensitive": "low",
+        "heat_radius": 22,
+        "part_name": "MCP73831",
+        "datasheet_url": "https://www.microchip.com/en-us/product/mcp73831",
+        "geometry_basis": "Illustrative functional placement envelope; not package-accurate CAD"
+      },
+      {
+        "id": "Battery",
+        "label": "JST-SH",
+        "dimensions": [
+          10,
+          6,
+          5
+        ],
+        "color": [
+          0.94,
+          0.61,
+          0.1,
+          1
+        ],
+        "component_type": "connector",
+        "heat_source": false,
+        "noise_source": false,
+        "sensitive": "low",
+        "heat_radius": 0,
+        "part_name": "JST-SH connector + LiPo (exact variant unspecified)",
+        "datasheet_url": "",
+        "geometry_basis": "Illustrative functional placement envelope; not package-accurate CAD"
+      }
+    ],
+    "profile": "ecg",
+    "ecg_rules": {
+      "afe_power_mm": 20,
+      "afe_rf_mm": 20,
+      "afe_digital_mm": 18,
+      "patient_spacing_mm": 3,
+      "trace_width_mm": 0.6,
+      "battery_heat_radius_mm": 9,
+      "mcu_center_mm": 18
+    },
+    "cache_policy": "Seeded offline fixtures; recompute actual geometry after edits. No network required at demo time."
+  },
+  "seeds": [
+    {
+      "name": "MCU_Naive",
+      "component_id": "MCU",
+      "layout": "Naive",
+      "location": [
+        0.0,
+        -10.0,
+        4.599999904632568
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "ECG_AFE_Naive",
+      "component_id": "Sensor",
+      "layout": "Naive",
+      "location": [
+        5.0,
+        0.0,
+        4.349999904632568
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "BLE_Module_Naive",
+      "component_id": "RF",
+      "layout": "Naive",
+      "location": [
+        -20.0,
+        9.0,
+        4.599999904632568
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Buck_PMIC_Naive",
+      "component_id": "Regulator",
+      "layout": "Naive",
+      "location": [
+        -5.0,
+        10.0,
+        5.099999904632568
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "LiPo_Charger_Naive",
+      "component_id": "Driver",
+      "layout": "Naive",
+      "location": [
+        18.0,
+        -4.0,
+        5.099999904632568
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Battery_Connector_Naive",
+      "component_id": "Battery",
+      "layout": "Naive",
+      "location": [
+        -28.0,
+        -11.0,
+        6.099999904632568
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Protection_Naive",
+      "component_id": "Protection",
+      "layout": "Naive",
+      "location": [
+        -13.0,
+        1.0,
+        4.349999904632568
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "ElectrodeA_Naive",
+      "component_id": "ElectrodeA",
+      "layout": "Naive",
+      "location": [
+        -16.0,
+        -3.0,
+        4.25
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "ElectrodeB_Naive",
+      "component_id": "ElectrodeB",
+      "layout": "Naive",
+      "location": [
+        -13.0,
+        16.0,
+        4.25
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Thin_LiPo_Naive",
+      "component_id": "LiPo",
+      "layout": "Naive",
+      "location": [
+        -12.0,
+        -5.0,
+        1.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "MCU_MissionPCB",
+      "component_id": "MCU",
+      "layout": "MissionPCB",
+      "location": [
+        12.0,
+        -11.0,
+        4.599999904632568
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "ECG_AFE_MissionPCB",
+      "component_id": "Sensor",
+      "layout": "MissionPCB",
+      "location": [
+        -2.0,
+        4.0,
+        4.349999904632568
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "BLE_Module_MissionPCB",
+      "component_id": "RF",
+      "layout": "MissionPCB",
+      "location": [
+        -27.0,
+        10.0,
+        4.599999904632568
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Buck_PMIC_MissionPCB",
+      "component_id": "Regulator",
+      "layout": "MissionPCB",
+      "location": [
+        29.0,
+        9.0,
+        5.099999904632568
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "LiPo_Charger_MissionPCB",
+      "component_id": "Driver",
+      "layout": "MissionPCB",
+      "location": [
+        27.0,
+        -10.0,
+        5.099999904632568
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Battery_Connector_MissionPCB",
+      "component_id": "Battery",
+      "layout": "MissionPCB",
+      "location": [
+        30.0,
+        0.0,
+        6.099999904632568
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Protection_MissionPCB",
+      "component_id": "Protection",
+      "layout": "MissionPCB",
+      "location": [
+        -9.0,
+        6.0,
+        4.349999904632568
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "ElectrodeA_MissionPCB",
+      "component_id": "ElectrodeA",
+      "layout": "MissionPCB",
+      "location": [
+        -9.0,
+        0.0,
+        4.25
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "ElectrodeB_MissionPCB",
+      "component_id": "ElectrodeB",
+      "layout": "MissionPCB",
+      "location": [
+        -9.0,
+        12.0,
+        4.25
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "name": "Thin_LiPo_MissionPCB",
+      "component_id": "LiPo",
+      "layout": "MissionPCB",
+      "location": [
+        22.0,
+        -5.0,
+        1.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  ],
+  "results": {
+    "Naive": {
+      "layout": "Naive",
+      "profile": "ecg",
+      "status": "FAIL",
+      "checks": [
+        {
+          "id": "pcb_wall",
+          "category": "Patch mechanical fit",
+          "value": 6.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PCB wall clearance",
+          "subjects": [],
+          "margin": 3.0
+        },
+        {
+          "id": "pcb_floor",
+          "category": "Patch mechanical fit",
+          "value": 2.0,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PCB above floor",
+          "subjects": [],
+          "margin": 2.0
+        },
+        {
+          "id": "pcb_ceiling",
+          "category": "Patch mechanical fit",
+          "value": 6.400000095367432,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PCB below ceiling",
+          "subjects": [],
+          "margin": 6.400000095367432
+        },
+        {
+          "id": "board_MCU",
+          "category": "Patch mechanical fit",
+          "value": 3.0,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "MCU PCB edge clearance",
+          "subjects": [
+            "MCU"
+          ],
+          "margin": 2.0
+        },
+        {
+          "id": "wall_MCU",
+          "category": "Patch mechanical fit",
+          "value": 9.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "MCU wall clearance",
+          "subjects": [
+            "MCU"
+          ],
+          "margin": 6.0
+        },
+        {
+          "id": "mount_MCU",
+          "category": "Patch mechanical fit",
+          "value": 0.0,
+          "threshold": 0.05,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "MCU mounting gap",
+          "subjects": [
+            "MCU"
+          ],
+          "margin": 0.05
+        },
+        {
+          "id": "upright_MCU",
+          "category": "Patch mechanical fit",
+          "value": 1,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "boolean",
+          "status": "PASS",
+          "reason": "MCU upright",
+          "subjects": [
+            "MCU"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "height_MCU",
+          "category": "Patch mechanical fit",
+          "value": 2.0,
+          "threshold": 14,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "MCU above PCB",
+          "subjects": [
+            "MCU"
+          ],
+          "margin": 12.0
+        },
+        {
+          "id": "ceiling_MCU",
+          "category": "Patch mechanical fit",
+          "value": 4.400000095367432,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "MCU lid clearance",
+          "subjects": [
+            "MCU"
+          ],
+          "margin": 4.400000095367432
+        },
+        {
+          "id": "board_Sensor",
+          "category": "Patch mechanical fit",
+          "value": 16.0,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ECG AFE PCB edge clearance",
+          "subjects": [
+            "Sensor"
+          ],
+          "margin": 15.0
+        },
+        {
+          "id": "wall_Sensor",
+          "category": "Patch mechanical fit",
+          "value": 22.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ECG AFE wall clearance",
+          "subjects": [
+            "Sensor"
+          ],
+          "margin": 19.0
+        },
+        {
+          "id": "mount_Sensor",
+          "category": "Patch mechanical fit",
+          "value": 0.0,
+          "threshold": 0.05,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ECG AFE mounting gap",
+          "subjects": [
+            "Sensor"
+          ],
+          "margin": 0.05
+        },
+        {
+          "id": "upright_Sensor",
+          "category": "Patch mechanical fit",
+          "value": 1,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "boolean",
+          "status": "PASS",
+          "reason": "ECG AFE upright",
+          "subjects": [
+            "Sensor"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "height_Sensor",
+          "category": "Patch mechanical fit",
+          "value": 1.5,
+          "threshold": 14,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ECG AFE above PCB",
+          "subjects": [
+            "Sensor"
+          ],
+          "margin": 12.5
+        },
+        {
+          "id": "ceiling_Sensor",
+          "category": "Patch mechanical fit",
+          "value": 4.900000095367432,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ECG AFE lid clearance",
+          "subjects": [
+            "Sensor"
+          ],
+          "margin": 4.900000095367432
+        },
+        {
+          "id": "board_RF",
+          "category": "Patch mechanical fit",
+          "value": 5.0,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "RF PCB edge clearance",
+          "subjects": [
+            "RF"
+          ],
+          "margin": 4.0
+        },
+        {
+          "id": "wall_RF",
+          "category": "Patch mechanical fit",
+          "value": 11.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "RF wall clearance",
+          "subjects": [
+            "RF"
+          ],
+          "margin": 8.0
+        },
+        {
+          "id": "mount_RF",
+          "category": "Patch mechanical fit",
+          "value": 0.0,
+          "threshold": 0.05,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "RF mounting gap",
+          "subjects": [
+            "RF"
+          ],
+          "margin": 0.05
+        },
+        {
+          "id": "upright_RF",
+          "category": "Patch mechanical fit",
+          "value": 1,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "boolean",
+          "status": "PASS",
+          "reason": "RF upright",
+          "subjects": [
+            "RF"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "height_RF",
+          "category": "Patch mechanical fit",
+          "value": 2.0,
+          "threshold": 14,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "RF above PCB",
+          "subjects": [
+            "RF"
+          ],
+          "margin": 12.0
+        },
+        {
+          "id": "ceiling_RF",
+          "category": "Patch mechanical fit",
+          "value": 4.400000095367432,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "RF lid clearance",
+          "subjects": [
+            "RF"
+          ],
+          "margin": 4.400000095367432
+        },
+        {
+          "id": "board_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 5.0,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Regulator PCB edge clearance",
+          "subjects": [
+            "Regulator"
+          ],
+          "margin": 4.0
+        },
+        {
+          "id": "wall_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 11.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Regulator wall clearance",
+          "subjects": [
+            "Regulator"
+          ],
+          "margin": 8.0
+        },
+        {
+          "id": "mount_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 0.0,
+          "threshold": 0.05,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Regulator mounting gap",
+          "subjects": [
+            "Regulator"
+          ],
+          "margin": 0.05
+        },
+        {
+          "id": "upright_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 1,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "boolean",
+          "status": "PASS",
+          "reason": "Regulator upright",
+          "subjects": [
+            "Regulator"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "height_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 3.0,
+          "threshold": 14,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Regulator above PCB",
+          "subjects": [
+            "Regulator"
+          ],
+          "margin": 11.0
+        },
+        {
+          "id": "ceiling_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 3.4000000953674316,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Regulator lid clearance",
+          "subjects": [
+            "Regulator"
+          ],
+          "margin": 3.4000000953674316
+        },
+        {
+          "id": "board_Driver",
+          "category": "Patch mechanical fit",
+          "value": 10.0,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Charger PCB edge clearance",
+          "subjects": [
+            "Driver"
+          ],
+          "margin": 9.0
+        },
+        {
+          "id": "wall_Driver",
+          "category": "Patch mechanical fit",
+          "value": 16.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Charger wall clearance",
+          "subjects": [
+            "Driver"
+          ],
+          "margin": 13.0
+        },
+        {
+          "id": "mount_Driver",
+          "category": "Patch mechanical fit",
+          "value": 0.0,
+          "threshold": 0.05,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Charger mounting gap",
+          "subjects": [
+            "Driver"
+          ],
+          "margin": 0.05
+        },
+        {
+          "id": "upright_Driver",
+          "category": "Patch mechanical fit",
+          "value": 1,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "boolean",
+          "status": "PASS",
+          "reason": "Charger upright",
+          "subjects": [
+            "Driver"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "height_Driver",
+          "category": "Patch mechanical fit",
+          "value": 3.0,
+          "threshold": 14,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Charger above PCB",
+          "subjects": [
+            "Driver"
+          ],
+          "margin": 11.0
+        },
+        {
+          "id": "ceiling_Driver",
+          "category": "Patch mechanical fit",
+          "value": 3.4000000953674316,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Charger lid clearance",
+          "subjects": [
+            "Driver"
+          ],
+          "margin": 3.4000000953674316
+        },
+        {
+          "id": "board_Battery",
+          "category": "Patch mechanical fit",
+          "value": 3.0,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Battery PCB edge clearance",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 2.0
+        },
+        {
+          "id": "wall_Battery",
+          "category": "Patch mechanical fit",
+          "value": 11.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Battery wall clearance",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 8.0
+        },
+        {
+          "id": "mount_Battery",
+          "category": "Patch mechanical fit",
+          "value": 0.0,
+          "threshold": 0.05,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Battery mounting gap",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 0.05
+        },
+        {
+          "id": "upright_Battery",
+          "category": "Patch mechanical fit",
+          "value": 1,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "boolean",
+          "status": "PASS",
+          "reason": "Battery upright",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "height_Battery",
+          "category": "Patch mechanical fit",
+          "value": 5.000000476837158,
+          "threshold": 14,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Battery above PCB",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 8.999999523162842
+        },
+        {
+          "id": "ceiling_Battery",
+          "category": "Patch mechanical fit",
+          "value": 1.3999996185302734,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Battery lid clearance",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 1.3999996185302734
+        },
+        {
+          "id": "collision_MCU_Sensor",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/ECG AFE body overlaps",
+          "subjects": [
+            "MCU",
+            "Sensor"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_MCU_RF",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/RF body overlaps",
+          "subjects": [
+            "MCU",
+            "RF"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_MCU_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/Regulator body overlaps",
+          "subjects": [
+            "MCU",
+            "Regulator"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_MCU_Driver",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/Charger body overlaps",
+          "subjects": [
+            "MCU",
+            "Driver"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_MCU_Battery",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/Battery body overlaps",
+          "subjects": [
+            "MCU",
+            "Battery"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_Sensor_RF",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "ECG AFE/RF body overlaps",
+          "subjects": [
+            "Sensor",
+            "RF"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_Sensor_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "ECG AFE/Regulator body overlaps",
+          "subjects": [
+            "Sensor",
+            "Regulator"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_Sensor_Driver",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "ECG AFE/Charger body overlaps",
+          "subjects": [
+            "Sensor",
+            "Driver"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_Sensor_Battery",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "ECG AFE/Battery body overlaps",
+          "subjects": [
+            "Sensor",
+            "Battery"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_RF_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "RF/Regulator body overlaps",
+          "subjects": [
+            "RF",
+            "Regulator"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_RF_Driver",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "RF/Charger body overlaps",
+          "subjects": [
+            "RF",
+            "Driver"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_RF_Battery",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "RF/Battery body overlaps",
+          "subjects": [
+            "RF",
+            "Battery"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_Regulator_Driver",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Regulator/Charger body overlaps",
+          "subjects": [
+            "Regulator",
+            "Driver"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_Regulator_Battery",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Regulator/Battery body overlaps",
+          "subjects": [
+            "Regulator",
+            "Battery"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_Driver_Battery",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Charger/Battery body overlaps",
+          "subjects": [
+            "Driver",
+            "Battery"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "center_Sensor",
+          "category": "Patch mechanical fit",
+          "value": 5.0,
+          "threshold": 12,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ECG AFE center offset (demo policy)",
+          "subjects": [
+            "Sensor"
+          ],
+          "margin": 7.0
+        },
+        {
+          "id": "sensor_heat_Regulator",
+          "category": "Regulator / battery heat zone",
+          "value": 14.142135623730951,
+          "threshold": 15,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "ECG AFE to Regulator centers",
+          "subjects": [
+            "Sensor",
+            "Regulator"
+          ],
+          "margin": -0.857864376269049
+        },
+        {
+          "id": "sensor_disk_Regulator",
+          "category": "Regulator / battery heat zone",
+          "value": 9.899494936611665,
+          "threshold": 18,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Regulator center to sensor footprint",
+          "subjects": [
+            "Sensor",
+            "Regulator"
+          ],
+          "margin": -8.100505063388335
+        },
+        {
+          "id": "sensor_heat_Driver",
+          "category": "Regulator / battery heat zone",
+          "value": 13.601470508735444,
+          "threshold": 15,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "ECG AFE to Charger centers",
+          "subjects": [
+            "Sensor",
+            "Driver"
+          ],
+          "margin": -1.398529491264556
+        },
+        {
+          "id": "sensor_disk_Driver",
+          "category": "Regulator / battery heat zone",
+          "value": 10.04987562112089,
+          "threshold": 22,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Charger center to sensor footprint",
+          "subjects": [
+            "Sensor",
+            "Driver"
+          ],
+          "margin": -11.95012437887911
+        },
+        {
+          "id": "antenna",
+          "category": "RF antenna keep-out",
+          "value": 1,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "FAIL",
+          "reason": "Conductors in antenna zone: PowerTrace_1_Naive",
+          "subjects": [
+            "RF"
+          ],
+          "margin": -1
+        },
+        {
+          "id": "battery_gap",
+          "category": "Connector / assembly access",
+          "value": 68.0,
+          "threshold": 12,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Rear opening distance",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": -56.0
+        },
+        {
+          "id": "battery_inside",
+          "category": "Connector / assembly access",
+          "value": 68.0,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Connector inside enclosure",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 68.0
+        },
+        {
+          "id": "battery_alignment",
+          "category": "Connector / assembly access",
+          "value": -10.0,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Opening projection clearance",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": -10.0
+        },
+        {
+          "id": "battery_facing",
+          "category": "Connector / assembly access",
+          "value": 0.0,
+          "threshold": 5,
+          "operator": "<=",
+          "unit": "degrees",
+          "status": "PASS",
+          "reason": "Connector facing rear",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 5.0
+        },
+        {
+          "id": "battery_corridor",
+          "category": "Connector / assembly access",
+          "value": 2,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "FAIL",
+          "reason": "Insertion corridor obstacles: MCU, Charger",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": -2
+        },
+        {
+          "id": "center_MCU",
+          "category": "Patch mechanical fit",
+          "value": 10.0,
+          "threshold": 18,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "MCU center offset",
+          "subjects": [],
+          "margin": 8.0
+        },
+        {
+          "id": "aux_fit_Protection",
+          "category": "Patch mechanical fit",
+          "value": 16.0,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Protection board envelope",
+          "subjects": [],
+          "margin": 15.0
+        },
+        {
+          "id": "aux_floor_Protection",
+          "category": "Patch mechanical fit",
+          "value": 3.5999999046325684,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Protection floor clearance",
+          "subjects": [],
+          "margin": 3.5999999046325684
+        },
+        {
+          "id": "aux_ceiling_Protection",
+          "category": "Patch mechanical fit",
+          "value": 4.900000095367432,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Protection lid clearance",
+          "subjects": [],
+          "margin": 4.900000095367432
+        },
+        {
+          "id": "aux_fit_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 14.199999809265137,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeA board envelope",
+          "subjects": [],
+          "margin": 13.199999809265137
+        },
+        {
+          "id": "aux_floor_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 3.5999999046325684,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeA floor clearance",
+          "subjects": [],
+          "margin": 3.5999999046325684
+        },
+        {
+          "id": "aux_ceiling_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 5.099999904632568,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeA lid clearance",
+          "subjects": [],
+          "margin": 5.099999904632568
+        },
+        {
+          "id": "aux_fit_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 1.2000007629394531,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeB board envelope",
+          "subjects": [],
+          "margin": 0.20000076293945312
+        },
+        {
+          "id": "aux_floor_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 3.5999999046325684,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeB floor clearance",
+          "subjects": [],
+          "margin": 3.5999999046325684
+        },
+        {
+          "id": "aux_ceiling_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 5.099999904632568,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeB lid clearance",
+          "subjects": [],
+          "margin": 5.099999904632568
+        },
+        {
+          "id": "aux_fit_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 6.0,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "LiPo board envelope",
+          "subjects": [],
+          "margin": 5.0
+        },
+        {
+          "id": "aux_floor_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0.19999998807907104,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "LiPo floor clearance",
+          "subjects": [],
+          "margin": 0.19999998807907104
+        },
+        {
+          "id": "aux_ceiling_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 8.200000047683716,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "LiPo lid clearance",
+          "subjects": [],
+          "margin": 8.200000047683716
+        },
+        {
+          "id": "aux_collision_MCU_Protection",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/Protection body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_MCU_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/ElectrodeA body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_MCU_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/ElectrodeB body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_MCU_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Sensor_Protection",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Sensor/Protection body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Sensor_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Sensor/ElectrodeA body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Sensor_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Sensor/ElectrodeB body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Sensor_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Sensor/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_RF_Protection",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "RF/Protection body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_RF_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "RF/ElectrodeA body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_RF_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "RF/ElectrodeB body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_RF_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "RF/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Regulator_Protection",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Regulator/Protection body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Regulator_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Regulator/ElectrodeA body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Regulator_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Regulator/ElectrodeB body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Regulator_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Regulator/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Driver_Protection",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Driver/Protection body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Driver_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Driver/ElectrodeA body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Driver_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Driver/ElectrodeB body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Driver_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Driver/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Battery_Protection",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Battery/Protection body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Battery_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Battery/ElectrodeA body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Battery_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Battery/ElectrodeB body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Battery_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Battery/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Protection_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Protection/ElectrodeA body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Protection_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Protection/ElectrodeB body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Protection_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Protection/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_ElectrodeA_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "ElectrodeA/ElectrodeB body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_ElectrodeA_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "ElectrodeA/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_ElectrodeB_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "ElectrodeB/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "ecg_noise_Regulator",
+          "category": "ECG analog noise separation",
+          "value": 14.142135623730951,
+          "threshold": 20,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "AFE to Regulator centers",
+          "subjects": [
+            "Sensor",
+            "Regulator"
+          ],
+          "margin": -5.857864376269049
+        },
+        {
+          "id": "ecg_noise_RF",
+          "category": "ECG analog noise separation",
+          "value": 26.570660511172846,
+          "threshold": 20,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "AFE to RF centers",
+          "subjects": [
+            "Sensor",
+            "RF"
+          ],
+          "margin": 6.570660511172846
+        },
+        {
+          "id": "ecg_noise_MCU",
+          "category": "ECG analog noise separation",
+          "value": 11.180339887498949,
+          "threshold": 18,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "AFE to MCU centers",
+          "subjects": [
+            "Sensor",
+            "MCU"
+          ],
+          "margin": -6.819660112501051
+        },
+        {
+          "id": "skin_heat_Regulator",
+          "category": "Patient-contact heat proxy",
+          "value": 0.0,
+          "threshold": 18,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Source to designated contact region; heat proxy",
+          "subjects": [
+            "Regulator"
+          ],
+          "margin": -18.0
+        },
+        {
+          "id": "skin_heat_Driver",
+          "category": "Patient-contact heat proxy",
+          "value": 14.035668847618199,
+          "threshold": 22,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Source to designated contact region; heat proxy",
+          "subjects": [
+            "Driver"
+          ],
+          "margin": -7.964331152381801
+        },
+        {
+          "id": "skin_heat_LiPo",
+          "category": "Patient-contact heat proxy",
+          "value": 2.0,
+          "threshold": 9,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Source to designated contact region; heat proxy",
+          "subjects": [
+            "LiPo"
+          ],
+          "margin": -7.0
+        },
+        {
+          "id": "battery_afe_heat",
+          "category": "Regulator / battery heat zone",
+          "value": 14.142135623730951,
+          "threshold": 9,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "LiPo center to AFE footprint; heat proxy",
+          "subjects": [
+            "Sensor",
+            "LiPo"
+          ],
+          "margin": 5.142135623730951
+        },
+        {
+          "id": "patient_gap_Sensor_MCU",
+          "category": "Patient-connected spacing",
+          "value": 1.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Sensor to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "Sensor",
+            "MCU"
+          ],
+          "margin": -2.0
+        },
+        {
+          "id": "patient_gap_Sensor_RF",
+          "category": "Patient-connected spacing",
+          "value": 14.035668847618199,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Sensor to RF XY envelope; spacing proxy",
+          "subjects": [
+            "Sensor",
+            "RF"
+          ],
+          "margin": 11.035668847618199
+        },
+        {
+          "id": "patient_gap_Sensor_Regulator",
+          "category": "Patient-connected spacing",
+          "value": 4.242640687119285,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Sensor to Regulator XY envelope; spacing proxy",
+          "subjects": [
+            "Sensor",
+            "Regulator"
+          ],
+          "margin": 1.2426406871192848
+        },
+        {
+          "id": "patient_gap_Sensor_Driver",
+          "category": "Patient-connected spacing",
+          "value": 3.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Sensor to Driver XY envelope; spacing proxy",
+          "subjects": [
+            "Sensor",
+            "Driver"
+          ],
+          "margin": 0.0
+        },
+        {
+          "id": "patient_gap_Sensor_Battery",
+          "category": "Patient-connected spacing",
+          "value": 25.495097567963924,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Sensor to Battery XY envelope; spacing proxy",
+          "subjects": [
+            "Sensor",
+            "Battery"
+          ],
+          "margin": 22.495097567963924
+        },
+        {
+          "id": "patient_gap_Sensor_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 2.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Sensor to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "Sensor",
+            "LiPo"
+          ],
+          "margin": -1.0
+        },
+        {
+          "id": "patient_gap_Protection_MCU",
+          "category": "Patient-connected spacing",
+          "value": 5.830951894845301,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Protection to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "Protection",
+            "MCU"
+          ],
+          "margin": 2.8309518948453007
+        },
+        {
+          "id": "patient_gap_Protection_RF",
+          "category": "Patient-connected spacing",
+          "value": 1.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Protection to RF XY envelope; spacing proxy",
+          "subjects": [
+            "Protection",
+            "RF"
+          ],
+          "margin": -2.0
+        },
+        {
+          "id": "patient_gap_Protection_Regulator",
+          "category": "Patient-connected spacing",
+          "value": 3.605551275463989,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Protection to Regulator XY envelope; spacing proxy",
+          "subjects": [
+            "Protection",
+            "Regulator"
+          ],
+          "margin": 0.6055512754639891
+        },
+        {
+          "id": "patient_gap_Protection_Driver",
+          "category": "Patient-connected spacing",
+          "value": 22.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Protection to Driver XY envelope; spacing proxy",
+          "subjects": [
+            "Protection",
+            "Driver"
+          ],
+          "margin": 19.0
+        },
+        {
+          "id": "patient_gap_Protection_Battery",
+          "category": "Patient-connected spacing",
+          "value": 10.63014581273465,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Protection to Battery XY envelope; spacing proxy",
+          "subjects": [
+            "Protection",
+            "Battery"
+          ],
+          "margin": 7.63014581273465
+        },
+        {
+          "id": "patient_gap_Protection_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 0.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Protection to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "Protection",
+            "LiPo"
+          ],
+          "margin": -3.0
+        },
+        {
+          "id": "patient_gap_ElectrodeA_MCU",
+          "category": "Patient-connected spacing",
+          "value": 8.199999809265137,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeA to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeA",
+            "MCU"
+          ],
+          "margin": 5.199999809265137
+        },
+        {
+          "id": "patient_gap_ElectrodeA_RF",
+          "category": "Patient-connected spacing",
+          "value": 5.200000047683716,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeA to RF XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeA",
+            "RF"
+          ],
+          "margin": 2.200000047683716
+        },
+        {
+          "id": "patient_gap_ElectrodeA_Regulator",
+          "category": "Patient-connected spacing",
+          "value": 8.881441251452546,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeA to Regulator XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeA",
+            "Regulator"
+          ],
+          "margin": 5.8814412514525465
+        },
+        {
+          "id": "patient_gap_ElectrodeA_Driver",
+          "category": "Patient-connected spacing",
+          "value": 25.199999809265137,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeA to Driver XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeA",
+            "Driver"
+          ],
+          "margin": 22.199999809265137
+        },
+        {
+          "id": "patient_gap_ElectrodeA_Battery",
+          "category": "Patient-connected spacing",
+          "value": 6.105735558789605,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeA to Battery XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeA",
+            "Battery"
+          ],
+          "margin": 3.105735558789605
+        },
+        {
+          "id": "patient_gap_ElectrodeA_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 0.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "ElectrodeA to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeA",
+            "LiPo"
+          ],
+          "margin": -3.0
+        },
+        {
+          "id": "patient_gap_ElectrodeB_MCU",
+          "category": "Patient-connected spacing",
+          "value": 18.928285476334313,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeB to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeB",
+            "MCU"
+          ],
+          "margin": 15.928285476334313
+        },
+        {
+          "id": "patient_gap_ElectrodeB_RF",
+          "category": "Patient-connected spacing",
+          "value": 0.19999980926513672,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "ElectrodeB to RF XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeB",
+            "RF"
+          ],
+          "margin": -2.8000001907348633
+        },
+        {
+          "id": "patient_gap_ElectrodeB_Regulator",
+          "category": "Patient-connected spacing",
+          "value": 2.209071996217581,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "ElectrodeB to Regulator XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeB",
+            "Regulator"
+          ],
+          "margin": -0.7909280037824189
+        },
+        {
+          "id": "patient_gap_ElectrodeB_Driver",
+          "category": "Patient-connected spacing",
+          "value": 25.827891638613707,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeB to Driver XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeB",
+            "Driver"
+          ],
+          "margin": 22.827891638613707
+        },
+        {
+          "id": "patient_gap_ElectrodeB_Battery",
+          "category": "Patient-connected spacing",
+          "value": 23.666009135536992,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeB to Battery XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeB",
+            "Battery"
+          ],
+          "margin": 20.666009135536992
+        },
+        {
+          "id": "patient_gap_ElectrodeB_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 11.199999809265137,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeB to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeB",
+            "LiPo"
+          ],
+          "margin": 8.199999809265137
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_0_Naive_MCU",
+          "category": "Patient-connected spacing",
+          "value": 9.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_0_0_Naive to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_0_Naive",
+            "MCU"
+          ],
+          "margin": 6.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_0_Naive_RF",
+          "category": "Patient-connected spacing",
+          "value": 2.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "PatientTrace_0_0_Naive to RF XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_0_Naive",
+            "RF"
+          ],
+          "margin": -1.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_0_Naive_Regulator",
+          "category": "Patient-connected spacing",
+          "value": 7.211102550927978,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_0_0_Naive to Regulator XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_0_Naive",
+            "Regulator"
+          ],
+          "margin": 4.211102550927978
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_0_Naive_Driver",
+          "category": "Patient-connected spacing",
+          "value": 26.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_0_0_Naive to Driver XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_0_Naive",
+            "Driver"
+          ],
+          "margin": 23.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_0_Naive_Battery",
+          "category": "Patient-connected spacing",
+          "value": 7.211102550927978,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_0_0_Naive to Battery XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_0_Naive",
+            "Battery"
+          ],
+          "margin": 4.211102550927978
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_0_Naive_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 0.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "PatientTrace_0_0_Naive to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_0_Naive",
+            "LiPo"
+          ],
+          "margin": -3.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_1_Naive_MCU",
+          "category": "Patient-connected spacing",
+          "value": 7.211102550927978,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_0_1_Naive to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_1_Naive",
+            "MCU"
+          ],
+          "margin": 4.211102550927978
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_1_Naive_RF",
+          "category": "Patient-connected spacing",
+          "value": 2.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "PatientTrace_0_1_Naive to RF XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_1_Naive",
+            "RF"
+          ],
+          "margin": -1.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_1_Naive_Regulator",
+          "category": "Patient-connected spacing",
+          "value": 5.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_0_1_Naive to Regulator XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_1_Naive",
+            "Regulator"
+          ],
+          "margin": 2.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_1_Naive_Driver",
+          "category": "Patient-connected spacing",
+          "value": 23.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_0_1_Naive to Driver XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_1_Naive",
+            "Driver"
+          ],
+          "margin": 20.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_1_Naive_Battery",
+          "category": "Patient-connected spacing",
+          "value": 10.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_0_1_Naive to Battery XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_1_Naive",
+            "Battery"
+          ],
+          "margin": 7.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_1_Naive_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 0.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "PatientTrace_0_1_Naive to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_1_Naive",
+            "LiPo"
+          ],
+          "margin": -3.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_1_0_Naive_MCU",
+          "category": "Patient-connected spacing",
+          "value": 7.211102550927978,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_1_0_Naive to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_1_0_Naive",
+            "MCU"
+          ],
+          "margin": 4.211102550927978
+        },
+        {
+          "id": "patient_gap_PatientTrace_1_0_Naive_RF",
+          "category": "Patient-connected spacing",
+          "value": 0.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "PatientTrace_1_0_Naive to RF XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_1_0_Naive",
+            "RF"
+          ],
+          "margin": -3.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_1_0_Naive_Regulator",
+          "category": "Patient-connected spacing",
+          "value": 3.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_1_0_Naive to Regulator XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_1_0_Naive",
+            "Regulator"
+          ],
+          "margin": 0.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_1_0_Naive_Driver",
+          "category": "Patient-connected spacing",
+          "value": 23.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_1_0_Naive to Driver XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_1_0_Naive",
+            "Driver"
+          ],
+          "margin": 20.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_1_0_Naive_Battery",
+          "category": "Patient-connected spacing",
+          "value": 12.041594578792296,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_1_0_Naive to Battery XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_1_0_Naive",
+            "Battery"
+          ],
+          "margin": 9.041594578792296
+        },
+        {
+          "id": "patient_gap_PatientTrace_1_0_Naive_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 0.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "PatientTrace_1_0_Naive to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_1_0_Naive",
+            "LiPo"
+          ],
+          "margin": -3.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_0_Naive_MCU",
+          "category": "Patient-connected spacing",
+          "value": 4.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_0_Naive to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_0_Naive",
+            "MCU"
+          ],
+          "margin": 1.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_0_Naive_RF",
+          "category": "Patient-connected spacing",
+          "value": 2.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "PatientTrace_2_0_Naive to RF XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_0_Naive",
+            "RF"
+          ],
+          "margin": -1.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_0_Naive_Regulator",
+          "category": "Patient-connected spacing",
+          "value": 4.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_0_Naive to Regulator XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_0_Naive",
+            "Regulator"
+          ],
+          "margin": 1.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_0_Naive_Driver",
+          "category": "Patient-connected spacing",
+          "value": 5.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_0_Naive to Driver XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_0_Naive",
+            "Driver"
+          ],
+          "margin": 2.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_0_Naive_Battery",
+          "category": "Patient-connected spacing",
+          "value": 12.041594578792296,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_0_Naive to Battery XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_0_Naive",
+            "Battery"
+          ],
+          "margin": 9.041594578792296
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_0_Naive_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 0.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "PatientTrace_2_0_Naive to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_0_Naive",
+            "LiPo"
+          ],
+          "margin": -3.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_1_Naive_MCU",
+          "category": "Patient-connected spacing",
+          "value": 3.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_1_Naive to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_1_Naive",
+            "MCU"
+          ],
+          "margin": 0.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_1_Naive_RF",
+          "category": "Patient-connected spacing",
+          "value": 16.1245154965971,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_1_Naive to RF XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_1_Naive",
+            "RF"
+          ],
+          "margin": 13.124515496597098
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_1_Naive_Regulator",
+          "category": "Patient-connected spacing",
+          "value": 6.4031242374328485,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_1_Naive to Regulator XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_1_Naive",
+            "Regulator"
+          ],
+          "margin": 3.4031242374328485
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_1_Naive_Driver",
+          "category": "Patient-connected spacing",
+          "value": 5.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_1_Naive to Driver XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_1_Naive",
+            "Driver"
+          ],
+          "margin": 2.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_1_Naive_Battery",
+          "category": "Patient-connected spacing",
+          "value": 27.892651361962706,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_1_Naive to Battery XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_1_Naive",
+            "Battery"
+          ],
+          "margin": 24.892651361962706
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_1_Naive_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 4.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_1_Naive to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_1_Naive",
+            "LiPo"
+          ],
+          "margin": 1.0
+        },
+        {
+          "id": "trace_width_PowerTrace_0_Naive",
+          "category": "Power trace width proxy",
+          "value": 0.25,
+          "threshold": 0.6,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Measured copper width; example threshold, not ampacity",
+          "subjects": [
+            "PowerTrace_0_Naive"
+          ],
+          "margin": -0.35
+        },
+        {
+          "id": "trace_width_PowerTrace_1_Naive",
+          "category": "Power trace width proxy",
+          "value": 0.25,
+          "threshold": 0.6,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Measured copper width; example threshold, not ampacity",
+          "subjects": [
+            "PowerTrace_1_Naive"
+          ],
+          "margin": -0.35
+        },
+        {
+          "id": "trace_width_PowerTrace_2_Naive",
+          "category": "Power trace width proxy",
+          "value": 0.25,
+          "threshold": 0.6,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Measured copper width; example threshold, not ampacity",
+          "subjects": [
+            "PowerTrace_2_Naive"
+          ],
+          "margin": -0.35
+        },
+        {
+          "id": "trace_width_PowerTrace_3_Naive",
+          "category": "Power trace width proxy",
+          "value": 0.25,
+          "threshold": 0.6,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Measured copper width; example threshold, not ampacity",
+          "subjects": [
+            "PowerTrace_3_Naive"
+          ],
+          "margin": -0.35
+        },
+        {
+          "id": "trace_width_PowerTrace_4_Naive",
+          "category": "Power trace width proxy",
+          "value": 0.25,
+          "threshold": 0.6,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Measured copper width; example threshold, not ampacity",
+          "subjects": [
+            "PowerTrace_4_Naive"
+          ],
+          "margin": -0.35
+        },
+        {
+          "id": "trace_width_PowerTrace_5_Naive",
+          "category": "Power trace width proxy",
+          "value": 0.25,
+          "threshold": 0.6,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Measured copper width; example threshold, not ampacity",
+          "subjects": [
+            "PowerTrace_5_Naive"
+          ],
+          "margin": -0.35
+        }
+      ],
+      "categories": [
+        {
+          "id": "pcb_wall",
+          "category": "Patch mechanical fit",
+          "value": 6.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PCB wall clearance",
+          "subjects": [],
+          "margin": 3.0,
+          "failure_count": 0,
+          "check_count": 98
+        },
+        {
+          "id": "skin_heat_Regulator",
+          "category": "Patient-contact heat proxy",
+          "value": 0.0,
+          "threshold": 18,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Source to designated contact region; heat proxy",
+          "subjects": [
+            "Regulator"
+          ],
+          "margin": -18.0,
+          "failure_count": 3,
+          "check_count": 3
+        },
+        {
+          "id": "ecg_noise_MCU",
+          "category": "ECG analog noise separation",
+          "value": 11.180339887498949,
+          "threshold": 18,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "AFE to MCU centers",
+          "subjects": [
+            "Sensor",
+            "MCU"
+          ],
+          "margin": -6.819660112501051,
+          "failure_count": 2,
+          "check_count": 3
+        },
+        {
+          "id": "patient_gap_Protection_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 0.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Protection to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "Protection",
+            "LiPo"
+          ],
+          "margin": -3.0,
+          "failure_count": 15,
+          "check_count": 54
+        },
+        {
+          "id": "antenna",
+          "category": "RF antenna keep-out",
+          "value": 1,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "FAIL",
+          "reason": "Conductors in antenna zone: PowerTrace_1_Naive",
+          "subjects": [
+            "RF"
+          ],
+          "margin": -1,
+          "failure_count": 1,
+          "check_count": 1
+        },
+        {
+          "id": "sensor_disk_Driver",
+          "category": "Regulator / battery heat zone",
+          "value": 10.04987562112089,
+          "threshold": 22,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Charger center to sensor footprint",
+          "subjects": [
+            "Sensor",
+            "Driver"
+          ],
+          "margin": -11.95012437887911,
+          "failure_count": 4,
+          "check_count": 5
+        },
+        {
+          "id": "trace_width_PowerTrace_0_Naive",
+          "category": "Power trace width proxy",
+          "value": 0.25,
+          "threshold": 0.6,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Measured copper width; example threshold, not ampacity",
+          "subjects": [
+            "PowerTrace_0_Naive"
+          ],
+          "margin": -0.35,
+          "failure_count": 6,
+          "check_count": 6
+        },
+        {
+          "id": "battery_gap",
+          "category": "Connector / assembly access",
+          "value": 68.0,
+          "threshold": 12,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "FAIL",
+          "reason": "Rear opening distance",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": -56.0,
+          "failure_count": 3,
+          "check_count": 5
+        }
+      ],
+      "errors": []
+    },
+    "MissionPCB": {
+      "layout": "MissionPCB",
+      "profile": "ecg",
+      "status": "PASS",
+      "checks": [
+        {
+          "id": "pcb_wall",
+          "category": "Patch mechanical fit",
+          "value": 6.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PCB wall clearance",
+          "subjects": [],
+          "margin": 3.0
+        },
+        {
+          "id": "pcb_floor",
+          "category": "Patch mechanical fit",
+          "value": 2.0,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PCB above floor",
+          "subjects": [],
+          "margin": 2.0
+        },
+        {
+          "id": "pcb_ceiling",
+          "category": "Patch mechanical fit",
+          "value": 6.400000095367432,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PCB below ceiling",
+          "subjects": [],
+          "margin": 6.400000095367432
+        },
+        {
+          "id": "board_MCU",
+          "category": "Patch mechanical fit",
+          "value": 2.0,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "MCU PCB edge clearance",
+          "subjects": [
+            "MCU"
+          ],
+          "margin": 1.0
+        },
+        {
+          "id": "wall_MCU",
+          "category": "Patch mechanical fit",
+          "value": 8.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "MCU wall clearance",
+          "subjects": [
+            "MCU"
+          ],
+          "margin": 5.0
+        },
+        {
+          "id": "mount_MCU",
+          "category": "Patch mechanical fit",
+          "value": 0.0,
+          "threshold": 0.05,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "MCU mounting gap",
+          "subjects": [
+            "MCU"
+          ],
+          "margin": 0.05
+        },
+        {
+          "id": "upright_MCU",
+          "category": "Patch mechanical fit",
+          "value": 1,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "boolean",
+          "status": "PASS",
+          "reason": "MCU upright",
+          "subjects": [
+            "MCU"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "height_MCU",
+          "category": "Patch mechanical fit",
+          "value": 2.0,
+          "threshold": 14,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "MCU above PCB",
+          "subjects": [
+            "MCU"
+          ],
+          "margin": 12.0
+        },
+        {
+          "id": "ceiling_MCU",
+          "category": "Patch mechanical fit",
+          "value": 4.400000095367432,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "MCU lid clearance",
+          "subjects": [
+            "MCU"
+          ],
+          "margin": 4.400000095367432
+        },
+        {
+          "id": "board_Sensor",
+          "category": "Patch mechanical fit",
+          "value": 12.0,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ECG AFE PCB edge clearance",
+          "subjects": [
+            "Sensor"
+          ],
+          "margin": 11.0
+        },
+        {
+          "id": "wall_Sensor",
+          "category": "Patch mechanical fit",
+          "value": 18.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ECG AFE wall clearance",
+          "subjects": [
+            "Sensor"
+          ],
+          "margin": 15.0
+        },
+        {
+          "id": "mount_Sensor",
+          "category": "Patch mechanical fit",
+          "value": 0.0,
+          "threshold": 0.05,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ECG AFE mounting gap",
+          "subjects": [
+            "Sensor"
+          ],
+          "margin": 0.05
+        },
+        {
+          "id": "upright_Sensor",
+          "category": "Patch mechanical fit",
+          "value": 1,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "boolean",
+          "status": "PASS",
+          "reason": "ECG AFE upright",
+          "subjects": [
+            "Sensor"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "height_Sensor",
+          "category": "Patch mechanical fit",
+          "value": 1.5,
+          "threshold": 14,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ECG AFE above PCB",
+          "subjects": [
+            "Sensor"
+          ],
+          "margin": 12.5
+        },
+        {
+          "id": "ceiling_Sensor",
+          "category": "Patch mechanical fit",
+          "value": 4.900000095367432,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ECG AFE lid clearance",
+          "subjects": [
+            "Sensor"
+          ],
+          "margin": 4.900000095367432
+        },
+        {
+          "id": "board_RF",
+          "category": "Patch mechanical fit",
+          "value": 1.0,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "RF PCB edge clearance",
+          "subjects": [
+            "RF"
+          ],
+          "margin": 0.0
+        },
+        {
+          "id": "wall_RF",
+          "category": "Patch mechanical fit",
+          "value": 10.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "RF wall clearance",
+          "subjects": [
+            "RF"
+          ],
+          "margin": 7.0
+        },
+        {
+          "id": "mount_RF",
+          "category": "Patch mechanical fit",
+          "value": 0.0,
+          "threshold": 0.05,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "RF mounting gap",
+          "subjects": [
+            "RF"
+          ],
+          "margin": 0.05
+        },
+        {
+          "id": "upright_RF",
+          "category": "Patch mechanical fit",
+          "value": 1,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "boolean",
+          "status": "PASS",
+          "reason": "RF upright",
+          "subjects": [
+            "RF"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "height_RF",
+          "category": "Patch mechanical fit",
+          "value": 2.0,
+          "threshold": 14,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "RF above PCB",
+          "subjects": [
+            "RF"
+          ],
+          "margin": 12.0
+        },
+        {
+          "id": "ceiling_RF",
+          "category": "Patch mechanical fit",
+          "value": 4.400000095367432,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "RF lid clearance",
+          "subjects": [
+            "RF"
+          ],
+          "margin": 4.400000095367432
+        },
+        {
+          "id": "board_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 3.0,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Regulator PCB edge clearance",
+          "subjects": [
+            "Regulator"
+          ],
+          "margin": 2.0
+        },
+        {
+          "id": "wall_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 12.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Regulator wall clearance",
+          "subjects": [
+            "Regulator"
+          ],
+          "margin": 9.0
+        },
+        {
+          "id": "mount_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 0.0,
+          "threshold": 0.05,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Regulator mounting gap",
+          "subjects": [
+            "Regulator"
+          ],
+          "margin": 0.05
+        },
+        {
+          "id": "upright_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 1,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "boolean",
+          "status": "PASS",
+          "reason": "Regulator upright",
+          "subjects": [
+            "Regulator"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "height_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 3.0,
+          "threshold": 14,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Regulator above PCB",
+          "subjects": [
+            "Regulator"
+          ],
+          "margin": 11.0
+        },
+        {
+          "id": "ceiling_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 3.4000000953674316,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Regulator lid clearance",
+          "subjects": [
+            "Regulator"
+          ],
+          "margin": 3.4000000953674316
+        },
+        {
+          "id": "board_Driver",
+          "category": "Patch mechanical fit",
+          "value": 2.0,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Charger PCB edge clearance",
+          "subjects": [
+            "Driver"
+          ],
+          "margin": 1.0
+        },
+        {
+          "id": "wall_Driver",
+          "category": "Patch mechanical fit",
+          "value": 10.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Charger wall clearance",
+          "subjects": [
+            "Driver"
+          ],
+          "margin": 7.0
+        },
+        {
+          "id": "mount_Driver",
+          "category": "Patch mechanical fit",
+          "value": 0.0,
+          "threshold": 0.05,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Charger mounting gap",
+          "subjects": [
+            "Driver"
+          ],
+          "margin": 0.05
+        },
+        {
+          "id": "upright_Driver",
+          "category": "Patch mechanical fit",
+          "value": 1,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "boolean",
+          "status": "PASS",
+          "reason": "Charger upright",
+          "subjects": [
+            "Driver"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "height_Driver",
+          "category": "Patch mechanical fit",
+          "value": 3.0,
+          "threshold": 14,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Charger above PCB",
+          "subjects": [
+            "Driver"
+          ],
+          "margin": 11.0
+        },
+        {
+          "id": "ceiling_Driver",
+          "category": "Patch mechanical fit",
+          "value": 3.4000000953674316,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Charger lid clearance",
+          "subjects": [
+            "Driver"
+          ],
+          "margin": 3.4000000953674316
+        },
+        {
+          "id": "board_Battery",
+          "category": "Patch mechanical fit",
+          "value": 1.0,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Battery PCB edge clearance",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 0.0
+        },
+        {
+          "id": "wall_Battery",
+          "category": "Patch mechanical fit",
+          "value": 10.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Battery wall clearance",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 7.0
+        },
+        {
+          "id": "mount_Battery",
+          "category": "Patch mechanical fit",
+          "value": 0.0,
+          "threshold": 0.05,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Battery mounting gap",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 0.05
+        },
+        {
+          "id": "upright_Battery",
+          "category": "Patch mechanical fit",
+          "value": 1,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "boolean",
+          "status": "PASS",
+          "reason": "Battery upright",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "height_Battery",
+          "category": "Patch mechanical fit",
+          "value": 5.000000476837158,
+          "threshold": 14,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Battery above PCB",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 8.999999523162842
+        },
+        {
+          "id": "ceiling_Battery",
+          "category": "Patch mechanical fit",
+          "value": 1.3999996185302734,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Battery lid clearance",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 1.3999996185302734
+        },
+        {
+          "id": "collision_MCU_Sensor",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/ECG AFE body overlaps",
+          "subjects": [
+            "MCU",
+            "Sensor"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_MCU_RF",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/RF body overlaps",
+          "subjects": [
+            "MCU",
+            "RF"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_MCU_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/Regulator body overlaps",
+          "subjects": [
+            "MCU",
+            "Regulator"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_MCU_Driver",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/Charger body overlaps",
+          "subjects": [
+            "MCU",
+            "Driver"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_MCU_Battery",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/Battery body overlaps",
+          "subjects": [
+            "MCU",
+            "Battery"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_Sensor_RF",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "ECG AFE/RF body overlaps",
+          "subjects": [
+            "Sensor",
+            "RF"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_Sensor_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "ECG AFE/Regulator body overlaps",
+          "subjects": [
+            "Sensor",
+            "Regulator"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_Sensor_Driver",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "ECG AFE/Charger body overlaps",
+          "subjects": [
+            "Sensor",
+            "Driver"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_Sensor_Battery",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "ECG AFE/Battery body overlaps",
+          "subjects": [
+            "Sensor",
+            "Battery"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_RF_Regulator",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "RF/Regulator body overlaps",
+          "subjects": [
+            "RF",
+            "Regulator"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_RF_Driver",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "RF/Charger body overlaps",
+          "subjects": [
+            "RF",
+            "Driver"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_RF_Battery",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "RF/Battery body overlaps",
+          "subjects": [
+            "RF",
+            "Battery"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_Regulator_Driver",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Regulator/Charger body overlaps",
+          "subjects": [
+            "Regulator",
+            "Driver"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_Regulator_Battery",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Regulator/Battery body overlaps",
+          "subjects": [
+            "Regulator",
+            "Battery"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "collision_Driver_Battery",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Charger/Battery body overlaps",
+          "subjects": [
+            "Driver",
+            "Battery"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "center_Sensor",
+          "category": "Patch mechanical fit",
+          "value": 4.47213595499958,
+          "threshold": 12,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ECG AFE center offset (demo policy)",
+          "subjects": [
+            "Sensor"
+          ],
+          "margin": 7.52786404500042
+        },
+        {
+          "id": "sensor_heat_Regulator",
+          "category": "Regulator / battery heat zone",
+          "value": 31.400636936215164,
+          "threshold": 15,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ECG AFE to Regulator centers",
+          "subjects": [
+            "Sensor",
+            "Regulator"
+          ],
+          "margin": 16.400636936215164
+        },
+        {
+          "id": "sensor_disk_Regulator",
+          "category": "Regulator / battery heat zone",
+          "value": 28.071337695236398,
+          "threshold": 18,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Regulator center to sensor footprint",
+          "subjects": [
+            "Sensor",
+            "Regulator"
+          ],
+          "margin": 10.071337695236398
+        },
+        {
+          "id": "sensor_heat_Driver",
+          "category": "Regulator / battery heat zone",
+          "value": 32.202484376209235,
+          "threshold": 15,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ECG AFE to Charger centers",
+          "subjects": [
+            "Sensor",
+            "Driver"
+          ],
+          "margin": 17.202484376209235
+        },
+        {
+          "id": "sensor_disk_Driver",
+          "category": "Regulator / battery heat zone",
+          "value": 28.231188426986208,
+          "threshold": 22,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Charger center to sensor footprint",
+          "subjects": [
+            "Sensor",
+            "Driver"
+          ],
+          "margin": 6.231188426986208
+        },
+        {
+          "id": "antenna",
+          "category": "RF antenna keep-out",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Conductors in antenna zone",
+          "subjects": [
+            "RF"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "battery_gap",
+          "category": "Connector / assembly access",
+          "value": 10.0,
+          "threshold": 12,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Rear opening distance",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 2.0
+        },
+        {
+          "id": "battery_inside",
+          "category": "Connector / assembly access",
+          "value": 10.0,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Connector inside enclosure",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 10.0
+        },
+        {
+          "id": "battery_alignment",
+          "category": "Connector / assembly access",
+          "value": 0.39999961853027344,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Opening projection clearance",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 0.39999961853027344
+        },
+        {
+          "id": "battery_facing",
+          "category": "Connector / assembly access",
+          "value": 0.0,
+          "threshold": 5,
+          "operator": "<=",
+          "unit": "degrees",
+          "status": "PASS",
+          "reason": "Connector facing rear",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 5.0
+        },
+        {
+          "id": "battery_corridor",
+          "category": "Connector / assembly access",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Insertion corridor obstacles",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 0
+        },
+        {
+          "id": "center_MCU",
+          "category": "Patch mechanical fit",
+          "value": 16.278820596099706,
+          "threshold": 18,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "MCU center offset",
+          "subjects": [],
+          "margin": 1.721179403900294
+        },
+        {
+          "id": "aux_fit_Protection",
+          "category": "Patch mechanical fit",
+          "value": 11.0,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Protection board envelope",
+          "subjects": [],
+          "margin": 10.0
+        },
+        {
+          "id": "aux_floor_Protection",
+          "category": "Patch mechanical fit",
+          "value": 3.5999999046325684,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Protection floor clearance",
+          "subjects": [],
+          "margin": 3.5999999046325684
+        },
+        {
+          "id": "aux_ceiling_Protection",
+          "category": "Patch mechanical fit",
+          "value": 4.900000095367432,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Protection lid clearance",
+          "subjects": [],
+          "margin": 4.900000095367432
+        },
+        {
+          "id": "aux_fit_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 17.200000047683716,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeA board envelope",
+          "subjects": [],
+          "margin": 16.200000047683716
+        },
+        {
+          "id": "aux_floor_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 3.5999999046325684,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeA floor clearance",
+          "subjects": [],
+          "margin": 3.5999999046325684
+        },
+        {
+          "id": "aux_ceiling_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 5.099999904632568,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeA lid clearance",
+          "subjects": [],
+          "margin": 5.099999904632568
+        },
+        {
+          "id": "aux_fit_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 5.199999809265137,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeB board envelope",
+          "subjects": [],
+          "margin": 4.199999809265137
+        },
+        {
+          "id": "aux_floor_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 3.5999999046325684,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeB floor clearance",
+          "subjects": [],
+          "margin": 3.5999999046325684
+        },
+        {
+          "id": "aux_ceiling_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 5.099999904632568,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeB lid clearance",
+          "subjects": [],
+          "margin": 5.099999904632568
+        },
+        {
+          "id": "aux_fit_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 2.0,
+          "threshold": 1,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "LiPo board envelope",
+          "subjects": [],
+          "margin": 1.0
+        },
+        {
+          "id": "aux_floor_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0.19999998807907104,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "LiPo floor clearance",
+          "subjects": [],
+          "margin": 0.19999998807907104
+        },
+        {
+          "id": "aux_ceiling_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 8.200000047683716,
+          "threshold": 0,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "LiPo lid clearance",
+          "subjects": [],
+          "margin": 8.200000047683716
+        },
+        {
+          "id": "aux_collision_MCU_Protection",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/Protection body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_MCU_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/ElectrodeA body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_MCU_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/ElectrodeB body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_MCU_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "MCU/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Sensor_Protection",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Sensor/Protection body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Sensor_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Sensor/ElectrodeA body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Sensor_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Sensor/ElectrodeB body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Sensor_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Sensor/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_RF_Protection",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "RF/Protection body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_RF_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "RF/ElectrodeA body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_RF_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "RF/ElectrodeB body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_RF_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "RF/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Regulator_Protection",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Regulator/Protection body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Regulator_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Regulator/ElectrodeA body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Regulator_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Regulator/ElectrodeB body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Regulator_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Regulator/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Driver_Protection",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Driver/Protection body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Driver_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Driver/ElectrodeA body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Driver_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Driver/ElectrodeB body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Driver_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Driver/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Battery_Protection",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Battery/Protection body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Battery_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Battery/ElectrodeA body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Battery_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Battery/ElectrodeB body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Battery_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Battery/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Protection_ElectrodeA",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Protection/ElectrodeA body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Protection_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Protection/ElectrodeB body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_Protection_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Protection/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_ElectrodeA_ElectrodeB",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "ElectrodeA/ElectrodeB body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_ElectrodeA_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "ElectrodeA/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "aux_collision_ElectrodeB_LiPo",
+          "category": "Patch mechanical fit",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "ElectrodeB/LiPo body overlap",
+          "subjects": [],
+          "margin": 0
+        },
+        {
+          "id": "ecg_noise_Regulator",
+          "category": "ECG analog noise separation",
+          "value": 31.400636936215164,
+          "threshold": 20,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "AFE to Regulator centers",
+          "subjects": [
+            "Sensor",
+            "Regulator"
+          ],
+          "margin": 11.400636936215164
+        },
+        {
+          "id": "ecg_noise_RF",
+          "category": "ECG analog noise separation",
+          "value": 25.709920264364882,
+          "threshold": 20,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "AFE to RF centers",
+          "subjects": [
+            "Sensor",
+            "RF"
+          ],
+          "margin": 5.709920264364882
+        },
+        {
+          "id": "ecg_noise_MCU",
+          "category": "ECG analog noise separation",
+          "value": 20.518284528683193,
+          "threshold": 18,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "AFE to MCU centers",
+          "subjects": [
+            "Sensor",
+            "MCU"
+          ],
+          "margin": 2.5182845286831927
+        },
+        {
+          "id": "skin_heat_Regulator",
+          "category": "Patient-contact heat proxy",
+          "value": 25.0,
+          "threshold": 18,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Source to designated contact region; heat proxy",
+          "subjects": [
+            "Regulator"
+          ],
+          "margin": 7.0
+        },
+        {
+          "id": "skin_heat_Driver",
+          "category": "Patient-contact heat proxy",
+          "value": 24.041630560342615,
+          "threshold": 22,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Source to designated contact region; heat proxy",
+          "subjects": [
+            "Driver"
+          ],
+          "margin": 2.0416305603426146
+        },
+        {
+          "id": "skin_heat_LiPo",
+          "category": "Patient-contact heat proxy",
+          "value": 18.110770276274835,
+          "threshold": 9,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Source to designated contact region; heat proxy",
+          "subjects": [
+            "LiPo"
+          ],
+          "margin": 9.110770276274835
+        },
+        {
+          "id": "battery_afe_heat",
+          "category": "Regulator / battery heat zone",
+          "value": 21.840329667841555,
+          "threshold": 9,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "LiPo center to AFE footprint; heat proxy",
+          "subjects": [
+            "Sensor",
+            "LiPo"
+          ],
+          "margin": 12.840329667841555
+        },
+        {
+          "id": "patient_gap_Sensor_MCU",
+          "category": "Patient-connected spacing",
+          "value": 7.810249675906654,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Sensor to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "Sensor",
+            "MCU"
+          ],
+          "margin": 4.810249675906654
+        },
+        {
+          "id": "patient_gap_Sensor_RF",
+          "category": "Patient-connected spacing",
+          "value": 14.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Sensor to RF XY envelope; spacing proxy",
+          "subjects": [
+            "Sensor",
+            "RF"
+          ],
+          "margin": 11.0
+        },
+        {
+          "id": "patient_gap_Sensor_Regulator",
+          "category": "Patient-connected spacing",
+          "value": 24.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Sensor to Regulator XY envelope; spacing proxy",
+          "subjects": [
+            "Sensor",
+            "Regulator"
+          ],
+          "margin": 21.0
+        },
+        {
+          "id": "patient_gap_Sensor_Driver",
+          "category": "Patient-connected spacing",
+          "value": 19.924858845171276,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Sensor to Driver XY envelope; spacing proxy",
+          "subjects": [
+            "Sensor",
+            "Driver"
+          ],
+          "margin": 16.924858845171276
+        },
+        {
+          "id": "patient_gap_Sensor_Battery",
+          "category": "Patient-connected spacing",
+          "value": 24.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Sensor to Battery XY envelope; spacing proxy",
+          "subjects": [
+            "Sensor",
+            "Battery"
+          ],
+          "margin": 21.0
+        },
+        {
+          "id": "patient_gap_Sensor_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 9.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Sensor to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "Sensor",
+            "LiPo"
+          ],
+          "margin": 6.0
+        },
+        {
+          "id": "patient_gap_Protection_MCU",
+          "category": "Patient-connected spacing",
+          "value": 15.811388300841896,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Protection to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "Protection",
+            "MCU"
+          ],
+          "margin": 12.811388300841896
+        },
+        {
+          "id": "patient_gap_Protection_RF",
+          "category": "Patient-connected spacing",
+          "value": 8.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Protection to RF XY envelope; spacing proxy",
+          "subjects": [
+            "Protection",
+            "RF"
+          ],
+          "margin": 5.0
+        },
+        {
+          "id": "patient_gap_Protection_Regulator",
+          "category": "Patient-connected spacing",
+          "value": 32.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Protection to Regulator XY envelope; spacing proxy",
+          "subjects": [
+            "Protection",
+            "Regulator"
+          ],
+          "margin": 29.0
+        },
+        {
+          "id": "patient_gap_Protection_Driver",
+          "category": "Patient-connected spacing",
+          "value": 28.460498941515414,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Protection to Driver XY envelope; spacing proxy",
+          "subjects": [
+            "Protection",
+            "Driver"
+          ],
+          "margin": 25.460498941515414
+        },
+        {
+          "id": "patient_gap_Protection_Battery",
+          "category": "Patient-connected spacing",
+          "value": 32.01562118716424,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Protection to Battery XY envelope; spacing proxy",
+          "subjects": [
+            "Protection",
+            "Battery"
+          ],
+          "margin": 29.015621187164243
+        },
+        {
+          "id": "patient_gap_Protection_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 17.029386365926403,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Protection to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "Protection",
+            "LiPo"
+          ],
+          "margin": 14.029386365926403
+        },
+        {
+          "id": "patient_gap_ElectrodeA_MCU",
+          "category": "Patient-connected spacing",
+          "value": 13.582341302948304,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeA to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeA",
+            "MCU"
+          ],
+          "margin": 10.582341302948304
+        },
+        {
+          "id": "patient_gap_ElectrodeA_RF",
+          "category": "Patient-connected spacing",
+          "value": 8.802272273516882,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeA to RF XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeA",
+            "RF"
+          ],
+          "margin": 5.802272273516882
+        },
+        {
+          "id": "patient_gap_ElectrodeA_Regulator",
+          "category": "Patient-connected spacing",
+          "value": 32.35861536008379,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeA to Regulator XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeA",
+            "Regulator"
+          ],
+          "margin": 29.35861536008379
+        },
+        {
+          "id": "patient_gap_ElectrodeA_Driver",
+          "category": "Patient-connected spacing",
+          "value": 27.387588245940883,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeA to Driver XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeA",
+            "Driver"
+          ],
+          "margin": 24.387588245940883
+        },
+        {
+          "id": "patient_gap_ElectrodeA_Battery",
+          "category": "Patient-connected spacing",
+          "value": 32.19999980926514,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeA to Battery XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeA",
+            "Battery"
+          ],
+          "margin": 29.199999809265137
+        },
+        {
+          "id": "patient_gap_ElectrodeA_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 17.199999809265137,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeA to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeA",
+            "LiPo"
+          ],
+          "margin": 14.199999809265137
+        },
+        {
+          "id": "patient_gap_ElectrodeB_MCU",
+          "category": "Patient-connected spacing",
+          "value": 20.13156698238515,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeB to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeB",
+            "MCU"
+          ],
+          "margin": 17.13156698238515
+        },
+        {
+          "id": "patient_gap_ElectrodeB_RF",
+          "category": "Patient-connected spacing",
+          "value": 8.199999809265137,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeB to RF XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeB",
+            "RF"
+          ],
+          "margin": 5.199999809265137
+        },
+        {
+          "id": "patient_gap_ElectrodeB_Regulator",
+          "category": "Patient-connected spacing",
+          "value": 32.19999980926514,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeB to Regulator XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeB",
+            "Regulator"
+          ],
+          "margin": 29.199999809265137
+        },
+        {
+          "id": "patient_gap_ElectrodeB_Driver",
+          "category": "Patient-connected spacing",
+          "value": 31.15894709109542,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeB to Driver XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeB",
+            "Driver"
+          ],
+          "margin": 28.15894709109542
+        },
+        {
+          "id": "patient_gap_ElectrodeB_Battery",
+          "category": "Patient-connected spacing",
+          "value": 32.99515093116097,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeB to Battery XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeB",
+            "Battery"
+          ],
+          "margin": 29.99515093116097
+        },
+        {
+          "id": "patient_gap_ElectrodeB_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 18.646178983699013,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "ElectrodeB to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "ElectrodeB",
+            "LiPo"
+          ],
+          "margin": 15.646178983699013
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_0_MissionPCB_MCU",
+          "category": "Patient-connected spacing",
+          "value": 14.560219778561036,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_0_0_MissionPCB to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_0_MissionPCB",
+            "MCU"
+          ],
+          "margin": 11.560219778561036
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_0_MissionPCB_RF",
+          "category": "Patient-connected spacing",
+          "value": 9.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_0_0_MissionPCB to RF XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_0_MissionPCB",
+            "RF"
+          ],
+          "margin": 6.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_0_MissionPCB_Regulator",
+          "category": "Patient-connected spacing",
+          "value": 33.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_0_0_MissionPCB to Regulator XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_0_MissionPCB",
+            "Regulator"
+          ],
+          "margin": 30.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_0_MissionPCB_Driver",
+          "category": "Patient-connected spacing",
+          "value": 28.284271247461902,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_0_0_MissionPCB to Driver XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_0_MissionPCB",
+            "Driver"
+          ],
+          "margin": 25.284271247461902
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_0_MissionPCB_Battery",
+          "category": "Patient-connected spacing",
+          "value": 33.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_0_0_MissionPCB to Battery XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_0_MissionPCB",
+            "Battery"
+          ],
+          "margin": 30.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_0_0_MissionPCB_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 18.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_0_0_MissionPCB to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_0_0_MissionPCB",
+            "LiPo"
+          ],
+          "margin": 15.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_1_0_MissionPCB_MCU",
+          "category": "Patient-connected spacing",
+          "value": 17.204650534085253,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_1_0_MissionPCB to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_1_0_MissionPCB",
+            "MCU"
+          ],
+          "margin": 14.204650534085253
+        },
+        {
+          "id": "patient_gap_PatientTrace_1_0_MissionPCB_RF",
+          "category": "Patient-connected spacing",
+          "value": 9.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_1_0_MissionPCB to RF XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_1_0_MissionPCB",
+            "RF"
+          ],
+          "margin": 6.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_1_0_MissionPCB_Regulator",
+          "category": "Patient-connected spacing",
+          "value": 33.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_1_0_MissionPCB to Regulator XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_1_0_MissionPCB",
+            "Regulator"
+          ],
+          "margin": 30.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_1_0_MissionPCB_Driver",
+          "category": "Patient-connected spacing",
+          "value": 29.732137494637012,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_1_0_MissionPCB to Driver XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_1_0_MissionPCB",
+            "Driver"
+          ],
+          "margin": 26.732137494637012
+        },
+        {
+          "id": "patient_gap_PatientTrace_1_0_MissionPCB_Battery",
+          "category": "Patient-connected spacing",
+          "value": 33.06055050963308,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_1_0_MissionPCB to Battery XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_1_0_MissionPCB",
+            "Battery"
+          ],
+          "margin": 30.06055050963308
+        },
+        {
+          "id": "patient_gap_PatientTrace_1_0_MissionPCB_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 18.110770276274835,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_1_0_MissionPCB to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_1_0_MissionPCB",
+            "LiPo"
+          ],
+          "margin": 15.110770276274835
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_0_MissionPCB_MCU",
+          "category": "Patient-connected spacing",
+          "value": 12.206555615733702,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_0_MissionPCB to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_0_MissionPCB",
+            "MCU"
+          ],
+          "margin": 9.206555615733702
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_0_MissionPCB_RF",
+          "category": "Patient-connected spacing",
+          "value": 9.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_0_MissionPCB to RF XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_0_MissionPCB",
+            "RF"
+          ],
+          "margin": 6.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_0_MissionPCB_Regulator",
+          "category": "Patient-connected spacing",
+          "value": 26.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_0_MissionPCB to Regulator XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_0_MissionPCB",
+            "Regulator"
+          ],
+          "margin": 23.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_0_MissionPCB_Driver",
+          "category": "Patient-connected spacing",
+          "value": 23.259406699226016,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_0_MissionPCB to Driver XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_0_MissionPCB",
+            "Driver"
+          ],
+          "margin": 20.259406699226016
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_0_MissionPCB_Battery",
+          "category": "Patient-connected spacing",
+          "value": 26.076809620810597,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_0_MissionPCB to Battery XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_0_MissionPCB",
+            "Battery"
+          ],
+          "margin": 23.076809620810597
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_0_MissionPCB_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 11.180339887498949,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_0_MissionPCB to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_0_MissionPCB",
+            "LiPo"
+          ],
+          "margin": 8.180339887498949
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_1_MissionPCB_MCU",
+          "category": "Patient-connected spacing",
+          "value": 10.63014581273465,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_1_MissionPCB to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_1_MissionPCB",
+            "MCU"
+          ],
+          "margin": 7.63014581273465
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_1_MissionPCB_RF",
+          "category": "Patient-connected spacing",
+          "value": 16.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_1_MissionPCB to RF XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_1_MissionPCB",
+            "RF"
+          ],
+          "margin": 13.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_1_MissionPCB_Regulator",
+          "category": "Patient-connected spacing",
+          "value": 26.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_1_MissionPCB to Regulator XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_1_MissionPCB",
+            "Regulator"
+          ],
+          "margin": 23.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_1_MissionPCB_Driver",
+          "category": "Patient-connected spacing",
+          "value": 22.47220505424423,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_1_MissionPCB to Driver XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_1_MissionPCB",
+            "Driver"
+          ],
+          "margin": 19.47220505424423
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_1_MissionPCB_Battery",
+          "category": "Patient-connected spacing",
+          "value": 26.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_1_MissionPCB to Battery XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_1_MissionPCB",
+            "Battery"
+          ],
+          "margin": 23.0
+        },
+        {
+          "id": "patient_gap_PatientTrace_2_1_MissionPCB_LiPo",
+          "category": "Patient-connected spacing",
+          "value": 11.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PatientTrace_2_1_MissionPCB to LiPo XY envelope; spacing proxy",
+          "subjects": [
+            "PatientTrace_2_1_MissionPCB",
+            "LiPo"
+          ],
+          "margin": 8.0
+        },
+        {
+          "id": "trace_width_PowerTrace_0_MissionPCB",
+          "category": "Power trace width proxy",
+          "value": 0.6000000238418579,
+          "threshold": 0.6,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Measured copper width; example threshold, not ampacity",
+          "subjects": [
+            "PowerTrace_0_MissionPCB"
+          ],
+          "margin": 2.384185793236071e-08
+        },
+        {
+          "id": "trace_width_PowerTrace_1_MissionPCB",
+          "category": "Power trace width proxy",
+          "value": 0.6000000238418579,
+          "threshold": 0.6,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Measured copper width; example threshold, not ampacity",
+          "subjects": [
+            "PowerTrace_1_MissionPCB"
+          ],
+          "margin": 2.384185793236071e-08
+        },
+        {
+          "id": "trace_width_PowerTrace_2_MissionPCB",
+          "category": "Power trace width proxy",
+          "value": 0.6000000238418579,
+          "threshold": 0.6,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Measured copper width; example threshold, not ampacity",
+          "subjects": [
+            "PowerTrace_2_MissionPCB"
+          ],
+          "margin": 2.384185793236071e-08
+        },
+        {
+          "id": "trace_width_PowerTrace_3_MissionPCB",
+          "category": "Power trace width proxy",
+          "value": 0.6000000238418579,
+          "threshold": 0.6,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Measured copper width; example threshold, not ampacity",
+          "subjects": [
+            "PowerTrace_3_MissionPCB"
+          ],
+          "margin": 2.384185793236071e-08
+        },
+        {
+          "id": "trace_width_PowerTrace_4_MissionPCB",
+          "category": "Power trace width proxy",
+          "value": 0.6000000238418579,
+          "threshold": 0.6,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Measured copper width; example threshold, not ampacity",
+          "subjects": [
+            "PowerTrace_4_MissionPCB"
+          ],
+          "margin": 2.384185793236071e-08
+        }
+      ],
+      "categories": [
+        {
+          "id": "pcb_wall",
+          "category": "Patch mechanical fit",
+          "value": 6.0,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "PCB wall clearance",
+          "subjects": [],
+          "margin": 3.0,
+          "failure_count": 0,
+          "check_count": 98
+        },
+        {
+          "id": "skin_heat_Driver",
+          "category": "Patient-contact heat proxy",
+          "value": 24.041630560342615,
+          "threshold": 22,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Source to designated contact region; heat proxy",
+          "subjects": [
+            "Driver"
+          ],
+          "margin": 2.0416305603426146,
+          "failure_count": 0,
+          "check_count": 3
+        },
+        {
+          "id": "ecg_noise_Regulator",
+          "category": "ECG analog noise separation",
+          "value": 31.400636936215164,
+          "threshold": 20,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "AFE to Regulator centers",
+          "subjects": [
+            "Sensor",
+            "Regulator"
+          ],
+          "margin": 11.400636936215164,
+          "failure_count": 0,
+          "check_count": 3
+        },
+        {
+          "id": "patient_gap_Sensor_MCU",
+          "category": "Patient-connected spacing",
+          "value": 7.810249675906654,
+          "threshold": 3,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Sensor to MCU XY envelope; spacing proxy",
+          "subjects": [
+            "Sensor",
+            "MCU"
+          ],
+          "margin": 4.810249675906654,
+          "failure_count": 0,
+          "check_count": 48
+        },
+        {
+          "id": "antenna",
+          "category": "RF antenna keep-out",
+          "value": 0,
+          "threshold": 0,
+          "operator": "<=",
+          "unit": "count",
+          "status": "PASS",
+          "reason": "Conductors in antenna zone",
+          "subjects": [
+            "RF"
+          ],
+          "margin": 0,
+          "failure_count": 0,
+          "check_count": 1
+        },
+        {
+          "id": "sensor_disk_Driver",
+          "category": "Regulator / battery heat zone",
+          "value": 28.231188426986208,
+          "threshold": 22,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Charger center to sensor footprint",
+          "subjects": [
+            "Sensor",
+            "Driver"
+          ],
+          "margin": 6.231188426986208,
+          "failure_count": 0,
+          "check_count": 5
+        },
+        {
+          "id": "trace_width_PowerTrace_0_MissionPCB",
+          "category": "Power trace width proxy",
+          "value": 0.6000000238418579,
+          "threshold": 0.6,
+          "operator": ">=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Measured copper width; example threshold, not ampacity",
+          "subjects": [
+            "PowerTrace_0_MissionPCB"
+          ],
+          "margin": 2.384185793236071e-08,
+          "failure_count": 0,
+          "check_count": 5
+        },
+        {
+          "id": "battery_gap",
+          "category": "Connector / assembly access",
+          "value": 10.0,
+          "threshold": 12,
+          "operator": "<=",
+          "unit": "mm",
+          "status": "PASS",
+          "reason": "Rear opening distance",
+          "subjects": [
+            "Battery"
+          ],
+          "margin": 2.0,
+          "failure_count": 0,
+          "check_count": 5
+        }
+      ],
+      "errors": []
+    }
+  },
+  "note": "Precomputed fixture results. Recalculate actual geometry after edits."
+}

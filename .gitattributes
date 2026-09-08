@@ -1,0 +1,5 @@
+# Preserve source CAD bytes and avoid line-oriented diffs for geometry.
+*.step binary
+*.stp binary
+*.glb binary
+*.blend binary

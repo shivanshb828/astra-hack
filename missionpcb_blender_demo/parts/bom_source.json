@@ -1,0 +1,385 @@
+{
+  "source_url": "https://claude.ai/code/artifact/4e9b2f3d-1850-4646-b383-0f7d393a6a7d",
+  "source_title": "ECG Patch BOM",
+  "retrieved_date": "2026-09-08",
+  "count": 29,
+  "user_selected_scope": "Library of all 29; selected ECG subset on board",
+  "source_status": "User-provided artifact, not independently verified",
+  "notes": [
+    "No complete per-part mechanical/thermal/electrical JSON records were provided in the artifact.",
+    "Exact orderable variants and package selections remain unresolved.",
+    "Source failure scenarios and thermal/noise/clinical claims are hypotheses, not validated simulation outputs.",
+    "The listed radios, chargers and regulators include alternative functionality; do not assume all are one validated circuit.",
+    "The source includes a PPG front end in addition to the ECG workflow."
+  ],
+  "parts": [
+    {
+      "part_family": "ADS1292R",
+      "manufacturer": "TI",
+      "role_from_source": "ECG analog front end",
+      "flags_from_source": [
+        "sensitive_high"
+      ],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/ads1292r.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "AFE4404",
+      "manufacturer": "TI",
+      "role_from_source": "PPG front end",
+      "flags_from_source": [
+        "sensitive_high"
+      ],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/afe4404.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "OPA333",
+      "manufacturer": "TI",
+      "role_from_source": "Precision op-amp",
+      "flags_from_source": [
+        "sensitive_high"
+      ],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/opa333.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "TMP117",
+      "manufacturer": "TI",
+      "role_from_source": "Body temperature sensor",
+      "flags_from_source": [
+        "thermally_sensitive"
+      ],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tmp117.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "BMA400",
+      "manufacturer": "Bosch",
+      "role_from_source": "Accelerometer, motion artefact",
+      "flags_from_source": [
+        "vibration_sensitive"
+      ],
+      "datasheet_url": "https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bma400-ds000.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "TMUX1104",
+      "manufacturer": "TI",
+      "role_from_source": "Analog mux, lead switching",
+      "flags_from_source": [
+        "sensitive_medium"
+      ],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tmux1104.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "MSP430FR2433",
+      "manufacturer": "TI",
+      "role_from_source": "Low-power MCU",
+      "flags_from_source": [],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/msp430fr2433.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "CC2652R",
+      "manufacturer": "TI",
+      "role_from_source": "BLE SoC",
+      "flags_from_source": [
+        "rf_source"
+      ],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/cc2652r.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "MDBT42Q",
+      "manufacturer": "Raytac",
+      "role_from_source": "BLE module, integrated antenna",
+      "flags_from_source": [
+        "rf_source",
+        "keepout"
+      ],
+      "datasheet_url": "https://www.raytac.com/download/index.php?index_id=27",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "2450AT18A100",
+      "manufacturer": "Johanson",
+      "role_from_source": "2.4 GHz chip antenna",
+      "flags_from_source": [
+        "keepout_hard"
+      ],
+      "datasheet_url": "https://www.johansontechnology.com/datasheets/2450AT18A100/2450AT18A100.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "TPS62740",
+      "manufacturer": "TI",
+      "role_from_source": "Step-down converter",
+      "flags_from_source": [
+        "noise_source"
+      ],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps62740.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "TPS63020",
+      "manufacturer": "TI",
+      "role_from_source": "Buck-boost converter",
+      "flags_from_source": [
+        "heat_source",
+        "noise_source"
+      ],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps63020.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "TPS61099",
+      "manufacturer": "TI",
+      "role_from_source": "Boost converter",
+      "flags_from_source": [
+        "noise_source"
+      ],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps61099.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "MCP73831",
+      "manufacturer": "Microchip",
+      "role_from_source": "LiPo charger",
+      "flags_from_source": [
+        "heat_source"
+      ],
+      "datasheet_url": "https://ww1.microchip.com/downloads/en/DeviceDoc/MCP73831-Family-Data-Sheet-DS20001984H.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "BQ24040",
+      "manufacturer": "TI",
+      "role_from_source": "LiPo charger",
+      "flags_from_source": [
+        "heat_source"
+      ],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/bq24040.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "TPS7A02",
+      "manufacturer": "TI",
+      "role_from_source": "Nanopower LDO",
+      "flags_from_source": [],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps7a02.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "MCP1700",
+      "manufacturer": "Microchip",
+      "role_from_source": "LDO",
+      "flags_from_source": [],
+      "datasheet_url": "https://ww1.microchip.com/downloads/en/DeviceDoc/MCP1700-Low-Quiescent-Current-LDO-20001826E.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "TPS22916",
+      "manufacturer": "TI",
+      "role_from_source": "Load switch",
+      "flags_from_source": [],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps22916.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "TPS3839",
+      "manufacturer": "TI",
+      "role_from_source": "Voltage supervisor",
+      "flags_from_source": [],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps3839.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "BQ27441-G1",
+      "manufacturer": "TI",
+      "role_from_source": "Fuel gauge",
+      "flags_from_source": [],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/bq27441-g1.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "DRV2605L",
+      "manufacturer": "TI",
+      "role_from_source": "Haptic driver, patient alert",
+      "flags_from_source": [
+        "noise_source",
+        "vibration_source"
+      ],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/drv2605l.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "ISO7741",
+      "manufacturer": "TI",
+      "role_from_source": "Quad digital isolator",
+      "flags_from_source": [
+        "creepage_barrier"
+      ],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/iso7741.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "ISO1541",
+      "manufacturer": "TI",
+      "role_from_source": "Isolated I2C",
+      "flags_from_source": [
+        "creepage_barrier"
+      ],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/iso1541.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "TPD4E1B06",
+      "manufacturer": "TI",
+      "role_from_source": "ESD protection array",
+      "flags_from_source": [],
+      "datasheet_url": "https://www.ti.com/lit/ds/symlink/tpd4e1b06.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "MX25R6435F",
+      "manufacturer": "Macronix",
+      "role_from_source": "SPI flash, data logging",
+      "flags_from_source": [],
+      "datasheet_url": "https://www.macronix.com/Lists/Datasheet/Attachments/8868/MX25R6435F,%20Wide%20Range,%2064Mb,%20v1.6.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "ABS07",
+      "manufacturer": "Abracon",
+      "role_from_source": "32.768 kHz crystal",
+      "flags_from_source": [
+        "vibration_sensitive"
+      ],
+      "datasheet_url": "https://abracon.com/Resonators/ABS07.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "VARTA CP1254",
+      "manufacturer": "VARTA",
+      "role_from_source": "Rechargeable Li-ion cell",
+      "flags_from_source": [
+        "heat_source",
+        "tall",
+        "safety_critical"
+      ],
+      "datasheet_url": "https://www.elektronik.ropla.eu/pdf/stock/vmb/cp1254a4.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "BM02B-SRSS",
+      "manufacturer": "JST",
+      "role_from_source": "Battery connector, SH series",
+      "flags_from_source": [
+        "access_required",
+        "tall"
+      ],
+      "datasheet_url": "https://www.jst-mfg.com/product/pdf/eng/eSH.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    },
+    {
+      "part_family": "JST ZH",
+      "manufacturer": "JST",
+      "role_from_source": "Electrode flex connector",
+      "flags_from_source": [
+        "patient_side",
+        "access_required"
+      ],
+      "datasheet_url": "https://www.jst-mfg.com/product/pdf/eng/eZH.pdf",
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "model_status": "not_yet_sourced",
+      "on_board": false
+    }
+  ]
+}

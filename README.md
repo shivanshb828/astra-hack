@@ -1,5 +1,11 @@
 # MissionPCB
 
+## Current Blender demo
+
+Open [the working ECG scene](missionpcb_blender_demo/component_pass/missionpcb_three_cad_components.blend). It contains six imported component models, a close-up inspection camera, and interactive placement checks. The ECG chip and buck use explicitly approximate packages. [Scene guide and verification](missionpcb_blender_demo/component_pass/README.md).
+
+![Imported ECG component models](missionpcb_blender_demo/component_pass/imported_parts.png)
+
 MissionPCB is an AI hardware engineer that generates PCB designs from real-world mission constraints and validates them with simulation before you build.
 
 This repo is the working space for our Astra hack project. The current goal is to build a lean but convincing prototype that shows how MissionPCB thinks differently from generic AI PCB tools: it starts from the mission, extracts constraints, creates a board/enclosure simulation, checks failure modes, and explains why a design passes or fails.

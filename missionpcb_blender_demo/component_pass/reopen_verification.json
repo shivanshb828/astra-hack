@@ -1,0 +1,80 @@
+{
+  "status": "PASS",
+  "checks": [
+    "12 component instances survive save/reopen",
+    "dimensions and mounting unchanged",
+    "recalculation matches saved results",
+    "failure/reset remains interactive",
+    "inspection overlays restore between views"
+  ],
+  "categories": {
+    "Naive": [
+      {
+        "category": "Patch mechanical fit",
+        "status": "PASS"
+      },
+      {
+        "category": "Patient-contact heat proxy",
+        "status": "FAIL"
+      },
+      {
+        "category": "ECG analog noise separation",
+        "status": "FAIL"
+      },
+      {
+        "category": "Patient-connected spacing",
+        "status": "FAIL"
+      },
+      {
+        "category": "RF antenna keep-out",
+        "status": "FAIL"
+      },
+      {
+        "category": "Regulator / battery heat zone",
+        "status": "FAIL"
+      },
+      {
+        "category": "Power trace width proxy",
+        "status": "FAIL"
+      },
+      {
+        "category": "Connector / assembly access",
+        "status": "FAIL"
+      }
+    ],
+    "MissionPCB": [
+      {
+        "category": "Patch mechanical fit",
+        "status": "PASS"
+      },
+      {
+        "category": "Patient-contact heat proxy",
+        "status": "PASS"
+      },
+      {
+        "category": "ECG analog noise separation",
+        "status": "PASS"
+      },
+      {
+        "category": "Patient-connected spacing",
+        "status": "PASS"
+      },
+      {
+        "category": "RF antenna keep-out",
+        "status": "PASS"
+      },
+      {
+        "category": "Regulator / battery heat zone",
+        "status": "PASS"
+      },
+      {
+        "category": "Power trace width proxy",
+        "status": "PASS"
+      },
+      {
+        "category": "Connector / assembly access",
+        "status": "FAIL"
+      }
+    ]
+  }
+}

@@ -1,0 +1,1057 @@
+{
+  "status": "CANDIDATE_LIBRARY_BUILT",
+  "blender_version": "5.2.1 LTS",
+  "counts": {
+    "family_specific_candidate_cached": 2,
+    "package_candidate_cached": 20,
+    "unresolved_no_cached_model": 6,
+    "total_families": 29,
+    "unique_cached_step_files": 23,
+    "cached_step_bytes": 3297418,
+    "manufacturer_family_model_cached": 1
+  },
+  "units": "1 Blender unit = 1 mm. Normalized GLBs use standard metres. Blender glTF importer automatically applies scene scale .001; do not scale again. If importing at scene scale 1, multiply coordinates by 1000 afterwards.",
+  "models": [
+    {
+      "package_model": "JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical",
+      "source_step": "candidate_models/Connector_JST.3dshapes/JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical.step",
+      "source_sha256": "df87a44803f392435a972f8b8837b8c2700842cc58412c1a4338fcdcf449fc3d",
+      "raw_glb": "converted_models/JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical.glb",
+      "raw_glb_sha256": "68417ccbb66f49ca5458134ecc6928403ff7b7d18e185194a2ff5677429c31c1",
+      "bytes": 44704,
+      "conversion_seconds": 0.4755,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Connector_JST.3dshapes/JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Connector_JST.3dshapes/JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical.step",
+        "exists": true,
+        "cached_path": "candidate_models/Connector_JST.3dshapes/JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical.step",
+        "sha256": "df87a44803f392435a972f8b8837b8c2700842cc58412c1a4338fcdcf449fc3d"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical",
+      "normalized_glb": "converted_models/JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical.normalized.glb",
+      "normalized_glb_sha256": "477a5016fa5b327b620dbecd1935b3c1abe91cbd76c503a41ce5065c2bb9703d",
+      "dimensions_mm": [
+        4.0,
+        3.599999,
+        4.32
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 392,
+      "triangles": 252,
+      "materials": 2
+    },
+    {
+      "package_model": "Crystal_SMD_3215-2Pin_3.2x1.5mm",
+      "source_step": "candidate_models/Crystal.3dshapes/Crystal_SMD_3215-2Pin_3.2x1.5mm.step",
+      "source_sha256": "70191ff5204d0ce50e154f75b1186923e3123cfdb58d647b5cce319de5485701",
+      "raw_glb": "converted_models/Crystal_SMD_3215-2Pin_3.2x1.5mm.glb",
+      "raw_glb_sha256": "fca6871691eec05cb1a75bbc3ba1cb86fa67b49e44857f7f37b04b8321df3a83",
+      "bytes": 142336,
+      "conversion_seconds": 0.313,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Crystal.3dshapes/Crystal_SMD_3215-2Pin_3.2x1.5mm.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Crystal.3dshapes/Crystal_SMD_3215-2Pin_3.2x1.5mm.step",
+        "exists": true,
+        "cached_path": "candidate_models/Crystal.3dshapes/Crystal_SMD_3215-2Pin_3.2x1.5mm.step",
+        "sha256": "70191ff5204d0ce50e154f75b1186923e3123cfdb58d647b5cce319de5485701"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__Crystal_SMD_3215-2Pin_3.2x1.5mm",
+      "normalized_glb": "converted_models/Crystal_SMD_3215-2Pin_3.2x1.5mm.normalized.glb",
+      "normalized_glb_sha256": "0030c3c771e34e0f93e34116798a8de45a1981b0f4a07850b602db95306f2f84",
+      "dimensions_mm": [
+        3.2,
+        1.499999,
+        0.93
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 2232,
+      "triangles": 2252,
+      "materials": 4
+    },
+    {
+      "package_model": "QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm",
+      "source_step": "candidate_models/Package_DFN_QFN.3dshapes/QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm.step",
+      "source_sha256": "036d57f4ca89806899156f4a3f615afd11af3273825e96ddd647df4605d590d1",
+      "raw_glb": "converted_models/QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm.glb",
+      "raw_glb_sha256": "51473adce2d0e833171832513a52528622fd88338ed79d20d827c1188f55adfe",
+      "bytes": 170524,
+      "conversion_seconds": 0.3606,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_DFN_QFN.3dshapes/QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_DFN_QFN.3dshapes/QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm.step",
+        "sha256": "036d57f4ca89806899156f4a3f615afd11af3273825e96ddd647df4605d590d1"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm",
+      "normalized_glb": "converted_models/QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm.normalized.glb",
+      "normalized_glb_sha256": "78aa3702257ec16b3200524c425722ca21f6a651528f8019b224436fc699e236",
+      "dimensions_mm": [
+        4.0,
+        4.0,
+        0.92
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 2712,
+      "triangles": 2304,
+      "materials": 3
+    },
+    {
+      "package_model": "Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm",
+      "source_step": "candidate_models/Package_DFN_QFN.3dshapes/Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm.step",
+      "source_sha256": "f2001b3f9a6ae3d0c8b7e19aea57daac7f0bb7d40364983cd7bb958958273a6d",
+      "raw_glb": "converted_models/Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm.glb",
+      "raw_glb_sha256": "ce4d0b96d137ee2a8219dd13fc48479eecae14eb0a3cca62d445d886530d0a97",
+      "bytes": 47484,
+      "conversion_seconds": 0.2685,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_DFN_QFN.3dshapes/Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_DFN_QFN.3dshapes/Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm.step",
+        "sha256": "f2001b3f9a6ae3d0c8b7e19aea57daac7f0bb7d40364983cd7bb958958273a6d"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm",
+      "normalized_glb": "converted_models/Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm.normalized.glb",
+      "normalized_glb_sha256": "c633ca64d0bd0580a30dfe0b2903ca0da29508f2a6a1c981b8ddb8aa6b8871a2",
+      "dimensions_mm": [
+        2.0,
+        1.975,
+        0.8
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 506,
+      "triangles": 364,
+      "materials": 3
+    },
+    {
+      "package_model": "Texas_RGE0024C_VQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm",
+      "source_step": "candidate_models/Package_DFN_QFN.3dshapes/Texas_RGE0024C_VQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm.step",
+      "source_sha256": "22ab85ba4b0f0e5d408abadd3519cae724e08c09f9cdfbd31a4c6a8703ff0152",
+      "raw_glb": "converted_models/Texas_RGE0024C_VQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm.glb",
+      "raw_glb_sha256": "f3c1c8b02d55f2ec49c5981935ad0e5264961395185235400b5f2028a406a7ee",
+      "bytes": 99940,
+      "conversion_seconds": 0.3162,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/Texas_RGE0024C_VQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_DFN_QFN.3dshapes/Texas_RGE0024C_VQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_DFN_QFN.3dshapes/Texas_RGE0024C_VQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm.step",
+        "sha256": "22ab85ba4b0f0e5d408abadd3519cae724e08c09f9cdfbd31a4c6a8703ff0152"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__Texas_RGE0024C_VQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm",
+      "normalized_glb": "converted_models/Texas_RGE0024C_VQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm.normalized.glb",
+      "normalized_glb_sha256": "20c2d3d91484c99e90478e30ee7bae67a3800471410a04498009dd671268dae5",
+      "dimensions_mm": [
+        4.0,
+        4.0,
+        0.8
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 1016,
+      "triangles": 704,
+      "materials": 3
+    },
+    {
+      "package_model": "Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm",
+      "source_step": "candidate_models/Package_DFN_QFN.3dshapes/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.step",
+      "source_sha256": "7f57f4040117e2ef4f78a76d74424d6f4d23513883c32457503aaaa3beb70471",
+      "raw_glb": "converted_models/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.glb",
+      "raw_glb_sha256": "51fb1a2110a81762106627b895a8f59850057ab439574a6f9c316554f75157ab",
+      "bytes": 99940,
+      "conversion_seconds": 0.4004,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_DFN_QFN.3dshapes/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_DFN_QFN.3dshapes/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.step",
+        "sha256": "7f57f4040117e2ef4f78a76d74424d6f4d23513883c32457503aaaa3beb70471"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm",
+      "normalized_glb": "converted_models/Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm.normalized.glb",
+      "normalized_glb_sha256": "adf09e8aaf34bb8e5849c151581cf92b66856d530b1b74d8ff41082507a4c6f6",
+      "dimensions_mm": [
+        4.0,
+        4.0,
+        0.8
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 1016,
+      "triangles": 704,
+      "materials": 3
+    },
+    {
+      "package_model": "Texas_RGZ0048A_VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm",
+      "source_step": "candidate_models/Package_DFN_QFN.3dshapes/Texas_RGZ0048A_VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm.step",
+      "source_sha256": "e9db0afa44d256cc5824b646bd84781f9960a1e23484fcee1060e6055c441674",
+      "raw_glb": "converted_models/Texas_RGZ0048A_VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm.glb",
+      "raw_glb_sha256": "426079c5f5ed9186e7e19fdd969cf9948246a49fe2710a17dac1dfd86955b355",
+      "bytes": 186176,
+      "conversion_seconds": 0.4214,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_DFN_QFN.3dshapes/Texas_RGZ0048A_VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_DFN_QFN.3dshapes/Texas_RGZ0048A_VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_DFN_QFN.3dshapes/Texas_RGZ0048A_VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm.step",
+        "sha256": "e9db0afa44d256cc5824b646bd84781f9960a1e23484fcee1060e6055c441674"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__Texas_RGZ0048A_VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm",
+      "normalized_glb": "converted_models/Texas_RGZ0048A_VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm.normalized.glb",
+      "normalized_glb_sha256": "41d709977aaeb4c96ee7a75b5e621f4ca3af559688357424653e2853b1be8ce5",
+      "dimensions_mm": [
+        7.0,
+        7.0,
+        0.8
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 1880,
+      "triangles": 1280,
+      "materials": 3
+    },
+    {
+      "package_model": "LGA-12_2x2mm_P0.5mm",
+      "source_step": "candidate_models/Package_LGA.3dshapes/LGA-12_2x2mm_P0.5mm.step",
+      "source_sha256": "5e6c16287491528f89c09590e0d5dace14debf478226f74b45504eb906119145",
+      "raw_glb": "converted_models/LGA-12_2x2mm_P0.5mm.glb",
+      "raw_glb_sha256": "29f409c3d93bdec3e34a4387ae0c82df5fcc0405fd001397a85d39e53c1a8b58",
+      "bytes": 41636,
+      "conversion_seconds": 0.2716,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_LGA.3dshapes/LGA-12_2x2mm_P0.5mm.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_LGA.3dshapes/LGA-12_2x2mm_P0.5mm.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_LGA.3dshapes/LGA-12_2x2mm_P0.5mm.step",
+        "sha256": "5e6c16287491528f89c09590e0d5dace14debf478226f74b45504eb906119145"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__LGA-12_2x2mm_P0.5mm",
+      "normalized_glb": "converted_models/LGA-12_2x2mm_P0.5mm.normalized.glb",
+      "normalized_glb_sha256": "1b7b8e1f3b566f95cc7ff600e81abf53b9b36130413836ce3f7899436ba4d4a5",
+      "dimensions_mm": [
+        2.0,
+        2.0,
+        1.025
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 410,
+      "triangles": 300,
+      "materials": 3
+    },
+    {
+      "package_model": "SOIC-16W_7.5x10.3mm_P1.27mm",
+      "source_step": "candidate_models/Package_SO.3dshapes/SOIC-16W_7.5x10.3mm_P1.27mm.step",
+      "source_sha256": "159663ceb2b4996b1b89d3111e4a355fc27de3e24d3570f50e5ed9086e0d73af",
+      "raw_glb": "converted_models/SOIC-16W_7.5x10.3mm_P1.27mm.glb",
+      "raw_glb_sha256": "d8ee6e7421bcbc5a431010d04bad4e05a33c34854e8f8663e8eb81abed227699",
+      "bytes": 200632,
+      "conversion_seconds": 0.3796,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/SOIC-16W_7.5x10.3mm_P1.27mm.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SO.3dshapes/SOIC-16W_7.5x10.3mm_P1.27mm.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_SO.3dshapes/SOIC-16W_7.5x10.3mm_P1.27mm.step",
+        "sha256": "159663ceb2b4996b1b89d3111e4a355fc27de3e24d3570f50e5ed9086e0d73af"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__SOIC-16W_7.5x10.3mm_P1.27mm",
+      "normalized_glb": "converted_models/SOIC-16W_7.5x10.3mm_P1.27mm.normalized.glb",
+      "normalized_glb_sha256": "4706444c2fbe2cface90954353d07a477c9d0f4342b19905b69b13162871f886",
+      "dimensions_mm": [
+        10.299999,
+        10.299999,
+        2.75
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 2768,
+      "triangles": 2236,
+      "materials": 3
+    },
+    {
+      "package_model": "SOIC-8_3.9x4.9mm_P1.27mm",
+      "source_step": "candidate_models/Package_SO.3dshapes/SOIC-8_3.9x4.9mm_P1.27mm.step",
+      "source_sha256": "07f46cff378d30e6c27dfd5a03092c795323f86d91c71fc7e743f4f418dc553a",
+      "raw_glb": "converted_models/SOIC-8_3.9x4.9mm_P1.27mm.glb",
+      "raw_glb_sha256": "13810aee8703244847bc964847d0f084f710b98e00bc726851ff3d5f1fa0b295",
+      "bytes": 111084,
+      "conversion_seconds": 0.3166,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/SOIC-8_3.9x4.9mm_P1.27mm.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SO.3dshapes/SOIC-8_3.9x4.9mm_P1.27mm.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_SO.3dshapes/SOIC-8_3.9x4.9mm_P1.27mm.step",
+        "sha256": "07f46cff378d30e6c27dfd5a03092c795323f86d91c71fc7e743f4f418dc553a"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__SOIC-8_3.9x4.9mm_P1.27mm",
+      "normalized_glb": "converted_models/SOIC-8_3.9x4.9mm_P1.27mm.normalized.glb",
+      "normalized_glb_sha256": "3363069092d65b74f948229b6cf94cee28be0d6d143511e78aa561f6770e86db",
+      "dimensions_mm": [
+        6.0,
+        4.9,
+        1.75
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 1472,
+      "triangles": 1180,
+      "materials": 3
+    },
+    {
+      "package_model": "TSSOP-10_3x3mm_P0.5mm",
+      "source_step": "candidate_models/Package_SO.3dshapes/TSSOP-10_3x3mm_P0.5mm.step",
+      "source_sha256": "39602ed75f3c6c524a0e4bab680480a2804b32aa5aa5eb0d979f088f4fb9c652",
+      "raw_glb": "converted_models/TSSOP-10_3x3mm_P0.5mm.glb",
+      "raw_glb_sha256": "c36a428d50f06bf28ac0c29fc755447ae93612a86294954ccc9ef0b983a62ff8",
+      "bytes": 133960,
+      "conversion_seconds": 0.3383,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SO.3dshapes/TSSOP-10_3x3mm_P0.5mm.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SO.3dshapes/TSSOP-10_3x3mm_P0.5mm.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_SO.3dshapes/TSSOP-10_3x3mm_P0.5mm.step",
+        "sha256": "39602ed75f3c6c524a0e4bab680480a2804b32aa5aa5eb0d979f088f4fb9c652"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__TSSOP-10_3x3mm_P0.5mm",
+      "normalized_glb": "converted_models/TSSOP-10_3x3mm_P0.5mm.normalized.glb",
+      "normalized_glb_sha256": "be38f06d813f41760e9e1804d71e094f8d78a1ff497f11d0b279e15d39f61946",
+      "dimensions_mm": [
+        4.9,
+        3.0,
+        1.1
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 1796,
+      "triangles": 1444,
+      "materials": 3
+    },
+    {
+      "package_model": "Texas_S-PDSO-N12",
+      "source_step": "candidate_models/Package_SON.3dshapes/Texas_S-PDSO-N12.step",
+      "source_sha256": "0f2ebd625419df73cf30a423e911544c75466aaa0167546130e6debd8d875605",
+      "raw_glb": "converted_models/Texas_S-PDSO-N12.glb",
+      "raw_glb_sha256": "3b3e728b634a97e40fab4ff18b7f9b2b71529ee68b800cafb409bef001edbce2",
+      "bytes": 80088,
+      "conversion_seconds": 0.3089,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SON.3dshapes/Texas_S-PDSO-N12.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SON.3dshapes/Texas_S-PDSO-N12.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_SON.3dshapes/Texas_S-PDSO-N12.step",
+        "sha256": "0f2ebd625419df73cf30a423e911544c75466aaa0167546130e6debd8d875605"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__Texas_S-PDSO-N12",
+      "normalized_glb": "converted_models/Texas_S-PDSO-N12.normalized.glb",
+      "normalized_glb_sha256": "39010bd27ba87d2396794fc299c96d31c2264645bf95d3ba48d91e339804440f",
+      "dimensions_mm": [
+        4.0,
+        2.499999,
+        0.92
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 1202,
+      "triangles": 1004,
+      "materials": 3
+    },
+    {
+      "package_model": "USON-10_2.5x1.0mm_P0.5mm",
+      "source_step": "candidate_models/Package_SON.3dshapes/USON-10_2.5x1.0mm_P0.5mm.step",
+      "source_sha256": "d9d0628ead2ac2bab888344afbd0ef8b0f5a4ba37641ccc66dcbe300e3a74ac0",
+      "raw_glb": "converted_models/USON-10_2.5x1.0mm_P0.5mm.glb",
+      "raw_glb_sha256": "be4e99ced53a027afdeb40314eb1fbf70487b3d0dbd5cc1574c63940fde0f89e",
+      "bytes": 58412,
+      "conversion_seconds": 0.2794,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SON.3dshapes/USON-10_2.5x1.0mm_P0.5mm.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SON.3dshapes/USON-10_2.5x1.0mm_P0.5mm.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_SON.3dshapes/USON-10_2.5x1.0mm_P0.5mm.step",
+        "sha256": "d9d0628ead2ac2bab888344afbd0ef8b0f5a4ba37641ccc66dcbe300e3a74ac0"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__USON-10_2.5x1.0mm_P0.5mm",
+      "normalized_glb": "converted_models/USON-10_2.5x1.0mm_P0.5mm.normalized.glb",
+      "normalized_glb_sha256": "f8ef1290dbd3c1bedb1c808f3bf88b148d390944539da815a564a5a033b66b6c",
+      "dimensions_mm": [
+        1.0,
+        2.48,
+        0.52
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 922,
+      "triangles": 788,
+      "materials": 3
+    },
+    {
+      "package_model": "WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm",
+      "source_step": "candidate_models/Package_SON.3dshapes/WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm.step",
+      "source_sha256": "a159a524ab16d3406353a16f8c20b59f5679eea26e2d41174628288b5b9da702",
+      "raw_glb": "converted_models/WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm.glb",
+      "raw_glb_sha256": "ea8aade817e4ce1560f98bc12c34431f582c460e7e3b5eb3e61b5390a3343a6e",
+      "bytes": 33016,
+      "conversion_seconds": 0.2682,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SON.3dshapes/WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SON.3dshapes/WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_SON.3dshapes/WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm.step",
+        "sha256": "a159a524ab16d3406353a16f8c20b59f5679eea26e2d41174628288b5b9da702"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm",
+      "normalized_glb": "converted_models/WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm.normalized.glb",
+      "normalized_glb_sha256": "626600820f0d52cfb0022b50028664047a20cab83a3ec2a7e1c9d61a91efc09b",
+      "dimensions_mm": [
+        2.0,
+        1.98,
+        0.82
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 368,
+      "triangles": 272,
+      "materials": 3
+    },
+    {
+      "package_model": "WSON-8-1EP_6x5mm_P1.27mm_EP3.4x4.3mm",
+      "source_step": "candidate_models/Package_SON.3dshapes/WSON-8-1EP_6x5mm_P1.27mm_EP3.4x4.3mm.step",
+      "source_sha256": "9e3cdbeba31188d6f31ec43bee1d94aff5a79d880edd12d016eef9c7c70f4d13",
+      "raw_glb": "converted_models/WSON-8-1EP_6x5mm_P1.27mm_EP3.4x4.3mm.glb",
+      "raw_glb_sha256": "1f9e71b89f3e78bdbaa2ff90d9a90378c34c5bc5915392b0a7de1b43afd4815b",
+      "bytes": 51448,
+      "conversion_seconds": 0.2765,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_SON.3dshapes/WSON-8-1EP_6x5mm_P1.27mm_EP3.4x4.3mm.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_SON.3dshapes/WSON-8-1EP_6x5mm_P1.27mm_EP3.4x4.3mm.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_SON.3dshapes/WSON-8-1EP_6x5mm_P1.27mm_EP3.4x4.3mm.step",
+        "sha256": "9e3cdbeba31188d6f31ec43bee1d94aff5a79d880edd12d016eef9c7c70f4d13"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__WSON-8-1EP_6x5mm_P1.27mm_EP3.4x4.3mm",
+      "normalized_glb": "converted_models/WSON-8-1EP_6x5mm_P1.27mm_EP3.4x4.3mm.normalized.glb",
+      "normalized_glb_sha256": "459f1be6890e28a903ed2807032818bc9d2dc52eda7fb112fabf66624f5ae4a3",
+      "dimensions_mm": [
+        6.0,
+        4.98,
+        0.75
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 792,
+      "triangles": 672,
+      "materials": 3
+    },
+    {
+      "package_model": "SOT-23-5",
+      "source_step": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step",
+      "source_sha256": "720a6eab0024069bbee68e7cb4c3ff1149468a34611225cdc852662c5d0ec2b7",
+      "raw_glb": "converted_models/SOT-23-5.glb",
+      "raw_glb_sha256": "be5cd307a88076aed01ed5641c6a21d42c9d9045e38cc30558528d993841b232",
+      "bytes": 76744,
+      "conversion_seconds": 0.3156,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-23-5.step",
+        "sha256": "720a6eab0024069bbee68e7cb4c3ff1149468a34611225cdc852662c5d0ec2b7"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__SOT-23-5",
+      "normalized_glb": "converted_models/SOT-23-5.normalized.glb",
+      "normalized_glb_sha256": "a2f8cfc6493f92e28bae5462d34ffc9e7c5b3a92a823faa99fbca56f32d66e49",
+      "dimensions_mm": [
+        2.799999,
+        2.900001,
+        1.55
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 984,
+      "triangles": 782,
+      "materials": 3
+    },
+    {
+      "package_model": "SOT-23",
+      "source_step": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-23.step",
+      "source_sha256": "dd5d1711204e1d8d26cd11490923bd84340820baa69538c385a4300ec2539bc0",
+      "raw_glb": "converted_models/SOT-23.glb",
+      "raw_glb_sha256": "e48e9b534a4f5aa358be6e0708ba30693af5ebc7544f829b493773f814f0b6f7",
+      "bytes": 50076,
+      "conversion_seconds": 0.2857,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-23.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_TO_SOT_SMD.3dshapes/SOT-23.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-23.step",
+        "sha256": "dd5d1711204e1d8d26cd11490923bd84340820baa69538c385a4300ec2539bc0"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__SOT-23",
+      "normalized_glb": "converted_models/SOT-23.normalized.glb",
+      "normalized_glb_sha256": "e6f62bdb267c021afbe64ee662bf92da6ecd98b82e43470dee42800f8b836337",
+      "dimensions_mm": [
+        2.499999,
+        3.0,
+        1.2
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 630,
+      "triangles": 494,
+      "materials": 3
+    },
+    {
+      "package_model": "SOT-353_SC-70-5",
+      "source_step": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-353_SC-70-5.step",
+      "source_sha256": "2860de5b7b085919ff6e952148353f928798588d9f544dc69430545aff2ba908",
+      "raw_glb": "converted_models/SOT-353_SC-70-5.glb",
+      "raw_glb_sha256": "82b206f1f4dab654cbe0114353b9f1f776e593a9e765fb056e003b8cb150c6b3",
+      "bytes": 75820,
+      "conversion_seconds": 0.3044,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-353_SC-70-5.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_TO_SOT_SMD.3dshapes/SOT-353_SC-70-5.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-353_SC-70-5.step",
+        "sha256": "2860de5b7b085919ff6e952148353f928798588d9f544dc69430545aff2ba908"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__SOT-353_SC-70-5",
+      "normalized_glb": "converted_models/SOT-353_SC-70-5.normalized.glb",
+      "normalized_glb_sha256": "18b5c2b77d80eb60748cc7184faf46a86089398a7db261367b4ee0e9071dd397",
+      "dimensions_mm": [
+        2.1,
+        2.0,
+        1.1
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 986,
+      "triangles": 784,
+      "materials": 3
+    },
+    {
+      "package_model": "SOT-363_SC-70-6",
+      "source_step": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-363_SC-70-6.step",
+      "source_sha256": "045cc95e18ee7a13d1623c3ce6604fc833049bdb4f952f68c26e3c5767d122e4",
+      "raw_glb": "converted_models/SOT-363_SC-70-6.glb",
+      "raw_glb_sha256": "87349bf0244a4d4cd03bbcd3a43757a70decaa1dc4d2b95263b5672489cc485c",
+      "bytes": 87396,
+      "conversion_seconds": 0.3173,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-363_SC-70-6.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_TO_SOT_SMD.3dshapes/SOT-363_SC-70-6.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-363_SC-70-6.step",
+        "sha256": "045cc95e18ee7a13d1623c3ce6604fc833049bdb4f952f68c26e3c5767d122e4"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__SOT-363_SC-70-6",
+      "normalized_glb": "converted_models/SOT-363_SC-70-6.normalized.glb",
+      "normalized_glb_sha256": "074a315df091b16fa59fbe1de0211eb2ff7a9852c9e69d0a31fa4ec448baad8f",
+      "dimensions_mm": [
+        2.1,
+        2.0,
+        1.1
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 1148,
+      "triangles": 916,
+      "materials": 3
+    },
+    {
+      "package_model": "SOT-89-3",
+      "source_step": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-89-3.step",
+      "source_sha256": "844c0bb504d0c383535d9845c6376fe7a4053241a2ede8d8ef694df3fcfc37c8",
+      "raw_glb": "converted_models/SOT-89-3.glb",
+      "raw_glb_sha256": "f1f70617ad53902a938914d851785fd051cd5c7e6f40d50b1553dd3e9c100084",
+      "bytes": 27600,
+      "conversion_seconds": 0.4073,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_SMD.3dshapes/SOT-89-3.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_TO_SOT_SMD.3dshapes/SOT-89-3.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_TO_SOT_SMD.3dshapes/SOT-89-3.step",
+        "sha256": "844c0bb504d0c383535d9845c6376fe7a4053241a2ede8d8ef694df3fcfc37c8"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__SOT-89-3",
+      "normalized_glb": "converted_models/SOT-89-3.normalized.glb",
+      "normalized_glb_sha256": "c464616674b825d0f2fc058face271a40f5a50b1f50559a134735b8268df6f82",
+      "dimensions_mm": [
+        4.0,
+        4.5,
+        1.52
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 270,
+      "triangles": 188,
+      "materials": 2
+    },
+    {
+      "package_model": "TO-92_Inline",
+      "source_step": "candidate_models/Package_TO_SOT_THT.3dshapes/TO-92_Inline.step",
+      "source_sha256": "f0b61c32ecbf0067157adc5a3d4966ceadf5d6dafe93c51af35f76c41c71a54a",
+      "raw_glb": "converted_models/TO-92_Inline.glb",
+      "raw_glb_sha256": "79360c9f47885eb382a7b7b6471a94e73c70f701aafe31c842263664978efd5d",
+      "bytes": 13640,
+      "conversion_seconds": 0.254,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/Package_TO_SOT_THT.3dshapes/TO-92_Inline.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/Package_TO_SOT_THT.3dshapes/TO-92_Inline.step",
+        "exists": true,
+        "cached_path": "candidate_models/Package_TO_SOT_THT.3dshapes/TO-92_Inline.step",
+        "sha256": "f0b61c32ecbf0067157adc5a3d4966ceadf5d6dafe93c51af35f76c41c71a54a"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__TO-92_Inline",
+      "normalized_glb": "converted_models/TO-92_Inline.normalized.glb",
+      "normalized_glb_sha256": "63020584628d9a741e0dd5cff6c2853fca92ed32dc2dfbe9ed0ecf92748956d2",
+      "dimensions_mm": [
+        4.81591,
+        3.72564,
+        9.8
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 148,
+      "triangles": 116,
+      "materials": 2
+    },
+    {
+      "package_model": "Johanson_2450AT18x100",
+      "source_step": "candidate_models/RF_Antenna.3dshapes/Johanson_2450AT18x100.step",
+      "source_sha256": "7d3afc869543ea1b697aee6824adc8f8b73ba56896d97c82088a686380379d63",
+      "raw_glb": "converted_models/Johanson_2450AT18x100.glb",
+      "raw_glb_sha256": "6b276b9b8ef2a87bd83ae27c9fdf8e99db9a4388aa7357d2f137ea6fe7cef032",
+      "bytes": 23764,
+      "conversion_seconds": 0.3452,
+      "source_metadata": {
+        "model_reference": "${KICAD10_3DMODEL_DIR}/RF_Antenna.3dshapes/Johanson_2450AT18x100.step",
+        "source_path": "/Applications/KiCad/KiCad.app/Contents/SharedSupport/3dmodels/RF_Antenna.3dshapes/Johanson_2450AT18x100.step",
+        "exists": true,
+        "cached_path": "candidate_models/RF_Antenna.3dshapes/Johanson_2450AT18x100.step",
+        "sha256": "7d3afc869543ea1b697aee6824adc8f8b73ba56896d97c82088a686380379d63"
+      },
+      "asset_object": "PACKAGE_CANDIDATE__Johanson_2450AT18x100",
+      "normalized_glb": "converted_models/Johanson_2450AT18x100.normalized.glb",
+      "normalized_glb_sha256": "013048be073b377deee19fcb78635300e32cd1357cff606890e2784e592fc8d9",
+      "dimensions_mm": [
+        3.2,
+        1.599999,
+        1.3
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "kicad_package_candidate",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 264,
+      "triangles": 204,
+      "materials": 3
+    },
+    {
+      "package_model": "mdbt42q",
+      "source_step": "manufacturer_models/Raytac/mdbt42q.stp",
+      "source_metadata": {
+        "model_reference": "manufacturer_models/Raytac/mdbt42q.stp",
+        "source_path": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_blender_demo/parts/manufacturer_models/Raytac/mdbt42q.stp",
+        "exists": true,
+        "cached_path": "manufacturer_models/Raytac/mdbt42q.stp",
+        "sha256": "2b7e20fce563175e3ec471a5695b2aec474c14706a9ce1e88b2e6ce0a64354d5",
+        "source_kind": "manufacturer_family_model",
+        "source_url": "https://www.raytac.com/document/",
+        "provenance_file": "manufacturer_models/Raytac/provenance.json",
+        "normalization_rotation_x_degrees": 90,
+        "license_note": "Manufacturer download; redistribution license not assessed. Not covered by KiCad library license."
+      },
+      "source_sha256": "2b7e20fce563175e3ec471a5695b2aec474c14706a9ce1e88b2e6ce0a64354d5",
+      "raw_glb": "converted_models/mdbt42q.glb",
+      "raw_glb_sha256": "47b8b071d57bfaf464aaff813e962ee8c1520d7754a24786b88d80783e4c2552",
+      "bytes": 8960,
+      "conversion_seconds": 0.7092,
+      "asset_object": "MANUFACTURER_FAMILY__mdbt42q",
+      "normalized_glb": "converted_models/mdbt42q.normalized.glb",
+      "normalized_glb_sha256": "cc60adcd7d4cc7c11f22371c3a06b76f5dcf63e04f4fd8b99671be1bebe1b3cb",
+      "dimensions_mm": [
+        10.0,
+        16.000002,
+        2.200002
+      ],
+      "origin": "centred XY; bottom Z=0",
+      "source_kind": "manufacturer_family_model",
+      "glb_units": "metres",
+      "glb_to_library_scale": 1000,
+      "vertices": 72,
+      "triangles": 44,
+      "materials": 0
+    }
+  ],
+  "families": [
+    {
+      "part_family": "ADS1292R",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__ADS1292R",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__QFN-32-1EP_4x4mm_P0.4mm_EP2.65x2.65mm"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "TI offers RSM VQFN32 4x4 body and PBS TQFP32 5x5 body (7x7 overall). Generic QFN candidate matches pin count/body/pitch class only; EP and height need drawing verification. Do not use installed7x7-body TQFP32 as PBS."
+    },
+    {
+      "part_family": "AFE4404",
+      "status": "unresolved_no_cached_model",
+      "family_record_object": "FAMILY_RECORD__AFE4404",
+      "candidate_assets": [],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "TI lists YZP DSBGA15; no compatible installed STEP located. Need exact downloaded model. Body2.6x1.6 per TI, not QFN."
+    },
+    {
+      "part_family": "OPA333",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__OPA333",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__SOT-23-5",
+        "PACKAGE_CANDIDATE__SOIC-8_3.9x4.9mm_P1.27mm",
+        "PACKAGE_CANDIDATE__SOT-353_SC-70-5"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "Local family symbol maps candidate package variants; full orderable suffix unresolved."
+    },
+    {
+      "part_family": "TMP117",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__TMP117",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "Local family symbol maps candidate package variants; full orderable suffix unresolved."
+    },
+    {
+      "part_family": "BMA400",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__BMA400",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__LGA-12_2x2mm_P0.5mm"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "Bosch specifies LGA12 2x2x0.95mm. Local generic LGA candidate requires terminal and height comparison; no Bosch-specific model."
+    },
+    {
+      "part_family": "TMUX1104",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__TMUX1104",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__TSSOP-10_3x3mm_P0.5mm",
+        "PACKAGE_CANDIDATE__USON-10_2.5x1.0mm_P0.5mm"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "TI offers DGS VSSOP10 and DQA USON10. Candidate packages only; choose suffix before integration."
+    },
+    {
+      "part_family": "MSP430FR2433",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__MSP430FR2433",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__Texas_RGE0024C_VQFN-24-1EP_4x4mm_P0.5mm_EP2.1x2.1mm",
+        "PACKAGE_CANDIDATE__Texas_RGE0024H_VQFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.7mm"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "TI lists RGE VQFN24 4x4 and YQW DSBGA24. Two local RGE drawings have different EP sizes; neither chosen pending RGE drawing revision check."
+    },
+    {
+      "part_family": "CC2652R",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__CC2652R",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__Texas_RGZ0048A_VQFN-48-1EP_7x7mm_P0.5mm_EP5.15x5.15mm"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "TI lists RGZ VQFN48 7x7. Local Texas RGZ drawing candidate; full MPN/suffix and drawing revision remain unresolved."
+    },
+    {
+      "part_family": "MDBT42Q",
+      "status": "manufacturer_family_model_cached",
+      "family_record_object": "FAMILY_RECORD__MDBT42Q",
+      "candidate_assets": [
+        "MANUFACTURER_FAMILY__mdbt42q"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "Official Raytac manufacturer family STEP from Footprint & Design Guide archive. Exact radio/flash suffix unresolved. Simplified module assembly; detail to be inspected after conversion. Local KiCad reference remains missing and is not used."
+    },
+    {
+      "part_family": "2450AT18A100",
+      "status": "family_specific_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__2450AT18A100",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__Johanson_2450AT18x100"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "Family STEP exists. Footprint filename and datasheet URL match2450AT18x100/A100 but description incorrectly says2450AT43F0100. Need outline check before treating as exact."
+    },
+    {
+      "part_family": "TPS62740",
+      "status": "unresolved_no_cached_model",
+      "family_record_object": "FAMILY_RECORD__TPS62740",
+      "candidate_assets": [],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "TI specifies DSS WSON12 2x3mm. Local footprint found but referenced STEP missing; no fabricated replacement."
+    },
+    {
+      "part_family": "TPS63020",
+      "status": "unresolved_no_cached_model",
+      "family_record_object": "FAMILY_RECORD__TPS63020",
+      "candidate_assets": [],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "TI specifies DSJ VSON14 3x4mm. No matching local STEP found; installed4x4 WSON14 and3x4.45 VSON14 are not substitutes."
+    },
+    {
+      "part_family": "TPS61099",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__TPS61099",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__WSON-6-1EP_2x2mm_P0.65mm_EP1x1.6mm"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "Prefer adjustable TPS61099DRV candidate for base family; TPS610991-7 symbols are different fixed-voltage variants. Same WSON package but do not imply electrical equivalence."
+    },
+    {
+      "part_family": "MCP73831",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__MCP73831",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__SOT-23-5"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "OT SOT23-5 and MC DFN8 packages both available. Charge voltage variant and package suffix unresolved; MCP73831 is a linear charger."
+    },
+    {
+      "part_family": "BQ24040",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__BQ24040",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__Texas_DSQ0010A_WSON-10-1EP_2x2mm_P0.4mm_EP0.9x1.5mm"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "TI lists DSQ WSON10 2x2. Texas DSQ0010A package candidate; full suffix unresolved."
+    },
+    {
+      "part_family": "TPS7A02",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__TPS7A02",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__SOT-23-5"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "TI lists DBV SOT23-5, DQN X2SON4 and YCH DSBGA4. Output voltage and package suffix unresolved."
+    },
+    {
+      "part_family": "MCP1700",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__MCP1700",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__SOT-23",
+        "PACKAGE_CANDIDATE__SOT-89-3",
+        "PACKAGE_CANDIDATE__TO-92_Inline"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "TT SOT23, MB SOT89 and TO TO92 package candidates available. Output voltage and suffix unresolved; not selected from arbitrary first symbol."
+    },
+    {
+      "part_family": "TPS22916",
+      "status": "unresolved_no_cached_model",
+      "family_record_object": "FAMILY_RECORD__TPS22916",
+      "candidate_assets": [],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "TI lists YFP DSBGA4. No compatible local STEP located; do not replace with generic SOT."
+    },
+    {
+      "part_family": "TPS3839",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__TPS3839",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__SOT-23"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "DBZ SOT23 and DQN X2SON4 symbol candidates; threshold variant unresolved."
+    },
+    {
+      "part_family": "BQ27441-G1",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__BQ27441-G1",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__Texas_S-PDSO-N12"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "Local family symbol maps Texas_S-PDSO-N12. Need exact G1A/G1B and DRZ suffix selection."
+    },
+    {
+      "part_family": "DRV2605L",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__DRV2605L",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__TSSOP-10_3x3mm_P0.5mm"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "Local DRV2605LDGS maps TSSOP10/VSSOP DGS3x3body. Other package options not researched; no selection inferred."
+    },
+    {
+      "part_family": "ISO7741",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__ISO7741",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__SOIC-16W_7.5x10.3mm_P1.27mm"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "TI lists DW SOIC16 wide and DBQ SSOP16; safety properties differ. Wide-body DW package candidate only, no isolation/creepage inference."
+    },
+    {
+      "part_family": "ISO1541",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__ISO1541",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__SOIC-8_3.9x4.9mm_P1.27mm"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "Local symbol maps SOIC8. Full orderable suffix unresolved. Model is generic package and cannot validate isolation."
+    },
+    {
+      "part_family": "TPD4E1B06",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__TPD4E1B06",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__SOT-363_SC-70-6"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "TI offers DCK SC70-6 and DRL SOT5X3. SC70-6 generic candidate only; choose suffix."
+    },
+    {
+      "part_family": "MX25R6435F",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__MX25R6435F",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__WSON-8-1EP_6x5mm_P1.27mm_EP3.4x4.3mm"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "Macronix datasheet lists ZN WSON8 6x5, ZA USON8 4x4, M2 SOP8 and WLCSP variants. WSON candidate matches body/pin class; exposed pad and height unverified."
+    },
+    {
+      "part_family": "ABS07",
+      "status": "package_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__ABS07",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__Crystal_SMD_3215-2Pin_3.2x1.5mm"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "Abracon datasheet shows3.2x1.5mm crystal; default height0.9mm max or height-option1=0.65mm. Generic3215 two-pad model is candidate, not exact Abracon CAD; load/height suffix unresolved."
+    },
+    {
+      "part_family": "VARTA CP1254",
+      "status": "unresolved_no_cached_model",
+      "family_record_object": "FAMILY_RECORD__VARTA CP1254",
+      "candidate_assets": [],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "No local CP1254 model. Cell generation/suffix, contacts/tabs and datasheet must be selected; no coin-cell stand-in."
+    },
+    {
+      "part_family": "BM02B-SRSS",
+      "status": "family_specific_candidate_cached",
+      "family_record_object": "FAMILY_RECORD__BM02B-SRSS",
+      "candidate_assets": [
+        "PACKAGE_CANDIDATE__JST_SH_BM02B-SRSS-TB_1x02-1MP_P1.00mm_Vertical"
+      ],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "Exact family named JST_SH_BM02B-SRSS-TB vertical2-pin1mm-pitch STEP. Full suffix/finish unresolved; no claim that it matches a generic LiPo plug."
+    },
+    {
+      "part_family": "JST ZH",
+      "status": "unresolved_no_cached_model",
+      "family_record_object": "FAMILY_RECORD__JST ZH",
+      "candidate_assets": [],
+      "exact_orderable_mpn": null,
+      "selected_package": null,
+      "note": "Series only, no pin count, orientation or mounting style. Local footprints exist for2\u201313pins but no installed ZH STEP located. Need complete MPN; not automatically a flex/FPC connector."
+    }
+  ],
+  "license": {
+    "name": "CC-BY-SA4.0 with KiCad electronic-design exception",
+    "url": "https://www.kicad.org/libraries/license/",
+    "upstream_license": "https://gitlab.com/kicad/libraries/kicad-packages3D/-/raw/master/LICENSE.md",
+    "attribution": "KiCad library contributors; original per-file STEP attribution retained unmodified.",
+    "redistribution_note": "A redistributed collection retains CC-BY-SA4.0 attribution/license; electronic-design exception is not a blanket library-collection exception."
+  },
+  "note": "No exact manufacturer MPN is confirmed by this library. No placeholder geometry is used for unresolved parts."
+}
