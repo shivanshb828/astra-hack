@@ -16,3 +16,12 @@ parts/datasheets/
 
 # Advisor output
 out/advisor/
+
+# Node
+node_modules/
+
+# Generated: Blender scene + renders are rebuilt by blender/build_scene.py
+blender/out/
+
+# Generated: local app database
+*.db
