@@ -152,7 +152,12 @@ export interface Integrations {
     asset_present: boolean
     asset_path: string | null
   }
-  model: { mode: string; label: string; supported_commands: string[] }
+  model: {
+    mode: string
+    configured: boolean
+    label: string
+    supported_commands: string[]
+  }
 }
 
 export interface Proposal {

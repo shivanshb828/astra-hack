@@ -328,6 +328,59 @@ def interpret(
                 "provider_label": f"Model provider failed; local fallback used: {exc}",
             }
 
+    exact_ref = next((c.ref for c in design.components if c.ref.lower() == lowered), None)
+    if exact_ref:
+        return {
+            **base,
+            "needs_clarification": False,
+            "reply": (
+                f"Got it: {exact_ref}. I will use that component as the target for the next "
+                "placement/action request."
+            ),
+            "selected_ref": exact_ref,
+        }
+
+    mission_words = ("build", "make", "design", "create", "prototype")
+    device_words = ("ecg", "patch", "medical", "wearable", "device", "patient")
+    if any(word in lowered for word in mission_words) and any(
+        word in lowered for word in device_words
+    ):
+        return {
+            **base,
+            "needs_clarification": True,
+            "reply": (
+                "Understood. I am setting up a medical-device PCB workflow in KiCad.\n\n"
+                "Three fast questions before I touch placement:\n"
+                "1. Wear duration?\n"
+                "2. Rechargeable or disposable power?\n"
+                "3. Optimize first for safety, size, battery life, or BOM cost?"
+            ),
+            "considerations": [
+                "Patient-contact safety and heat are first-order constraints.",
+                "The analog front end needs separation from switching power noise.",
+                "Battery, charger, and protection should be reviewed as a subsystem.",
+            ],
+        }
+
+    if (
+        any(token in lowered for token in ("7", "day", "rechargeable", "disposable", "safety"))
+        and len(text) < 140
+    ):
+        return {
+            **base,
+            "needs_clarification": False,
+            "reply": (
+                "Good. I will inspect the current KiCad placement for the ECG patch and "
+                "surface the highest-risk items first: patient-contact protection, AFE "
+                "noise separation, charger heat near the cell, and enclosure/headroom."
+            ),
+            "considerations": [
+                "Check electrode ESD/protection path before routing patient-facing nets.",
+                "Keep the buck regulator away from AFE inputs and electrode connectors.",
+                "Confirm the selected cell height and charger/protection architecture.",
+            ],
+        }
+
     # "move <a> <n> mm (farther|away) from <b>"
     match = re.search(
         r"move\s+(?:the\s+)?(.+?)\s+(?-i:)?([\d.]+)\s*mm\s+(?:farther|further|away)\s+from\s+(?:the\s+)?(.+?)[.?]?$",
@@ -445,9 +498,8 @@ def interpret(
         **base,
         "needs_clarification": True,
         "reply": (
-            "Demo mode understands a small command set:\n- "
-            + "\n- ".join(SUPPORTED_COMMANDS)
-            + "\nNo model credentials are configured, so this reply was produced "
-              "locally by rule, not by Astra."
+            "I can help from the KiCad board. Start with a product request like "
+            "'Build a rechargeable 7-day ECG patch,' or ask for a concrete edit like "
+            "'Move BUCK to x=52 y=7.5.'"
         ),
     }

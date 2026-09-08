@@ -88,7 +88,15 @@ export const api = {
     }),
 
   applyProposal: (id: string) =>
-    req<{ design: DesignState }>(`/api/proposals/${id}/apply`, { method: 'POST' }),
+    req<{
+      design: DesignState
+      native_tool?: {
+        kicad?: {
+          synced: boolean
+          changes: unknown[]
+        }
+      }
+    }>(`/api/proposals/${id}/apply`, { method: 'POST' }),
 
   rejectProposal: (id: string) =>
     req<{ status: string }>(`/api/proposals/${id}/reject`, { method: 'POST' }),
@@ -125,4 +133,34 @@ export const api = {
         rotation_deg: rotationDeg,
       }),
     }),
+
+  widgetSend: (message: string, autoMode: boolean) =>
+    req<{
+      outcome: ChatOutcome
+      auto_applied: boolean
+      apply_result?: {
+        design: DesignState
+        native_tool?: {
+          kicad?: {
+            synced: boolean
+            changes: unknown[]
+          }
+        }
+      }
+    }>('/api/widget/send', {
+      method: 'POST',
+      body: JSON.stringify({ message, auto_mode: autoMode }),
+    }),
+
+  widgetMonitor: () =>
+    req<{
+      ok: boolean
+      design_revision: number
+      integrations: Integrations
+      latest_kicad_reload: null | {
+        mutation?: {
+          ref?: string
+        }
+      }
+    }>('/api/widget/monitor'),
 }

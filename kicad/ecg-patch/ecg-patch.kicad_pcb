@@ -126,7 +126,7 @@
 
   (footprint "MissionPCB:BUCK_Demo" (layer "F.Cu")
     (uuid "ddf0f0f1-2f11-42a0-a37e-4577b6245001")
-    (at 49 4 0)
+    (at 47 3.5 0)
     (property "Reference" "BUCK" (at 0 -2.2 0) (layer "F.SilkS") (uuid "e9deeb53-3a95-4e48-a7cc-5b75a32a28b3") (effects (font (size 0.9 0.9) (thickness 0.12))))
     (property "Value" "TPS62740" (at 0 2.2 0) (layer "F.Fab") (uuid "a5aaef1d-3f83-42dd-aaaf-ef863c31226f") (effects (font (size 0.7 0.7) (thickness 0.1))))
     (attr smd)
