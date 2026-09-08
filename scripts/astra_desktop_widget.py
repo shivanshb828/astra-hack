@@ -22,6 +22,7 @@ import urllib.request
 BASE_URL = "http://127.0.0.1:8000"
 KICAD_PROJECT = "kicad/ecg-patch/ecg-patch.kicad_pro"
 BLENDER_WORKBENCH = "missionpcb_blender_demo/workbench/missionpcb_ecg_workbench.blend"
+PLACEHOLDER = "How can I help you today?"
 
 
 def request(path: str, payload: dict | None = None) -> dict:
@@ -43,44 +44,56 @@ def request(path: str, payload: dict | None = None) -> dict:
 class AstraWidget(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
-        self.title("Astra KiCad")
-        self.geometry("430x150+970+120")
-        self.minsize(390, 135)
+        self.title("Astra")
+        self.geometry("430x128+970+120")
+        self.minsize(390, 118)
         self.attributes("-topmost", True)
-        self.configure(bg="#101010")
+        self.configure(bg="#0b0b0b")
         self.pending_proposal: str | None = None
         self.status = tk.StringVar(value="Connecting...")
         self.reply = tk.StringVar(value="")
         self.input = tk.StringVar(value="")
+        self.placeholder_visible = True
         self._build()
         self.after(100, self.refresh_status)
 
     def _build(self) -> None:
-        shell = tk.Frame(self, bg="#101010", padx=18, pady=16)
-        shell.pack(fill="both", expand=True)
+        shell_canvas = tk.Canvas(self, bg="#0b0b0b", highlightthickness=0)
+        shell_canvas.pack(fill="both", expand=True)
+        shell_canvas.bind("<Configure>", self._draw_shell)
 
-        prompt_canvas = tk.Canvas(shell, height=62, bg="#101010", highlightthickness=0)
-        prompt_canvas.pack(fill="x", pady=(0, 10))
-        prompt = tk.Frame(prompt_canvas, bg="#202020", padx=10, pady=8)
-        prompt_canvas.create_window(0, 0, anchor="nw", window=prompt, width=394, height=58)
-        self._rounded_rect(prompt_canvas, 0, 0, 394, 58, 29, fill="#202020", outline="#202020")
-        prompt.lift()
+        shell = tk.Frame(shell_canvas, bg="#0b0b0b", padx=18, pady=14)
+        self.shell_window = shell_canvas.create_window(0, 0, anchor="nw", window=shell, width=430, height=128)
 
-        mark = tk.Label(prompt, text="*", fg="#ff7a3d", bg="#202020", width=2,
-                        font=("Helvetica", 20, "bold"))
-        mark.pack(side="left", padx=(4, 8))
+        prompt_canvas = tk.Canvas(shell, height=58, bg="#0b0b0b", highlightthickness=0)
+        prompt_canvas.pack(fill="x", pady=(0, 8))
+        prompt_canvas.bind("<Configure>", self._draw_prompt)
+
+        prompt = tk.Frame(prompt_canvas, bg="#1c1c1c", padx=13, pady=8)
+        self.prompt_window = prompt_canvas.create_window(6, 5, anchor="nw", window=prompt, height=48)
+
+        mark = tk.Label(
+            prompt,
+            text="A",
+            fg="#f6f6f2",
+            bg="#1c1c1c",
+            width=2,
+            font=("Helvetica Neue", 13),
+        )
+        mark.pack(side="left", padx=(2, 10))
         entry = tk.Entry(
             prompt,
             textvariable=self.input,
             relief="flat",
-            bg="#202020",
-            fg="#f4f4f0",
-            insertbackground="#f4f4f0",
-            font=("Helvetica", 14, "bold"),
+            bg="#1c1c1c",
+            fg="#8f8f8a",
+            insertbackground="#f6f6f2",
+            font=("Helvetica Neue", 14),
         )
         entry.pack(side="left", fill="x", expand=True, padx=(0, 8))
-        entry.insert(0, "How can I help today?")
+        entry.insert(0, PLACEHOLDER)
         entry.bind("<FocusIn>", self._clear_placeholder)
+        entry.bind("<FocusOut>", self._restore_placeholder)
         entry.bind("<Return>", lambda _event: self.send())
 
         tk.Label(
@@ -89,10 +102,44 @@ class AstraWidget(tk.Tk):
             anchor="w",
             justify="left",
             wraplength=380,
-            bg="#101010",
-            fg="#e7e7e2",
-            font=("Helvetica", 9),
+            bg="#0b0b0b",
+            fg="#d8d8d2",
+            font=("Helvetica Neue", 9),
         ).pack(fill="x")
+
+    def _draw_shell(self, event: tk.Event) -> None:
+        canvas = event.widget
+        canvas.delete("shell")
+        canvas.itemconfigure(self.shell_window, width=event.width, height=event.height)
+        self._rounded_rect(
+            canvas,
+            2,
+            2,
+            max(2, event.width - 2),
+            max(2, event.height - 2),
+            28,
+            fill="#0b0b0b",
+            outline="#2a2a2a",
+            tags="shell",
+        )
+
+    def _draw_prompt(self, event: tk.Event) -> None:
+        canvas = event.widget
+        canvas.delete("prompt-bg")
+        width = max(40, event.width - 12)
+        self._rounded_rect(
+            canvas,
+            6,
+            5,
+            6 + width,
+            53,
+            24,
+            fill="#1c1c1c",
+            outline="#1c1c1c",
+            tags="prompt-bg",
+        )
+        canvas.itemconfigure(self.prompt_window, width=width)
+        canvas.tag_lower("prompt-bg", self.prompt_window)
 
     def _rounded_rect(self, canvas: tk.Canvas, x1: int, y1: int, x2: int, y2: int, radius: int, **kwargs) -> None:
         points = [
@@ -112,8 +159,16 @@ class AstraWidget(tk.Tk):
         canvas.create_polygon(points, smooth=True, **kwargs)
 
     def _clear_placeholder(self, _event: object) -> None:
-        if self.input.get() == "How can I help today?":
+        if self.placeholder_visible:
             self.input.set("")
+            self.placeholder_visible = False
+            _event.widget.configure(fg="#f6f6f2")
+
+    def _restore_placeholder(self, _event: object) -> None:
+        if not self.input.get().strip():
+            self.placeholder_visible = True
+            self.input.set(PLACEHOLDER)
+            _event.widget.configure(fg="#8f8f8a")
 
     def append(self, who: str, text: str) -> None:
         self.reply.set(f"{who}: {text.strip()}")
@@ -179,7 +234,7 @@ class AstraWidget(tk.Tk):
 
     def send(self) -> None:
         message = self.input.get().strip()
-        if not message or message == "How can I help today?":
+        if not message or self.placeholder_visible:
             return
         self.input.set("")
         self.append("You", message)
