@@ -1,0 +1,106 @@
+import type {
+  AnalysisResult,
+  ChatOutcome,
+  DesignState,
+  HistoryEvent,
+  Integrations,
+  PartInfo,
+} from './types'
+
+async function req<T>(path: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(path, {
+    ...init,
+    headers: { 'Content-Type': 'application/json', ...(init?.headers ?? {}) },
+  })
+  if (!res.ok) {
+    let detail: unknown = await res.text()
+    try {
+      detail = JSON.parse(detail as string).detail ?? detail
+    } catch {
+      /* plain-text error body */
+    }
+    throw Object.assign(new Error(`${res.status}`), { status: res.status, detail })
+  }
+  return res.json() as Promise<T>
+}
+
+export const api = {
+  design: () =>
+    req<{ design: DesignState; current_revision: number; revisions: number[] }>(
+      '/api/design',
+    ),
+
+  parts: () => req<{ parts: Record<string, PartInfo>; warnings: string[] }>('/api/parts'),
+
+  integrations: () => req<Integrations>('/api/integrations'),
+
+  /** Revision-checked. Throws with status 409 when the base is stale. */
+  edit: (
+    baseRevision: number,
+    changes: { ref: string; field: string; after: unknown }[],
+    source = 'inspector',
+    summary = '',
+  ) =>
+    req<{ design: DesignState; analysis_job_id: string }>('/api/design/edit', {
+      method: 'POST',
+      body: JSON.stringify({
+        base_revision: baseRevision,
+        changes,
+        source,
+        summary,
+      }),
+    }),
+
+  analyze: () =>
+    req<{ job_id: string; design_revision: number }>('/api/design/analyze', {
+      method: 'POST',
+    }),
+
+  job: (id: string) =>
+    req<{
+      status: string
+      design_revision: number
+      current_revision: number
+      stale: boolean
+      result?: AnalysisResult
+    }>(`/api/jobs/${id}`),
+
+  analysis: () =>
+    req<{ result: AnalysisResult | null; stale: boolean; current_revision: number }>(
+      '/api/design/analysis',
+    ),
+
+  history: () => req<{ events: HistoryEvent[] }>('/api/design/history'),
+
+  undo: () => req<{ design: DesignState }>('/api/design/undo', { method: 'POST' }),
+  redo: () => req<{ design: DesignState }>('/api/design/redo', { method: 'POST' }),
+
+  restore: (revision: number, baseRevision: number) =>
+    req<{ design: DesignState }>('/api/design/restore', {
+      method: 'POST',
+      body: JSON.stringify({ revision, base_revision: baseRevision }),
+    }),
+
+  chat: (message: string) =>
+    req<ChatOutcome>('/api/chat', {
+      method: 'POST',
+      body: JSON.stringify({ message }),
+    }),
+
+  applyProposal: (id: string) =>
+    req<{ design: DesignState }>(`/api/proposals/${id}/apply`, { method: 'POST' }),
+
+  rejectProposal: (id: string) =>
+    req<{ status: string }>(`/api/proposals/${id}/reject`, { method: 'POST' }),
+
+  blenderExport: () =>
+    req<{ ok: boolean; reason?: string; log?: string }>('/api/blender/export', {
+      method: 'POST',
+    }),
+
+  kicadDrc: () =>
+    req<{ ok: boolean; status?: string; detail?: string }>('/api/kicad/drc', {
+      method: 'POST',
+      body: JSON.stringify({ board: '' }),
+    }),
+}
