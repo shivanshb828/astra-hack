@@ -1,0 +1,126 @@
+{
+  "id": "tps22916",
+  "mpn": "TPS22916",
+  "manufacturer": "Texas Instruments",
+  "role": "load_switch",
+
+  "mechanical": {
+    "package": "WCSP-4 (YFP, DSBGA)",
+    "length_mm": {
+      "value": 0.78, "unit": "mm", "qualifier": "nominal",
+      "conditions": "body size (nom) from the Device Information table; the toleranced D and E dimensions on the YFP0004 outline drawing are given as symbols only and were not text-extractable",
+      "source": { "doc": "SLVSDO5F", "page": 1, "section": "3 Description, Device Information" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 0.78, "unit": "mm", "qualifier": "nominal",
+      "conditions": "body size (nom) from the Device Information table; the toleranced D and E dimensions on the YFP0004 outline drawing are given as symbols only and were not text-extractable",
+      "source": { "doc": "SLVSDO5F", "page": 1, "section": "3 Description, Device Information" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 0.5, "unit": "mm", "qualifier": "max",
+      "conditions": "package outline YFP0004, DSBGA - 0.5 mm max height, seating plane to top",
+      "source": { "doc": "SLVSDO5F", "page": 24, "section": "PACKAGE OUTLINE YFP0004" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": false,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 1, "unit": "V", "qualifier": "min",
+      "conditions": "recommended input voltage VIN, over operating free-air temperature range",
+      "source": { "doc": "SLVSDO5F", "page": 4, "section": "6.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 5.5, "unit": "V", "qualifier": "max",
+      "conditions": "recommended input voltage VIN, over operating free-air temperature range; absolute maximum is 6 V",
+      "source": { "doc": "SLVSDO5F", "page": 4, "section": "6.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 0.5, "unit": "uA", "qualifier": "typ",
+      "conditions": "IQ,VIN with the switch enabled and VOUT open, TJ = -40 C to +85 C; 1.0 uA max. Shutdown current ISD,VIN is 10 nA typ / 100 nA max (TPS22916B/C/CN, disabled, VOUT = GND).",
+      "source": { "doc": "SLVSDO5F", "page": 5, "section": "6.5 Electrical Characteristics, IQ,VIN" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 2, "unit": "A", "qualifier": "abs_max",
+      "conditions": "IMAX maximum continuous switch current, Absolute Maximum Ratings; maximum pulsed switch current IPLS is 2.5 A for pulses under 300 us at 2% duty cycle",
+      "source": { "doc": "SLVSDO5F", "page": 4, "section": "6.1 Absolute Maximum Ratings" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 193, "unit": "C/W", "qualifier": "typ",
+          "conditions": "YFP (WCSP/DSBGA) 4 pins, no thermal pad; TI Thermal Information table, board condition not stated in the table",
+          "source": { "doc": "SLVSDO5F", "page": 4, "section": "6.4 Thermal Information" },
+          "review_status": "extracted"
+        }
+      ]
+    },
+    "conducted": [
+      {
+        "mechanism": "load_transient",
+        "harmonics_modeled": 5
+      }
+    ]
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "TA recommended operating free-air temperature",
+        "source": { "doc": "SLVSDO5F", "page": 4, "section": "6.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 85, "unit": "C", "qualifier": "max",
+        "conditions": "TA recommended operating free-air temperature; RON is additionally characterized out to +105 C",
+        "source": { "doc": "SLVSDO5F", "page": 4, "section": "6.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_junction_max": {
+        "value": 125, "unit": "C", "qualifier": "abs_max",
+        "conditions": "TJ,MAX maximum junction temperature, Absolute Maximum Ratings. Section 11.3 restates that junction temperature must be restricted to 125 C under normal operating conditions.",
+        "source": { "doc": "SLVSDO5F", "page": 4, "section": "6.1 Absolute Maximum Ratings" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "design_notes": [
+    {
+      "note": "The emission mechanism here is inrush, not switching. Turning the switch on charges the downstream capacitance from 0 V to VIN and the charge arrives as a current pulse: IRUSH = CL x SRON. With CL = 47 uF and the C-version slew rate, TI's worked example gives 150 mA of inrush -- a large, one-shot current step on a shared rail.",
+      "source": { "doc": "SLVSDO5F", "page": 18, "section": "9.2.2.1 Maximum Inrush Current" }
+    },
+    {
+      "note": "Slew rate, and therefore inrush amplitude, is chosen by ORDERING CODE, not by external components. The fast B version slews at 57 mV/us at 5 VIN (tON = 115 us); the slow C version is far gentler. Picking the C version is the datasheet's own remedy for inrush that would disturb the rail.",
+      "source": { "doc": "SLVSDO5F", "page": 1, "section": "1 Features" }
+    },
+    {
+      "note": "Input and output capacitors must sit close to the device so that parasitic trace inductance does not act on the switched current, and VIN, VOUT and GND traces must be wide and as short as possible.",
+      "source": { "doc": "SLVSDO5F", "page": 20, "section": "11.1 Layout Guidelines" }
+    },
+    {
+      "note": "TI's layout example deliberately routes the VOUT bypass capacitor ground and the device GND pin to system ground through a shared connection that forms a ground barrier, specifically to reduce the ground noise seen by the device.",
+      "source": { "doc": "SLVSDO5F", "page": 20, "section": "11.2 Layout Example" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps22916.pdf",
+    "doc_revision": "SLVSDO5F (July 2017, revised December 2021)",
+    "review_status": "extracted",
+    "notes": "emissions.conducted[0] carries mechanism 'load_transient' with NO measurements. That is deliberate: the device has no oscillator and no switch node, so there is no f_fundamental_hz to record; its disturbance is a single inrush pulse whose amplitude is IRUSH = CL x SRON, i.e. a function of the downstream capacitance the designer chooses. The 150 mA figure in the design notes is TI's worked EXAMPLE at CL = 47 uF, not a device specification, so it was not stored as a measurement. No dissipation_model: the only power equation in the datasheet (Equation 5, page 20) computes the maximum ALLOWABLE dissipation from TJ, TA and theta_JA -- it is a limit, not an expression for actual dissipation, and storing it in dissipation_model would misrepresent it. Actual dissipation would be I_out^2 * RON using the RON table on page 5 (60 mOhm typ at 5 VIN, rising to 200 mOhm typ at 1 VIN), but that product is not written anywhere in the document so it was not invented. Package length/width come from the Device Information body size because the YFP0004 outline drawing labels D and E symbolically without numeric values. Page numbers are PDF page numbers, which coincide with the printed page numbers in this document."
+  }
+}

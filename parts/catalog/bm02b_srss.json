@@ -1,0 +1,93 @@
+{
+  "id": "bm02b_srss",
+  "mpn": "BM02B-SRSS-TB",
+  "manufacturer": "JST",
+  "role": "batt_connector",
+
+  "mechanical": {
+    "package": "SH series 1.0 mm pitch wire-to-board header, 2 circuits, SMT top entry, embossed tape and reel",
+    "length_mm": {
+      "value": 4.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "Dimension B (overall header length along the pitch axis) for the 2-circuit BM02B-SRSS-TB. Dimension A, the span between the outer contacts, is 1.0 mm. No tolerance is published for A or B in the header table.",
+      "source": { "doc": "JST eSH (SH CONNECTOR catalogue)", "page": 3, "section": "Header -- Top entry type, dimension table" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 3.6, "unit": "mm", "qualifier": "nominal",
+      "conditions": "Front-to-back depth of the top-entry header: the drawing dimensions the moulded body as 2.9 mm plus a 0.7 mm solder-tab extension in front of it (0.7 + 2.9). Both figures are called out on the top-entry side view; the sum is the footprint depth.",
+      "source": { "doc": "JST eSH (SH CONNECTOR catalogue)", "page": 3, "section": "Header -- Top entry type, side view" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 4.30, "unit": "mm", "qualifier": "nominal",
+      "conditions": "Height above the PCB surface: the top-entry side view dimensions the body as 4.25 mm and a 0.05 mm standoff between the PCB and the underside of the body (4.25 + 0.05). This is the header alone -- a mated SHR-02V-S housing and its wires sit above this and are not dimensioned in this catalogue. NOTE: the side-entry variant SM02B-SRSS-TB is only 2.9 mm tall (with a 4.95 mm depth); if lid clearance is the binding constraint, that is the variant to consider.",
+      "source": { "doc": "JST eSH (SH CONNECTOR catalogue)", "page": 3, "section": "Header -- Top entry type, side view" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": false,
+    "mounting": "smt",
+    "access_required": true
+  },
+
+  "electrical": {
+    "v_in_max": {
+      "value": 50, "unit": "V", "qualifier": "max",
+      "conditions": "Voltage rating, 50 V AC/DC, series-wide specification for the SH connector",
+      "source": { "doc": "JST eSH (SH CONNECTOR catalogue)", "page": 1, "section": "Specifications" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 1.0, "unit": "A", "qualifier": "max",
+      "conditions": "Current rating, 1.0 A AC/DC with AWG #28 wire (the largest wire the series accepts). Applicable wire range is AWG #32 to #28, conductor 0.032 to 0.081 mm2, insulation OD 0.4 to 0.8 mm; thinner wire derates this.",
+      "source": { "doc": "JST eSH (SH CONNECTOR catalogue)", "page": 1, "section": "Specifications" },
+      "review_status": "extracted"
+    }
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -25, "unit": "C", "qualifier": "min",
+        "conditions": "Series temperature range, -25 C to +85 C",
+        "source": { "doc": "JST eSH (SH CONNECTOR catalogue)", "page": 1, "section": "Specifications" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 85, "unit": "C", "qualifier": "max",
+        "conditions": "Series temperature range ceiling. JST states this range is INCLUSIVE of the temperature rise caused by applying electrical current, so the allowable ambient is 85 C minus the connector's own I2R rise -- a neighbouring heat source and the connector's own load current draw on the same budget.",
+        "source": { "doc": "JST eSH (SH CONNECTOR catalogue)", "page": 1, "section": "Specifications" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "design_notes": [
+    {
+      "note": "This is the battery connector and must remain reachable after enclosure assembly. Being a top-entry (vertical) header, it is also mated along the board normal: the assembly needs vertical insertion clearance above the 4.30 mm header, not merely a hole beside it. The mating SHR-02V-S housing and its wire bundle are not dimensioned in this catalogue, so the true swept volume during mating is larger than the header footprint by an unknown amount.",
+      "source": { "doc": "JST eSH (SH CONNECTOR catalogue)", "page": 3, "section": "Header -- Top entry type" }
+    },
+    {
+      "note": "Dielectric strength between circuits: no breakdown or flashover while applying 500 VAC for one minute. Insulation resistance 100 Mohm min. These are ordinary connector dielectric specifications, NOT a certified patient-isolation barrier -- the catalogue publishes no creepage or clearance figure and no medical-standard certification, so this part must not be treated as a means of protection.",
+      "source": { "doc": "JST eSH (SH CONNECTOR catalogue)", "page": 1, "section": "Specifications" }
+    },
+    {
+      "note": "Contact resistance is 20 mohm max initially and 40 mohm max after environmental tests -- it doubles over life. On a battery feed this appears as a growing series resistance in the discharge path.",
+      "source": { "doc": "JST eSH (SH CONNECTOR catalogue)", "page": 1, "section": "Specifications" }
+    },
+    {
+      "note": "JST publishes a PC board layout and assembly layout for the top-entry type, but explicitly labels those figures as reference values viewed from the connector mounting surface, with PCB pattern pitch tolerance +/-0.05 non-accumulating beyond +/-0.1. The land pattern must be confirmed with JST rather than taken from the catalogue drawing.",
+      "source": { "doc": "JST eSH (SH CONNECTOR catalogue)", "page": 1, "section": "PC board layout and Assembly layout, Notes 1-4" }
+    },
+    {
+      "note": "Housing is PA (heat-resistance grade), contacts and reinforcement tabs are tin-plated copper alloy. The reinforcement tabs are what hold the header to the board against mating force; they are soldered, so pull-out strength depends on the land pattern being correct.",
+      "source": { "doc": "JST eSH (SH CONNECTOR catalogue)", "page": 3, "section": "Header -- Material and Surface finish" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.jst-mfg.com/product/pdf/eng/eSH.pdf",
+    "doc_revision": "JST eSH catalogue, SH CONNECTOR, 1.0 mm pitch wire-to-board, crimp style and mating style (4 pages, undated)",
+    "review_status": "extracted",
+    "notes": "This is a SERIES catalogue covering the whole SH family (2 to 20 circuits, top-entry BM and side-entry SM headers, SHR housings, SSH contacts). The variant extracted here is BM02B-SRSS-TB: the 2-circuit, SMT TOP-ENTRY header, per parts/sources.json. Dimensions A = 1.0 and B = 4.0 come from the 2-circuit row of the header table on page 3; the depth and height come from the top-entry side-view drawing on the same page, which is shared across all circuit counts. The 3.6 mm width and 4.30 mm height are the sums of two adjacent dimensions each explicitly called out on that drawing (0.7 + 2.9 and 4.25 + 0.05) and were verified by rendering page 3 at 600 dpi, since the plain text extraction does not preserve which dimension belongs to which axis. Genuinely absent from this catalogue and deliberately NOT invented: any tolerance on the header body dimensions (the table publishes bare nominals); creepage and clearance (never stated, so there is no safety block); mating and withdrawal forces; durability / insertion cycle count; the mated-assembly height with an SHR-02V-S housing and wires fitted; the reflow profile; and any thermal resistance or self-heating curve. The 500 VAC one-minute withstanding voltage was deliberately NOT recorded as safety.isolation_v_rms -- it is an inter-circuit dielectric test on an unrated connector, not a certified isolation barrier, and mapping it into the safety block would let the constraint engine credit this part with isolation it does not have. It is preserved in design_notes instead."
+  }
+}

@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/shivanshb828/astra-hack/parts/schema/part.schema.json",
+  "title": "MissionPCB Part Record",
+  "description": "One component's context-free physical facts, extracted from its datasheet with provenance. Contains NO placement rules and NO separation distances -- those are derived by the constraint engine from these facts plus the mission's operating point. Every part both EMITS and is SUSCEPTIBLE across four channels (thermal, conducted, radiated, mechanical), so every interaction check has the same shape.",
+  "type": "object",
+  "required": ["id", "mpn", "manufacturer", "role", "mechanical", "provenance"],
+  "additionalProperties": false,
+
+  "$defs": {
+    "measurement": {
+      "description": "A number lifted from a datasheet. The conditions are part of the value: a measurement without them is not data.",
+      "type": "object",
+      "required": ["value", "unit", "qualifier", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "value": { "type": "number" },
+        "unit": { "type": "string", "examples": ["C/W", "mm", "uA", "Hz", "dBm", "uVpp", "V", "W", "C"] },
+        "qualifier": {
+          "enum": ["typ", "min", "max", "abs_max", "nominal"],
+          "description": "typ vs max is a real engineering distinction; do not collapse it."
+        },
+        "conditions": {
+          "type": "string",
+          "description": "The measurement context. REQUIRED in practice for anything thermal or electrical. e.g. 'SOT-23-5, 4-layer JC51-7 board, natural convection' -- the same part's theta_ja is 230 or 130 C/W depending on copper area."
+        },
+        "source": { "$ref": "#/$defs/source" },
+        "review_status": { "$ref": "#/$defs/review_status" }
+      }
+    },
+
+    "model": {
+      "description": "Used where the datasheet gives a FORMULA rather than a number, because the value depends on how the designer uses the part. Example: MCP73831 dissipation = (Vdd_max - Vbat) * I_charge, where I_charge is set by an external resistor. Storing the formula is what lets the constraint engine evaluate at THIS device's operating point.",
+      "type": "object",
+      "required": ["expression", "variables", "unit", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "expression": { "type": "string", "examples": ["(v_in - v_bat) * i_charge"] },
+        "variables": {
+          "type": "object",
+          "description": "Variable name -> what it means and where its value comes from (mission operating point, another field, or a default).",
+          "additionalProperties": { "type": "string" }
+        },
+        "unit": { "type": "string" },
+        "source": { "$ref": "#/$defs/source" },
+        "review_status": { "$ref": "#/$defs/review_status" }
+      }
+    },
+
+    "source": {
+      "description": "Page-level provenance. Every claim must be checkable by a human in under 30 seconds.",
+      "type": "object",
+      "required": ["doc", "page"],
+      "additionalProperties": false,
+      "properties": {
+        "doc": { "type": "string", "description": "Document ID or revision, e.g. 'DS20001984H'" },
+        "page": { "type": "integer", "minimum": 1 },
+        "section": { "type": "string", "examples": ["6.4 Thermal Information", "Note 2"] }
+      }
+    },
+
+    "review_status": {
+      "enum": ["unextracted", "extracted", "human_verified", "assumed"],
+      "default": "unextracted",
+      "description": "'assumed' means no datasheet backs this -- it is our engineering assumption and must be surfaced in the validation report as such. Absent is a valid answer; invented is not."
+    },
+
+    "band": {
+      "description": "A frequency range in Hz. Emissions and susceptibility use the SAME units so they can be compared directly.",
+      "type": "array",
+      "items": { "type": "number", "minimum": 0 },
+      "minItems": 2,
+      "maxItems": 2
+    }
+  },
+
+  "properties": {
+    "id":           { "type": "string", "pattern": "^[a-z0-9_-]+$" },
+    "mpn":          { "type": "string", "description": "Manufacturer part number as printed on the datasheet." },
+    "manufacturer": { "type": "string" },
+    "role":         { "type": "string", "description": "Function in this device, e.g. 'lipo_charger'. Roles are device-specific; the part record is not." },
+
+    "mechanical": {
+      "type": "object",
+      "required": ["package"],
+      "additionalProperties": false,
+      "properties": {
+        "package":     { "type": "string", "examples": ["SOT-23-5", "VQFN-32"] },
+        "length_mm":   { "$ref": "#/$defs/measurement" },
+        "width_mm":    { "$ref": "#/$defs/measurement" },
+        "height_mm":   { "$ref": "#/$defs/measurement" },
+        "thermal_pad": { "type": "boolean", "description": "If true, theta_ja depends heavily on whether the pad is connected to a copper pour." },
+        "mounting":    { "type": "string", "examples": ["smt", "through_hole", "flex_cable"] },
+        "access_required": {
+          "type": "boolean",
+          "description": "Must remain reachable after enclosure assembly (connectors, battery, service points)."
+        }
+      }
+    },
+
+    "electrical": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "v_in_min":     { "$ref": "#/$defs/measurement" },
+        "v_in_max":     { "$ref": "#/$defs/measurement" },
+        "i_quiescent":  { "$ref": "#/$defs/measurement" },
+        "i_typ":        { "$ref": "#/$defs/measurement" },
+        "i_max":        { "$ref": "#/$defs/measurement" }
+      }
+    },
+
+    "emissions": {
+      "description": "What this part PUTS OUT. Every part emits on some channel; most emit on only one or two.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "thermal": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "theta_ja": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/measurement" },
+              "description": "An ARRAY, not a scalar. The same part has different theta_ja per package and per copper area; each entry carries its own conditions and the engine picks the one matching the board."
+            },
+            "dissipation":       { "$ref": "#/$defs/measurement" },
+            "dissipation_model": { "$ref": "#/$defs/model" }
+          }
+        },
+
+        "conducted": {
+          "description": "Noise injected onto rails and traces. Switching converters are the usual source.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["mechanism"],
+            "additionalProperties": false,
+            "properties": {
+              "mechanism":         { "enum": ["switching", "charge_pump", "load_transient", "digital_clock"] },
+              "f_fundamental_hz":  { "$ref": "#/$defs/measurement" },
+              "harmonics_modeled": { "type": "integer", "minimum": 1, "default": 5, "description": "Harmonics to consider when checking band overlap. A 1.6 MHz switcher still lands energy far above its fundamental." },
+              "ripple":            { "$ref": "#/$defs/measurement" },
+              "di_dt":             { "$ref": "#/$defs/measurement" }
+            }
+          }
+        },
+
+        "radiated": {
+          "description": "Intentional (a transmitter) or unintentional RF energy.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["band_hz"],
+            "additionalProperties": false,
+            "properties": {
+              "band_hz":       { "$ref": "#/$defs/band" },
+              "tx_power_dbm":  { "$ref": "#/$defs/measurement" },
+              "intentional":   { "type": "boolean" }
+            }
+          }
+        },
+
+        "mechanical_emissions": {
+          "description": "Vibration and acoustic output. A haptic driver next to an accelerometer is a real failure.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["mechanism"],
+            "additionalProperties": false,
+            "properties": {
+              "mechanism": { "enum": ["vibration", "acoustic"] },
+              "band_hz":   { "$ref": "#/$defs/band" },
+              "amplitude": { "$ref": "#/$defs/measurement" }
+            }
+          }
+        }
+      }
+    },
+
+    "susceptibility": {
+      "description": "What DISTURBS this part. Mirrors emissions channel-for-channel and unit-for-unit, so a check is always: does emitter energy at receiver's band exceed receiver's threshold at this distance?",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "thermal": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "t_op_min":       { "$ref": "#/$defs/measurement" },
+            "t_op_max":       { "$ref": "#/$defs/measurement" },
+            "t_junction_max": { "$ref": "#/$defs/measurement" },
+            "accuracy_note":  { "type": "string", "description": "For sensors whose READING is corrupted by nearby heat, not just damaged by it -- e.g. a body-temperature sensor sitting next to a charger." }
+          }
+        },
+
+        "conducted": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["band_hz", "reason"],
+            "additionalProperties": false,
+            "properties": {
+              "band_hz":     { "$ref": "#/$defs/band" },
+              "reason":      { "type": "string", "examples": ["ECG signal band 0.05-150 Hz"] },
+              "noise_floor": { "$ref": "#/$defs/measurement" },
+              "psrr_db":     { "$ref": "#/$defs/measurement" },
+              "cmrr_db":     { "$ref": "#/$defs/measurement" }
+            }
+          }
+        },
+
+        "radiated": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["band_hz"],
+            "additionalProperties": false,
+            "properties": {
+              "band_hz":           { "$ref": "#/$defs/band" },
+              "rx_sensitivity_dbm":{ "$ref": "#/$defs/measurement" },
+              "keepout_mm":        { "$ref": "#/$defs/measurement", "description": "Only when the VENDOR states one (antennas usually do). Never our own guess -- guesses belong to the constraint engine." }
+            }
+          }
+        },
+
+        "mechanical_susceptibility": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["reason"],
+            "additionalProperties": false,
+            "properties": {
+              "band_hz": { "$ref": "#/$defs/band" },
+              "reason":  { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "safety": {
+      "description": "Medical-device-relevant intrinsic properties. NOT 'is this a medical part' -- that is a role, assigned at placement.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "isolation_v_rms":  { "$ref": "#/$defs/measurement" },
+        "creepage_mm":      { "$ref": "#/$defs/measurement" },
+        "clearance_mm":     { "$ref": "#/$defs/measurement" }
+      }
+    },
+
+    "design_notes": {
+      "description": "Engineer's prose from Layout Guidelines / Application Information. Useless to a math engine, directly useful to the LLM that derives constraints. Keep the page cite.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["note", "source"],
+        "additionalProperties": false,
+        "properties": {
+          "note":   { "type": "string" },
+          "source": { "$ref": "#/$defs/source" }
+        }
+      }
+    },
+
+    "provenance": {
+      "type": "object",
+      "required": ["datasheet_url", "review_status"],
+      "additionalProperties": false,
+      "properties": {
+        "datasheet_url": { "type": "string" },
+        "doc_revision":  { "type": "string" },
+        "review_status": { "$ref": "#/$defs/review_status" },
+        "reviewed_by":   { "type": "string" },
+        "notes":         { "type": "string" }
+      }
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "id": "varta_cp1254",
+  "mpn": "CP 1254 A4",
+  "manufacturer": "VARTA Microbattery GmbH",
+  "role": "battery",
+
+  "mechanical": {
+    "package": "CoinPower lithium-ion coin cell, 12.1 mm dia x 5.4 mm (type number 63125, cell code INR1254)",
+    "length_mm": {
+      "value": 12.1, "unit": "mm", "qualifier": "max",
+      "conditions": "Cell diameter, stated as 12.1 +0.0/-0.3 mm WITHOUT TAGS. The cell is cylindrical, so length and width are both the diameter; 12.1 is the upper tolerance limit and therefore the bounding-box side. The solder tags are explicitly excluded from this figure and extend beyond it by an amount the datasheet does not give.",
+      "source": { "doc": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01)", "page": 1, "section": "Dimensions [mm] (without Tags) -- Diameter" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 12.1, "unit": "mm", "qualifier": "max",
+      "conditions": "Same diameter dimension as length_mm: 12.1 +0.0/-0.3 mm without tags. Recorded on both axes because the cell is round and the enclosure-fit check needs a bounding box.",
+      "source": { "doc": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01)", "page": 1, "section": "Dimensions [mm] (without Tags) -- Diameter" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 5.6, "unit": "mm", "qualifier": "max",
+      "conditions": "Cell height, stated as 5.4 +0.2/-0.1 mm without tags, i.e. a 5.3-5.6 mm range. 5.6 mm is the upper tolerance limit and is the figure a component-height / enclosure-lid check must use.",
+      "source": { "doc": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01)", "page": 1, "section": "Dimensions [mm] (without Tags) -- Height" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": false,
+    "access_required": true
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 3.0, "unit": "V", "qualifier": "min",
+      "conditions": "Discharge cut-off voltage. Terminal voltage floor, not a supply input -- this is the bottom of the cell's usable terminal-voltage envelope. Nominal voltage is 3.7 V average (3.62 V min).",
+      "source": { "doc": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01)", "page": 1, "section": "Discharge Cut-Off Voltage [V]" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 4.30, "unit": "V", "qualifier": "nominal",
+      "conditions": "Charge voltage 4.30 +/- 0.05 V, CC+CV charging method. Top of the terminal-voltage envelope. Note the rapid-charge mode (140 mA) instead caps at 4.00 +/- 0.05 V and requires a minimum charging temperature of 15 C.",
+      "source": { "doc": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01)", "page": 1, "section": "Charge Voltage [V] and footnote 3" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 140, "unit": "mA", "qualifier": "max",
+      "conditions": "Maximum continuous discharge current. Maximum pulse discharge current is 210 mA for 2 s. Initial charge currents are 35 mA (standard), 70 mA (fast) and 140 mA (rapid).",
+      "source": { "doc": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01)", "page": 1, "section": "Max. Continuous Discharge Current [mA]" },
+      "review_status": "extracted"
+    }
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -20, "unit": "C", "qualifier": "min",
+        "conditions": "Discharge operating temperature range. The CHARGE window is much narrower: 0 to 45 C, and rapid charge additionally requires >= 15 C. The charge window, not the discharge window, is the binding thermal constraint when the cell sits next to a charger.",
+        "source": { "doc": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01)", "page": 1, "section": "Operating Temperature [C]" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 60, "unit": "C", "qualifier": "max",
+        "conditions": "Discharge operating temperature ceiling. Charge ceiling is 45 C. Separately, the datasheet specifies a cell SURFACE temperature limit of 60 C, so 60 C is both the ambient ceiling and the skin-of-the-cell ceiling -- any neighbouring heat source is spending the same budget.",
+        "source": { "doc": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01)", "page": 1, "section": "Operating Temperature [C] / Cell Surface Temperature [C]" },
+        "review_status": "extracted"
+      },
+      "accuracy_note": "Not an accuracy issue but a degradation one: capacity recovery after storage is temperature-graded (>90% after 1 year at -20 to 20 C, >90% after 3 months at -20 to 45 C, but only >85% after 1 month at -20 to 60 C). Sustained warmth from a neighbouring part costs usable capacity long before it reaches any damage limit."
+    }
+  },
+
+  "design_notes": [
+    {
+      "note": "The cell must not be used without external safety electronics (a Protection Circuit Module). The datasheet states this as an unconditional requirement, in bold, on the only page it has. A design that connects this cell directly to a charger or load without a PCM is outside the manufacturer's stated use.",
+      "source": { "doc": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01)", "page": 1, "section": "Footnote 1" }
+    },
+    {
+      "note": "For medical applications VARTA directs the designer to contact VARTA Microbattery. The cell is not qualified off-the-shelf for a medical device by this datasheet. Safety qualification is incomplete: UN 38.3 is marked pending, IEC 62133 tests are marked pending, and both internal overcharge tests are marked pending. The sheet is labelled PRELIMINARY.",
+      "source": { "doc": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01)", "page": 1, "section": "Safety / Internal Approval / Footnote 1" }
+    },
+    {
+      "note": "All published dimensions are explicitly 'without Tags'. The cell carries solder tags whose length, width and bend geometry are not given anywhere in this datasheet, so the real board footprint and the real keep-out are larger than 12.1 mm dia x 5.6 mm by an unspecified amount. Any enclosure-fit check on this part is a lower bound until the tag drawing is obtained. The tags also mean the cell is attached by welding or hand-soldering, not reflow.",
+      "source": { "doc": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01)", "page": 1, "section": "Dimensions [mm] (without Tags)" }
+    },
+    {
+      "note": "Charging cut-off must be enforced either by time (5 h standard, 3 h fast/rapid) or by minimum current (1.4 mA). The charger's termination behaviour is a cell-safety parameter here, not a convenience.",
+      "source": { "doc": "CP 1254 A4 Preliminary Data Sheet (Fo_920/01)", "page": 1, "section": "Charging Cut-Off (a) or (b)" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.elektronik.ropla.eu/pdf/stock/vmb/cp1254a4.pdf",
+    "doc_revision": "Preliminary Data Sheet, form Fo_920/01, date of issue 2020-02-18",
+    "review_status": "extracted",
+    "notes": "One-page preliminary datasheet; everything recorded here is on page 1 because page 1 is the whole document. NOTHING was assumed -- there are no 'assumed' entries in this record. Genuinely absent and deliberately NOT invented: any thermal-resistance or self-heating figure (no theta_ja, no internal thermal model, no temperature rise vs discharge current), so this part has no emissions.thermal block at all despite being a heat source in practice; the tag/tab geometry (dimensions are stated 'without Tags'); the mounting method, which the datasheet never names -- mechanical.mounting is therefore omitted rather than guessed at, though the presence of tags rules out reflow; and any weight-independent mass distribution. Capacity (77 mAh typ at 0.1C, 70 mAh nominal at 0.2C), weight (1.8 +/-0.2 g), initial impedance (<0.5 ohm at 1 kHz) and cycle life (>500 cycles to 80% of initial capacity) are on the datasheet but have no schema field and were omitted rather than forced into an unrelated one. Height and diameter are recorded at their upper tolerance limits (5.6 mm from '5.4 +0.2/-0.1', 12.1 mm from '12.1 +0.0/-0.3') because enclosure-fit checks need the worst case; both bounds are stated on the datasheet, not computed from an assumption."
+  }
+}

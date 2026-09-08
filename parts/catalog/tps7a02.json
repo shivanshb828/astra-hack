@@ -1,0 +1,149 @@
+{
+  "id": "tps7a02",
+  "mpn": "TPS7A02",
+  "manufacturer": "Texas Instruments",
+  "role": "ldo",
+
+  "mechanical": {
+    "package": "X2SON-4 (DQN), 1x1 mm; also offered as SOT-23-5 (DBV) and DSBGA-4 (YCH)",
+    "length_mm": {
+      "value": 1.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "package outline DQN0004A (X2SON-4), body toleranced 0.95-1.05 mm",
+      "source": { "doc": "SBVS277C", "page": 42, "section": "PACKAGE OUTLINE DQN0004A" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 1.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "package outline DQN0004A (X2SON-4), body toleranced 0.95-1.05 mm",
+      "source": { "doc": "SBVS277C", "page": 42, "section": "PACKAGE OUTLINE DQN0004A" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 0.4, "unit": "mm", "qualifier": "max",
+      "conditions": "package outline DQN0004A, X2SON - 0.4 mm max height. Alternates: DBV SOT-23-5 is 1.45 mm max (page 38), YCH DSBGA is 0.4 mm max (page 45).",
+      "source": { "doc": "SBVS277C", "page": 42, "section": "PACKAGE OUTLINE DQN0004A" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": true,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 1.5, "unit": "V", "qualifier": "min",
+      "conditions": "recommended input voltage, over operating junction temperature range; UVLO rising threshold is 1.3 V typ. For well-regulated output and optimum dynamic performance the input must be at least VOUT(nom) + 0.5 V.",
+      "source": { "doc": "SBVS277C", "page": 5, "section": "6.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 6.0, "unit": "V", "qualifier": "max",
+      "conditions": "recommended input voltage, over operating junction temperature range",
+      "source": { "doc": "SBVS277C", "page": 5, "section": "6.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 25, "unit": "nA", "qualifier": "typ",
+      "conditions": "IGND ground current at IOUT = 0 mA, TJ = 25 C, VIN = VOUT(nom) + 0.5 V or 2.0 V (whichever is greater), VEN = VIN; 46 nA max at 25 C, 60 nA max over TJ = -40 C to +85 C. Ground current in dropout is also 25 nA typ. Shutdown current is 3 nA typ (VEN = 0 V).",
+      "source": { "doc": "SBVS277C", "page": 6, "section": "6.5 Electrical Characteristics, IGND" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 200, "unit": "mA", "qualifier": "max",
+      "conditions": "recommended output current IOUT; internal output current limit ICL is 450 mA typ (240 mA min) and short-circuit current limit is 65 mA typ",
+      "source": { "doc": "SBVS277C", "page": 5, "section": "6.3 Recommended Operating Conditions" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 179.1, "unit": "C/W", "qualifier": "typ",
+          "conditions": "DQN (X2SON) 4 pins, 1x1 mm, with thermal pad; JEDEC standard PCB and copper-spreading area, stated by TI to be only a relative measure of package thermal performance",
+          "source": { "doc": "SBVS277C", "page": 5, "section": "6.4 Thermal Information" },
+          "review_status": "extracted"
+        },
+        {
+          "value": 181.9, "unit": "C/W", "qualifier": "typ",
+          "conditions": "DBV (SOT-23-5) 5 pins, no thermal pad; JEDEC standard PCB and copper-spreading area",
+          "source": { "doc": "SBVS277C", "page": 5, "section": "6.4 Thermal Information" },
+          "review_status": "extracted"
+        },
+        {
+          "value": 201.1, "unit": "C/W", "qualifier": "typ",
+          "conditions": "YCH (DSBGA) 4 balls, no thermal pad; JEDEC standard PCB and copper-spreading area",
+          "source": { "doc": "SBVS277C", "page": 5, "section": "6.4 Thermal Information" },
+          "review_status": "extracted"
+        }
+      ],
+      "dissipation_model": {
+        "expression": "(v_in - v_out) * i_out",
+        "variables": {
+          "v_in": "Input supply voltage at IN -- from the mission operating point (the upstream rail or battery)",
+          "v_out": "Programmed output voltage, 0.8 V to 5.0 V in 50 mV steps, fixed by the ordered option -- a design choice, not a part property",
+          "i_out": "Load current drawn by the downstream circuit, 0 to 200 mA -- from the mission operating point. In brick-wall current limit the pass transistor instead dissipates (v_in - v_out) * ICL, and into a hard short (v_in - v_out) * ISC."
+        },
+        "unit": "W",
+        "source": { "doc": "SBVS277C", "page": 24, "section": "8.1.5 Power Dissipation (PD), Equation 2" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "recommended operating junction temperature TJ; this datasheet specifies no separate ambient range",
+        "source": { "doc": "SBVS277C", "page": 5, "section": "6.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      },
+      "t_junction_max": {
+        "value": 125, "unit": "C", "qualifier": "max",
+        "conditions": "recommended operating junction temperature TJ; thermal shutdown triggers at 170 C typ and resets at 145 C typ (page 7)",
+        "source": { "doc": "SBVS277C", "page": 5, "section": "6.3 Recommended Operating Conditions" },
+        "review_status": "extracted"
+      }
+    },
+    "conducted": [
+      {
+        "band_hz": [1000, 1000],
+        "reason": "Supply-rail noise passed through to the regulated output. This is the single PSRR point specified numerically in the Electrical Characteristics table; PSRR falls off outside it, so a switching neighbour's fundamental or harmonics landing away from 1 kHz are not covered by this figure.",
+        "psrr_db": {
+          "value": 55, "unit": "dB", "qualifier": "typ",
+          "conditions": "f = 1 kHz, IOUT = 30 mA, TJ = 25 C, CIN = COUT = 1 uF",
+          "source": { "doc": "SBVS277C", "page": 6, "section": "6.5 Electrical Characteristics, PSRR" },
+          "review_status": "extracted"
+        }
+      }
+    ]
+  },
+
+  "design_notes": [
+    {
+      "note": "Output voltage noise is 130 uVRMS over 10 Hz to 100 kHz at VOUT = 0.8 V, IOUT = 30 mA. That integration band fully contains the ECG signal band, so this LDO's own noise, not just what it passes through from upstream, sets a floor for anything it powers.",
+      "source": { "doc": "SBVS277C", "page": 6, "section": "6.5 Electrical Characteristics, VN" }
+    },
+    {
+      "note": "TI states explicitly that the PCB area around the regulator must be as free as possible of other heat-generating devices that cause added thermal stresses. This is a placement constraint written into the datasheet, not an inference.",
+      "source": { "doc": "SBVS277C", "page": 24, "section": "8.1.5 Power Dissipation (PD)" }
+    },
+    {
+      "note": "The main heat conduction path is through the package thermal pad, which must be soldered to a copper pad area with an array of plated vias to inner or bottom-side planes. TI warns the tabulated RthetaJA is a JEDEC relative figure only -- real RthetaJA is RthetaJC(bot) plus the PCB copper contribution, so the board, not the table, decides the temperature rise.",
+      "source": { "doc": "SBVS277C", "page": 25, "section": "8.1.5 Power Dissipation (PD)" }
+    },
+    {
+      "note": "Do NOT place a thermal via directly beneath the thermal pad of the DQN package -- a via can wick solder paste away during reflow and compromise the thermal-pad joint. Place input and output capacitors as close to the device as possible, use copper planes for device connections, and ring the device with thermal vias.",
+      "source": { "doc": "SBVS277C", "page": 27, "section": "8.4.1 Layout Guidelines" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.ti.com/lit/ds/symlink/tps7a02.pdf",
+    "doc_revision": "SBVS277C (July 2019, revised September 2022)",
+    "review_status": "extracted",
+    "notes": "No emissions.conducted entry: this is a linear LDO with a pass transistor, so it has no switch node, no switching fundamental, and none of the four mechanisms in the schema enum apply. Its intrinsic output noise (130 uVRMS, 10 Hz to 100 kHz) is recorded as a design note rather than forced into the conducted-emissions array, because it is broadband noise and not a mechanism-driven tone. dissipation_model uses Equation 2 rather than a single dissipation number, since PD depends entirely on the designer's chosen input rail, output option and load. Three theta_JA entries are recorded, one per orderable package; mechanical.* records the DQN X2SON because it is the only option with a thermal pad. susceptibility.thermal.t_op_max is absent: Recommended Operating Conditions give only a junction temperature range (-40 C to 125 C), no ambient range. susceptibility.conducted carries only the single 1 kHz PSRR point that is specified in the table; the PSRR-versus-frequency curves in Typical Characteristics were not read off as numbers. Page numbers are PDF page numbers, which coincide with the printed page numbers through the body of the document."
+  }
+}

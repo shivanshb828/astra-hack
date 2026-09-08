@@ -1,0 +1,128 @@
+{
+  "id": "mx25r6435f",
+  "mpn": "MX25R6435F",
+  "manufacturer": "Macronix",
+  "role": "spi_flash",
+
+  "mechanical": {
+    "package": "USON-8 (4 x 4 x 0.6 mm, 0.8 mm lead pitch)",
+    "length_mm": {
+      "value": 4.10, "unit": "mm", "qualifier": "max",
+      "conditions": "Dimension D of the USON 8L 4x4x0.6 mm outline (3.90 min / 4.00 nom / 4.10 max). The 4x3 mm USON option has the same D; the 8-SOP (200 mil) and 6x5 mm WSON options are larger.",
+      "source": { "doc": "PM2138 Rev. 1.6", "page": 81, "section": "19. PACKAGE INFORMATION -- Package Outline for USON 8L (4x4x0.6MM, LEAD PITCH 0.8MM)" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 4.10, "unit": "mm", "qualifier": "max",
+      "conditions": "Dimension E of the USON 8L 4x4x0.6 mm outline (3.90 min / 4.00 nom / 4.10 max). The 4x3 mm USON option is 3.10 max on this axis and is the choice if footprint area is binding.",
+      "source": { "doc": "PM2138 Rev. 1.6", "page": 81, "section": "19. PACKAGE INFORMATION -- Package Outline for USON 8L (4x4x0.6MM, LEAD PITCH 0.8MM)" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 0.60, "unit": "mm", "qualifier": "max",
+      "conditions": "Dimension A, overall package height (0.50 min / 0.55 nom / 0.60 max), plus a standoff A1 of 0.04 nom / 0.05 max. The 4x3 USON has the same 0.60 max height; the WLCSP options are thinner still (0.52 mm and 0.395 mm) and the 8-SOP is much taller.",
+      "source": { "doc": "PM2138 Rev. 1.6", "page": 81, "section": "19. PACKAGE INFORMATION -- Package Outline for USON 8L (4x4x0.6MM, LEAD PITCH 0.8MM)" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": true,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 1.65, "unit": "V", "qualifier": "min",
+      "conditions": "VCC operating range, valid for read, erase and program operations across the whole range (no reduced-voltage read-only mode). Absolute maximum VCC-to-ground is -0.5 V to 4.0 V.",
+      "source": { "doc": "PM2138 Rev. 1.6", "page": 1, "section": "Key Features" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 3.6, "unit": "V", "qualifier": "max",
+      "conditions": "VCC operating range ceiling, for read, erase and program. Absolute maximum VCC-to-ground is 4.0 V.",
+      "source": { "doc": "PM2138 Rev. 1.6", "page": 1, "section": "Key Features" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 0.35, "unit": "uA", "qualifier": "max",
+      "conditions": "ISB2, deep power-down current, Ultra Low Power Mode (Configuration Register-2 bit1 = 0), VIN = VCC or GND, CS# = VCC. Typical is 0.007 uA. NOTE this is the DEEP POWER-DOWN state, which the host must command; plain standby (ISB1, CS# high but not in DP) is 5 uA typ / 24 uA max in the same mode, roughly 70x higher. In High Performance Mode standby rises again to 9 uA typ / 50 uA max.",
+      "source": { "doc": "PM2138 Rev. 1.6", "page": 66, "section": "Table 16. DC Characteristics -- Ultra Low Power Mode" },
+      "review_status": "extracted"
+    },
+    "i_typ": {
+      "value": 2.2, "unit": "mA", "qualifier": "typ",
+      "conditions": "ICC1 VCC read current at f = 33 MHz, Ultra Low Power Mode, SCLK swinging 0.1VCC/0.9VCC, SO open. Typical values are at VCC = 1.8 V, T = 25 C. Other read conditions in the same mode range 1.9 to 2.8 mA typ. In High Performance Mode at 80 MHz quad I/O the same parameter is 6.5 mA typ / 9 mA max.",
+      "source": { "doc": "PM2138 Rev. 1.6", "page": 66, "section": "Table 16. DC Characteristics -- Ultra Low Power Mode" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 6, "unit": "mA", "qualifier": "max",
+      "conditions": "Worst-case sustained current in Ultra Low Power Mode: ICC2 program (PP) = 3.5 mA typ / 6 mA max, and ICC3/ICC4/ICC5 write-status-register, sector-block erase and chip erase all = 3.1 mA typ / 6 mA max. Erase holds this current for a long time -- see design notes.",
+      "source": { "doc": "PM2138 Rev. 1.6", "page": 66, "section": "Table 16. DC Characteristics -- Ultra Low Power Mode" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "conducted": [
+      {
+        "mechanism": "digital_clock",
+        "f_fundamental_hz": {
+          "value": 33000000, "unit": "Hz", "qualifier": "max",
+          "conditions": "fSCLK, maximum SPI clock frequency in Ultra Low Power Mode (Configuration Register-2 bit1 = 0) for FAST_READ, PP, SE, BE, CE and the register instructions; normal READ is likewise capped at 33 MHz, while dual and quad reads are capped at 8 MHz in this mode. In High Performance Mode the ceiling rises to 80 MHz. The clock is host-driven, so the operating point is a design choice, not a part property -- this is the ceiling.",
+          "source": { "doc": "PM2138 Rev. 1.6", "page": 68, "section": "Table 17. AC Characteristics -- Ultra Low Power Mode" },
+          "review_status": "extracted"
+        }
+      },
+      {
+        "mechanism": "load_transient"
+      }
+    ]
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "Ambient operating temperature, industrial grade. All ordering options in the ordering table are industrial -40 to 85 C.",
+        "source": { "doc": "PM2138 Rev. 1.6", "page": 64, "section": "Table 14. Absolute Maximum Ratings" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 85, "unit": "C", "qualifier": "max",
+        "conditions": "Ambient operating temperature ceiling, industrial grade. Storage range is -65 to +150 C. Note Macronix lists ambient operating temperature inside the ABSOLUTE MAXIMUM RATINGS table rather than in a separate recommended-operating-conditions table; there is no separate recommended range in this datasheet.",
+        "source": { "doc": "PM2138 Rev. 1.6", "page": 64, "section": "Table 14. Absolute Maximum Ratings" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "design_notes": [
+    {
+      "note": "The USON package has an exposed metal pad underneath. Macronix requires it to be left floating or connected to the SAME ground as the GND pin, and explicitly says to avoid placing vias or traces underneath the metal pad; connecting it to any other voltage or signal line can short or malfunction the device. This makes the area directly under the part a routing keep-out, which matters on a small board where that region is tempting to cross.",
+      "source": { "doc": "PM2138 Rev. 1.6", "page": 81, "section": "19. PACKAGE INFORMATION -- Note" }
+    },
+    {
+      "note": "Erase is a long, high-current event, not a transaction. In Ultra Low Power Mode a 4 KB sector erase is 58 ms typ / 240 ms max, a 64 KB block erase is 0.8 s typ / 3.5 s max, and a full chip erase is 50 s typ / 150 s max, all at ICC4/ICC5 = 3.1 mA typ / 6 mA max. On a coin cell rated 140 mA continuous this is well within capability, but it is a multi-second load step that a battery-impedance or brown-out analysis must account for.",
+      "source": { "doc": "PM2138 Rev. 1.6", "page": 75, "section": "15. ERASE AND PROGRAMMING PERFORMANCE" }
+    },
+    {
+      "note": "Power-down discipline: to guarantee correct initialization on the next power-up, VCC must fall below VPWD -- 0.4 V max if the part was in Deep Power-down mode, 0.9 V max otherwise -- and stay there for at least tPWD = 300 us. A partial rail collapse that does not reach these levels can leave the device in an undefined state. After power-up, the host must wait tVSL = 800 us from VCC(min.) before asserting CS#, and writes are inhibited below VWI (1.1 to 1.5 V).",
+      "source": { "doc": "PM2138 Rev. 1.6", "page": 74, "section": "Table 18. Power-Up/Down Voltage and Timing" }
+    },
+    {
+      "note": "The Ultra Low Power / High Performance choice is a configuration-register bit AND an ordering-option default, and it changes the current budget by roughly 3x at read plus 2x at standby, while raising the clock ceiling from 33 MHz to 80 MHz. It is the single biggest power lever on this part and must be pinned down before any energy budget is meaningful.",
+      "source": { "doc": "PM2138 Rev. 1.6", "page": 67, "section": "Table 16. DC Characteristics -- High Performance Mode" }
+    },
+    {
+      "note": "Latch-up: compliant to JEDEC JESD78, rated to +/-100 mA input current on all non-power pins and 1.5 x VCCmax on power pins, one pin at a time. Relevant because the SPI bus on a patient-connected board can be a path for injected energy.",
+      "source": { "doc": "PM2138 Rev. 1.6", "page": 76, "section": "16. LATCH-UP CHARACTERISTICS" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://www.macronix.com/Lists/Datasheet/Attachments/8868/MX25R6435F,%20Wide%20Range,%2064Mb,%20v1.6.pdf",
+    "doc_revision": "PM2138, Rev. 1.6, August 08, 2022",
+    "review_status": "extracted",
+    "notes": "VARIANT: parts/sources.json names no package or mode option. Macronix offers 8-SOP (200 mil), 8-WSON (6x5 mm), 8-USON (4x4 mm), 8-USON (4x3 mm) and two 22-ball WLCSP heights (0.52 mm and 0.395 mm). Dimensions here are for the 8-USON 4x4 mm (ordering code MX25R6435FZAIL0), which is the low-profile option whose ordering row defaults to Ultra Low Power Mode with a RESET# pin -- the sensible pairing for a battery-powered patch. All current and AC figures are taken from the ULTRA LOW POWER MODE tables specifically; the High Performance Mode equivalents are noted in the conditions strings so the record can be switched without re-reading the datasheet. Package dimensions were read from page 81 rendered as an image, since the package-outline pages are graphics and yield no text. Genuinely absent and deliberately NOT invented: any thermal resistance (this datasheet has no theta_ja / RthetaJA table at all, so there is no emissions.thermal block and no dissipation figure -- dissipation would have to be computed as VCC x ICC at the mission operating point, and the datasheet gives no formula to record as a model); junction temperature maximum; and any radiated or mechanical emissions or susceptibility. There are two conducted-emissions entries and both are deliberately thin. The 'digital_clock' entry carries only the datasheet's fSCLK ceiling; classifying the SPI clock as an emission mechanism is our reading of what the part does in circuit, not a Macronix claim. The 'load_transient' entry carries a mechanism and NOTHING else: the erase/program current step is real and documented (page 75), but the datasheet publishes no di/dt, no rise time and no ripple for it, so no numbers were invented to fill the fields. Recorded on the datasheet but with no schema field, so omitted: input/output capacitance (6 pF / 8 pF max at 1 MHz), all AC timing parameters, and the full erase/program cycle-time table beyond what is quoted in design_notes."
+  }
+}

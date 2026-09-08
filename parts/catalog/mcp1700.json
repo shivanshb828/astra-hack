@@ -1,0 +1,161 @@
+{
+  "id": "mcp1700",
+  "mpn": "MCP1700",
+  "manufacturer": "Microchip",
+  "role": "ldo",
+
+  "mechanical": {
+    "package": "DFN-6 (MAY), 2x2x0.9 mm; also offered as SOT-23-3, SOT-89-3 and TO-92-3",
+    "length_mm": {
+      "value": 2.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "6-Lead DFN (2x2x0.9 mm) as named in the packaging section; the toleranced outline drawing pages use an encoded font and were not text-extractable",
+      "source": { "doc": "DS20001826E", "page": 17, "section": "7.1 Package Marking Information" },
+      "review_status": "extracted"
+    },
+    "width_mm": {
+      "value": 2.0, "unit": "mm", "qualifier": "nominal",
+      "conditions": "6-Lead DFN (2x2x0.9 mm) as named in the packaging section; the toleranced outline drawing pages use an encoded font and were not text-extractable",
+      "source": { "doc": "DS20001826E", "page": 17, "section": "7.1 Package Marking Information" },
+      "review_status": "extracted"
+    },
+    "height_mm": {
+      "value": 0.9, "unit": "mm", "qualifier": "nominal",
+      "conditions": "6-Lead DFN (2x2x0.9 mm) as named in the packaging section",
+      "source": { "doc": "DS20001826E", "page": 17, "section": "7.1 Package Marking Information" },
+      "review_status": "extracted"
+    },
+    "thermal_pad": true,
+    "mounting": "smt",
+    "access_required": false
+  },
+
+  "electrical": {
+    "v_in_min": {
+      "value": 2.3, "unit": "V", "qualifier": "min",
+      "conditions": "input operating voltage. Note 1: minimum VIN must satisfy BOTH VIN >= 2.3 V AND VIN >= VR + 3.0% + VDROPOUT, so the practical floor rises with the programmed output.",
+      "source": { "doc": "DS20001826E", "page": 3, "section": "1.0 DC Characteristics, Input Operating Voltage" },
+      "review_status": "extracted"
+    },
+    "v_in_max": {
+      "value": 6.0, "unit": "V", "qualifier": "max",
+      "conditions": "input operating voltage; absolute maximum VDD is 6.5 V",
+      "source": { "doc": "DS20001826E", "page": 3, "section": "1.0 DC Characteristics, Input Operating Voltage" },
+      "review_status": "extracted"
+    },
+    "i_quiescent": {
+      "value": 1.6, "unit": "uA", "qualifier": "typ",
+      "conditions": "IL = 0 mA, VIN = VR + 1 V, TA = +25 C, COUT = CIN = 1 uF X7R; 4 uA max over TJ = -40 C to +125 C",
+      "source": { "doc": "DS20001826E", "page": 3, "section": "1.0 DC Characteristics, Input Quiescent Current" },
+      "review_status": "extracted"
+    },
+    "i_max": {
+      "value": 250, "unit": "mA", "qualifier": "max",
+      "conditions": "maximum output current for VR >= 2.5 V (200 mA for VR < 2.5 V). This is a maximum AVERAGE continuous rating; higher pulsed loads are permitted so long as the average stays under it. Typical internal current limit is 550 mA at TA = +25 C, and short-circuit current is 408 mA typ.",
+      "source": { "doc": "DS20001826E", "page": 3, "section": "1.0 DC Characteristics, Maximum Output Current" },
+      "review_status": "extracted"
+    }
+  },
+
+  "emissions": {
+    "thermal": {
+      "theta_ja": [
+        {
+          "value": 91, "unit": "C/W", "qualifier": "typ",
+          "conditions": "2x2 DFN-6 with exposed thermal pad, EIA/JEDEC JESD51-7, FR-4 4-layer board",
+          "source": { "doc": "DS20001826E", "page": 4, "section": "Temperature Specifications, Thermal Package Resistance" },
+          "review_status": "extracted"
+        },
+        {
+          "value": 212, "unit": "C/W", "qualifier": "typ",
+          "conditions": "SOT-23, EIA/JEDEC JESD51-7, FR-4 4-layer board",
+          "source": { "doc": "DS20001826E", "page": 4, "section": "Temperature Specifications, Thermal Package Resistance" },
+          "review_status": "extracted"
+        },
+        {
+          "value": 104, "unit": "C/W", "qualifier": "typ",
+          "conditions": "SOT-89, EIA/JEDEC JESD51-7, FR-4 4-layer board",
+          "source": { "doc": "DS20001826E", "page": 4, "section": "Temperature Specifications, Thermal Package Resistance" },
+          "review_status": "extracted"
+        },
+        {
+          "value": 92, "unit": "C/W", "qualifier": "typ",
+          "conditions": "TO-92, EIA/JEDEC JESD51-7, FR-4 4-layer board",
+          "source": { "doc": "DS20001826E", "page": 5, "section": "Temperature Specifications (Continued), Thermal Package Resistance" },
+          "review_status": "extracted"
+        }
+      ],
+      "dissipation_model": {
+        "expression": "(v_in_max - v_out_min) * i_out_max",
+        "variables": {
+          "v_in_max": "Maximum input voltage seen at VIN -- from the mission operating point (battery top-of-charge or upstream rail)",
+          "v_out_min": "Minimum output voltage of the LDO, i.e. the programmed VR at its low tolerance corner. The datasheet worked example uses 0.97 * VR.",
+          "i_out_max": "Maximum load current drawn by the downstream circuit -- from the mission operating point. Dissipation from the 1.6 uA quiescent current is explicitly called insignificant."
+        },
+        "unit": "W",
+        "source": { "doc": "DS20001826E", "page": 14, "section": "6.2.1 Power Dissipation, Equation 6-1" },
+        "review_status": "extracted"
+      }
+    }
+  },
+
+  "susceptibility": {
+    "thermal": {
+      "t_op_min": {
+        "value": -40, "unit": "C", "qualifier": "min",
+        "conditions": "specified temperature range TA",
+        "source": { "doc": "DS20001826E", "page": 4, "section": "Temperature Specifications, Temperature Ranges" },
+        "review_status": "extracted"
+      },
+      "t_op_max": {
+        "value": 125, "unit": "C", "qualifier": "max",
+        "conditions": "specified temperature range TA",
+        "source": { "doc": "DS20001826E", "page": 4, "section": "Temperature Specifications, Temperature Ranges" },
+        "review_status": "extracted"
+      },
+      "t_junction_max": {
+        "value": 125, "unit": "C", "qualifier": "max",
+        "conditions": "maximum continuous operating junction temperature TJ; absolute maximum junction temperature is 150 C, and thermal shutdown protection trips at 140 C typ (page 4)",
+        "source": { "doc": "DS20001826E", "page": 4, "section": "Temperature Specifications, Temperature Ranges" },
+        "review_status": "extracted"
+      }
+    },
+    "conducted": [
+      {
+        "band_hz": [100, 100],
+        "reason": "Ripple on the input rail passed straight through to the regulated output. 100 Hz sits inside the ECG signal band, and this is the only PSRR figure specified numerically -- a neighbouring switcher's fundamental in the MHz will be rejected far less well than this number suggests.",
+        "psrr_db": {
+          "value": 44, "unit": "dB", "qualifier": "typ",
+          "conditions": "f = 100 Hz, COUT = 1 uF, IL = 50 mA, VIN AC = 100 mV pk-pk, CIN = 0 uF, VR = 1.2 V",
+          "source": { "doc": "DS20001826E", "page": 4, "section": "DC Characteristics (Continued), PSRR" },
+          "review_status": "extracted"
+        }
+      }
+    ]
+  },
+
+  "design_notes": [
+    {
+      "note": "Output noise is 3 uV/sqrt(Hz) at 1 kHz with IL = 100 mA and COUT = 1 uF. Unlike the TPS7A02 this is a spot noise density, not an integrated figure, so a wideband noise budget for a downstream analog front end has to be built from it rather than read off directly.",
+      "source": { "doc": "DS20001826E", "page": 4, "section": "DC Characteristics (Continued), Output Noise eN" }
+    },
+    {
+      "note": "Package choice moves theta_JA by more than 2x across the orderable options (91 C/W for the 2x2 DFN-6 versus 212 C/W for the SOT-23) on the SAME JESD51-7 4-layer board. At 218 mW the worked example gives a 46.2 C junction rise in SOT-23; the same dissipation in the DFN gives roughly half that. Any thermal claim must name the package.",
+      "source": { "doc": "DS20001826E", "page": 15, "section": "6.3.1 Power Dissipation Example" }
+    },
+    {
+      "note": "Microchip warns that the tabulated theta_JA comes from the JESD51-7 standard board and that actual thermal resistance in an application varies with copper area and thickness, referring the designer to AN792 for how much power a SOT-23 can really dissipate. The table value is a comparison figure, not a board prediction.",
+      "source": { "doc": "DS20001826E", "page": 15, "section": "6.3.1 Power Dissipation Example" }
+    },
+    {
+      "note": "The 250 mA rating is a maximum average continuous rating, not a peak. Pulsed loads above it are allowed and the internal current limit (550 mA typ) protects the part, so a duty-cycled radio or sensor burst is a legitimate load -- but average dissipation, and therefore the thermal emission, must be computed on the average current.",
+      "source": { "doc": "DS20001826E", "page": 16, "section": "6.5 Pulsed Load Applications" }
+    }
+  ],
+
+  "provenance": {
+    "datasheet_url": "https://ww1.microchip.com/downloads/en/DeviceDoc/MCP1700-Low-Quiescent-Current-LDO-20001826E.pdf",
+    "doc_revision": "DS20001826E (November 2018)",
+    "review_status": "extracted",
+    "notes": "No emissions.conducted entry: this is a CMOS linear LDO with a pass device, so there is no switch node and none of the schema's conducted mechanisms apply. Its own output noise is a spot density (3 uV/sqrt(Hz) at 1 kHz) and is recorded as a design note rather than forced into the ripple field. NOTE a documented internal inconsistency: the Thermal Package Resistance table (page 4) gives SOT-23 theta_JA = 212 C/W, while the narrative on page 14 says the SOT-23 junction-to-ambient resistance 'is estimated at 230 C/W'. The table value (212) was recorded, and the worked example on page 15 also uses 212. Package body dimensions come from the '6-Lead DFN (2x2x0.9 mm)' label in section 7.1 because the toleranced package outline drawings (pages 18-24) are rendered with an encoded font that pdftotext returns as mojibake -- no toleranced dimension was readable, so none was invented. mechanical.* describes the DFN-6 because it is the only option with an exposed thermal pad and the only one whose body size the document states in plain text; all four package theta_JA values are kept in the array. Page numbers are PDF page numbers, which coincide with the printed 'DS20001826E-page N' numbers."
+  }
+}
