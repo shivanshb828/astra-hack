@@ -45,8 +45,8 @@ class AstraWidget(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
         self.title("Astra")
-        self.geometry("430x128+970+120")
-        self.minsize(390, 118)
+        self.geometry("430x156+970+120")
+        self.minsize(390, 146)
         self.attributes("-topmost", True)
         self.configure(bg="#0b0b0b")
         self.pending_proposal: str | None = None
@@ -63,10 +63,22 @@ class AstraWidget(tk.Tk):
         shell_canvas.bind("<Configure>", self._draw_shell)
 
         shell = tk.Frame(shell_canvas, bg="#0b0b0b", padx=18, pady=14)
-        self.shell_window = shell_canvas.create_window(0, 0, anchor="nw", window=shell, width=430, height=128)
+        self.shell_window = shell_canvas.create_window(0, 0, anchor="nw", window=shell, width=430, height=156)
+
+        tk.Label(
+            shell,
+            textvariable=self.reply,
+            anchor="sw",
+            justify="left",
+            wraplength=380,
+            bg="#0b0b0b",
+            fg="#d8d8d2",
+            font=("Helvetica Neue", 10),
+            height=2,
+        ).pack(fill="x", pady=(0, 8))
 
         prompt_canvas = tk.Canvas(shell, height=58, bg="#0b0b0b", highlightthickness=0)
-        prompt_canvas.pack(fill="x", pady=(0, 8))
+        prompt_canvas.pack(fill="x")
         prompt_canvas.bind("<Configure>", self._draw_prompt)
 
         prompt = tk.Frame(prompt_canvas, bg="#1c1c1c", padx=13, pady=8)
@@ -95,17 +107,6 @@ class AstraWidget(tk.Tk):
         entry.bind("<FocusIn>", self._clear_placeholder)
         entry.bind("<FocusOut>", self._restore_placeholder)
         entry.bind("<Return>", lambda _event: self.send())
-
-        tk.Label(
-            shell,
-            textvariable=self.reply,
-            anchor="w",
-            justify="left",
-            wraplength=380,
-            bg="#0b0b0b",
-            fg="#d8d8d2",
-            font=("Helvetica Neue", 9),
-        ).pack(fill="x")
 
     def _draw_shell(self, event: tk.Event) -> None:
         canvas = event.widget
