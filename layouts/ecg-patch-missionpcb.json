@@ -1,0 +1,181 @@
+{
+  "name": "ECG Patch - MissionPCB Layout",
+  "description": "The same BOM, placed against the mission instead of the schematic. The board splits into three zones along its long axis: an analog end holding the electrode, the front end, and the antenna; a battery pod in the middle; and a digital/power island at the far end. The two electrodes take the extreme ends to buy lead-vector length, which pushes the regulator inboard and away from every skin-contact surface. This layout is the hand-authored reference target; the solver is expected to reach an equivalent result on its own.",
+  "rationales": {
+    "sep.noise": "The ECG signal arriving at the front end is roughly 1 mV, and the patch's buck converter switches within millimetres of it on the same copper. Capacitively coupled switching noise at that scale does not degrade the trace, it buries the QRS complex outright, and no amount of downstream gain or filtering recovers it.",
+    "sep.thermal": "A 24-bit front end resolves well under a microvolt per count. Package self-heating from a neighbouring part drifts its input offset and bias currents, and that drift appears in the recording as baseline wander that looks like respiration or motion artifact.",
+    "sep.rf": "Broadband switching noise raises the BLE receiver's noise floor. On a worn patch, lost link margin means retries, retries mean the radio stays on longer, and a 150 mAh cell does not have the budget for that over a multi-day wear.",
+    "zone.heat_overlap": "Simplified thermal model: a fixed radius standing in for the elevated temperature region around the regulator, covering heat spread through the copper pour rather than just the package body. This is a geometric proxy, not a solved thermal field.",
+    "zone.rf_keepout": "A chip antenna radiates into the volume ahead of it. Copper, a pouch cell, or any bulk dielectric inside that volume detunes the match and absorbs radiated power. Inside a sealed patch there is no way to retune after assembly.",
+    "safety.skin_contact_temp": "IEC 60601-1 caps prolonged patient skin contact at 43 C. This patch is worn continuously for days against bare skin, so a dissipating part near a skin-contact surface is a burn exposure, and the local heating also drives electrode half-cell potential drift into the measurement.",
+    "safety.battery_thermal": "Sustained heat accelerates lithium cell ageing and lowers the thermal runaway threshold. Inside a sealed patch the cell has no convective path, so heat that reaches it stays there for the whole wear duration.",
+    "access.connector": "The patch is sealed for moisture ingress, so the gasketed charge window is the only external interface after assembly. Pads that do not register with that window mean the device cannot be charged and cannot be serviced.",
+    "fit.enclosure_xy": "A sealed patch needs an uninterrupted gasket path around the full perimeter. Anything intruding into the wall zone breaks the seal and the shell will not close.",
+    "fit.height": "The patch must stay thin enough to be worn under clothing without catching, which is what sets the interior height, and the pouch cell already consumes most of the budget.",
+    "fit.courtyard": "IPC-7351 courtyard excess. At this board density the placement head needs room to land and the joints need room to fillet; parts butted edge to edge cannot be assembled or reworked reliably."
+  },
+  "distance_metric": "edge",
+  "mission": {
+    "skin_contact_clearance_mm": 15,
+    "battery_thermal_clearance_mm": 8
+  },
+  "mission_rules": [
+    {
+      "id": "lead_vector",
+      "type": "min_separation",
+      "between": [
+        "ELEC_A",
+        "ELEC_B"
+      ],
+      "distance_mm": 35,
+      "metric": "center",
+      "severity": "blocker",
+      "title": "ECG lead vector is long enough to resolve",
+      "rationale": "A single-lead ECG measures the potential difference between two electrodes. The signal amplitude scales with how much of the heart's dipole the pair spans, so electrodes placed close together produce a small, low-amplitude trace that no amount of gain recovers cleanly. 35 mm is the practical floor for a chest patch."
+    }
+  ],
+  "enclosure": {
+    "interior_mm": {
+      "length": 100,
+      "width": 40,
+      "height": 7
+    },
+    "wall_thickness_mm": 1.5,
+    "wall_keepout_mm": 2.0,
+    "openings": [
+      {
+        "id": "charge_window",
+        "face": "-x",
+        "center_mm": 20,
+        "size_mm": {
+          "width": 20,
+          "height": 5
+        },
+        "max_reach_mm": 12
+      }
+    ]
+  },
+  "board": {
+    "id": "PCB_MissionPCB",
+    "size_mm": {
+      "length": 92,
+      "width": 30,
+      "thickness": 1.0
+    },
+    "origin_mm": [
+      4,
+      5,
+      2
+    ],
+    "edge_margin_mm": 1.5,
+    "max_component_height_mm": 4.0
+  },
+  "placements": [
+    {
+      "ref": "CHARGE",
+      "part_id": "con-charge-pogo",
+      "pos_mm": [
+        6,
+        15
+      ]
+    },
+    {
+      "ref": "ELEC_A",
+      "part_id": "elec-snap-agagcl",
+      "pos_mm": [
+        16,
+        15
+      ]
+    },
+    {
+      "ref": "AFE",
+      "part_id": "afe-ecg-24bit",
+      "pos_mm": [
+        18,
+        22
+      ]
+    },
+    {
+      "ref": "ANT",
+      "part_id": "ant-chip-2g4",
+      "pos_mm": [
+        24,
+        26
+      ]
+    },
+    {
+      "ref": "LIPO",
+      "part_id": "bat-lipo-150mah",
+      "pos_mm": [
+        45,
+        20
+      ]
+    },
+    {
+      "ref": "MCU",
+      "part_id": "mcu-ble-soc",
+      "pos_mm": [
+        44,
+        5
+      ]
+    },
+    {
+      "ref": "REG",
+      "part_id": "reg-buck-3v3",
+      "pos_mm": [
+        66,
+        3
+      ]
+    },
+    {
+      "ref": "ELEC_B",
+      "part_id": "elec-snap-agagcl",
+      "pos_mm": [
+        84,
+        15
+      ]
+    }
+  ],
+  "traces": [
+    {
+      "id": "charge_run",
+      "net": "VBUS",
+      "path_mm": [
+        [
+          10,
+          15
+        ],
+        [
+          25,
+          12
+        ],
+        [
+          30,
+          14
+        ]
+      ],
+      "width_mm": 1.0,
+      "high_current": true
+    },
+    {
+      "id": "vbat_run",
+      "net": "VBAT",
+      "path_mm": [
+        [
+          64.5,
+          4
+        ],
+        [
+          60,
+          8
+        ],
+        [
+          55,
+          12
+        ]
+      ],
+      "width_mm": 1.0,
+      "high_current": true
+    }
+  ]
+}
