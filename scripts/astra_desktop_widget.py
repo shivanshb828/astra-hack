@@ -15,7 +15,6 @@ import json
 import subprocess
 import threading
 import tkinter as tk
-from tkinter import ttk
 import urllib.error
 import urllib.request
 
@@ -45,12 +44,11 @@ class AstraWidget(tk.Tk):
     def __init__(self) -> None:
         super().__init__()
         self.title("Astra KiCad")
-        self.geometry("430x220+970+120")
-        self.minsize(390, 200)
+        self.geometry("430x150+970+120")
+        self.minsize(390, 135)
         self.attributes("-topmost", True)
-        self.configure(bg="#141414")
+        self.configure(bg="#101010")
         self.pending_proposal: str | None = None
-        self.auto_apply = tk.BooleanVar(value=False)
         self.status = tk.StringVar(value="Connecting...")
         self.reply = tk.StringVar(value="")
         self.input = tk.StringVar(value="")
@@ -58,17 +56,16 @@ class AstraWidget(tk.Tk):
         self.after(100, self.refresh_status)
 
     def _build(self) -> None:
-        style = ttk.Style(self)
-        style.theme_use("clam")
-        style.configure("TButton", padding=(7, 5), relief="flat")
-        style.configure("Primary.TButton", background="#f4f4f0", foreground="#111111")
-        style.configure("TCheckbutton", background="#141414", foreground="#d8d8d2")
-
-        shell = tk.Frame(self, bg="#141414", padx=18, pady=16)
+        shell = tk.Frame(self, bg="#101010", padx=18, pady=16)
         shell.pack(fill="both", expand=True)
 
-        prompt = tk.Frame(shell, bg="#202020", padx=8, pady=7)
-        prompt.pack(fill="x", pady=(0, 12))
+        prompt_canvas = tk.Canvas(shell, height=62, bg="#101010", highlightthickness=0)
+        prompt_canvas.pack(fill="x", pady=(0, 10))
+        prompt = tk.Frame(prompt_canvas, bg="#202020", padx=10, pady=8)
+        prompt_canvas.create_window(0, 0, anchor="nw", window=prompt, width=394, height=58)
+        self._rounded_rect(prompt_canvas, 0, 0, 394, 58, 29, fill="#202020", outline="#202020")
+        prompt.lift()
+
         mark = tk.Label(prompt, text="*", fg="#ff7a3d", bg="#202020", width=2,
                         font=("Helvetica", 20, "bold"))
         mark.pack(side="left", padx=(4, 8))
@@ -82,16 +79,9 @@ class AstraWidget(tk.Tk):
             font=("Helvetica", 14, "bold"),
         )
         entry.pack(side="left", fill="x", expand=True, padx=(0, 8))
-        entry.insert(0, "How can I help with this board?")
+        entry.insert(0, "How can I help today?")
         entry.bind("<FocusIn>", self._clear_placeholder)
         entry.bind("<Return>", lambda _event: self.send())
-
-        actions = tk.Canvas(shell, height=78, bg="#141414", highlightthickness=0)
-        actions.pack(fill="x")
-        self._circle_button(actions, 39, "Ki", self.open_kicad)
-        self._circle_button(actions, 141, "Bl", self.open_blender)
-        self._circle_button(actions, 243, "R", self.reload_kicad)
-        self._circle_button(actions, 345, "OK", self.apply)
 
         tk.Label(
             shell,
@@ -99,55 +89,30 @@ class AstraWidget(tk.Tk):
             anchor="w",
             justify="left",
             wraplength=380,
-            bg="#141414",
+            bg="#101010",
             fg="#e7e7e2",
-            font=("Helvetica", 10),
-        ).pack(fill="x", pady=(0, 6))
-
-        footer = tk.Frame(shell, bg="#141414")
-        footer.pack(fill="x")
-        tk.Label(
-            footer,
-            textvariable=self.status,
-            anchor="w",
-            bg="#141414",
-            fg="#969696",
             font=("Helvetica", 9),
-        ).pack(side="left", fill="x", expand=True)
-        ttk.Checkbutton(
-            footer,
-            text="Auto-apply",
-            variable=self.auto_apply,
-        )
-        ttk.Button(footer, text="Send", style="Primary.TButton", command=self.send).pack(
-            side="right", padx=(8, 0)
-        )
+        ).pack(fill="x")
 
-    def _circle_button(self, canvas: tk.Canvas, x: int, label: str, command) -> None:
-        y = 38
-        radius = 31
-        oval = canvas.create_oval(
-            x - radius,
-            y - radius,
-            x + radius,
-            y + radius,
-            fill="#242424",
-            outline="#242424",
-        )
-        text = canvas.create_text(
-            x,
-            y,
-            text=label,
-            fill="#f4f4f0",
-            font=("Helvetica", 13, "bold"),
-        )
-        for item in (oval, text):
-            canvas.tag_bind(item, "<Button-1>", lambda _event, cmd=command: cmd())
-            canvas.tag_bind(item, "<Enter>", lambda _event, oid=oval: canvas.itemconfig(oid, fill="#303030", outline="#303030"))
-            canvas.tag_bind(item, "<Leave>", lambda _event, oid=oval: canvas.itemconfig(oid, fill="#242424", outline="#242424"))
+    def _rounded_rect(self, canvas: tk.Canvas, x1: int, y1: int, x2: int, y2: int, radius: int, **kwargs) -> None:
+        points = [
+            x1 + radius, y1,
+            x2 - radius, y1,
+            x2, y1,
+            x2, y1 + radius,
+            x2, y2 - radius,
+            x2, y2,
+            x2 - radius, y2,
+            x1 + radius, y2,
+            x1, y2,
+            x1, y2 - radius,
+            x1, y1 + radius,
+            x1, y1,
+        ]
+        canvas.create_polygon(points, smooth=True, **kwargs)
 
     def _clear_placeholder(self, _event: object) -> None:
-        if self.input.get() == "How can I help with this board?":
+        if self.input.get() == "How can I help today?":
             self.input.set("")
 
     def append(self, who: str, text: str) -> None:
@@ -214,7 +179,7 @@ class AstraWidget(tk.Tk):
 
     def send(self) -> None:
         message = self.input.get().strip()
-        if not message or message == "How can I help with this board?":
+        if not message or message == "How can I help today?":
             return
         self.input.set("")
         self.append("You", message)
@@ -243,16 +208,14 @@ class AstraWidget(tk.Tk):
             try:
                 res = request(
                     "/api/widget/send",
-                    {"message": message, "auto_mode": self.auto_apply.get()},
+                    {"message": message, "auto_mode": True},
                 )
                 outcome = res["outcome"]
                 proposal = outcome.get("proposal")
                 self.pending_proposal = proposal.get("proposal_id") if proposal else None
                 suffix = ""
-                if proposal and not res.get("auto_applied"):
-                    suffix = "\n\nProposal ready. Press Apply to change KiCad."
-                elif res.get("auto_applied"):
-                    suffix = "\n\nApplied in KiCad."
+                if res.get("auto_applied"):
+                    suffix = "\n\nUpdated KiCad."
                 self.append("Astra", outcome.get("reply", "Done.") + suffix)
             except Exception as exc:
                 self.append("Astra", f"Request failed: {exc}")
