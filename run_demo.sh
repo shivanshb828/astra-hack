@@ -56,11 +56,22 @@ echo "=============================================================="
 run explain --parts "$PARTS" --layout "$NAIVE" --out out/naive
 echo
 
+echo "=============================================================="
+echo " 5. RENDER INPUTS - stable, committed paths for the Blender lane"
+echo "=============================================================="
+mkdir -p render
+cp out/naive/validation_results.json  render/naive.json
+cp out/solved/validation_results.json render/solved.json
+echo "  render/naive.json   the before board  (7 failures to draw in red)"
+echo "  render/solved.json  the after board   (51 passing, nothing to flag)"
+echo
+
 echo "Artifacts:"
 echo "  out/naive/validation_report.md      failures, measured, with reasons"
 echo "  out/naive/explain_brief.txt         prompt-ready brief for an LLM"
 echo "  out/solved/validation_report.md     the corrected board"
 echo "  out/compare/                        per-layout results for the sim"
-echo "  $SOLVED   solved layout, same schema as the input"
+echo "  $SOLVED   solved layout, same schema as the input
+  render/naive.json render/solved.json  committed inputs for Blender"
 
 exit $solve_status

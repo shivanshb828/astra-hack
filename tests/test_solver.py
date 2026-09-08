@@ -79,16 +79,25 @@ class TestSolvesTheDemo:
         assert layout.rationales == naive_layout.rationales
 
 
+@pytest.fixture(scope="module")
+def solved_twice(naive_layout, parts):
+    """Two independent solves of the same input.
+
+    Module-scoped because a solve is several seconds and both determinism
+    assertions below need the same pair -- running four solves to check one
+    property was a third of the suite's runtime.
+    """
+    return solve(naive_layout, parts), solve(naive_layout, parts)
+
+
 class TestDeterminism:
-    def test_same_input_same_output(self, naive_layout, parts):
-        a, cost_a = solve(naive_layout, parts)
-        b, cost_b = solve(naive_layout, parts)
+    def test_same_input_same_output(self, solved_twice):
+        (a, cost_a), (b, cost_b) = solved_twice
         assert cost_a == cost_b
         assert layout_to_dict(a) == layout_to_dict(b)
 
-    def test_serialized_output_is_byte_identical(self, naive_layout, parts):
-        a, _ = solve(naive_layout, parts)
-        b, _ = solve(naive_layout, parts)
+    def test_serialized_output_is_byte_identical(self, solved_twice):
+        (a, _), (b, _) = solved_twice
         assert json.dumps(layout_to_dict(a), indent=2) == json.dumps(
             layout_to_dict(b), indent=2
         )
