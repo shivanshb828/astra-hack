@@ -5,6 +5,8 @@ from pathlib import Path
 import design_workflow as workflow
 ROOT=Path(__file__).resolve().parent
 ASSETS=ROOT.parent/'wearable-cad'
+CACHE=ROOT.parent/'detailed-cache'
+CACHE_FILES={'missionpcb_detailed_assembly.blend','board.png','assembly.png','chest.png','exploded.png','cache-manifest.json','state.json'}
 FILES={'wearable-assembly.blend','wearable-assembly.png','assembly-verification.json','ecg-chest-enclosure.blend','ecg-chest-enclosure.glb','enclosure-base.stl','enclosure-lid.stl','human-chest-reference.blend','human-chest-reference.glb','human-chest-reference.obj','manifest.json'}
 def reply(h,code,value):
  body=json.dumps(value).encode();h.send_response(code);h.send_header('Content-Type','application/json');h.send_header('Cache-Control','no-store');h.end_headers();h.wfile.write(body)
@@ -47,7 +49,15 @@ def get(h,token):
   elif h.path=='/workflow/ui.js':body=(ROOT/'workflow-ui.js').read_bytes();mime='text/javascript'
   elif h.path=='/workflow/ui.css':body=(ROOT/'workflow-ui.css').read_bytes();mime='text/css'
   elif h.path=='/workflow/profile':return reply(h,200,workflow.profile_state())
-  elif h.path=='/workflow/assembly-preview':body=(ASSETS/'wearable-assembly.png').read_bytes();mime='image/png'
+  elif h.path=='/workflow/assembly-preview':body=((CACHE/'chest.png') if (CACHE/'cache-manifest.json').exists() else (ASSETS/'wearable-assembly.png')).read_bytes();mime='image/png'
+  elif h.path=='/workflow/cache-state':
+   manifest=CACHE/'cache-manifest.json'
+   return reply(h,200,{'available':manifest.exists(),'manifest':json.loads(manifest.read_text()) if manifest.exists() else None})
+  elif h.path.startswith('/workflow/cache/'):
+   filename=h.path.rsplit('/',1)[1]
+   if filename not in CACHE_FILES or not (CACHE/'cache-manifest.json').exists():return reply(h,404,{'error':'Detailed assembly cache is not ready.'})
+   body=(CACHE/filename).read_bytes();mime='image/png' if filename.endswith('.png') else 'application/octet-stream'
+   if not filename.endswith('.png'):name=filename
   elif h.path=='/workflow/state':return reply(h,200,workflow.view())
   elif h.path=='/workflow/summary':return reply(h,200,workflow.summary())
   elif h.path in ('/workflow/report.json','/workflow/report.md'):

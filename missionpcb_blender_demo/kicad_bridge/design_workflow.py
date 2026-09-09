@@ -46,6 +46,11 @@ def generate_housing(payload):
   if not isinstance(payload.get('expected_session'),str) or not payload['expected_session']:raise ValueError('Refresh the Blender connection before generating housing.')
   current=profile_state()
   if not current['adopted'] or current['stale'] or payload.get('profile_revision')!=current['revision']:raise ValueError('Review and save the device profile for the current brief before generating housing.')
+  live=blender_handoff.state();assembly=live.get('assembly',{})
+  if not live.get('connected') or live.get('session')!=payload['expected_session']:raise ValueError('Blender connection or scene changed. Refresh before generating housing.')
+  source=assembly.get('source_board')
+  if not source or Path(source).resolve()!=bridge.TARGET:raise ValueError('The Blender PCB belongs to a different or unknown project. Update it from this KiCad project first.')
+  if assembly.get('source_revision')!=bridge.snapshot(bridge.connect())['revision']:raise ValueError('The PCB changed since its Blender export. Update PCB from KiCad before generating housing.')
   result=blender_handoff.dispatch('assembly_generate_housing',profile={**current['adopted'],'status':'adopted','revision':current['revision'],'brief_revision':current['brief_revision']},expected_session=payload.get('expected_session'))
   append('device_housing_generated',dict(profile_revision=current['revision'],brief_revision=current['brief_revision'],result=result))
   return result
