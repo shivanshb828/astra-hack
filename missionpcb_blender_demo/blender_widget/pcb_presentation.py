@@ -55,6 +55,23 @@ def board_finish(board,assembly):
   obj['native_baseline']=json.dumps(row);obj['import_location']=list(obj.location);obj['import_rotation_z']=0
  bpy.context.view_layer.update()
 
+def enable_existing(assembly):
+ """Upgrade an existing mounted native import without changing its world geometry."""
+ board=assembly.objects()['board'];parent=board.parent.matrix_world if board.parent else Matrix.Identity(4)
+ bpy.context.view_layer.update();lo,hi=assembly.bounds(board,parent);poses={o:o.matrix_world.copy() for o in board.children}
+ board.matrix_basis=Matrix.Translation(Vector(((lo.x+hi.x)/2,(lo.y+hi.y)/2,lo.z)))
+ bpy.context.view_layer.update()
+ for obj,world in poses.items():obj.matrix_world=world
+ bpy.context.view_layer.update()
+ for obj in board.children_recursive:
+  if obj.get('kicad_ref'):
+   local=board.matrix_world.inverted()@obj.matrix_world
+   obj['import_location']=list(local.translation);obj['import_rotation_z']=local.to_euler().z
+ bpy.context.scene['presentation_style']='native_pcb';bpy.context.scene['red_flag_motion']=False
+ board_finish(board,assembly)
+ bpy.context.scene.view_settings.view_transform='AgX'
+ assembly.check()
+
 def clear_flags():
  import red_flags
  red_flags.clear()
@@ -100,8 +117,11 @@ def draw(findings,assembly):
     mark['severity']='FAIL' if failed else 'WARN'
    if target.get('missing_model'):text('Missing model note','L1 / MODEL MISSING',(x0,y1+.65,z),.7,AMBER,parent,True)
   elif assembly.meshes(target):
-   lo,hi=assembly.bounds(target);z=hi.z+.6
-   line('Assembly issue',[(lo.x,lo.y,z),(hi.x,lo.y,z),(hi.x,hi.y,z),(lo.x,hi.y,z),(lo.x,lo.y,z)],color,None,key,.22)
+   frame=board.matrix_world
+   points=[frame.inverted()@mesh.matrix_world@Vector(c) for mesh in assembly.meshes(target) if not mesh.get('outside_mounting_pocket') for c in mesh.bound_box]
+   if points:
+    lo=Vector(tuple(min(p[i] for p in points) for i in range(3)));hi=Vector(tuple(max(p[i] for p in points) for i in range(3)));z=hi.z+.6
+    line('Assembly issue',[(lo.x,lo.y,z),(hi.x,lo.y,z),(hi.x,hi.y,z),(lo.x,hi.y,z),(lo.x,lo.y,z)],color,board,key,.22)
   errors+=int(failed);warnings+=int(not failed)
  # One calm legend outside the board replaces overlapping per-component callouts.
  text('Review legend',f'{errors} ERROR AREAS   /   {warnings} WATCH AREAS',(-36,-25,0),1.4,(.04,.1,.13,1),board,True)

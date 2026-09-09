@@ -1,0 +1,93 @@
+{
+  "source_board": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_kicad/projects/ECG20/MissionPCB.kicad_pcb",
+  "source_hash": "c0ad35e4b6ddcfac9f9f6c3a20be90a7757e477811b9a4256f9b3fcbf05969b1",
+  "source_revision": "c0ad35e4b6ddcfac9f9f6c3a20be90a7757e477811b9a4256f9b3fcbf05969b1",
+  "manifest": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_blender_demo/kicad_bridge/runtime/blender-sessions/c868b35140614d6eb739c97d/manifest.json",
+  "profile": {
+    "device_kind": "ecg",
+    "mount": "chest",
+    "attachment": "strap",
+    "interior_mm": {
+      "length": 100,
+      "width": 40,
+      "height": 7
+    },
+    "required_wear_hours": 336,
+    "revision": "436fb6a2c0344e189c4956210d96f5b3",
+    "status": "adopted",
+    "source": "Existing ECG project: adopted chest-strap example; separate from the currently opened new project"
+  },
+  "blender_file": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_blender_demo/detailed-cache/missionpcb_detailed_assembly.blend",
+  "views": [
+    "board",
+    "assembly",
+    "chest",
+    "exploded"
+  ],
+  "modeled_refs": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "J1",
+    "J2",
+    "J3",
+    "R1",
+    "R2",
+    "R3",
+    "R4",
+    "U1",
+    "U2",
+    "U3",
+    "U4",
+    "U5"
+  ],
+  "missing_model_refs": [
+    "L1"
+  ],
+  "scope": "Native KiCad board and models; editable concept housing and cached cell envelope; CC0 body reference. No copper routing or physiology claimed.",
+  "verification": {
+    "native_ref_count": 20,
+    "component_check_error": "",
+    "findings": [
+      {
+        "id": "fit-device",
+        "object": "device",
+        "title": "ECG chest patch \u00b7 fits chest",
+        "status": "PASS",
+        "method": "mesh bounding-box corners in oriented region",
+        "reason": "Concept mounting volume on selected body surface; verify anatomical landmark manually",
+        "margin_note": "Declared mounting volume, not automatic interior reconstruction."
+      },
+      {
+        "id": "fit-board",
+        "object": "board",
+        "title": "Confirmed KiCad PCB \u00b7 fits board-bay",
+        "status": "PASS",
+        "method": "mesh bounding-box corners in oriented region",
+        "reason": "Housing interior from adopted profile; measured native board and component geometry",
+        "margin_note": "Declared mounting volume, not automatic interior reconstruction."
+      },
+      {
+        "id": "fit-cached-cell",
+        "object": "cached-cell",
+        "title": "150 mAh cell envelope \u00b7 cached dimensions \u00b7 fits board-bay",
+        "status": "PASS",
+        "method": "mesh bounding-box corners in oriented region",
+        "reason": "Housing interior from adopted profile; measured native board and component geometry",
+        "margin_note": "Declared mounting volume, not automatic interior reconstruction."
+      },
+      {
+        "id": "body-intersection",
+        "object": "device",
+        "title": "Device intersects body",
+        "status": "FAIL",
+        "method": "triangle surface intersection",
+        "reason": "ECG enclosure must remain outside the chest surface. Does not validate comfort, pressure, physiology or full containment."
+      }
+    ]
+  }
+}

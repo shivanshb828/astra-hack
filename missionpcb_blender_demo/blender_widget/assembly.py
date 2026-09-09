@@ -7,6 +7,9 @@ ROOT=Path(__file__).resolve().parent
 
 def active():return bool(bpy.context.scene.get('missionpcb_assembly'))
 def objects():return {o['assembly_id']:o for o in bpy.context.scene.objects if o.get('assembly_id')}
+def body_object():
+ items=objects();selected=items.get(bpy.context.scene.get('active_body_id','body'))
+ return selected if selected and selected.get('asset_role')=='body' else next((o for o in items.values() if o.get('asset_role')=='body'),None)
 def vector(value,positive=False):
  if not isinstance(value,list) or len(value)!=3 or any(isinstance(x,bool) or not isinstance(x,(int,float)) or not math.isfinite(x) or abs(x)>10000 or (positive and x<=0) for x in value):raise ValueError('Expected three finite millimeter values (maximum 10000).')
  return Vector(value)
@@ -89,6 +92,15 @@ def handoff(manifest):
     o['kicad_ref']=ref;o['assembly_id']='part-'+ref;o['asset_role']='component';o['value']=refs[ref]['value']
     local=board.matrix_world.inverted()@o.matrix_world
     o['native_baseline']=json.dumps(refs[ref]);o['import_location']=list(local.translation);o['import_rotation_z']=local.to_euler().z
+  # Keep every native reference in the checker, even when no package mesh exported.
+  exported={o.get('kicad_ref') for o in imported}
+  lo,hi=bounds(board,board.matrix_world);center=(lo+hi)/2
+  for ref,row in refs.items():
+   if ref in exported:continue
+   anchor=empty(ref+' · missing package model','part-'+ref,board)
+   anchor['kicad_ref']=ref;anchor['value']=row['value'];anchor['asset_role']='component';anchor['missing_model']=True
+   anchor.location=(row['x_mm']-136+center.x,119-row['y_mm']+center.y,lo.z+1.645)
+   anchor['native_baseline']=json.dumps(row);anchor['import_location']=list(anchor.location);anchor['import_rotation_z']=0
   scene['model_coverage']=json.dumps(data.get('model_coverage',{}))
   scene['handoff_manifest']=str(manifest);scene['board_revision']=data['revision'];scene['source_hash']=data['source_hash'];scene['mission']=data['mission'];scene['native_findings']=json.dumps(data.get('native_findings',[]))
   if not existing:region('board-bay',[0,0,6],[76,42,12],'PCB pocket from ECG demo brief','device')
@@ -137,13 +149,18 @@ def record(reason):
 def edit(identifier,position=None,rotation=None,dimensions=None):
  obj=objects().get(identifier)
  if obj is None or obj.get('region'):raise ValueError('Choose an editable assembly object.')
- if position is not None:obj.location=vector(position)
- if rotation is not None:obj.rotation_euler=[math.radians(v) for v in vector(rotation)]
+ # Validate every requested field before changing any transform.
+ new_position=vector(position) if position is not None else None
+ new_rotation=[math.radians(v) for v in vector(rotation)] if rotation is not None else None
+ new_scale=None
  if dimensions is not None:
   if obj.get('asset_role') in ('electronics','component'):raise ValueError('PCB/component dimensions come from KiCad. Resize the product CAD instead.')
   wanted=vector(dimensions,True);lo,hi=bounds(obj,obj.matrix_world);size=hi-lo
   if min(size)<1e-8:raise ValueError('Cannot resize flat geometry.')
-  obj.scale=Vector([wanted[i]/size[i] for i in range(3)])
+  new_scale=Vector([wanted[i]/size[i] for i in range(3)])
+ if new_position is not None:obj.location=new_position
+ if new_rotation is not None:obj.rotation_euler=new_rotation
+ if new_scale is not None:obj.scale=new_scale
  bpy.context.view_layer.update();record('Edited '+obj.name);return check()
 
 def focus(identifier):
@@ -157,7 +174,10 @@ def focus(identifier):
   max(areas,key=lambda a:a.width*a.height).type='VIEW_3D'
  for area in areas:
   if area.type=='VIEW_3D':
-   area.spaces.active.clip_end=100000;area.spaces.active.shading.type='MATERIAL'
+   area.spaces.active.clip_end=100000
+   try:area.spaces.active.shading.type='MATERIAL'
+   except TypeError:
+    area.spaces.active.shading.type='SOLID';area.spaces.active.shading.color_type='MATERIAL'
    for reg in area.regions:
     if reg.type=='WINDOW':
      with bpy.context.temp_override(area=area,region=reg):bpy.ops.view3d.view_selected(use_all_regions=False)
@@ -226,9 +246,12 @@ def world_bvh(root):
 def flags(findings):
  if bpy.context.scene.get('presentation_style')=='native_pcb':
   import pcb_presentation
-  return pcb_presentation.draw(findings,__import__(__name__))
- import red_flags
- red_flags.draw(findings,__import__(__name__))
+  pcb_presentation.draw(findings,__import__(__name__))
+ else:
+  import red_flags
+  red_flags.draw(findings,__import__(__name__))
+ import native_views
+ native_views.draw_comments(__import__(__name__))
 
 def live_component_findings():
  import sys,tempfile
@@ -264,7 +287,7 @@ def live_component_findings():
   findings.append(c)
  return findings
 
-def check():
+def _check_assembled():
  bpy.context.view_layer.update();items=objects();findings=[]
  for identifier,obj in items.items():
   assignment=obj.get('assigned_region')
@@ -272,9 +295,9 @@ def check():
    target=items.get(assignment)
    if target:
     # The region's unit cube is [-1,1] in its scaled local frame.
-    points=corners(obj,target.matrix_world);overflow=max([abs(p[i])-1 for p in points for i in range(3)],default=0)
+    points=[target.matrix_world.inverted()@mesh.matrix_world@Vector(c) for mesh in meshes(obj) if not mesh.get('outside_mounting_pocket') for c in mesh.bound_box];overflow=max([abs(p[i])-1 for p in points for i in range(3)],default=0)
     findings.append({'id':'fit-'+identifier,'object':identifier,'title':obj.name+' · '+('fits '+target.name if overflow<=1e-5 else 'outside '+target.name),'status':'PASS' if overflow<=1e-5 else 'FAIL','method':'mesh bounding-box corners in oriented region','reason':target.get('reason',''),'margin_note':'Declared mounting volume, not automatic interior reconstruction.'})
- board=items.get('board');body=items.get('body')
+ board=items.get('board');body=body_object()
  if board and not board.get('assigned_region'):
   findings.append({'id':'unassigned-board','object':'board','title':'Assign PCB to its mounting pocket','status':'UNKNOWN','method':'placement workflow','reason':'Confirm where electronics fit in the enclosure.'})
  if body and items.get('device') and items['device'].get('assigned_region')=='region-chest':
@@ -287,7 +310,14 @@ def check():
  scene['assembly_checks']=json.dumps(findings);scene['assembly_signature']=signature()
  native=[{**f,'object':'part-'+ref,'title':ref+' · '+f.get('title',f.get('id','KiCad finding')),'status':f['status']} for f in json.loads(scene.get('native_findings','[]')) if f.get('status')!='PASS' for ref in f.get('kicad_refs',[])]
  flags(findings+native)
- return 'Assembly checked: '+str(sum(f['status']=='FAIL' for f in findings))+' failures, '+str(sum(f['status']=='UNKNOWN' for f in findings))+' pending placements.'
+ native=json.loads(scene.get('native_findings','[]'))
+ return 'Assembly fit: '+str(sum(f['status']=='FAIL' for f in findings))+' failures, '+str(sum(f['status']=='UNKNOWN' for f in findings))+' pending placements. Components: '+str(sum(f['status']=='FAIL' for f in native))+' flagged checks, '+str(sum(f['status'] in ('SKIP','WARN') for f in native))+' needing review.'
+
+def check():
+ import native_views
+ with native_views.assembled_pose():result=_check_assembled()
+ bpy.context.scene['assembly_signature']=signature()
+ return result+(' Fit uses assembled positions; exploded offsets are presentation only.' if native_views.offsets() else '')
 
 def mesh_signature(obj):
  import array
@@ -299,22 +329,45 @@ def signature():
 def snapshot():
  scene=bpy.context.scene;rows=[]
  for identifier,o in objects().items():
-  row={'id':identifier,'name':o.name,'role':'region' if o.get('region') else o.get('asset_role','assembly'),'position_mm':list(o.location),'rotation_deg':[math.degrees(v) for v in o.rotation_euler],'region':o.get('assigned_region'),'ref':o.get('kicad_ref')}
+  row={'id':identifier,'name':o.name,'role':'region' if o.get('region') else o.get('asset_role','assembly'),'position_mm':list(o.location),'rotation_deg':[math.degrees(v) for v in o.rotation_euler],'region':o.get('assigned_region'),'ref':o.get('kicad_ref'),'value':o.get('value',''),'missing_model':bool(o.get('missing_model')),'selected':o.select_get(),'source':o.get('source','')}
   if meshes(o):
    lo,hi=bounds(o);row['dimensions_mm']=list(hi-lo)
   rows.append(row)
- return {'stage':'Blender','model_coverage':json.loads(scene.get('model_coverage','{}')),'mission':scene.get('mission'),'objects':rows,'native_findings':json.loads(scene.get('native_findings','[]')),'findings':json.loads(scene.get('assembly_checks','[]')),'timeline':json.loads(scene.get('timeline','[]')),'stale':signature()!=scene.get('assembly_signature'),'source_revision':scene.get('board_revision'),'source_hash':scene.get('source_hash'),'component_check_error':scene.get('component_check_error',''),'body_scope':'Reference anatomy, chest placement and geometric fit only.'}
+ return {'stage':'Blender','source_board':json.loads(Path(scene['handoff_manifest']).read_text()).get('source_board'),'comments':json.loads(scene.get('engineering_comments','[]')),'design_gaps':json.loads(scene.get('design_gaps','[]')),'device_profile':json.loads(scene.get('device_profile','{}')),'active_body_id':body_object().get('assembly_id') if body_object() else None,'presentation':{'view':scene.get('presentation_view','assembly'),'exploded':bool(json.loads(scene.get('presentation_offsets','{}'))),'validation_pose':'assembled'},'model_coverage':json.loads(scene.get('model_coverage','{}')),'mission':scene.get('mission'),'objects':rows,'native_findings':json.loads(scene.get('native_findings','[]')),'findings':json.loads(scene.get('assembly_checks','[]')),'timeline':json.loads(scene.get('timeline','[]')),'stale':signature()!=scene.get('assembly_signature'),'source_revision':scene.get('board_revision'),'source_hash':scene.get('source_hash'),'component_check_error':scene.get('component_check_error',''),'body_scope':'Reference anatomy, chest placement and geometric fit only.'}
 
 def execute(command):
  action=command['action']
- if action=='assembly_handoff':return handoff(command['manifest'])
+ if action=='assembly_handoff':
+  import native_views
+  native_views.restore()
+  return handoff(command['manifest'])
  if not active():raise ValueError('Confirm a KiCad board to start the assembly workspace.')
  if action=='assembly_import':
-  root,_=import_asset(command['path'],command['label'],command['units'],command['role']);record('Imported '+root.name);check();focus(root['assembly_id']);return 'Imported editable CAD: '+root.name
+  root,_=import_asset(command['path'],command['label'],command['units'],command['role'])
+  if command['role']=='body':bpy.context.scene['active_body_id']=root['assembly_id']
+  record('Imported '+root.name);check();focus(root['assembly_id']);return 'Imported editable CAD: '+root.name
+ if action=='assembly_select_body':
+  obj=objects().get(command['object'])
+  if not obj or obj.get('asset_role')!='body':raise ValueError('Select an imported body model.')
+  bpy.context.scene['active_body_id']=obj['assembly_id'];record('Selected body CAD: '+obj.name);return check()
+ if action=='assembly_view':
+  import native_views
+  return native_views.view(command['view'])
+ if action=='assembly_comment':
+  import native_views
+  return native_views.add_comment(command['finding_id'],command['text'],command.get('object'))
+ if action=='assembly_generate_housing':
+  import housing
+  return housing.generate(command['profile'])
  if action=='assembly_region':region(command['name'],command['center'],command['size'],command.get('reason','ECG brief placement'),command.get('parent'));record('Defined '+command['name']);return check()
  if action=='assembly_place':return place(command['object'],command['region'])
  if action=='assembly_edit':return edit(command['object'],command.get('position'),command.get('rotation'),command.get('dimensions'))
- if action=='assembly_focus':return focus(command['object'])
+ if action=='assembly_focus':
+  import native_views
+  return native_views.contextual_focus(command['object'])
+ if action=='assembly_flag_motion':
+  scene=bpy.context.scene;scene['red_flag_motion']=not scene.get('red_flag_motion',True)
+  return 'Red pulse '+('enabled' if scene['red_flag_motion'] else 'paused')
  if action=='assembly_check':
   result=check();focus('board' if objects().get('board') else 'device');return result
  if action=='assembly_body':return body_reference()

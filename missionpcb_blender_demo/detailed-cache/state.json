@@ -1,0 +1,955 @@
+{
+  "stage": "Blender",
+  "source_board": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_kicad/projects/ECG20/MissionPCB.kicad_pcb",
+  "comments": [],
+  "design_gaps": [
+    "PCB copper routing and electrical connectivity are not generated.",
+    "L1 has no native KiCad package model.",
+    "Cell is a catalogue envelope; manufacturer CAD and battery safety are unverified.",
+    "Electrode areas are conceptual; acquisition wiring and patient protection are not validated.",
+    "Pogo charging and sealing need a defined contact part and verified enclosure opening."
+  ],
+  "device_profile": {
+    "device_kind": "ecg",
+    "mount": "chest",
+    "attachment": "strap",
+    "interior_mm": {
+      "length": 100,
+      "width": 40,
+      "height": 7
+    },
+    "required_wear_hours": 336,
+    "revision": "436fb6a2c0344e189c4956210d96f5b3",
+    "status": "adopted",
+    "source": "Existing ECG project: adopted chest-strap example; separate from the currently opened new project"
+  },
+  "active_body_id": "body",
+  "presentation": {
+    "view": "assembly",
+    "exploded": false,
+    "validation_pose": "assembled"
+  },
+  "model_coverage": {
+    "modeled_refs": [
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C7",
+      "J1",
+      "J2",
+      "J3",
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "U1",
+      "U2",
+      "U3",
+      "U4",
+      "U5"
+    ],
+    "missing_model_refs": [
+      "L1"
+    ],
+    "mesh_count": 24,
+    "export_options": [
+      "--include-tracks",
+      "--include-pads",
+      "--include-zones",
+      "--include-silkscreen",
+      "--include-soldermask"
+    ],
+    "source": "Native KiCad GLB; no generated component substitutes"
+  },
+  "mission": "ECG chest patch \u00b7 adopted chest strap example \u00b7 cached placement review",
+  "objects": [
+    {
+      "id": "device",
+      "name": "ECG chest patch",
+      "role": "assembly",
+      "position_mm": [
+        -8.999996185302734,
+        -42.80107116699219,
+        1300.2501220703125
+      ],
+      "rotation_deg": [
+        89.999995674289,
+        -0.0,
+        0.0
+      ],
+      "region": "region-chest",
+      "ref": null,
+      "value": "",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        640.6109008789062,
+        218.96942138671875,
+        43.0
+      ]
+    },
+    {
+      "id": "region-board-bay",
+      "name": "board-bay",
+      "role": "region",
+      "position_mm": [
+        8.999996185302734,
+        -2.6702880859375e-05,
+        5.250002384185791
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": null,
+      "value": "",
+      "missing_model": false,
+      "selected": false,
+      "source": ""
+    },
+    {
+      "id": "enclosure",
+      "name": "ECG concept enclosure",
+      "role": "reference_product",
+      "position_mm": [
+        0.0,
+        -110.5007095336914,
+        215.00006103515625
+      ],
+      "rotation_deg": [
+        89.999995674289,
+        -0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": null,
+      "value": "",
+      "missing_model": false,
+      "selected": false,
+      "source": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_blender_demo/wearable-cad/ecg-chest-enclosure.glb",
+      "dimensions_mm": [
+        120.0,
+        10.800003051757812,
+        54.0
+      ]
+    },
+    {
+      "id": "archived-body",
+      "name": "Bare chest \u00b7 MakeHuman CC0",
+      "role": "reference_body",
+      "position_mm": [
+        0.0,
+        -62.3255615234375,
+        -1079.9998779296875
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": null,
+      "value": "",
+      "missing_model": false,
+      "selected": false,
+      "source": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_blender_demo/wearable-cad/human-chest-reference.glb",
+      "dimensions_mm": [
+        490.0,
+        234.0595703125,
+        430.0001220703125
+      ]
+    },
+    {
+      "id": "region-chest",
+      "name": "chest",
+      "role": "region",
+      "position_mm": [
+        0.0,
+        -47.53857421875,
+        1300.2501220703125
+      ],
+      "rotation_deg": [
+        90.00000250447816,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": null,
+      "value": "",
+      "missing_model": false,
+      "selected": false,
+      "source": ""
+    },
+    {
+      "id": "part-C6",
+      "name": "C6",
+      "role": "component",
+      "position_mm": [
+        143.29998779296875,
+        -118.69998931884766,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "C6",
+      "value": "TBD",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        1.5999999046325684,
+        0.7999992370605469,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-U3",
+      "name": "U3",
+      "role": "component",
+      "position_mm": [
+        108.99999237060547,
+        -112.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "U3",
+      "value": "MDBT42Q-512KV2",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        10.0,
+        2.200000762939453,
+        16.0
+      ]
+    },
+    {
+      "id": "part-J2",
+      "name": "J2",
+      "role": "component",
+      "position_mm": [
+        133.49998474121094,
+        -118.49999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "J2",
+      "value": "JST SH 3 pin",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        4.950000762939453,
+        2.9599990844726562,
+        5.0
+      ]
+    },
+    {
+      "id": "part-C2",
+      "name": "C2",
+      "role": "component",
+      "position_mm": [
+        127.79999542236328,
+        -119.69998931884766,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "C2",
+      "value": "TBD",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        1.5999984741210938,
+        0.7999992370605469,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-C7",
+      "name": "C7",
+      "role": "component",
+      "position_mm": [
+        130.29998779296875,
+        -122.19998931884766,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "C7",
+      "value": "TBD",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        1.6000003814697266,
+        0.7999992370605469,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-C3",
+      "name": "C3",
+      "role": "component",
+      "position_mm": [
+        119.79999542236328,
+        -118.19998931884766,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "C3",
+      "value": "TBD",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        1.5999984741210938,
+        0.7999992370605469,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-C4",
+      "name": "C4",
+      "role": "component",
+      "position_mm": [
+        135.8000030517578,
+        -114.69998931884766,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "C4",
+      "value": "10uF",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        1.6000003814697266,
+        0.7999992370605469,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-C1",
+      "name": "C1",
+      "role": "component",
+      "position_mm": [
+        140.3000030517578,
+        -125.69998931884766,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "C1",
+      "value": "TBD",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        1.6000001430511475,
+        0.7999992370605469,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-J1",
+      "name": "J1",
+      "role": "component",
+      "position_mm": [
+        137.99998474121094,
+        -118.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "J1",
+      "value": "BM02B-SRSS-TB",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        3.6000003814697266,
+        4.319999694824219,
+        4.0
+      ]
+    },
+    {
+      "id": "part-U5",
+      "name": "U5",
+      "role": "component",
+      "position_mm": [
+        148.94998168945312,
+        -119.04999542236328,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "U5",
+      "value": "MCP73831",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        2.799999475479126,
+        1.5499992370605469,
+        2.89990234375
+      ]
+    },
+    {
+      "id": "part-U4",
+      "name": "U4",
+      "role": "component",
+      "position_mm": [
+        139.5,
+        -109.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "U4",
+      "value": "TPS62740 [APPROX]",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        2.0,
+        0.7999992370605469,
+        1.97509765625
+      ]
+    },
+    {
+      "id": "part-U2",
+      "name": "U2",
+      "role": "component",
+      "position_mm": [
+        124.99999237060547,
+        -124.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "U2",
+      "value": "ADS1292R [APPROX]",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        4.0,
+        0.9199981689453125,
+        4.0
+      ]
+    },
+    {
+      "id": "part-U1",
+      "name": "U1",
+      "role": "component",
+      "position_mm": [
+        142.0,
+        -130.99998474121094,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "U1",
+      "value": "MSP430FR2433",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        4.0,
+        0.7999992370605469,
+        4.0
+      ]
+    },
+    {
+      "id": "part-R3",
+      "name": "R3",
+      "role": "component",
+      "position_mm": [
+        143.29998779296875,
+        -120.19999694824219,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "R3",
+      "value": "TBD",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        1.5999999046325684,
+        0.4500007629394531,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-J3",
+      "name": "J3",
+      "role": "component",
+      "position_mm": [
+        136.0,
+        -125.99999237060547,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "J3",
+      "value": "JST SH 4 pin",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        6.0,
+        2.9599990844726562,
+        4.949951171875
+      ]
+    },
+    {
+      "id": "part-C5",
+      "name": "C5",
+      "role": "component",
+      "position_mm": [
+        137.79998779296875,
+        -115.69998931884766,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "C5",
+      "value": "10uF",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        0.8000001907348633,
+        0.7999992370605469,
+        1.60009765625
+      ]
+    },
+    {
+      "id": "part-R2",
+      "name": "R2",
+      "role": "component",
+      "position_mm": [
+        128.29998779296875,
+        -118.19998931884766,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "R2",
+      "value": "TBD",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        1.5999994277954102,
+        0.4500007629394531,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-R4",
+      "name": "R4",
+      "role": "component",
+      "position_mm": [
+        136.29998779296875,
+        -129.19998168945312,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "R4",
+      "value": "TBD",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        1.6000003814697266,
+        0.4500007629394531,
+        0.800048828125
+      ]
+    },
+    {
+      "id": "part-R1",
+      "name": "R1",
+      "role": "component",
+      "position_mm": [
+        130.29998779296875,
+        -119.19998931884766,
+        1.59499990940094
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "R1",
+      "value": "TBD",
+      "missing_model": false,
+      "selected": false,
+      "source": "",
+      "dimensions_mm": [
+        0.8000011444091797,
+        0.4500007629394531,
+        1.60009765625
+      ]
+    },
+    {
+      "id": "board",
+      "name": "Confirmed KiCad PCB",
+      "role": "electronics",
+      "position_mm": [
+        -3.814697265625e-06,
+        3.814697265625e-06,
+        2.450010299682617
+      ],
+      "rotation_deg": [
+        0.0,
+        -0.0,
+        0.0
+      ],
+      "region": "region-board-bay",
+      "ref": null,
+      "value": "",
+      "missing_model": false,
+      "selected": false,
+      "source": "/Users/dhruvavutukury/Documents/ChatGPT/astra/missionpcb_blender_demo/kicad_bridge/runtime/blender-sessions/c868b35140614d6eb739c97d/board.glb",
+      "dimensions_mm": [
+        72.00000762939453,
+        5.965000152587891,
+        38.0
+      ]
+    },
+    {
+      "id": "part-L1",
+      "name": "L1 \u00b7 missing package model.001",
+      "role": "component",
+      "position_mm": [
+        0.14999619126319885,
+        10.649972915649414,
+        1.644990086555481
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": "L1",
+      "value": "2.2uH",
+      "missing_model": true,
+      "selected": false,
+      "source": ""
+    },
+    {
+      "id": "body",
+      "name": "Human body \u00b7 MakeHuman CC0",
+      "role": "body",
+      "position_mm": [
+        0.0,
+        115.51708984375,
+        857.9978637695312
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": null,
+      "value": "",
+      "missing_model": false,
+      "selected": false,
+      "source": "MakeHuman CC0 base surface, normalized to 1750 mm. Created reference geometry, not a user scan.",
+      "dimensions_mm": [
+        1042.6529541015625,
+        444.36773681640625,
+        1750.0001220703125
+      ]
+    },
+    {
+      "id": "generated-housing",
+      "name": "Housing \u00b7 ECG",
+      "role": "product",
+      "position_mm": [
+        8.999996185302734,
+        -2.6702880859375e-05,
+        0.2500024437904358
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": null,
+      "value": "",
+      "missing_model": false,
+      "selected": false,
+      "source": "Derived from native PCB bounds and adopted device profile",
+      "dimensions_mm": [
+        103.0,
+        10.424999237060547,
+        43.0
+      ]
+    },
+    {
+      "id": "housing-lid",
+      "name": "Inspection lid \u00b7 separate editable part",
+      "role": "mechanical",
+      "position_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": null,
+      "value": "",
+      "missing_model": false,
+      "selected": false,
+      "source": "Transparent inspection finish; not an asserted production material",
+      "dimensions_mm": [
+        103.0,
+        1.0800018310546875,
+        43.0
+      ]
+    },
+    {
+      "id": "cached-cell",
+      "name": "150 mAh cell envelope \u00b7 cached dimensions",
+      "role": "energy_storage",
+      "position_mm": [
+        46.0,
+        -2.6702880859375e-05,
+        4.050002574920654
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": "region-board-bay",
+      "ref": null,
+      "value": "",
+      "missing_model": false,
+      "selected": false,
+      "source": "parts/ecg-patch-parts.json: bat-lipo-150mah, 30 \u00d7 16 \u00d7 3.2 mm. Cell make/model and CAD are unverified.",
+      "dimensions_mm": [
+        16.0,
+        3.4500045776367188,
+        30.0
+      ]
+    },
+    {
+      "id": "strap",
+      "name": "Body strap \u00b7 sampled fit concept",
+      "role": "attachment",
+      "position_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "region": null,
+      "ref": null,
+      "value": "",
+      "missing_model": false,
+      "selected": false,
+      "source": "Radial cross-section of selected body CAD; 2 mm nominal offset. No pressure/tension/material simulation.",
+      "dimensions_mm": [
+        640.6109008789062,
+        207.9208526611328,
+        20.0
+      ]
+    }
+  ],
+  "native_findings": [
+    {
+      "id": "access.connector",
+      "title": "Connector accessibility",
+      "status": "SKIP",
+      "severity": "info",
+      "subjects": [
+        "J2",
+        "Battery",
+        "J3"
+      ],
+      "metric": "",
+      "message": "The enclosure declares no openings, so accessibility could not be evaluated.",
+      "rationale": "Requires at least one entry in enclosure.openings.",
+      "kicad_refs": [
+        "J2",
+        "J1",
+        "J3"
+      ],
+      "source": "Recomputed from current Blender component transforms; authored demo spacing policies"
+    }
+  ],
+  "findings": [
+    {
+      "id": "fit-device",
+      "object": "device",
+      "title": "ECG chest patch \u00b7 fits chest",
+      "status": "PASS",
+      "method": "mesh bounding-box corners in oriented region",
+      "reason": "Concept mounting volume on selected body surface; verify anatomical landmark manually",
+      "margin_note": "Declared mounting volume, not automatic interior reconstruction."
+    },
+    {
+      "id": "fit-board",
+      "object": "board",
+      "title": "Confirmed KiCad PCB \u00b7 fits board-bay",
+      "status": "PASS",
+      "method": "mesh bounding-box corners in oriented region",
+      "reason": "Housing interior from adopted profile; measured native board and component geometry",
+      "margin_note": "Declared mounting volume, not automatic interior reconstruction."
+    },
+    {
+      "id": "fit-cached-cell",
+      "object": "cached-cell",
+      "title": "150 mAh cell envelope \u00b7 cached dimensions \u00b7 fits board-bay",
+      "status": "PASS",
+      "method": "mesh bounding-box corners in oriented region",
+      "reason": "Housing interior from adopted profile; measured native board and component geometry",
+      "margin_note": "Declared mounting volume, not automatic interior reconstruction."
+    },
+    {
+      "id": "body-intersection",
+      "object": "device",
+      "title": "Device intersects body",
+      "status": "FAIL",
+      "method": "triangle surface intersection",
+      "reason": "ECG enclosure must remain outside the chest surface. Does not validate comfort, pressure, physiology or full containment."
+    }
+  ],
+  "timeline": [
+    {
+      "reason": "Confirmed KiCad board imported with reference IDs",
+      "kind": "edit"
+    },
+    {
+      "reason": "Placed ECG chest patch in chest",
+      "kind": "edit"
+    },
+    {
+      "reason": "Updated KiCad PCB; preserved enclosure and body placement",
+      "kind": "edit"
+    },
+    {
+      "reason": "Updated KiCad PCB; preserved enclosure and body placement",
+      "kind": "edit"
+    },
+    {
+      "reason": "Added body reference and chest mounting area",
+      "kind": "edit"
+    },
+    {
+      "reason": "Placed ECG chest patch in chest",
+      "kind": "edit"
+    },
+    {
+      "reason": "Generated editable housing from explicit interior dimensions; adopted chest / strap profile",
+      "kind": "edit"
+    }
+  ],
+  "stale": false,
+  "source_revision": "c0ad35e4b6ddcfac9f9f6c3a20be90a7757e477811b9a4256f9b3fcbf05969b1",
+  "source_hash": "c0ad35e4b6ddcfac9f9f6c3a20be90a7757e477811b9a4256f9b3fcbf05969b1",
+  "component_check_error": "",
+  "body_scope": "Reference anatomy, chest placement and geometric fit only."
+}
