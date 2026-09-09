@@ -1,114 +1,257 @@
 # MissionPCB
 
-MissionPCB is an AI hardware engineer that generates PCB designs from real-world mission constraints and validates them with simulation before you build.
+**An AI hardware engineer that generates PCB designs from real-world mission constraints and validates them with simulation before you build.**
 
-This repo is the working space for our Astra hack project. The current goal is to build a lean but convincing prototype that shows how MissionPCB thinks differently from generic AI PCB tools: it starts from the mission, extracts constraints, creates a board/enclosure simulation, checks failure modes, and explains why a design passes or fails.
+Most AI PCB tools are fast schematic assistants. MissionPCB is something different: it starts from the *mission* — the real product the board must live inside — and works backwards through mechanical fit, heat, RF interference, and sensor reliability before a single trace is drawn.
 
-## Core Idea
+---
 
-Existing AI PCB tools help with parts, schematics, routing, and general PCB workflows. MissionPCB is aimed at higher-constraint hardware work where the important design questions are not only "can this circuit be drawn?" but:
+## The Core Idea
 
-- Will the board fit inside the actual product?
-- Will hot components damage people, sensors, batteries, or nearby modules?
-- Do noisy parts interfere with sensitive sensors or RF modules?
-- Does the design still work under real operating conditions?
-- What risks remain before manufacturing?
+Hardware projects fail on constraints that live outside the schematic:
 
-Our first demo should stay lean. It should not try to solve all PCB design in one shot. It should prove the product thesis visually and technically: MissionPCB can turn messy real-world requirements into a structured constraint model and an inspectable 3D simulation.
+- A component fits on the board but not inside the enclosure.
+- A hot regulator is too close to skin, a battery, or a temperature sensor.
+- A switching regulator's noise floor masks the microvolt signal the AFE is trying to measure.
+- A BLE antenna sits next to a metal battery can, and range collapses even though every trace is correct.
 
-## Recommended First Demo
+Existing AI PCB tools can draw circuits. MissionPCB answers the questions that come before and after routing:
 
-Build a Blender-based 3D simulation of a constrained PCB inside a transparent electronics enclosure.
+> Will the board fit? Will it run hot? Will it interfere with itself? Does the design still work under real operating conditions?
 
-The demo should show two side-by-side layouts:
+---
 
-- **Naive Layout:** a plausible but bad first-pass board with visible failures.
-- **MissionPCB Layout:** a corrected board that satisfies or explains the key constraints.
+## Architecture: Judgment vs. Arithmetic
 
-Only include three constraint types at first:
+The system has a hard split that must stay clean.
 
-- Mechanical fit inside the enclosure
-- Approximate heat zones around hot components
-- Separation between sensitive and noisy components
+**A language model sets the rules.** "Worn against skin all day" has no closed form. Turning it into `skin_contact: true` and `max_surface_temp_c: 43` is engineering judgment — only a model can make that call. The same applies on the way out: explaining *why* a failure matters in plain English is a model job.
 
-This is enough to communicate the wedge without overbuilding.
+**Deterministic code checks the rules.** Once the AFE needs 15 mm from the switching regulator, measuring 6.0 mm is subtraction. This module never asks a model to compute a distance: a model is right most of the time and wrong unpredictably, which is exactly the failure you cannot reproduce. Computed in code, it is exact and identical every run.
 
-## Why Blender First
+```
+Mission text (LLM)
+    → parts + layout JSON
+        → constraint engine (deterministic)
+            → pass/fail results + zone overlays
+                → Blender 3D scene
+                    → explain brief (LLM)
+```
 
-Use Blender for the first prototype because it is fast, scriptable, visual, and interactive. Astra can generate Blender Python, run it, inspect renders, and revise the scene. Blender also lets teammates orbit, zoom, select individual parts, and inspect the design from any angle.
-
-Fusion or other CAD tools may become useful later for CAD-grade enclosure import, manufacturing workflows, or enterprise integrations. For the hack/demo, Blender is the fastest path to an impressive simulation.
+---
 
 ## Demo Mission: Single-Lead ECG Chest Patch
 
-The demo is built around one concrete product: a single-lead ECG chest patch.
-It was chosen because a single BOM exercises every constraint type in the brief
-at once — patient-contact surface (temperature limit), microvolt biosignal
-(noise floor), BLE radio (RF separation), LiPo cell (battery safety), and a
-thin sealed enclosure (mechanical fit). Nothing else in medtech gives that
-coverage as cheaply.
+The demo is built around one concrete product — a single-lead ECG chest patch — because a single BOM exercises every constraint type at once:
 
-## Architecture: judgment versus arithmetic
+| Constraint | Example |
+|---|---|
+| Thermal / patient safety | MCP73831 charger too close to TMP117 body-temp sensor → *"the device reports a fever the patient doesn't have"* |
+| RF keep-out | 2450AT18A100 antenna next to VARTA LiPo can → *"range collapses even though every trace is correct"* |
+| Mechanical fit | 29 components inside a 90 × 50 × 18 mm sealed enclosure |
+| Noise / biosignal | Switching regulators near microvolt AFE inputs |
 
-The system splits in two, and keeping the split clean is the whole design.
-
-**A language model decides what the rules are.** "Worn against skin all day"
-and "shouldn't look like a medical device" are real hardware constraints with
-no closed form. Turning them into `skin_contact: true` and
-`max_surface_temp_c: 43` is judgment, and only a model can do it. The same is
-true on the way out: `REG→AFE 6.0mm < 15mm FAIL` is a linter, while "the
-regulator sits under the skin-contact face and will push that surface past the
-43 °C limit during a charge cycle" is an engineer.
-
-**Deterministic code decides whether the rules are met.** Once something has
-asserted that the front end needs 15 mm, measuring 6.0 mm is subtraction. Never
-ask a model to compute a distance: it will be right most of the time and wrong
-unpredictably, which is the one failure you cannot reproduce afterwards.
-Computing it in code is free, exact, and identical every run.
-
-The constraint engine is the second half. It is stdlib-only and fully
-deterministic, and it imports directly into Blender's bundled Python.
+### Demo output
 
 ```
-Mission (LLM)  ->  parts + layout JSON  ->  constraint engine  ->  results + overlays  ->  Blender
-                                                     |
-                                                     +->  explain brief  ->  write-up (LLM)
-```
-
-## Try it
-
-```bash
-./run_demo.sh
-```
-
-Validates a deliberately constraint-blind layout (10 failures across every
-constraint family), solves for a corrected one, re-validates it through the
-same code path, and emits the LLM explanation brief.
-
-```
-ECG Patch - Naive Layout        FAIL     35     10
+ECG Patch - Naive Layout        FAIL     35     10   failures
 ECG Patch - MissionPCB Layout   PASS     45      0
 ECG Patch - MissionPCB Solved   PASS     45      0
 ```
 
-Tests: `PYTHONPATH=src python3 -m pytest tests/ -q`
+---
 
-## Main Docs
+## What's Built
 
-Start here:
+### Constraint Engine (`src/constraint_engine/`)
 
-- [MissionPCB product and build brief](docs/missionpcb-product-build-brief.md) — product thesis and roadmap
-- [Constraint engine contract](docs/constraint-engine-contract.md) — the JSON interface between parts data, the engine, and Blender
-- [Mission intake](docs/mission-intake.md) — how plain English becomes structured constraints
+Pure Python, stdlib only, no external dependencies. Imports directly into Blender's bundled Python.
+
+- **Rules** — three families: physical (fit, clearance, height, assembly), electrical (heat zones, noise separation, RF keep-out), mission (skin-contact temperature, patient-safety requirements)
+- **Solver** — searches for a placement that satisfies all active rules; reports residual failures rather than lying when a layout is unsatisfiable
+- **Overlays** — emits colored zone annotations (heat halos, RF exclusion rings, noise corridors) for the 3D scene
+- **Brief generator** — produces a prompt-ready fact sheet for the LLM explanation layer
+- **294 tests** — covers golden behavior, edge cases, degenerate inputs, and the solver's own constraint compliance
+
+### Parts Catalog (`parts/catalog/`)
+
+29 real components for the ECG patch BOM. Every number is cited to a datasheet page.
+
+Each part is modeled as both an emitter and a receiver across four channels:
+
+| Channel | Emitter side | Receiver side |
+|---|---|---|
+| Thermal | `heat_source`, `power_dissipation_mw` | `max_temp_c`, `temp_sensitivity` |
+| Conducted | switching frequency, ripple | supply rejection, PSRR |
+| Radiated | RF power, frequency | EMI sensitivity |
+| Mechanical | footprint, height, keep-out | mounting constraints |
+
+Run `python3 parts/validate.py` to confirm the catalog is schema-valid.
+
+### Layout Files (`layouts/`)
+
+Three variants ship with the repo:
+
+| File | Description |
+|---|---|
+| `ecg-patch-naive.json` | Constraint-blind first pass — 10 deliberate failures |
+| `ecg-patch-missionpcb.json` | Hand-authored corrected layout |
+| `ecg-patch-solved.json` | Engine-solved layout, generated by `run_demo.sh` |
+
+### KiCad Widget Bridge
+
+A live bridge between the constraint engine and an open KiCad session:
+
+- **`tools/kicad_widget_control.py`** — Python backend that reads/writes the `.kicad_pcb` file, applies placement proposals, and annotates footprints
+- **`web/`** — React + TypeScript frontend: the Astra chat widget. Send a plain-English instruction, get a proposal back, review it, press Apply. KiCad reloads automatically.
+
+```
+Astra widget (browser)  →  widget backend  →  kicad_pcb file  →  KiCad
+```
+
+Features: auto-apply mode for safe proposals, one-click component annotation (Mark AFE / BUCK / CELL), live status showing KiCad connection and last mutation.
+
+### Blender Workbench (`missionpcb_blender_demo/`)
+
+A full Blender scene with a native AI adapter for interactive inspection:
+
+- **`workbench/missionpcb_ecg_workbench.blend`** — pre-built ECG patch scene with the correct enclosure, board, and component geometry
+- **`blender_widget/addon.py`** — session adapter that connects the floating Astra widget to the open Blender viewport. Supports: `Inspect`, `Full check`, focus commands for individual components (sensor, regulator, radio, MCU, charger, battery). Full check runs the embedded constraint engine and draws red attention rings on failed components in the live viewport.
+- **`kicad_bridge/blender_command.py`** — routes widget commands tagged `blender:` from the shared bridge on port 8768
+
+The adapter allowlists every command — it does not execute arbitrary Python provided as chat text.
+
+Open the workbench from the floating widget by typing:
+
+```text
+open Blender
+```
+
+Or load the adapter directly in Blender's Python console:
+
+```python
+import runpy; runpy.run_path('missionpcb_blender_demo/blender_widget/addon.py', run_name='__main__')
+```
+
+Run the adapter's isolated test suite (16 tests, no Blender required):
+
+```bash
+python3 -m unittest discover -s missionpcb_blender_demo/blender_widget -p 'test_*.py' -v
+```
+
+### Desktop Widget (`scripts/astra_desktop_widget.py`)
+
+A native floating window that sits on top of KiCad and provides a minimal chat surface. Type a plain-English instruction, press Enter, and Astra updates the open KiCad board behind the scenes. Dhruva's Blender workbench is accessible through the same widget.
+
+---
+
+## Quick Start
+
+```bash
+# Run the full demo pipeline (validate → solve → compare → explain → render inputs)
+./run_demo.sh
+
+# Run the test suite
+PYTHONPATH=src python3 -m pytest tests/ -q
+
+# Validate the parts catalog
+python3 parts/validate.py
+```
+
+`run_demo.sh` emits artifacts to `out/` and writes committed render inputs to `render/`:
+
+```
+out/naive/validation_report.md     failures with measured distances and reasons
+out/naive/explain_brief.txt        prompt-ready brief for the LLM layer
+out/solved/validation_report.md    the corrected board
+render/naive.json                  Blender input — before board (failures flagged)
+render/solved.json                 Blender input — after board (all passing)
+```
+
+### KiCad Widget
+
+```bash
+# Start the backend
+python3 tools/kicad_widget_control.py
+
+# Start the frontend (in web/)
+cd web && npm install && npm run dev
+```
+
+Open KiCad with the ECG patch board, then open `http://localhost:5173` for the Astra widget.
+
+---
 
 ## Repo Layout
 
-```text
-src/constraint_engine/   deterministic checker, solver, and report generator
-parts/                   parts libraries (generic seed + ECG patch BOM)
-layouts/                 enclosure, board, and placements per design variant
-tests/                   172 tests, including the demo's golden behaviour
-docs/                    product brief and interface contracts
-run_demo.sh              one-button pipeline
+```
+src/constraint_engine/         deterministic checker, solver, brief generator
+  engine.py                    top-level validate() entry point
+  rules.py                     physical / electrical / mission rule families
+  solver.py                    placement search
+  geometry.py                  distance, overlap, containment primitives
+  overlays.py                  zone annotation builders
+  brief.py                     LLM explanation input generator
+  models.py                    shared data models
+
+parts/
+  catalog/                     29 component JSON files, one per part
+  schema/                      part.schema.json — the contract
+  ecg-patch-parts.json         mission-merged BOM (generated by build_mission_parts.py)
+  validate.py                  catalog linter
+
+layouts/                       enclosure + board + placements per design variant
+missions/                      mission constraint files (clearances, rationales)
+tools/                         kicad_widget_control.py, build_mission_parts.py
+web/                           React/TypeScript Astra widget frontend (browser)
+scripts/astra_desktop_widget.py  native floating Astra widget (desktop)
+missionpcb_blender_demo/
+  workbench/                   pre-built Blender ECG patch scene
+  blender_widget/              Blender adapter + 16 isolated tests
+  kicad_bridge/                command router from widget to Blender
+render/                        committed JSON inputs for the Blender lane
+tests/                         294 constraint engine tests
+docs/                          product brief, interface contracts
+run_demo.sh                    one-button pipeline
 ```
 
+---
+
+## Integration Contract
+
+All components communicate through `design.json`. Nobody calls anybody's function directly.
+
+```json
+{
+  "mission": { "device": "ECG patch", "duty": "continuous", "patient_contact": true },
+  "enclosure": { "l": 90, "w": 50, "h": 18, "wall": 2 },
+  "placements": [
+    { "part_id": "mcp73831", "x": 21.0, "y": 8.5, "rot": 0 }
+  ],
+  "results": [
+    {
+      "check": "thermal",
+      "pair": ["mcp73831", "tmp117"],
+      "measured_mm": 9.4,
+      "required_mm": 12.0,
+      "status": "FAIL"
+    }
+  ],
+  "revision": 3
+}
+```
+
+- **Parts catalog** — static, read-only for everything downstream
+- **Constraint engine** — reads `catalog + placements`, writes `results` + next `placements`
+- **Blender** — reads `placements + results`, renders
+- **Widget UI** — displays current state, scrubs past revisions
+
+---
+
+## Docs
+
+- [Product and build brief](docs/missionpcb-product-build-brief.md) — product thesis, target users, competitive positioning
+- [Constraint engine contract](docs/constraint-engine-contract.md) — JSON interface between parts data, the engine, and Blender
+- [Mission intake](docs/mission-intake.md) — how plain English becomes structured constraints
+- [Renderer contract](docs/renderer-contract.md) — Blender scene spec
+- [Parts review](parts/REVIEW.md) — human-readable BOM summary, grouped by subsystem, with known data gaps called out
