@@ -4,6 +4,10 @@ import review_journal
 from pathlib import Path
 import bridge
 
+def review_layers():
+ from kipy.board_types import BoardLayer
+ return {BoardLayer.BL_Cmts_User,BoardLayer.BL_User_1,BoardLayer.BL_User_2}
+
 def parse(text):
  command=text.strip().lower().rstrip('.!?')
  command=re.sub(r'^please\s+', '',command)
@@ -69,13 +73,14 @@ def run(text):
   return layout_search.apply_winner()
 
  if text.strip().lower() in ('show review markers','hide review markers'):
-  from kipy.board_types import BoardLayer
-  board=bridge.connect();layers=set(board.get_visible_layers());layer=BoardLayer.BL_Cmts_User
-  if text.strip().lower().startswith('show'):layers.add(layer)
-  else:layers.discard(layer)
+  board=bridge.connect();layers=set(board.get_visible_layers());markers=review_layers()
+  show=text.strip().lower().startswith('show')
+  if show:layers.update(markers)
+  else:layers.difference_update(markers)
   board.set_visible_layers(list(layers))
-  visible=layer in board.get_visible_layers()
-  return 'Review markers '+('visible' if visible else 'hidden')+' in the PCB Editor. Geometry unchanged.'
+  actual=set(board.get_visible_layers())
+  if (show and not markers<=actual) or (not show and markers&actual):raise ValueError('KiCad did not confirm all review layer visibility changes.')
+  return 'Red/amber flags and comment labels '+('visible' if show else 'hidden')+' in the PCB Editor. The 3D Viewer follows when Use PCB editor is enabled. Geometry unchanged.'
  if re.fullmatch(r"select (?:[UCRLJ][1-9][0-9]*)(?:,(?:[UCRLJ][1-9][0-9]*))*",text.strip(),re.I):
   refs=text.strip().upper().split(' ',1)[1].split(',')
   board=bridge.connect();fps={f.reference_field.text.value:f for f in board.get_footprints()}

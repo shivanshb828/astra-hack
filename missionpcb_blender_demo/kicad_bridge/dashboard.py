@@ -1,5 +1,8 @@
 """Read-only local dashboard; never mutates a board."""
-from http.server import HTTPServer,BaseHTTPRequestHandler
+from http.server import ThreadingHTTPServer,BaseHTTPRequestHandler
+import threading
+Server=ThreadingHTTPServer
+MUTATION_LOCK=threading.RLock()
 from pathlib import Path
 import json
 import bridge
@@ -9,6 +12,11 @@ TOKEN=(Path(__file__).resolve().parent/'.widget-token').read_text()
 ROOT=Path(__file__).resolve().parent
 class Handler(BaseHTTPRequestHandler):
  def do_POST(self):
+  with MUTATION_LOCK:return self.mutate()
+ def mutate(self):
+  if self.path.startswith("/brief/"):
+   import brief_http
+   return brief_http.post(self,TOKEN)
   if self.path.startswith("/workflow/"):
    import workflow_http
    return workflow_http.post(self,TOKEN)
@@ -58,6 +66,9 @@ class Handler(BaseHTTPRequestHandler):
    return workflow_http.get(self,TOKEN)
   if self.path.startswith('/board-preview'):
    self.send_response(303);self.send_header('Location','/design');self.end_headers();return
+  if self.path=='/brief':
+   import brief_store,assembly_http
+   return assembly_http.reply(self,200,brief_store.current())
   if self.path=='/assembly/state':
    import assembly_http,blender_handoff
    return assembly_http.reply(self,200,blender_handoff.state())
@@ -67,7 +78,7 @@ class Handler(BaseHTTPRequestHandler):
    try:
     board=bridge.connect();state={'connected':True,**bridge.snapshot(board)}
     from kipy.board_types import BoardLayer
-    state['review_visible']=BoardLayer.BL_Cmts_User in board.get_visible_layers()
+    state['review_visible']=widget_command.review_layers()<=set(board.get_visible_layers())
     state['selected_refs']=[f.reference_field.text.value for f in board.get_selection() if hasattr(f,'reference_field')]
    except Exception as e:state={'connected':False,'error':str(e)}
    log=ROOT/'activity.jsonl'
@@ -97,9 +108,13 @@ class Handler(BaseHTTPRequestHandler):
    body=json.dumps(state).encode();mime='application/json'
   elif self.path=='/context':
    import design_context
-   body=json.dumps(design_context.get_context()).encode();mime='application/json'
+   import brief_store
+   body=json.dumps({**design_context.get_context(),'project_brief':brief_store.current()}).encode();mime='application/json'
   elif self.path in ('/companion','/assembly-companion'):body=(ROOT/'companion.html').read_text().replace('__LOCAL_TOKEN__',json.dumps(TOKEN)).encode();mime='text/html'
   elif self.path=='/design':body=(ROOT/'design-dashboard.html').read_text().replace('__LOCAL_TOKEN__',json.dumps(TOKEN)).encode();mime='text/html'
+  elif self.path=='/brief-ui.js':body=(ROOT/'brief-ui.js').read_bytes();mime='text/javascript'
+  elif self.path=='/assembly-ui.js':body=(ROOT/'assembly-ui.js').read_bytes();mime='text/javascript'
+  elif self.path=='/assembly-ui.css':body=(ROOT/'assembly-ui.css').read_bytes();mime='text/css'
   elif self.path=='/workspace-theme.css':body=(ROOT/'workspace-theme.css').read_bytes();mime='text/css'
   elif self.path=='/ui-vendor/motion.js':body=(ROOT/'ui-vendor/motion.js').read_bytes();mime='text/javascript'
   elif self.path=='/classic':body=(ROOT/'dashboard.html').read_text().replace('__LOCAL_TOKEN__',json.dumps(TOKEN)).encode();mime='text/html'
@@ -107,4 +122,4 @@ class Handler(BaseHTTPRequestHandler):
   else:self.send_error(404);return
   self.send_response(200);self.send_header('Content-Type',mime);self.send_header('Cache-Control','no-store');self.end_headers();self.wfile.write(body)
  def log_message(self,*args):pass
-HTTPServer(('127.0.0.1',8768),Handler).serve_forever()
+if __name__=='__main__':Server(('127.0.0.1',8768),Handler).serve_forever()

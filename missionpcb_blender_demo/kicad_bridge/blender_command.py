@@ -15,7 +15,7 @@ def run(text):
   ref=aliases.get(t[6:]);action='focus'
   if not ref:raise ValueError('Use focus sensor, regulator, radio, MCU, charger or battery connector.')
  else:return 'Blender supports: Full check, Inspect, Focus sensor, Focus regulator. Live Astra and arbitrary CAD placement are not connected.'
- cmd=dict(id=uuid.uuid4().hex,created=time.time(),action=action,ref=ref)
+ cmd=dict(id=uuid.uuid4().hex,created=time.time(),action=action,ref=ref,session=state.get('session'))
  if (IPC/'command.json').exists():raise ValueError('Another Blender command is pending')
  tmp=IPC/'command.tmp';tmp.write_text(json.dumps(cmd));tmp.replace(IPC/'command.json')
  reply=IPC/(cmd['id']+'.json')

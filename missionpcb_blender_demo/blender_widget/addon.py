@@ -9,6 +9,10 @@ _assembly=None
 OWNER=None
 SESSION=None
 SCENE=None
+LAST_ASSEMBLY=None
+def file_loaded(_):
+ global SCENE,SESSION
+ SCENE=None;SESSION=None
 def connection():
  global SESSION,SCENE
  identity=(bpy.data.filepath,bpy.context.scene.as_pointer())
@@ -18,6 +22,8 @@ def connection():
 def assembly_module():
  global _assembly
  if _assembly is None:
+  for name in ('red_flags','pcb_presentation','native_views','housing'):
+   if name in sys.modules:importlib.reload(sys.modules[name])
   _assembly=importlib.import_module("assembly");importlib.reload(_assembly)
  return _assembly
 def assembly_active():return bool(bpy.context.scene.get("missionpcb_assembly"))
@@ -30,9 +36,12 @@ def guard():
  if not bpy.context.scene.get('use_upstream_engine'):raise ValueError('MissionPCB engine is not installed')
 def parts():return {o['component_id']:o for o in bpy.context.scene.objects if o.get('role')=='component' and o.get('layout_id')=='MissionPCB'}
 def snapshot():
+ global LAST_ASSEMBLY
  if assembly_active():
   assembly=assembly_module()
   if assembly.signature()!=bpy.context.scene.get('assembly_signature'):assembly.check()
+  if bpy.data.filepath and LAST_ASSEMBLY!=bpy.data.filepath:
+   atomic(IPC/'assembly-project.json',{'file':bpy.data.filepath});LAST_ASSEMBLY=bpy.data.filepath
   return dict(heartbeat=time.time(),file=bpy.data.filepath,assembly_api=1,assembly=assembly.snapshot(),**connection())
  guard();r=runtime();payload=json.loads(bpy.context.scene.get('engine_results_json','{}'))
  return dict(heartbeat=time.time(),file=bpy.data.filepath,assembly_api=1,signature=r.signature(),stale=r.signature()!=bpy.context.scene.get('validated_signature'),parts=[dict(ref=k,position=list(o.location)) for k,o in parts().items()],result=payload.get('results',{}).get('MissionPCB'),**connection())
@@ -111,6 +120,12 @@ def start():
  if old and bpy.app.timers.is_registered(old):bpy.app.timers.unregister(old)
  OWNER=uuid.uuid4().hex
  (IPC/'owner').write_text(OWNER)
+ # Reloading the same file can reuse Blender's scene memory address. Explicitly
+ # invalidate the session so commands issued before a load never edit its result.
+ for handler in list(bpy.app.handlers.load_post):
+  if getattr(handler,'_missionpcb_adapter_load',False):bpy.app.handlers.load_post.remove(handler)
+ handler=bpy.app.handlers.persistent(file_loaded);handler._missionpcb_adapter_load=True
+ bpy.app.handlers.load_post.append(handler)
  bpy.app.driver_namespace['missionpcb_widget_timer']=tick;bpy.app.timers.register(tick,first_interval=.1,persistent=True);tick()
  print('MISSIONPCB_BLENDER_WIDGET_READY')
 if __name__=='__main__':start()
