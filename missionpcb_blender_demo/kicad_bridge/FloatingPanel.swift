@@ -7,48 +7,94 @@ final class ChatModel: ObservableObject {
  @Published var messages=[ChatMessage(text:"Choose the application above.\nKiCad: inspect, move a component, or apply the cached layout.\nBlender: inspect the scene, check constraints, or focus a component.",user:false)]
  @Published var input=""
  @Published var target="KiCad" { didSet { status="\(target) · local commands" } }
- private var stageTimer:Timer?
- private var assemblyRevision:String?
- init(){stageTimer=Timer.scheduledTimer(withTimeInterval:2,repeats:true){[weak self] _ in self?.syncStage()}}
- func syncStage(){
-  URLSession.shared.dataTask(with:URL(string:"http://127.0.0.1:8768/assembly/state")!){[weak self] data,_,_ in
-   guard let data=data,let value=try? JSONSerialization.jsonObject(with:data) as? [String:Any],value["connected"] as? Bool == true,let assembly=value["assembly"] as? [String:Any],let revision=assembly["source_hash"] as? String else{return}
-   DispatchQueue.main.async{guard let self=self,self.assemblyRevision != revision else{return};self.assemblyRevision=revision}
-  }.resume()
- }
+ lazy var dashboardSession=DashboardSession()
  @Published var busy=false
- @Published var status="Live KiCad · local commands"
+ @Published var status="KiCad · local commands"
  func send(_ supplied:String?=nil){
   let text=(supplied ?? input).trimmingCharacters(in:.whitespacesAndNewlines)
   guard !text.isEmpty && !busy else{return}
   let requestTarget=target
   input="";messages.append(ChatMessage(text:"\(requestTarget) · \(text)",user:true));busy=true;status="Working in \(requestTarget)…"
   guard let token=Bundle.main.object(forInfoDictionaryKey:"MissionPCBToken") as? String else {finish("Connection configuration is missing. Relaunch using the MissionPCB launcher.",ok:false);return}
-  var request=URLRequest(url:URL(string:"http://127.0.0.1:8768/command")!);request.httpMethod="POST";request.timeoutInterval=20
+  var request=URLRequest(url:URL(string:"http://127.0.0.1:8768/command")!);request.httpMethod="POST";request.timeoutInterval=120
   request.setValue(token,forHTTPHeaderField:"X-Widget-Token");request.httpBody=(requestTarget == "Blender" ? "blender: " + text : text).data(using:.utf8)
   URLSession.shared.dataTask(with:request){data,response,error in
    let code=(response as? HTTPURLResponse)?.statusCode ?? 0
    var message=String(data:data ?? Data(),encoding:.utf8) ?? "No response from \(requestTarget)."
    if error != nil {message="The local bridge isn't responding. Open the MissionPCB dashboard or restart the bridge, then try again. Your command may not have completed; inspect the current state before retrying."}
    else if code==403 {message="The panel and bridge have different connection credentials. Relaunch them together to reconnect."}
-   else if code != 200 {message="The bridge couldn't complete this request. Inspect the current state before retrying."}
+   else if code != 200 && message.trimmingCharacters(in:.whitespacesAndNewlines).isEmpty {message="The bridge couldn't complete this request. Inspect the current state before retrying."}
    DispatchQueue.main.async{self.finish(message,ok:error==nil && code==200 && !message.hasPrefix("Could not apply"))}
   }.resume()
  }
  func finish(_ text:String,ok:Bool){messages.append(ChatMessage(text:text,user:false));busy=false;status=ok ? "\(target) · local commands" : "Connection needs attention"}
 }
-struct ReviewDashboard: NSViewRepresentable {
- @ObservedObject var model:ChatModel
- var companion:Bool
- var address:String { "http://127.0.0.1:8768/" + (companion ? (model.target == "Blender" ? "assembly-companion" : "companion") : (model.target == "Blender" ? "assembly" : "design")) }
- func makeNSView(context:Context)->WKWebView {
-  let view=WKWebView();view.load(URLRequest(url:URL(string:address)!));return view
+// Retain the page when Chat is shown; load only when the requested stage changes.
+final class DashboardSession:NSObject,ObservableObject,WKNavigationDelegate {
+ @Published var loading=false
+ @Published var failure:String?
+ var requestedAddress:String?
+ var onRouteChange:((String)->Void)?
+ lazy var webView:WKWebView = {
+  let view=WKWebView();view.navigationDelegate=self;return view
+ }()
+ func load(_ address:String){
+  guard requestedAddress != address else{return}
+  requestedAddress=address
+  webView.load(URLRequest(url:URL(string:address)!))
  }
- func updateNSView(_ view:WKWebView,context:Context){
-  let path=view.url?.path ?? ""
-  let sameStage=path == URL(string:address)!.path
-  if !sameStage {view.load(URLRequest(url:URL(string:address)!))}
+ func retry(){
+  guard let address=requestedAddress else{return}
+  webView.load(URLRequest(url:URL(string:address)!))
  }
+ func webView(_ webView:WKWebView,didStartProvisionalNavigation navigation:WKNavigation!){loading=true;failure=nil}
+ func webView(_ webView:WKWebView,didFinish navigation:WKNavigation!){
+  loading=false;failure=nil
+  if let url=webView.url, ["/design","/assembly","/companion","/assembly-companion"].contains(url.path){
+   requestedAddress="http://127.0.0.1:8768"+url.path
+   onRouteChange?(url.path)
+  }
+ }
+ func webView(_ webView:WKWebView,decidePolicyFor response:WKNavigationResponse,decisionHandler:@escaping(WKNavigationResponsePolicy)->Void){
+  if response.isForMainFrame,let http=response.response as? HTTPURLResponse,http.statusCode >= 400 {
+   decisionHandler(.cancel);loading=false;failure="The bridge returned HTTP \(http.statusCode). Retry after the workspace service is ready."
+  } else {decisionHandler(.allow)}
+ }
+ func showFailure(_ error:Error){
+  guard (error as NSError).code != NSURLErrorCancelled else{return}
+  loading=false;failure="The local workspace could not load. Check the bridge, then retry."
+ }
+ func webView(_ webView:WKWebView,didFailProvisionalNavigation navigation:WKNavigation!,withError error:Error){showFailure(error)}
+ func webView(_ webView:WKWebView,didFail navigation:WKNavigation!,withError error:Error){showFailure(error)}
+ func webViewWebContentProcessDidTerminate(_ webView:WKWebView){loading=false;failure="The workspace page stopped responding. Retry to reopen it."}
+}
+struct ReviewDashboard:NSViewRepresentable {
+ var session:DashboardSession
+ var address:String
+ func makeNSView(context:Context)->WKWebView {session.load(address);return session.webView}
+ func updateNSView(_ view:WKWebView,context:Context){session.load(address)}
+}
+struct DashboardContent:View {
+ @ObservedObject var session:DashboardSession
+ var address:String
+ var body:some View {
+  ZStack {
+   ReviewDashboard(session:session,address:address)
+   if let failure=session.failure {
+    VStack(spacing:14){Image(systemName:"wifi.exclamationmark").font(.title);Text(failure).multilineTextAlignment(.center);Button("Retry workspace"){session.retry()}}
+     .padding(24).frame(maxWidth:.infinity,maxHeight:.infinity).background(Color(red:0.965,green:0.97,blue:0.957))
+   } else if session.loading {
+    VStack{ProgressView("Loading workspace…").padding(12).background(.regularMaterial,in:RoundedRectangle(cornerRadius:10));Spacer()}.padding(12).allowsHitTesting(false)
+   }
+  }
+ }
+}
+struct PanelDragHandle:NSViewRepresentable {
+ final class Handle:NSView {
+  override func mouseDown(with event:NSEvent){window?.performDrag(with:event)}
+ }
+ func makeNSView(context:Context)->Handle {Handle()}
+ func updateNSView(_ view:Handle,context:Context){}
 }
 struct ChatView: View {
  @ObservedObject var model:ChatModel
@@ -58,15 +104,24 @@ struct ChatView: View {
  @Environment(\.accessibilityReduceMotion) var reduceMotion
  var body: some View {
  VStack(spacing:0){
+  if !compact {
+   ZStack{Capsule().fill(Color.gray.opacity(0.35)).frame(width:36,height:4);PanelDragHandle()}.frame(height:14).help("Drag to move widget")
+  }
   if dashboard {
    HStack {
-    Button("← Chat"){dashboard=false;NotificationCenter.default.post(name:Notification.Name("MissionPCBExpand"),object:nil)}
-    Picker("Application",selection:$model.target){Text("KiCad").tag("KiCad");Text("Blender").tag("Blender")}.pickerStyle(.segmented).labelsHidden().accessibilityLabel("Application").frame(width:180)
+    Button("← Chat"){compact=false;dashboard=false;NotificationCenter.default.post(name:Notification.Name("MissionPCBExpand"),object:nil)}
+    Picker("Application",selection:$model.target){Text("KiCad").tag("KiCad");Text("Blender").tag("Blender")}.pickerStyle(.segmented).labelsHidden().accessibilityLabel("Application").frame(width:180).disabled(model.busy)
     Spacer()
     Button(companion ? "Workspace" : "Findings"){companion.toggle();NotificationCenter.default.post(name:Notification.Name(companion ? "MissionPCBCompanion" : "MissionPCBDashboard"),object:nil)}
     Button("Collapse"){dashboard=false;compact=true;NotificationCenter.default.post(name:Notification.Name("MissionPCBCollapse"),object:nil)}
    }.buttonStyle(.plain).font(.system(size:12)).padding(10)
-   ReviewDashboard(model:model,companion:companion)
+   DashboardContent(session:model.dashboardSession,address:"http://127.0.0.1:8768/" + (companion ? (model.target == "Blender" ? "assembly-companion" : "companion") : (model.target == "Blender" ? "assembly" : "design")))
+    .onAppear{model.dashboardSession.onRouteChange={path in
+     let nextTarget=path.contains("assembly") ? "Blender" : "KiCad"
+     let nextCompanion=path.contains("companion")
+     if model.target != nextTarget {model.target=nextTarget}
+     if companion != nextCompanion {companion=nextCompanion;NotificationCenter.default.post(name:Notification.Name(nextCompanion ? "MissionPCBCompanion" : "MissionPCBDashboard"),object:nil)}
+    }}
   } else if compact {
    Button {
     compact=false;dashboard=true;companion=true
@@ -76,7 +131,7 @@ struct ChatView: View {
      Circle().fill(model.busy ? Color(red:0.78,green:0.9,blue:0.42) : Color(red:0.35,green:0.42,blue:0.34)).frame(width:8,height:8)
      VStack(alignment:.leading,spacing:4){
       Text("MissionPCB").font(.system(size:16,weight:.semibold))
-      Text(model.busy ? model.status : "Open board review").font(.system(size:14)).foregroundStyle(.secondary).lineLimit(1)
+      Text(model.busy ? model.status : "Open \(model.target) findings").font(.system(size:14)).foregroundStyle(.secondary).lineLimit(1)
      }
      Spacer()
      Image(systemName:"chevron.up").font(.system(size:11,weight:.medium)).foregroundStyle(.secondary)
@@ -89,7 +144,7 @@ struct ChatView: View {
     compact=true
     NotificationCenter.default.post(name:Notification.Name("MissionPCBCollapse"),object:nil)
    } label: {Image(systemName:"chevron.down").foregroundStyle(.secondary)}.buttonStyle(.plain).help("Collapse to status card")
-   Button{dashboard=true;NotificationCenter.default.post(name:Notification.Name("MissionPCBDashboard"),object:nil)}label:{Image(systemName:"arrow.up.right.square").foregroundStyle(.secondary)}.buttonStyle(.plain).help("Expand to full review dashboard")
+   Button{compact=false;companion=false;dashboard=true;NotificationCenter.default.post(name:Notification.Name("MissionPCBDashboard"),object:nil)}label:{Image(systemName:"arrow.up.right.square").foregroundStyle(.secondary)}.buttonStyle(.plain).help("Expand to full review dashboard")
   }.padding(.horizontal,20).padding(.top,17).padding(.bottom,13)
   Picker("Application",selection:$model.target){Text("KiCad").tag("KiCad");Text("Blender").tag("Blender")}.pickerStyle(.segmented).labelsHidden().accessibilityLabel("Application").disabled(model.busy).padding(.horizontal,20).padding(.bottom,10)
   Divider().opacity(0.2)
@@ -105,31 +160,51 @@ struct ChatView: View {
   }.onChange(of:model.messages.count){_ in if reduceMotion {proxy.scrollTo(model.messages.last?.id,anchor:.bottom)}else{withAnimation(.easeOut(duration:0.2)){proxy.scrollTo(model.messages.last?.id,anchor:.bottom)}}}
   }
   HStack(spacing:7){suggestion(model.target == "Blender" ? "Inspect scene" : "Inspect board",model.target == "Blender" ? "Inspect" : "Inspect the board");suggestion("Full check","Full check");suggestion(model.target == "Blender" ? "Focus sensor" : "Reset",model.target == "Blender" ? "Focus sensor" : "Reset the layout");Spacer()}.padding(.horizontal,17).padding(.bottom,12)
-  HStack(alignment:.center,spacing:10){TextField(model.target == "Blender" ? "Inspect, check, or focus a component…" : "Enter a board command…",text:$model.input).textFieldStyle(.plain).font(.system(size:13)).onSubmit{model.send()}.accessibilityLabel("Message MissionPCB")
+  HStack(alignment:.center,spacing:10){TextField(model.target == "Blender" ? "Inspect, check, or focus a component…" : "Enter a board command…",text:$model.input,axis:.vertical).lineLimit(1...4).textFieldStyle(.plain).font(.system(size:13)).onSubmit{model.send()}.accessibilityLabel("Message MissionPCB")
    Button{model.send()}label:{Image(systemName:"arrow.up").font(.system(size:14,weight:.semibold)).frame(width:30,height:30).background(model.input.isEmpty || model.busy ? Color.black.opacity(0.08) : Color(red:0.78,green:0.9,blue:0.42),in:Circle()).foregroundStyle(model.input.isEmpty || model.busy ? Color.gray : Color.black)}.buttonStyle(.plain).disabled(model.input.isEmpty || model.busy).accessibilityLabel("Send message")
   }.padding(13).background(Color.white,in:RoundedRectangle(cornerRadius:19)).overlay(RoundedRectangle(cornerRadius:19).stroke(Color(red:0.78,green:0.9,blue:0.42).opacity(model.busy ? 0.5 : 0.18),lineWidth:1)).shadow(color:Color(red:0.78,green:0.9,blue:0.42).opacity(model.busy ? 0.12 : 0.035),radius:12).animation(reduceMotion ? nil : .easeInOut(duration:0.25),value:model.busy).padding(.horizontal,15)
-  Text("Local board commands").font(.system(size:9)).foregroundStyle(.secondary).padding(.vertical,12)
+  Text("Local CAD commands · ChatGPT connection not configured").font(.system(size:9)).foregroundStyle(.secondary).padding(.vertical,12)
  }
  }.foregroundStyle(Color(red:0.10,green:0.12,blue:0.10)).background(Color(red:0.965,green:0.97,blue:0.957)).clipShape(RoundedRectangle(cornerRadius:compact ? 38 : 20)).overlay(RoundedRectangle(cornerRadius:compact ? 38 : 20).stroke(LinearGradient(colors:[Color(red:0.78,green:0.9,blue:0.42).opacity(0.35),Color.black.opacity(0.06)],startPoint:.topLeading,endPoint:.bottomTrailing),lineWidth:1)).preferredColorScheme(.light)
+ .onReceive(NotificationCenter.default.publisher(for:Notification.Name("MissionPCBRequestCollapse"))){_ in
+  dashboard=false;compact=true;NotificationCenter.default.post(name:Notification.Name("MissionPCBCollapse"),object:nil)
+ }
  }
  func suggestion(_ label:String,_ command:String)->some View {Button(label){model.send(command)}.buttonStyle(.plain).font(.system(size:10)).padding(.horizontal,10).padding(.vertical,7).background(Color.white,in:Capsule()).overlay(Capsule().stroke(Color.black.opacity(0.06))).disabled(model.busy)}
 }
-final class FloatingPanel:NSPanel{override var canBecomeKey:Bool{true};override var canBecomeMain:Bool{false}}
+final class FloatingPanel:NSPanel{
+ override var canBecomeKey:Bool{true}
+ override var canBecomeMain:Bool{false}
+ // Accessory apps have no Edit menu to dispatch standard text shortcuts.
+ override func performKeyEquivalent(with event:NSEvent)->Bool {
+  let modifiers=event.modifierFlags.intersection(.deviceIndependentFlagsMask)
+  if modifiers == .command || modifiers == [.command,.shift] {
+   let key=event.charactersIgnoringModifiers?.lowercased() ?? ""
+   let actions=["a":"selectAll:","c":"copy:","x":"cut:","v":"paste:","z":modifiers.contains(.shift) ? "redo:" : "undo:"]
+   if let action=actions[key],firstResponder?.tryToPerform(NSSelectorFromString(action),with:nil) == true {return true}
+  }
+  return super.performKeyEquivalent(with:event)
+ }
+ // A close/Escape action folds the widget instead of making it disappear.
+ override func close(){NotificationCenter.default.post(name:Notification.Name("MissionPCBRequestCollapse"),object:nil)}
+ override func cancelOperation(_ sender:Any?){close()}
+}
 final class Controller:NSObject,NSApplicationDelegate {
  var panel:FloatingPanel!;let model=ChatModel();var statusItem:NSStatusItem!
- @objc func showPanel(){panel.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true)}
+ @objc func showPanel(){panel.makeKeyAndOrderFront(nil)}
  func applicationDidFinishLaunching(_ notification:Notification){let screen=NSScreen.main!.visibleFrame
   panel=FloatingPanel(contentRect:NSRect(x:screen.maxX-486,y:screen.minY+16,width:470,height:min(740,screen.height-32)),styleMask:[.borderless,.nonactivatingPanel,.resizable],backing:.buffered,defer:false)
-  panel.title="MissionPCB Assistant";panel.titleVisibility = .hidden;panel.titlebarAppearsTransparent=true;panel.level = .floating;panel.collectionBehavior=[.canJoinAllSpaces,.fullScreenAuxiliary];panel.hidesOnDeactivate=false;panel.isMovableByWindowBackground=true;panel.isReleasedWhenClosed=false;panel.minSize=NSSize(width:390,height:86);panel.isOpaque=false;panel.backgroundColor = .clear;panel.hasShadow=true
+  panel.title="MissionPCB Assistant";panel.titleVisibility = .hidden;panel.titlebarAppearsTransparent=true;panel.level = .floating;panel.collectionBehavior=[.canJoinAllSpaces,.fullScreenAuxiliary];panel.hidesOnDeactivate=false;panel.isMovableByWindowBackground=false;panel.isReleasedWhenClosed=false;panel.minSize=NSSize(width:470,height:520);panel.isOpaque=false;panel.backgroundColor = .clear;panel.hasShadow=true
   statusItem=NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength);statusItem.button?.title="MissionPCB";statusItem.button?.target=self;statusItem.button?.action=#selector(showPanel)
   NotificationCenter.default.addObserver(forName:Notification.Name("MissionPCBCompanion"),object:nil,queue:.main){[weak self] _ in self?.resizePanel(height:740)}
-  NotificationCenter.default.addObserver(forName:Notification.Name("MissionPCBDashboard"),object:nil,queue:.main){[weak self] _ in self?.resizePanel(height:760,width:1100)}
-  NotificationCenter.default.addObserver(forName:Notification.Name("MissionPCBExpand"),object:nil,queue:.main){[weak self] _ in self?.resizePanel(height:420)}
+  NotificationCenter.default.addObserver(forName:Notification.Name("MissionPCBDashboard"),object:nil,queue:.main){[weak self] _ in self?.resizePanel(height:760,width:560)}
+  NotificationCenter.default.addObserver(forName:Notification.Name("MissionPCBExpand"),object:nil,queue:.main){[weak self] _ in self?.resizePanel(height:520)}
   NotificationCenter.default.addObserver(forName:Notification.Name("MissionPCBCollapse"),object:nil,queue:.main){[weak self] _ in self?.resizePanel(height:86)}
-  panel.contentView=NSHostingView(rootView:ChatView(model:model));panel.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true)
+  panel.contentView=NSHostingView(rootView:ChatView(model:model));panel.makeKeyAndOrderFront(nil)
  }
  func resizePanel(height:CGFloat,width:CGFloat=470){
   let screen=(panel.screen ?? NSScreen.main)!.visibleFrame
+  panel.minSize=NSSize(width:min(470,screen.width-32),height:height == 86 ? 86 : min(520,screen.height-32))
   var frame=panel.frame
   let center=frame.midX
   frame.size=NSSize(width:min(width,screen.width-32),height:min(height,screen.height-32))
@@ -140,7 +215,7 @@ final class Controller:NSObject,NSApplicationDelegate {
  func applicationShouldHandleReopen(_ sender:NSApplication,hasVisibleWindows flag:Bool)->Bool{
   guard panel != nil else{return true}
   resizePanel(height:panel.frame.height,width:panel.frame.width)
-  panel.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true);return true
+  panel.makeKeyAndOrderFront(nil);return true
  }
  func applicationShouldTerminateAfterLastWindowClosed(_ sender:NSApplication)->Bool{false}
 }
