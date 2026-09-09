@@ -1,0 +1,9 @@
+(() => {
+ const field=document.getElementById('briefInput'),file=document.getElementById('briefFile'),save=document.getElementById('saveBrief'),status=document.getElementById('briefState'),name=document.getElementById('briefName');
+ let revision='',filename='Project brief',working=false;
+ async function request(url,body,headers={}){const response=await fetch(url,{method:'POST',headers:{'X-Widget-Token':token,...headers},body});const data=await response.json();if(!response.ok)throw Error(data.error||'Could not save the brief');return data;}
+ fetch('/brief').then(r=>r.json()).then(data=>{field.value=data.text;revision=data.revision;filename=data.filename;name.textContent=filename;status.textContent='Brief available as project context.'}).catch(e=>status.textContent=e.message);
+ file.onchange=async()=>{if(working||!file.files[0])return;working=true;save.disabled=true;status.textContent='Reading brief…';try{const selected=file.files[0];const data=await request('/brief/upload',selected,{'X-Filename':encodeURIComponent(selected.name)});field.value=data.text;filename=data.filename;name.textContent=filename;status.textContent='Review the text, then save the brief.';}catch(e){status.textContent=e.message}finally{working=false;save.disabled=false;file.value=''}};
+ field.oninput=()=>status.textContent='Unsaved brief changes.';
+ save.onclick=async()=>{if(working)return;working=true;save.disabled=true;try{const data=await request('/brief/save',JSON.stringify({text:field.value,filename,base_revision:revision}),{'Content-Type':'application/json'});revision=data.revision;status.textContent='Brief saved. Review the proposed device profile and numeric targets; existing geometry is unchanged.';document.dispatchEvent(new CustomEvent('missionpcb:brief-saved'));}catch(e){status.textContent=e.message}finally{working=false;save.disabled=false}};
+})();

@@ -5,7 +5,7 @@ import design_workflow as w
 class WorkflowTests(unittest.TestCase):
  def setUp(self):
   self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
-  self.patches=[patch.object(w.review_journal,'STORAGE_ROOT',Path(self.tmp.name)),patch.object(w.bridge,'connect',return_value=object()),patch.object(w.bridge,'snapshot',return_value={'board':str(w.bridge.TARGET),'revision':'r1','parts':[dict(ref='U1',x_mm=110,y_mm=110,rotation_deg=0)]}),patch.object(w,'evaluate',side_effect=lambda s:{'checks':[dict(id='x',status='FAIL' if s['parts'][0]['x_mm']==110 else 'PASS',margin_mm=-1 if s['parts'][0]['x_mm']==110 else 1)],'summary':{}}),patch.object(w.mission_constraints,'revision',return_value='c1')]
+  self.patches=[patch.object(w.brief_store,'current',return_value={'text':w.brief_store.CANONICAL_BRIEF.read_text(),'revision':'fixture-brief','source':'test','filename':'test.md'}),patch.object(w.review_journal,'STORAGE_ROOT',Path(self.tmp.name)),patch.object(w.bridge,'connect',return_value=object()),patch.object(w.bridge,'snapshot',return_value={'board':str(w.bridge.TARGET),'revision':'r1','parts':[dict(ref='U1',x_mm=110,y_mm=110,rotation_deg=0)]}),patch.object(w,'evaluate',side_effect=lambda s:{'checks':[dict(id='x',status='FAIL' if s['parts'][0]['x_mm']==110 else 'PASS',margin_mm=-1 if s['parts'][0]['x_mm']==110 else 1)],'summary':{}}),patch.object(w.mission_constraints,'revision',return_value='c1')]
   for p in self.patches:p.start();self.addCleanup(p.stop)
  def proposal(self):return w.propose(dict(base_revision='r1',moves=[dict(ref='U1',x_mm=111,y_mm=110,rotation_deg=0)],rationale='Reduce interference'))['payload']
  def test_preview_does_not_apply(self):

@@ -2,10 +2,12 @@ import tempfile,unittest
 from pathlib import Path
 from unittest.mock import patch
 import mission_constraints as mc
+import brief_store
 from board_profile import CORE_MAP
 from layout_adapter import payload_for
 class MissionConstraintsTests(unittest.TestCase):
  def setUp(self):
+  brief=patch.object(brief_store,"current",return_value={"text":mc.BRIEF.read_text(),"revision":"fixture","source":"fixture"});brief.start();self.addCleanup(brief.stop)
   self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
   p=patch.object(mc,'OVERRIDES',Path(self.tmp.name)/'limits.json');p.start();self.addCleanup(p.stop)
   self.state={'parts':[{'ref':r,'x_mm':120,'y_mm':120,'rotation_deg':0} for r in CORE_MAP]}

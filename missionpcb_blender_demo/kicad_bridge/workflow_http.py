@@ -1,5 +1,6 @@
 """Authenticated mutations and local downloadable engineering artifacts."""
 import json,secrets
+from urllib.parse import unquote
 from pathlib import Path
 import design_workflow as workflow
 ROOT=Path(__file__).resolve().parent
@@ -11,12 +12,23 @@ def post(h,token):
  if h.headers.get('Host') not in ('127.0.0.1:8768','localhost:8768') or not secrets.compare_digest(h.headers.get('X-Widget-Token',''),token):return reply(h,403,{'error':'Unauthorized'})
  try:
   size=int(h.headers.get('Content-Length','0'))
+  if h.path=='/workflow/schematic':
+   import circuit_readiness
+   if not 0<size<=circuit_readiness.MAX_SCHEMATIC_BYTES:raise ValueError('Choose a schematic up to 8 MiB.')
+   result=circuit_readiness.attach_schematic(unquote(h.headers.get('X-Filename','')),h.rfile.read(size),expected_board_sha256=h.headers.get('X-Board-Revision'))
+   workflow.append('schematic_attached',{'saved_board_sha256':result['saved_board_sha256'],'schematic':result['schematic']})
+   return reply(h,200,result)
   if not 0<size<=16000:raise ValueError('Request must be 1–16000 bytes')
   p=json.loads(h.rfile.read(size));route=h.path
   if route=='/workflow/capture':result=workflow.capture('Initial design' if not workflow.events() else 'Current design snapshot')
   elif route=='/workflow/proposals':result=workflow.propose(p)
   elif route=='/workflow/decisions':result=workflow.decide(p)
   elif route=='/workflow/finding-decisions':result=workflow.decide_finding(p)
+  elif route=='/workflow/comments':result=workflow.add_comment(p)
+  elif route=='/workflow/focus':result=workflow.focus_finding(p)
+  elif route=='/workflow/adopt-targets':result=workflow.adopt_brief_targets(p)
+  elif route=='/workflow/profile':result=workflow.save_profile(p)
+  elif route=='/workflow/generate-housing':result=workflow.generate_housing(p)
   elif route=='/workflow/inputs':result=workflow.save_inputs(p)
   elif route=='/workflow/checks':result=workflow.start_checks()
   elif route=='/workflow/import-asset':
@@ -32,8 +44,12 @@ def get(h,token):
  try:
   name=None
   if h.path=='/workflow':body=(ROOT/'workflow.html').read_text().replace('__LOCAL_TOKEN__',json.dumps(token)).encode();mime='text/html'
+  elif h.path=='/workflow/ui.js':body=(ROOT/'workflow-ui.js').read_bytes();mime='text/javascript'
+  elif h.path=='/workflow/ui.css':body=(ROOT/'workflow-ui.css').read_bytes();mime='text/css'
+  elif h.path=='/workflow/profile':return reply(h,200,workflow.profile_state())
   elif h.path=='/workflow/assembly-preview':body=(ASSETS/'wearable-assembly.png').read_bytes();mime='image/png'
   elif h.path=='/workflow/state':return reply(h,200,workflow.view())
+  elif h.path=='/workflow/summary':return reply(h,200,workflow.summary())
   elif h.path in ('/workflow/report.json','/workflow/report.md'):
    state=workflow.view();name='missionpcb-design-report.'+h.path.rsplit('.',1)[1]
    body=(json.dumps(state,indent=2) if name.endswith('json') else workflow.report_markdown(state)).encode();mime='application/json' if name.endswith('json') else 'text/markdown'
